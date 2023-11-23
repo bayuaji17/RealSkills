@@ -14,7 +14,7 @@ export const RouterPages = () => {
         <Route path="login" element={<LoginPage />} />
         <Route path="login admin" element={<LoginAdminPage />} />
         <Route path="register" element={<RegisterPage />} />
-        <Route path="reset" element={<ResetPasswordPage />} />
+        <Route path="/reset" element={<ResetPasswordPage />} />
       </Routes>
     </BrowserRouter>
   );
