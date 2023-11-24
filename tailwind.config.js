@@ -10,8 +10,8 @@ module.exports = {
       },
     },
     screens: {
-      "mobile": "426",
-      "laptop": "1025"
+      "mobile": "426px",
+      "laptop": "1025px"
     },
   },
   plugins: [],
