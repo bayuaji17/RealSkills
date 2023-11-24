@@ -31,7 +31,7 @@ export const RegisterPage = () => {
 
 
   return (
-    <div className="">
+    <div className="font-poppins">
       <div className="flex flex-row justify-between">
         <div className="flex flex-col justify-center w-8/12 items-center">
           <form action="" method="post">
