@@ -1,8 +1,7 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
 export const Beranda = () => {
-    //Testing
+  //Testing
   return (
     <div>
       <a href="login">Login</a>

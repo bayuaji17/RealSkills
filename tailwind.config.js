@@ -8,9 +8,10 @@ module.exports = {
         'montserrat': ['Montserrat', 'sans-serif'],
          'poppins': ['Poppins', 'sans'],
       },
-      colors: {
-        'dark-blue' : '#6148FF'
-      },
+    },
+    screens: {
+      "mobile": "426",
+      "laptop": "1025"
     },
   },
   plugins: [],
