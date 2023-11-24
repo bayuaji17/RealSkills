@@ -11,8 +11,8 @@ module.exports = {
       },
     },
     screens: {
-      "mobile": "426px",
-      "laptop": "1025px,
+      mobile: "426px",
+      laptop: "1025px",
     },
   },
   plugins: [],

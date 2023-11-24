@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const LoginAdminPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -28,7 +27,7 @@ export const LoginAdminPage = () => {
             <span className="text-sm text-black flex justify-between">
               <label> Password</label>
               <a href="/reset" className="text-[#6148FF]">
-                Lupa Kata Sandi{" "}
+                Lupa Kata Sandi
               </a>
             </span>
 
@@ -36,11 +35,6 @@ export const LoginAdminPage = () => {
               className="border border-black w-full py-3 px-2 rounded-2xl"
               type={showPassword ? "text" : "password"}
               placeholder="Masukan Password"
-            />
-            <FontAwesomeIcon
-              icon={showPassword}
-              className="absolute top-2 right-2 cursor-pointer"
-              onClick={password}
             />
             <button className="bg-[#6148FF] w-full text-white rounded-2xl py-3 ">
               Masuk
