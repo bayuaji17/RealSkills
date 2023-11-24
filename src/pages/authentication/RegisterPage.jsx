@@ -7,28 +7,14 @@ import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 // const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 const PASSWORD_REGEX =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-  const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
+const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 export const RegisterPage = () => {
   const Ref = useRef();
   const errRef = useRef();
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [noTelp, setNoTelp] = useState(62);
-  const [password, setPassword] = useState('');
-
-
-
-
-
-
-
-
-
-
-
-
-
+  const [password, setPassword] = useState("");
 
   return (
     <div className="">
