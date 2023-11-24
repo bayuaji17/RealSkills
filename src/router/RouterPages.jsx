@@ -12,7 +12,7 @@ export const RouterPages = () => {
       <Routes>
         <Route path="/" element={<Beranda />} />
         <Route path="login" element={<LoginPage />} />
-        <Route path="login admin" element={<LoginAdminPage />} />
+        <Route path="loginAdmin" element={<LoginAdminPage />} />
         <Route path="register" element={<RegisterPage />} />
         <Route path="reset" element={<ResetPasswordPage />} />
       </Routes>
