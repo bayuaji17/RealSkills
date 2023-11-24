@@ -11,7 +11,7 @@ export const LoginAdminPage = () => {
           <h1 className=" mb-4 font-bold text-3xl font-montserrat text-[#6148FF]">
             Login
           </h1>
-          <div className="w-[25rem] h-[14.3rem] justify-center items-center font-poppins space-y-3 ">
+          <div className="w-[23rem] h-[14rem] justify-center items-center font-poppins space-y-3 ">
             <span className="text-sm text-[0.9rem] text-black">ID Admin</span>
             <input
               className="border border-black w-full py-3 px-2 rounded-2xl"
