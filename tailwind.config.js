@@ -10,6 +10,10 @@ module.exports = {
         "dark-blue": "#6148FF",
       },
     },
+    screens: {
+      "mobile": "426px",
+      "laptop": "1025px,
+    },
   },
   plugins: [],
 };
