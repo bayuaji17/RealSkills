@@ -10,8 +10,8 @@ module.exports = {
       },
       colors: {
         'dark-blue' : '#6148FF'
-      }
+      },
     },
   },
   plugins: [],
-}
+};
