@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 
 const ResetPasswordTautanPage = () => {
+  
+  const [first, setfirst] = useState("")
+
   return (
     <>
       <div className="parents w-full h-screen flex overflow-y-hidden">

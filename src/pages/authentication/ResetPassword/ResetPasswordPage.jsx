@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 
 const ResetPasswordPage = () => {
+  const [Password, setPassword] = useState("")
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [passwordVisibleRepeat, setPasswordVisibleRepeat] = useState(false);
 
@@ -44,6 +45,7 @@ const ResetPasswordPage = () => {
                   <FontAwesomeIcon
                     icon={passwordVisible ? faEyeSlash : faEye}
                     size="md"
+                    style={{ color: "#8A8A8A" }}
                     onClick={togglePasswordVisibility}
                     className="cursor-pointer eye-icon absolute right-[1rem] top-1/2 transform -translate-y-1/2"
                   />
@@ -64,6 +66,7 @@ const ResetPasswordPage = () => {
                   <FontAwesomeIcon
                     icon={passwordVisibleRepeat ? faEyeSlash : faEye}
                     size="md"
+                    style={{ color: "#8A8A8A" }}
                     onClick={togglePasswordRepeat}
                     className="cursor-pointer eye-icon absolute right-[1rem] top-1/2 transform -translate-y-1/2"
                   />
@@ -71,7 +74,7 @@ const ResetPasswordPage = () => {
               </div>
             </div>
             <button 
-            className="reset-btn font-poppins text-white bg-blue-700 rounded-[1rem] py-[0.75rem] px-[1.5rem] text-[1rem]"
+            className="reset-btn font-poppins text-white bg-blue-700 rounded-[1rem] py-[0.75rem] px-[1.5rem] text-[1rem] disabled:bg-blue-300"
             onClick={()=>{showToastSuccess()}}
             >
               Simpan
