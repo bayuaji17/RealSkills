@@ -1,12 +1,12 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
 export const Beranda = () => {
-    //Testing
   return (
-    <div>
-      <a href="login">Login</a>
-      <a href="register">register</a>
+    <div className="flex flex-col gap-4 justify-center w-screen h-screen items-center bg-slate-900">
+      <h1 className="text-white">HomePage is Under Construction</h1>
+      <a href="login" className="border-2 rounded-lg w-64 text-center bg-blue-600 text-white">ke Halaman Login User</a>
+      <a href="register" className="border-2 rounded-lg w-64 text-center bg-blue-600 text-white">Ke Halaman Register</a>
+      <a href="admin"className="border-2 rounded-lg w-64 text-center bg-blue-600 text-white">Ke halaman Admin Login</a>
     </div>
   );
 };

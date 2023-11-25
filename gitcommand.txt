@@ -11,3 +11,5 @@ echo "# RealSkills" >> README.md
   git remote add origin https://github.com/bayuaji17/RealSkills.git
   git branch -M main
   git push -u origin main
+
+  git pull origin staging
