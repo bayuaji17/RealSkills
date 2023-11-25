@@ -13,8 +13,9 @@ export const RouterPages = () => {
       <Routes>
         <Route path="/" element={<Beranda />} />
         <Route path="login" element={<LoginPage />} />
-        <Route path="loginAdmin" element={<LoginAdminPage />} />
+        <Route path="admin" element={<LoginAdminPage />} />
         <Route path="register" element={<RegisterPage />} />
+
         <Route path="/reset" element={<ResetPasswordTautanPage />} />
         <Route path="/resetPassword" element={<ResetPasswordPage />} />
       </Routes>
