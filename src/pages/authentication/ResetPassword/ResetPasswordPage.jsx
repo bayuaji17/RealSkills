@@ -82,7 +82,7 @@ const ResetPasswordPage = () => {
                 </div>
                 <div className="password-input-container relative">
                   <input
-                    type={ConfirmPasswordVisible ? "text" : "password"}
+                    type={passwordVisible ? "text" : "password"}
                     name="password"
                     id="password"
                     placeholder="Buat Password"
