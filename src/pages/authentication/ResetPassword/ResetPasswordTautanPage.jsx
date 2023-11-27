@@ -29,9 +29,9 @@ const ResetPasswordTautanPage = () => {
     <>
       <div className="parents w-full h-screen flex overflow-y-hidden">
         {/* Left Section */}
-        <div className="left-section w-[50%] h-screen flex flex-col justify-center items-center">
-          <div className="left-container-section flex flex-col gap-[1.5rem] w-[50%]">
-            <span className="font-montserrat text-blue-700 text-[1.5rem] font-black leading-[2.25rem]">
+        <div className="left-section w-full h-screen flex flex-col justify-center items-center mx-[1rem] laptop:w-[50%] laptop:mx-0">
+          <div className="left-container-section flex flex-col gap-[1.5rem] w-full laptop:w-[60%]">
+            <span className="font-montserrat text-blue-700 text-[1.5rem] font-black leading-[2.25rem] flex justify-center laptop:justify-start">
               Masuk
             </span>
             <div className="form-section flex flex-col font-poppins gap-[1rem]">
@@ -65,7 +65,7 @@ const ResetPasswordTautanPage = () => {
         </div>
 
         {/* Right Section */}
-        <div className="right-section bg-blue-700 w-[50%] h-screen flex justify-center items-center">
+        <div className="right-section hidden laptop:bg-blue-700 laptop:w-[50%] laptop:h-screen laptop:flex laptop:justify-center laptop:items-center">
         <div className="brand-text-logo flex gap-2 items-center">
           <img src={logo} alt="RealSkills" className="w-40 h-40"/>
           <span className="text-brand font-montserrat font-black text-white text-[3rem]">
