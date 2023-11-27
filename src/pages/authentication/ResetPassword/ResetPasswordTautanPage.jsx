@@ -48,7 +48,7 @@ const ResetPasswordTautanPage = () => {
               </div>
               {isEmailLengthValid && !isEmailValid && (
                 <div className="text-red-600 text-xs -mt-2">
-                  Gunakan format "contoh@gmail.com"
+                  Gunakan format "example@gmail.com"
                 </div>
               )}
             </div>
