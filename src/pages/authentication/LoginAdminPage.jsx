@@ -19,7 +19,7 @@ export const LoginAdminPage = () => {
       </div>
       {/* Right Section */}
       <div className=" laptop:w-[60%] flex h-full justify-center items-center ">
-        <div className=" mobile:ml-3 flex flex-col font-poppins">
+        <div className=" mobile:ml-4 flex flex-col font-poppins">
           <h1 className="flex justify-center items-center mb-3 font-bold text-3xl text-[#6148FF]">
             Login
           </h1>
@@ -56,7 +56,7 @@ export const LoginAdminPage = () => {
             />
           </div>
 
-          <button className="bg-[#6148FF] w-full text-white rounded-2xl py-3 ">
+          <button className="bg-[#6148FF] text-white p-3 rounded-2xl laptop:w-[22rem] mobile:w-[94vw] ">
             Masuk
           </button>
         </div>
