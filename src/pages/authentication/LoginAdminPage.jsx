@@ -11,19 +11,19 @@ export const LoginAdminPage = () => {
   };
 
   return (
-    <div className="parent flex h-screen text-white">
+    <div className="parents flex h-screen text-white">
       {/*Left Section*/}
-      <div className="hidden laptop:flex laptop:w-[40%] h-full bg-[#6148FF] font-montserrat text-center text-2xl justify-center items-center">
+      <div className="hidden laptop:flex laptop:w-[40%] h-full bg-[#6148FF] font-poppins text-center text-2xl justify-center items-center">
         <img src={logo} alt="" className="w-40 h-40" />
-        <h1 className="font-bold text-2xl text-white">RealSkills</h1>
+        <h1 className="font-bold text-4xl text-white">RealSkills</h1>
       </div>
       {/* Right Section */}
       <div className=" laptop:w-[60%] flex h-full justify-center items-center ">
-        <div className=" mobile:ml-3 flex flex-col font-poppins">
-          <h1 className="flex justify-center items-center mb-3 font-bold text-3xl font-montserrat text-[#6148FF]">
+        <div className=" mobile:ml-4 flex flex-col font-poppins">
+          <h1 className="flex justify-center items-center mb-3 font-bold text-3xl text-[#6148FF]">
             Login
           </h1>
-          <label className=" flex flex-col justify-start text-sm text-[0.9rem] text-black">
+          <label className=" flex flex-col justify-start text-sm text-[0.9rem] text-black mb-2">
             ID Admin
           </label>
           <input
@@ -31,7 +31,7 @@ export const LoginAdminPage = () => {
             type="text"
             placeholder="ID Admin"
           />
-          <span className=" flex justify-between text-sm text-black  mb-2">
+          <span className=" flex justify-between text-sm text-black mb-2">
             <label> Password</label>
             <a href="/reset" className="text-[#6148FF]">
               Lupa Kata Sandi
@@ -56,7 +56,7 @@ export const LoginAdminPage = () => {
             />
           </div>
 
-          <button className="bg-[#6148FF] w-full text-white rounded-2xl py-3 ">
+          <button className="bg-[#6148FF] text-white p-3 rounded-2xl laptop:w-[22rem] mobile:w-[94vw] ">
             Masuk
           </button>
         </div>
