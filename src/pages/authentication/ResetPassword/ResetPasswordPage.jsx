@@ -8,21 +8,28 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import logo from "../../../assets/img/logo.png";
+import { postReset } from "../../../services/auth/reset-password";
 
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,24}$/;
 const ERROR_BORDER_COLOR = "border-red-600 focus:outline-red-600";
 const SUCCESS_BORDER_COLOR = "border-green-600 focus:outline-green-600";
 
 const ResetPasswordPage = () => {
-  const [Password, setPassword] = useState("");
-  const [ConfirmPassword, setConfirmPassword] = useState("");
+  const [FormInput, setFormInput] = useState(
+    {
+      password: "",
+      confirmPassword: "",
+    }
+  )
+  // const [Password, setPassword] = useState("");
+  // const [ConfirmPassword, setConfirmPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [ConfirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
-  const isPasswordLengthValid = Password.length > 0;
-  const isConfirmPasswordLengthValid = ConfirmPassword.length > 0;
-  const isPasswordValid = PASSWORD_REGEX.test(Password);
-  const isConfirmPasswordValid = PASSWORD_REGEX.test(ConfirmPassword);
+  const isPasswordLengthValid = FormInput.password.length > 0;
+  const isConfirmPasswordLengthValid = FormInput.confirmPassword.length > 0;
+  const isPasswordValid = PASSWORD_REGEX.test(FormInput.password);
+  const isConfirmPasswordValid = PASSWORD_REGEX.test(FormInput.confirmPassword);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible((prevVisible) => !prevVisible);
@@ -32,15 +39,13 @@ const ResetPasswordPage = () => {
     setConfirmPasswordVisible((prevVisible2) => !prevVisible2);
   };
 
-  const handlePasswordChange = (e) => {
-    const newPassword = e.target.value;
-    setPassword(newPassword);
-  };
-
-  const handleConfirmPasswordChange = (e) => {
-    const newPassword = e.target.value;
-    setConfirmPassword(newPassword);
-  };
+  const handleInput = (e) => {
+     const { id, value } = e.target;
+    setFormInput({
+      ...FormInput,
+      [id]: value,
+    });
+  }
 
   const passwordBorderClass = () => {
     if (isPasswordLengthValid && !isPasswordValid) {
@@ -58,13 +63,37 @@ const ResetPasswordPage = () => {
     }
   };
 
-  const handleResetPassword = () => {
-    if (Password !== ConfirmPassword) {
-      toast.error("Password Tidak Sama", { autoClose: 1000 });
-    } else {
-      toast.success("Reset Password Berhasil", { autoClose: 1000 });
+  const handleResetPassword = async () => {
+    const formReset = {
+      new_password: FormInput.password,
+      confirm_new_password: FormInput.confirmPassword
     }
-  };
+    try {
+      const response = await postReset(formReset);
+      toast.success(response.data.message, {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } catch (error) {
+      toast.error(error.response.data.error, {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      console.log(error, "err reset")
+    }
+  }  
 
   return (
     <>
@@ -86,8 +115,10 @@ const ResetPasswordPage = () => {
                     name="password"
                     id="password"
                     placeholder="Buat Password"
-                    value={Password}
-                    onChange={handlePasswordChange}
+                    value={FormInput.password}
+                    onChange={(e)=>{
+                      handleInput(e)
+                    }}
                     className={`border-2 border-[#D0D0D0] rounded-[1rem] py-[0.5rem] px-[1rem] w-full ${passwordBorderClass()}`}
                     required
                   />
@@ -139,11 +170,13 @@ const ResetPasswordPage = () => {
                 <div className="password-input-container relative">
                   <input
                     type={ConfirmPasswordVisible ? "text" : "password"}
-                    name="confirm-password"
-                    id="confirm-password"
+                    name="confirmPassword"
+                    id="confirmPassword"
                     placeholder="Ulangi Password"
-                    value={ConfirmPassword}
-                    onChange={handleConfirmPasswordChange}
+                    // value={FormInput.confirmPassword}
+                    onChange={(e)=>{
+                      handleInput(e)
+                    }}
                     className={`border-2 border-[#D0D0D0] rounded-[1rem] py-[0.5rem] px-[1rem] w-full ${ConfirmPasswordBorderClass()}`}
                     required
                   />

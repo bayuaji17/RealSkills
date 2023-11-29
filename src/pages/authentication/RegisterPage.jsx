@@ -98,7 +98,7 @@ export const RegisterPage = () => {
       });
       navigate("/login");
     } catch (error) {
-      toast.error(error.response.data.error.detail, {
+      toast.error("error.response.data.error.detail", {
         position: "bottom-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -108,6 +108,7 @@ export const RegisterPage = () => {
         progress: undefined,
         theme: "light",
       });
+      console.log(error)
     }
   };
 

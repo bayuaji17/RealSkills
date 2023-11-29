@@ -1,21 +1,24 @@
 import React, { useState } from "react";
 // import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import logo from "../../../assets/img/logo.png";
-import { useCreateUser } from "../../../services/auth/post_register_user";
-// import { useCreateReset } from "../../../services/auth/forgot-password";
-// import { useCreateReset } from "../../../services/auth/forgot-password";
-// import { useForgotPassword } from "../../../services/auth/forgot-password";
+import { postForgotPassword } from "../../../services/auth/forgot-password";
+import { CookieKeys, CookieStorage } from "../../../utils/cookies";
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 const ResetPasswordTautanPage = () => {
-  const [Email, setEmail] = useState("");
-  const isEmailValid = EMAIL_REGEX.test(Email);
-  const isEmailLengthValid = Email.length > 0;
+  const [FormInput, setFormInput] = useState(
+    {
+      email: ""
+    }
+  )
+  // const [Email, setEmail] = useState("");
+  const isEmailValid = EMAIL_REGEX.test(FormInput.email);
+  const isEmailLengthValid = FormInput.email.length > 0;
   const ERROR_BORDER_COLOR = "border-red-600 focus:outline-red-600";
   const SUCCESS_BORDER_COLOR = "border-green-600 focus:outline-green-600";
   // const navigate = useNavigate()
-  const { mutate : resetUser } = useCreateUser()
   
   const emailBorderClass = () => {
     if (isEmailLengthValid > 0 && !isEmailValid) {
@@ -26,17 +29,45 @@ const ResetPasswordTautanPage = () => {
   };
 
   const handleInput = (e) => {
-    if (e) {
-      if(e.target.id === "email"){
-        setEmail(e.target.value)
-      }
-    }
+     const { id, value } = e.target;
+    setFormInput({
+      ...FormInput,
+      [id]: value,
+    });
   }
 
-  const resetPassword = () => {
-    resetUser({
-      email: Email
-    })
+  const handleForgotPassword = async () => {
+    const formForgot = {
+      email: FormInput.email
+    }
+    try {
+      const response = await postForgotPassword(formForgot);
+      toast.success(response.data.message, {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      console.log(response.data.data.token)
+      console.log('sukses')
+      CookieStorage.set(CookieKeys.AuthToken, response.data.data.token)
+      // navigate("/login");
+    } catch (error) {
+      toast.error(error.response.data.error, {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
   }
 
   return (
@@ -56,6 +87,8 @@ const ResetPasswordTautanPage = () => {
                   required
                   id="email"
                   type="email"
+                  label="email"
+                  value={FormInput.email}
                   placeholder="example@gmail.com"
                   className={`border-2 border-[#D0D0D0] rounded-[1rem] py-[0.5rem] px-[1rem] ${emailBorderClass()}`}
                 />
@@ -71,7 +104,7 @@ const ResetPasswordTautanPage = () => {
               disabled={!isEmailLengthValid || !isEmailValid}
               onClick={()=>{
                 console.log('hello')
-                resetPassword();
+                handleForgotPassword();
               }}
             >
               Masuk
