@@ -8,6 +8,7 @@ import {
   faEyeSlash,
 } from "@fortawesome/free-solid-svg-icons";
 import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
+// import { useCreateUser } from "../../services/auth/register-user";
 
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,24}$/;
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -21,6 +22,7 @@ export const RegisterPage = () => {
   const [noTelp, setNoTelp] = useState("");
   const [password, setPassword] = useState("");
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  // const { mutate : register } = useCreateUser()
 
   const isPasswordValid = PASSWORD_REGEX.test(password);
   const isPasswordLengthValid = password.length > 0;
@@ -76,6 +78,15 @@ export const RegisterPage = () => {
   const togglePassword = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
+
+  // const registerUser = () => {
+  //   register({
+  //     name : nama,
+  //     email : email,
+  //     password : password,
+  //     phone_number : noTelp,
+  //   })
+  // }
 
   return (
     <div className="font-poppins">
@@ -269,6 +280,9 @@ export const RegisterPage = () => {
                 !isEmailLengthValid ||
                 !isNoTelpLengthValid
               }
+              // onClick={()=>{
+              //   registerUser()
+              // }}
             >
               Daftar
             </button>
