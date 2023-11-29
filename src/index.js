@@ -2,20 +2,21 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from "react";
 import ReactDOM from "react-dom/client";
-// import "./assets/css/index.css";
 import "./index.css";
 // import RouterList from "./routes/RouterList";
+// import RouterPages from "./router/RouterPages.jsx"
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { RouterPages } from "./router/RouterPages";
 
-const queryUser = new QueryClient();
+const queryMovie = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <QueryClientProvider client={queryUser}>
+    <QueryClientProvider client={queryMovie}>
       {/* <GoogleOAuthProvider clientId={process.env.REACT_APP_OAUTH_ID}> */}
-        <RouterPages />
+        {/* ... */}
+        <RouterPages/>
       {/* </GoogleOAuthProvider> */}
       <ToastContainer />
     </QueryClientProvider>

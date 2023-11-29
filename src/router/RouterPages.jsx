@@ -7,6 +7,7 @@ import { LoginAdminPage } from "../pages/authentication/LoginAdminPage";
 import ResetPasswordPage from "../pages/authentication/ResetPassword/ResetPasswordPage";
 import ResetPasswordTautanPage from "../pages/authentication/ResetPassword/ResetPasswordTautanPage";
 import RegisterPage from "../pages/authentication/ResetPassword/RegisterPage";
+import DetailKelasPage from "../pages/ClassDetail/DetailKelasPage";
 
 export const RouterPages = () => {
   return (
@@ -20,6 +21,7 @@ export const RouterPages = () => {
         <Route path="/reset" element={<ResetPasswordTautanPage />} />
         <Route path="/Cobareset" element={<RegisterPage />} />
         <Route path="/resetPassword" element={<ResetPasswordPage />} />
+        <Route path="/detailKelas" element={<DetailKelasPage />} /> 
       </Routes>
     </BrowserRouter>
   );

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 // import { useNavigate } from "react-router-dom";
 import logo from "../../../assets/img/logo.png";
-import { useCreateReset } from "../../../services/auth/forgot-password";
+import { useCreateUser } from "../../../services/auth/post_register_user";
+// import { useCreateReset } from "../../../services/auth/forgot-password";
 // import { useCreateReset } from "../../../services/auth/forgot-password";
 // import { useForgotPassword } from "../../../services/auth/forgot-password";
 
@@ -14,7 +15,7 @@ const ResetPasswordTautanPage = () => {
   const ERROR_BORDER_COLOR = "border-red-600 focus:outline-red-600";
   const SUCCESS_BORDER_COLOR = "border-green-600 focus:outline-green-600";
   // const navigate = useNavigate()
-  const { mutate : resetUser } = useCreateReset()
+  const { mutate : resetUser } = useCreateUser()
   
   const emailBorderClass = () => {
     if (isEmailLengthValid > 0 && !isEmailValid) {
