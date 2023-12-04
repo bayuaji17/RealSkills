@@ -108,7 +108,7 @@ export const RegisterPage = () => {
         progress: undefined,
         theme: "light",
       });
-      console.log(error)
+      console.log(error);
     }
   };
 
