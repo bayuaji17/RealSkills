@@ -1,7 +1,7 @@
 // import { faIdBadge } from "@fortawesome/free-regular-svg-icons";
 import { faArrowLeft, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useState } from "react";
 import NavbarComponents from "../../assets/components/NavbarComponents";
 import badge from "../../assets/img/icon/badge-svg.svg";
 import modul from "../../assets/img/icon/clarity_book-line.svg";
@@ -11,9 +11,22 @@ import play_video from "../../assets/img/icon/play video.svg";
 import progress_check from "../../assets/img/icon/progress-check.svg";
 import done_play_button from "../../assets/img/icon/green-play.svg";
 import undone_play_button from "../../assets/img/icon/dark-blue-play.svg";
-import locked from "../../assets/img/icon/bxs_lock.svg"
+import locked from "../../assets/img/icon/bxs_lock.svg";
 
 const DetailKelasPage = () => {
+  const [MateriBelajar, setMateriBelajar] = useState(false);
+  const [TentangKelas, setTentangKelas] = useState(true);
+
+  const toogleTentangKelas = () => {
+    setTentangKelas(true);
+    setMateriBelajar(false);
+  };
+
+  const toogleMateriBelajar = () => {
+    setMateriBelajar(true);
+    setTentangKelas(false);
+  };
+
   return (
     <div className="parents">
       <div className="nav-component-section hidden laptop:flex">
@@ -230,115 +243,154 @@ const DetailKelasPage = () => {
             </div>
           </div>
 
-          <div className="select-about-materi-section flex items-center w-full mt-2">
-            <div className="about-section flex justify-center items-center bg-sky-100 w-[50%] py-[.5rem]">
-              <span className="font-montserrat text-[0.9rem] font-black leading-[2.25rem] text-[#489CFF]">
-                Tentang
-              </span>
-            </div>
-            <div className="materi-section flex justify-center items-center bg-dark-blue w-[50%] py-[.5rem]">
-              <span className="font-montserrat text-[0.9rem] font-black leading-[2.25rem] text-[#FFFF]">
-                Materi Kelas
-              </span>
-            </div>
-          </div>
-
-          <div className="chapter-section flex flex-col gap-2 ml-[1.35rem] mr-[1.5rem] mt-2">
-            <span className="font-montserrat font-black text-[1.25rem] leading-[0.9rem]">
-              Materi Belajar
-            </span>
-            <div className="chapter-title-section flex items-center justify-between">
-              <span className="font-montserrat font-extrabold text-dark-blue text-[0.8rem] leading-[2.25rem]">
-                Chapter 1 - Pendahuluan
-              </span>
-              <span className="font-montserrat text-[#489CFF] text-[0.8rem] font-extrabold leading-[2.25rem]">
-                60 Menit
-              </span>
-            </div>
-          </div>
-
-          <div className="chapter-card-section flex flex-col items-center gap-1 ml-[1.35rem] mr-[1.5rem]">
-            <div className="card-index-section flex justify-between w-full items-center border-b-2 border-[#EBF3FC] py-[0.25rem]">
-              <div className="number-title-section flex items-center gap-2">
-                <span className="index-number-section bg-[#EBF3FC] rounded-[100%] px-[1rem] py-[0.65rem] flex items-center font-montserrat text-[#202244] text-[0.8rem] font-bold leading-[0.9rem] hover:bg-dark-blue hover:text-white">
-                  1
-                </span>
-                <span className="course-title-section text-[rgba(0,0,0,0.80)] text-[0.75rem] font-semibold leading-[1.25rem] font-montserrat">
-                  Tujuan Mengikuti Kelas Design System
-                </span>
+          {TentangKelas && !MateriBelajar ? (
+            <>
+              <div className="select-about-materi-section flex items-center w-full mt-2">
+                <div
+                  className="about-section flex justify-center items-center bg-dark-blue w-[50%] py-[.5rem]"
+                  onClick={() => {
+                    toogleTentangKelas();
+                  }}
+                >
+                  <span className="font-montserrat text-[0.9rem] font-black leading-[2.25rem] text-[#FFFF]">
+                    Tentang
+                  </span>
+                </div>
+                <div
+                  className="materi-section flex justify-center items-center bg-sky-100 w-[50%] py-[.5rem]"
+                  onClick={() => {
+                    toogleMateriBelajar();
+                  }}
+                >
+                  <span className="font-montserrat text-[0.9rem] font-black leading-[2.25rem] text-[#489CFF]">
+                    Materi Kelas
+                  </span>
+                </div>
               </div>
-              <img
-                className="play-btn"
-                src={done_play_button}
-                alt="success-play-button"
-                width="20"
-              />
-            </div>
-
-            <div className="card-index-section flex justify-between w-full items-center border-b-2 border-[#EBF3FC] py-[0.25rem]">
-              <div className="number-title-section flex items-center gap-2">
-                <span className="index-number-section bg-[#EBF3FC] rounded-[100%] px-[1rem] py-[0.65rem] flex items-center font-montserrat text-[#202244] text-[0.8rem] font-bold leading-[0.9rem] hover:bg-dark-blue hover:text-white">
-                  2
-                </span>
-                <span className="course-title-section text-[rgba(0,0,0,0.80)] text-[0.75rem] font-semibold leading-[1.25rem] font-montserrat">
-                  Pengenalan Design System
-                </span>
+              <div className="detail">Tentang Kelas</div>
+            </>
+          ) : (
+            <>
+              <div className="select-about-materi-section flex items-center w-full mt-2">
+                <div
+                  className="about-section flex justify-center items-center bg-sky-100 w-[50%] py-[.5rem]"
+                  onClick={() => {
+                    toogleTentangKelas();
+                  }}
+                >
+                  <span className="font-montserrat text-[0.9rem] font-black leading-[2.25rem] text-[#489CFF]">
+                    Tentang
+                  </span>
+                </div>
+                <div
+                  className="materi-section flex justify-center items-center bg-dark-blue w-[50%] py-[.5rem]"
+                  onClick={() => {
+                    toogleMateriBelajar();
+                  }}
+                >
+                  <span className="font-montserrat text-[0.9rem] font-black leading-[2.25rem] text-[#FFFF]">
+                    Materi Kelas
+                  </span>
+                </div>
               </div>
-              <img
-                className="play-btn"
-                src={done_play_button}
-                alt="success-play-button"
-                width="20"
-              />
-            </div>
-
-            <div className="card-index-section flex justify-between w-full items-center border-b-2 border-[#EBF3FC] py-[0.25rem]">
-              <div className="number-title-section flex items-center gap-2">
-                <span className="index-number-section bg-[#EBF3FC] rounded-[100%] px-[1rem] py-[0.65rem] flex items-center font-montserrat text-[#202244] text-[0.75rem] font-bold leading-[0.9rem] hover:bg-dark-blue hover:text-white">
-                  3
+              <div className="chapter-section flex flex-col gap-2 ml-[1.35rem] mr-[1.5rem] mt-2">
+                <span className="font-montserrat font-black text-[1.25rem] leading-[0.9rem]">
+                  Materi Belajar
                 </span>
-                <span className="course-title-section text-[rgba(0,0,0,0.80)] text-[0.75rem] font-semibold leading-[1.25rem] font-montserrat">
-                  Contoh Dalam Membangun Design System
-                </span>
+                <div className="chapter-title-section flex items-center justify-between">
+                  <span className="font-montserrat font-extrabold text-dark-blue text-[0.8rem] leading-[2.25rem]">
+                    Chapter 1 - Pendahuluan
+                  </span>
+                  <span className="font-montserrat text-[#489CFF] text-[0.8rem] font-extrabold leading-[2.25rem]">
+                    60 Menit
+                  </span>
+                </div>
               </div>
-              <img
-                className="play-btn"
-                src={undone_play_button}
-                alt="success-play-button"
-                width="20"
-              />
-            </div>
-          </div>
 
-          <div className="chapter-section flex flex-col gap-2 ml-[1.35rem] mr-[1.5rem] mt-2">
-            <div className="chapter-title-section flex items-center justify-between">
-              <span className="font-montserrat font-extrabold text-dark-blue text-[0.8rem] leading-[2.25rem]">
-                Chapter 2 - Memulai Desain
-              </span>
-              <span className="font-montserrat text-[#489CFF] text-[0.8rem] font-extrabold leading-[2.25rem]">
-                120 Menit
-              </span>
-            </div>
-          </div>
+              <div className="chapter-card-section flex flex-col items-center gap-1 ml-[1.35rem] mr-[1.5rem]">
+                <div className="card-index-section flex justify-between w-full items-center border-b-2 border-[#EBF3FC] py-[0.25rem]">
+                  <div className="number-title-section flex items-center gap-2">
+                    <span className="index-number-section bg-[#EBF3FC] rounded-[100%] px-[1rem] py-[0.65rem] flex items-center font-montserrat text-[#202244] text-[0.8rem] font-bold leading-[0.9rem] hover:bg-dark-blue hover:text-white">
+                      1
+                    </span>
+                    <span className="course-title-section text-[rgba(0,0,0,0.80)] text-[0.75rem] font-semibold leading-[1.25rem] font-montserrat">
+                      Tujuan Mengikuti Kelas Design System
+                    </span>
+                  </div>
+                  <img
+                    className="play-btn"
+                    src={done_play_button}
+                    alt="success-play-button"
+                    width="20"
+                  />
+                </div>
 
-          <div className="chapter-card-section flex flex-col items-center gap-1 ml-[1.35rem] mr-[1.5rem]">
-            <div className="card-index-section flex justify-between w-full items-center border-b-2 border-[#EBF3FC] py-[0.25rem]">
-              <div className="number-title-section flex items-center gap-2">
-                <span className="index-number-section bg-[#EBF3FC] rounded-[100%] px-[1rem] py-[0.65rem] flex items-center font-montserrat text-[#202244] text-[0.8rem] font-bold leading-[0.9rem]">
-                  4
-                </span>
-                <span className="course-title-section text-[rgba(0,0,0,0.80)] text-[0.75rem] font-semibold leading-[1.25rem] font-montserrat">
-                  Color Pallete
-                </span>
+                <div className="card-index-section flex justify-between w-full items-center border-b-2 border-[#EBF3FC] py-[0.25rem]">
+                  <div className="number-title-section flex items-center gap-2">
+                    <span className="index-number-section bg-[#EBF3FC] rounded-[100%] px-[1rem] py-[0.65rem] flex items-center font-montserrat text-[#202244] text-[0.8rem] font-bold leading-[0.9rem] hover:bg-dark-blue hover:text-white">
+                      2
+                    </span>
+                    <span className="course-title-section text-[rgba(0,0,0,0.80)] text-[0.75rem] font-semibold leading-[1.25rem] font-montserrat">
+                      Pengenalan Design System
+                    </span>
+                  </div>
+                  <img
+                    className="play-btn"
+                    src={done_play_button}
+                    alt="success-play-button"
+                    width="20"
+                  />
+                </div>
+
+                <div className="card-index-section flex justify-between w-full items-center border-b-2 border-[#EBF3FC] py-[0.25rem]">
+                  <div className="number-title-section flex items-center gap-2">
+                    <span className="index-number-section bg-[#EBF3FC] rounded-[100%] px-[1rem] py-[0.65rem] flex items-center font-montserrat text-[#202244] text-[0.75rem] font-bold leading-[0.9rem] hover:bg-dark-blue hover:text-white">
+                      3
+                    </span>
+                    <span className="course-title-section text-[rgba(0,0,0,0.80)] text-[0.75rem] font-semibold leading-[1.25rem] font-montserrat">
+                      Contoh Dalam Membangun Design System
+                    </span>
+                  </div>
+                  <img
+                    className="play-btn"
+                    src={undone_play_button}
+                    alt="success-play-button"
+                    width="20"
+                  />
+                </div>
               </div>
-              <img
-                className="play-btn"
-                src={locked}
-                alt="success-play-button"
-                width="20"
-              />
-            </div>
-          </div>
+
+              <div className="chapter-section flex flex-col gap-2 ml-[1.35rem] mr-[1.5rem] mt-2">
+                <div className="chapter-title-section flex items-center justify-between">
+                  <span className="font-montserrat font-extrabold text-dark-blue text-[0.8rem] leading-[2.25rem]">
+                    Chapter 2 - Memulai Desain
+                  </span>
+                  <span className="font-montserrat text-[#489CFF] text-[0.8rem] font-extrabold leading-[2.25rem]">
+                    120 Menit
+                  </span>
+                </div>
+              </div>
+
+              <div className="chapter-card-section flex flex-col items-center gap-1 ml-[1.35rem] mr-[1.5rem]">
+                <div className="card-index-section flex justify-between w-full items-center border-b-2 border-[#EBF3FC] py-[0.25rem]">
+                  <div className="number-title-section flex items-center gap-2">
+                    <span className="index-number-section bg-[#EBF3FC] rounded-[100%] px-[1rem] py-[0.65rem] flex items-center font-montserrat text-[#202244] text-[0.8rem] font-bold leading-[0.9rem]">
+                      4
+                    </span>
+                    <span className="course-title-section text-[rgba(0,0,0,0.80)] text-[0.75rem] font-semibold leading-[1.25rem] font-montserrat">
+                      Color Pallete
+                    </span>
+                  </div>
+                  <img
+                    className="play-btn"
+                    src={locked}
+                    alt="success-play-button"
+                    width="20"
+                  />
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
       {/* End Mobile */}
