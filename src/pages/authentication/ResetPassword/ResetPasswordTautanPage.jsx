@@ -54,7 +54,7 @@ const ResetPasswordTautanPage = () => {
       });
       console.log(response.data.data.token)
       console.log('sukses')
-      CookieStorage.set(CookieKeys.AuthToken, response.data.data.token)
+      CookieStorage.set(CookieKeys.ForgotPasswordToken, response.data.data.token)
       // navigate("/login");
     } catch (error) {
       toast.error(error.response.data.error, {
