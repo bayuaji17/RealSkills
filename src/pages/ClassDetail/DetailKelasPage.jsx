@@ -16,6 +16,7 @@ import locked from "../../assets/img/icon/bxs_lock.svg";
 const DetailKelasPage = () => {
   const [MateriBelajar, setMateriBelajar] = useState(false);
   const [TentangKelas, setTentangKelas] = useState(true);
+  const [PaymentModal, setPaymentModal] = useState(false);
 
   const toogleTentangKelas = () => {
     setTentangKelas(true);
@@ -25,6 +26,10 @@ const DetailKelasPage = () => {
   const toogleMateriBelajar = () => {
     setMateriBelajar(true);
     setTentangKelas(false);
+  };
+
+  const tooglePayment = () => {
+    setPaymentModal((PaymentModal) => !PaymentModal);
   };
 
   return (
@@ -156,7 +161,7 @@ const DetailKelasPage = () => {
         </div>
 
         <div className="right-class-section w-[40%] flex justify-center pr-[3rem]">
-          <div className="materi-container w-[100%] h-[15rem] rounded-[1rem] px-[1.25rem] py-[1.25rem] flex flex-col -mt-[15rem] bg-[#FFFF] shadow-xl">
+          <div className="materi-container w-[100%] rounded-[1rem] px-[1.25rem] py-[1.25rem] flex flex-col -mt-[15rem] bg-[#FFFF] shadow-xl">
             <div className="top-text flex items-center gap-[1.5rem] w-full justify-between">
               <div className="text-materi w-[50%]">
                 <span className="font-montserrat font-black text-[1.25rem] leading-[0.75rem]">
@@ -179,11 +184,86 @@ const DetailKelasPage = () => {
               </span>
             </div>
             <div className="chapter-materi-section flex flex-col gap-2">
-              <div className="card-materi-section flex gap-4">
-                <span className="rounded-[100%] bg-[#EBF3FC] px-[1rem] py-[.5rem]">
-                  1
+              <div className="card-materi-section flex items-center justify-between w-[95%] border-b-2 border-[#EBF3FC] py-[0.25rem]">
+                <div className="card-number-title-section flex items-center gap-[0.75rem]">
+                  <span className="rounded-[100%] bg-[#EBF3FC] px-[1rem] py-[.5rem]">
+                    1
+                  </span>
+                  <span className="font-montserrat font-semibold text-[0.9rem] text-[rgba(0,0,0,0.80)] leading-[1.25rem]">
+                    Tujuan Mengikuti Kelas Design System
+                  </span>
+                </div>
+                <img src={done_play_button} alt="done-play" width="20" />
+              </div>
+
+              <div className="card-materi-section flex items-center justify-between w-[95%] border-b-2 border-[#EBF3FC] py-[0.25rem]">
+                <div className="card-number-title-section flex items-center gap-[0.75rem]">
+                  <span className="rounded-[100%] bg-[#EBF3FC] px-[1rem] py-[.5rem]">
+                    2
+                  </span>
+                  <span className="font-montserrat font-semibold text-[0.9rem] text-[rgba(0,0,0,0.80)] leading-[1.25rem]">
+                    Pengenalan Design System
+                  </span>
+                </div>
+                <img src={done_play_button} alt="done-play" width="20" />
+              </div>
+
+              <div className="card-materi-section flex items-center justify-between w-[95%] border-b-2 border-[#EBF3FC] py-[0.25rem]">
+                <div className="card-number-title-section flex items-center gap-[0.75rem]">
+                  <span className="rounded-[100%] bg-[#EBF3FC] px-[1rem] py-[.5rem]">
+                    3
+                  </span>
+                  <span className="font-montserrat font-semibold text-[0.9rem] text-[rgba(0,0,0,0.80)] leading-[1.25rem]">
+                    Contoh Dalam Membangun Design System
+                  </span>
+                </div>
+                <img src={undone_play_button} alt="done-play" width="20" />
+              </div>
+
+              <div className="chapter-section flex justify-between items-center w-[95%] mt-2">
+                <span className="chapter-title font-montserrat text-[#6148FF] font-black text-[1rem] leading-[2.25rem]">
+                  Chapter 2 - Memulai Desain
+                </span>
+                <span className="chapter-time font-black font-montserrat leading-[2.25rem] text-[0.9rem] text-[#489CFF]">
+                  120 menit
                 </span>
               </div>
+
+              <div className="card-materi-section flex items-center justify-between w-[95%] border-b-2 border-[#EBF3FC] py-[0.25rem]">
+                <div className="card-number-title-section flex items-center gap-[0.75rem]">
+                  <span className="rounded-[100%] bg-[#EBF3FC] px-[1rem] py-[.5rem]">
+                    4
+                  </span>
+                  <span className="font-montserrat font-semibold text-[0.9rem] text-[rgba(0,0,0,0.80)] leading-[1.25rem]">
+                    Color Pallete
+                  </span>
+                </div>
+                <img
+                  src={locked}
+                  alt="done-play"
+                  width="20"
+                  onClick={() => {
+                    tooglePayment();
+                    console.log(PaymentModal);
+                  }}
+                />
+              </div>
+
+              {PaymentModal ? (
+                <>
+                  <div className="modal-payment-popup fixed bg-black bg-opacity-30 inset-0 font-montserrat cursor-pointer">
+                    <div className="flex justify-center items-center font-montserrat h-full w-full">
+                      <div className='bg-[#FFFF] flex flex-col  justify-center items-center h-[40%] w-[30%] rounded-[1rem]'>
+                        <span onClick={tooglePayment}>close</span>
+                        <span className="font-montserrat font-black text-[1rem]">Selangkah lagi menuju</span>
+                        <span className="font-montserrat font-black text-[1rem] text-dark-blue">Kelas Premium</span>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <div>Hello false</div>
+              )}
             </div>
           </div>
         </div>
@@ -245,7 +325,7 @@ const DetailKelasPage = () => {
 
           {TentangKelas && !MateriBelajar ? (
             <>
-              <div className="select-about-materi-section flex items-center w-full mt-2">
+              <div className="select-about-materi-section flex items-center w-full mt-2 cursor-pointer">
                 <div
                   className="about-section flex justify-center items-center bg-dark-blue w-[50%] py-[.5rem]"
                   onClick={() => {
@@ -271,7 +351,7 @@ const DetailKelasPage = () => {
             </>
           ) : (
             <>
-              <div className="select-about-materi-section flex items-center w-full mt-2">
+              <div className="select-about-materi-section flex items-center w-full mt-2 cursor-pointer">
                 <div
                   className="about-section flex justify-center items-center bg-sky-100 w-[50%] py-[.5rem]"
                   onClick={() => {
