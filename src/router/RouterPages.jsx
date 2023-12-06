@@ -8,6 +8,7 @@ import ResetPasswordPage from "../pages/authentication/ResetPassword/ResetPasswo
 import ResetPasswordTautanPage from "../pages/authentication/ResetPassword/ResetPasswordTautanPage";
 // import RegisterPage from "../pages/authentication/ResetPassword/RegisterPage";
 import DetailKelasPage from "../pages/ClassDetail/DetailKelasPage";
+import { WebNotifikasi } from "../pages/WebNotifikasi/WebNotifikasi";
 
 export const RouterPages = () => {
   return (
@@ -21,7 +22,8 @@ export const RouterPages = () => {
         <Route path="/reset" element={<ResetPasswordTautanPage />} />
         {/* <Route path="/Cobareset" element={<RegisterPage />} /> */}
         <Route path="/resetPassword" element={<ResetPasswordPage />} />
-        <Route path="/detailKelas" element={<DetailKelasPage />} /> 
+        <Route path="/detailKelas" element={<DetailKelasPage />} />
+        <Route path="/notifikasi" element={<WebNotifikasi />} />
       </Routes>
     </BrowserRouter>
   );

@@ -4,11 +4,9 @@ import logo from "../../assets/img/logo.png";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { toast } from "react-toastify";
 import { postLoginAdmin } from "../../services/auth/login_admin";
-import { useNavigate } from "react-router-dom";
 
 export const LoginAdminPage = () => {
-  const navigate = useNavigate();
-
+ 
   const [showPassword, setShowPassword] = useState(false);
   const [FormInput, setFormInput] = useState({
     admin_id: "",
@@ -40,7 +38,6 @@ export const LoginAdminPage = () => {
         progress: undefined,
         theme: "light",
       });
-      navigate("/");
     } catch (error) {
       toast.error(error.response.data.error, {
         position: "bottom-center",
