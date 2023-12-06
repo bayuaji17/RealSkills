@@ -12,11 +12,14 @@ import progress_check from "../../assets/img/icon/progress-check.svg";
 import done_play_button from "../../assets/img/icon/green-play.svg";
 import undone_play_button from "../../assets/img/icon/dark-blue-play.svg";
 import locked from "../../assets/img/icon/bxs_lock.svg";
+import close_modal from "../../assets/img/icon/close-modal.svg";
+import arrow_buy from "../../assets/img/icon/carbon_next-filled.svg";
 
 const DetailKelasPage = () => {
   const [MateriBelajar, setMateriBelajar] = useState(false);
   const [TentangKelas, setTentangKelas] = useState(true);
   const [PaymentModal, setPaymentModal] = useState(false);
+  const background_uiux = require("../../assets/img/image/uiux.jpg");
 
   const toogleTentangKelas = () => {
     setTentangKelas(true);
@@ -249,20 +252,95 @@ const DetailKelasPage = () => {
                 />
               </div>
 
-              {PaymentModal ? (
+              {PaymentModal && (
                 <>
                   <div className="modal-payment-popup fixed bg-black bg-opacity-30 inset-0 font-montserrat cursor-pointer">
                     <div className="flex justify-center items-center font-montserrat h-full w-full">
-                      <div className='bg-[#FFFF] flex flex-col  justify-center items-center h-[40%] w-[30%] rounded-[1rem]'>
-                        <span onClick={tooglePayment}>close</span>
-                        <span className="font-montserrat font-black text-[1rem]">Selangkah lagi menuju</span>
-                        <span className="font-montserrat font-black text-[1rem] text-dark-blue">Kelas Premium</span>
+                      <div className="bg-[#FFFF] flex flex-col h-[60%] w-[40%] rounded-[1rem] px-[1rem] py-[1rem]">
+                        <span
+                          onClick={tooglePayment}
+                          className="flex justify-end"
+                        >
+                          <img src={close_modal} alt="close-modal" width="20" />
+                        </span>
+                        <div className="flex justify-center items-center">
+                          <span className="font-montserrat font-black text-[1.5rem] text-center leading-[2rem]">
+                            Selangkah lagi menuju
+                            <br />
+                            <span className="text-dark-blue font-black">
+                              Kelas Premium
+                            </span>
+                          </span>
+                        </div>
+
+                        <div className="course-container rounded-[1rem] mx-[1.25rem] mt-[1.25rem] mb-[1.2rem] h-[60%] border-2 border-dark-blue flex flex-col">
+                          <div
+                            className="rounded-t-[1rem] bg-cover bg-no-repeat bg-center w-full h-[40%]"
+                            style={{
+                              backgroundImage: `url(${background_uiux})`,
+                            }}
+                          ></div>
+                          <div className="modal-category-rate-section flex flex-col gap-1">
+                            <div className="mobile-course-category flex justify-between items-center mx-[1rem] mt-[0.8rem]">
+                              <span className="font-montserrat text-dark-blue text-[1.25rem] font-black leading-[0.9rem]">
+                                UI/UX Design
+                              </span>
+                              <div className="rating-star-section flex gap-1 items-center">
+                                <FontAwesomeIcon
+                                  icon={faStar}
+                                  size="sm"
+                                  style={{ color: "#F9CC00" }}
+                                />
+                                <span className="font-montserrat text-[#202244] font-bold leading-[0.9rem] text-[0.9rem]">
+                                  5.0
+                                </span>
+                              </div>
+                            </div>
+
+                            <div className="mobile-title-course-section flex flex-col gap-1 mx-[1rem]">
+                              <span className="course-title font-black font-montserrat text-[1rem] leading-[1.5rem] text-[#202244]">
+                                Intro to Basic of User Introduction Design
+                              </span>
+                              <span className="author-section font-bold text-[0.85rem] leading-[1.1rem] text-[#000] font-montserrat">
+                                by Simon Doe
+                              </span>
+                            </div>
+
+                            <div className="mobile-deets-section flex items-center gap-[1.5rem] mx-[1rem] mt-1">
+                              <div className="badge-level-section flex items-center gap-1">
+                                <img src={badge} alt="badge-level" />
+                                <span className="font-montserrat text-[0.75rem] leading-[0.9rem] font-bold hover:text-[#6148FF] cursor-pointer">
+                                  Beginner Level
+                                </span>
+                              </div>
+                              <div className="badge-level-section flex items-center gap-1">
+                                <img src={modul} alt="modul-course" />
+                                <span className="font-montserrat text-[0.75rem] leading-[0.9rem] font-bold hover:text-[#6148FF] cursor-pointer">
+                                  5 Modul
+                                </span>
+                              </div>
+                              <div className="badge-level-section flex items-center gap-1">
+                                <img src={time} alt="course-time" />
+                                <span className="font-montserrat text-[0.75rem] leading-[0.9rem] font-bold hover:text-[#6148FF] cursor-pointer">
+                                  45 Menit
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                          <button className="modal-buy-button w-[28%] rounded-[1rem] bg-[#489CFF] hover:bg-dark-blue flex justify-center items-center gap-4 px-[1rem] py-[.5rem] text-white mx-[1rem] my-[0.5rem] font-montserrat text-[0.75rem] leading-[0.9rem] font-black">
+                            <span>Beli</span>
+                            <span>Rp 349.000</span>
+                          </button>
+                        </div>
+
+                        <button className='buy-now-btn flex items-center justify-center mx-[5rem] rounded-[1.5rem] px-[.75rem] py-[1rem] bg-dark-blue gap-2 my-[1rem]'>
+                          <span className='font-montserrat font-black text-white text-[1rem] leading-[1.5rem]'>Beli Sekarang</span>
+                          <img src={arrow_buy} alt='arrow-buy' width='20'/>
+                        </button>
                       </div>
                     </div>
                   </div>
                 </>
-              ) : (
-                <div>Hello false</div>
               )}
             </div>
           </div>
