@@ -14,12 +14,14 @@ import undone_play_button from "../../assets/img/icon/dark-blue-play.svg";
 import locked from "../../assets/img/icon/bxs_lock.svg";
 import close_modal from "../../assets/img/icon/close-modal.svg";
 import arrow_buy from "../../assets/img/icon/carbon_next-filled.svg";
+import { useNavigate } from "react-router-dom";
 
 const DetailKelasPage = () => {
   const [MateriBelajar, setMateriBelajar] = useState(false);
   const [TentangKelas, setTentangKelas] = useState(true);
   const [PaymentModal, setPaymentModal] = useState(false);
-  const background_uiux = require("../../assets/img/image/uiux.jpg");
+  const background_uiux = require("../../assets/img/image/uiux-person.jpg");
+  const navigate = useNavigate();
 
   const toogleTentangKelas = () => {
     setTentangKelas(true);
@@ -333,9 +335,16 @@ const DetailKelasPage = () => {
                           </button>
                         </div>
 
-                        <button className='buy-now-btn flex items-center justify-center mx-[5rem] rounded-[1.5rem] px-[.75rem] py-[1rem] bg-dark-blue gap-2 my-[1rem]'>
-                          <span className='font-montserrat font-black text-white text-[1rem] leading-[1.5rem]'>Beli Sekarang</span>
-                          <img src={arrow_buy} alt='arrow-buy' width='20'/>
+                        <button
+                          className="buy-now-btn flex items-center justify-center mx-[5rem] rounded-[1.5rem] px-[.75rem] py-[1rem] bg-dark-blue gap-2 my-[1rem]"
+                          onClick={() => {
+                            navigate("/pembayaran");
+                          }}
+                        >
+                          <span className="font-montserrat font-black text-white text-[1rem] leading-[1.5rem]">
+                            Beli Sekarang
+                          </span>
+                          <img src={arrow_buy} alt="arrow-buy" width="20" />
                         </button>
                       </div>
                     </div>
