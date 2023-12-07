@@ -189,7 +189,7 @@ const DetailKelasPage = () => {
             <div className="chapter-materi-section flex flex-col gap-2">
               <div className="card-materi-section flex items-center justify-between w-[95%] border-b-2 border-[#EBF3FC] py-[0.25rem]">
                 <div className="card-number-title-section flex items-center gap-[0.75rem]">
-                  <span className="rounded-[100%] bg-[#EBF3FC] px-[1rem] py-[.5rem]">
+                  <span className="rounded-[100%] bg-[#EBF3FC] px-[1rem] py-[.5rem] hover:bg-dark-blue hover:text-white cursor-pointer">
                     1
                   </span>
                   <span className="font-montserrat font-semibold text-[0.9rem] text-[rgba(0,0,0,0.80)] leading-[1.25rem]">
@@ -201,7 +201,7 @@ const DetailKelasPage = () => {
 
               <div className="card-materi-section flex items-center justify-between w-[95%] border-b-2 border-[#EBF3FC] py-[0.25rem]">
                 <div className="card-number-title-section flex items-center gap-[0.75rem]">
-                  <span className="rounded-[100%] bg-[#EBF3FC] px-[1rem] py-[.5rem]">
+                  <span className="rounded-[100%] bg-[#EBF3FC] px-[1rem] py-[.5rem] hover:bg-dark-blue hover:text-white cursor-pointer">
                     2
                   </span>
                   <span className="font-montserrat font-semibold text-[0.9rem] text-[rgba(0,0,0,0.80)] leading-[1.25rem]">
@@ -213,7 +213,7 @@ const DetailKelasPage = () => {
 
               <div className="card-materi-section flex items-center justify-between w-[95%] border-b-2 border-[#EBF3FC] py-[0.25rem]">
                 <div className="card-number-title-section flex items-center gap-[0.75rem]">
-                  <span className="rounded-[100%] bg-[#EBF3FC] px-[1rem] py-[.5rem]">
+                  <span className="rounded-[100%] bg-[#EBF3FC] px-[1rem] py-[.5rem] hover:bg-dark-blue hover:text-white cursor-pointer">
                     3
                   </span>
                   <span className="font-montserrat font-semibold text-[0.9rem] text-[rgba(0,0,0,0.80)] leading-[1.25rem]">
@@ -254,7 +254,7 @@ const DetailKelasPage = () => {
 
               {PaymentModal && (
                 <>
-                  <div className="modal-payment-popup fixed bg-black bg-opacity-30 inset-0 font-montserrat cursor-pointer">
+                  <div className="modal-payment-popup fixed bg-black bg-opacity-70 inset-0 font-montserrat cursor-pointer">
                     <div className="flex justify-center items-center font-montserrat h-full w-full">
                       <div className="bg-[#FFFF] flex flex-col h-[60%] w-[40%] rounded-[1rem] px-[1rem] py-[1rem]">
                         <span
