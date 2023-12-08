@@ -28,8 +28,6 @@ export const RouterPages = () => {
         <Route path="/filterSide" element={<FilterSide/>} />
         <Route path="/filterResultKelas" element={<FilterResultKelas/>}/>
         <Route path="/filterResultTopik" element={<FilterResultTopik/>}/>
-
-
         <Route path="/reset" element={<ResetPasswordTautanPage />} />
         <Route path="/resetPassword" element={<ResetPasswordPage />} />
       </Routes>

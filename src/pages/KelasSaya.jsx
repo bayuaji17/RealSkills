@@ -49,10 +49,8 @@ export const KelasSaya = () => {
           <div className="flex justify-center laptop:pl-0 pr-0  ">
             <div className="flex  gap-20">
               <div className="hidden laptop:flex">
-
               <FilterSide />
               </div>
-
               <div className="flex flex-col gap-5">
                 <div className="flex justify-between w-[94vw]  laptop:gap-14 laptop:w-full ">
                   <button className="py-1 pl-5 pr-5 mr-3 rounded-xl bg-white hover:bg-[#6148FF] hover:text-white active:bg-[#6148FF] active:text-white focus:text-white focus:outline-none focus:ring focus:ring-violet-300 focus:bg-[#6148FF] laptop:py-1 laptop:px-12 ">
