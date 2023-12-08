@@ -9369,7 +9369,7 @@ unique-string@^2.0.0:
 
 universal-cookie@^6.1.1:
   version "6.1.1"
-  resolved "https://registry.npmjs.org/universal-cookie/-/universal-cookie-6.1.1.tgz"
+  resolved "https://registry.yarnpkg.com/universal-cookie/-/universal-cookie-6.1.1.tgz#2d619e21804c93b39ff0c77fe47dafd7a492346d"
   integrity sha512-33S9x3CpdUnnjwTNs2Fgc41WGve2tdLtvaK2kPSbZRc5pGpz2vQFbRWMxlATsxNNe/Cy8SzmnmbuBM85jpZPtA==
   dependencies:
     "@types/cookie" "^0.5.1"

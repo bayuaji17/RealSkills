@@ -5,6 +5,7 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { login } from "../../services/auth/login-user";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { CookieKeys, CookieStorage } from "../../utils/cookies";
 
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,24}$/;
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -70,8 +71,7 @@ export const LoginPage = () => {
         progress: undefined,
         theme: "light",
       });
-      
-      
+      CookieStorage.set(CookieKeys.AuthToken, response.data.data.token)
       navigate("/");
     } catch (error) {
       toast.error(error?.response?.data?.error?.detail, {
