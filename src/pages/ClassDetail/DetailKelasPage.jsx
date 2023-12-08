@@ -553,9 +553,109 @@ const DetailKelasPage = () => {
                     src={locked}
                     alt="success-play-button"
                     width="20"
+                    onClick={tooglePayment}
                   />
                 </div>
               </div>
+
+              {PaymentModal && (
+                <div className="modal-payment-popup fixed h-screen bg-black bg-opacity-70 inset-0 font-montserrat cursor-pointer overflow-hidden">
+                  <div className="flex justify-center items-end h-full w-full">
+                    <div className="flex flex-col gap-4 bg-[#FFFF] rounded-t-[1rem] px-[1.5rem] py-[1rem] w-full h-[65vh]">
+                      <span className="flex justify-end">
+                        <img
+                          src={close_modal}
+                          alt="close-modal"
+                          width="30"
+                          onClick={tooglePayment}
+                        />
+                      </span>
+                      <div className="flex justify-center items-center">
+                        <span className="font-montserrat font-black text-[3vh] text-center leading-[3.5vh]">
+                          Selangkah lagi menuju
+                          <br />
+                          <span className="text-dark-blue font-black">
+                            Kelas Premium
+                          </span>
+                        </span>
+                      </div>
+
+                      <div className="course-container rounded-[1rem] mt-[1rem] mb-[1.2rem] h-[30vh] border-2 border-dark-blue flex flex-col">
+                        <div
+                          className="rounded-t-[1rem] bg-cover bg-no-repeat bg-center w-full h-[25vh]"
+                          style={{
+                            backgroundImage: `url(${background_uiux})`,
+                            backgroundSize: 'cover',
+                          }}
+                        ></div>
+                        <div className="modal-category-rate-section flex flex-col gap-[1vh]">
+                          <div className="mobile-course-category flex justify-between items-center mx-[1rem] mt-[0.8rem]">
+                            <span className="font-montserrat text-dark-blue text-[2vh] font-black leading-[0.9rem]">
+                              UI/UX Design
+                            </span>
+                            <div className="rating-star-section flex gap-1 items-center">
+                              <FontAwesomeIcon
+                                icon={faStar}
+                                size="md"
+                                style={{ color: "#F9CC00" }}
+                              />
+                              <span className="font-montserrat text-[#202244] font-bold leading-[0.9rem] text-[1.8vh]">
+                                5.0
+                              </span>
+                            </div>
+                          </div>
+
+                          <div className="mobile-title-course-section flex flex-col mx-[1rem]">
+                            <span className="course-title font-black font-montserrat text-[1.75vh] leading-[2vh] text-[#202244]">
+                              Intro to Basic of User Introduction Design
+                            </span>
+                            <span className="author-section font-bold text-[1.5vh] leading-[2vh] text-[#000] font-montserrat">
+                              by Simon Doe
+                            </span>
+                          </div>
+
+                          <div className="mobile-deets-section flex items-center gap-[1.5rem] mx-[1rem] mt-1">
+                            <div className="badge-level-section flex items-center gap-1">
+                              <img src={badge} alt="badge-level" style={{ width : '2.5vh'}}/>
+                              <span className="font-montserrat text-[1.5vh] leading-[2vh] font-bold hover:text-[#6148FF] cursor-pointer">
+                                Beginner Level
+                              </span>
+                            </div>
+                            <div className="badge-level-section flex items-center gap-1">
+                              <img src={modul} alt="modul-course" style={{ width : '2.5vh'}}/>
+                              <span className="font-montserrat text-[1.5vh] leading-[2vh] font-bold hover:text-[#6148FF] cursor-pointer">
+                                5 Modul
+                              </span>
+                            </div>
+                            <div className="badge-level-section flex items-center gap-1">
+                              <img src={time} alt="course-time" style={{ width : '2.5vh'}}/>
+                              <span className="font-montserrat text-[1.5vh] leading-[2vh] font-bold hover:text-[#6148FF] cursor-pointer">
+                                45 Menit
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <button className="modal-buy-button w-[20vh] rounded-[1rem] bg-[#489CFF] hover:bg-dark-blue flex justify-center items-center gap-4 px-[2vh] py-[1.25vh] mb-[1.5vh] text-white mx-[1rem] mt-[1vh] font-montserrat text-[1.5vh] leading-[0.9rem] font-black">
+                          <span>Beli</span>
+                          <span>Rp 349.000</span>
+                        </button>
+                      </div>
+                      
+                      <button
+                          className="mobile-buy-now-btn flex items-center justify-center mx-[1vh] rounded-[1.5rem] py-[1rem] bg-dark-blue gap-2"
+                          onClick={() => {
+                            navigate("/pembayaran");
+                          }}
+                        >
+                          <span className="font-montserrat font-black text-white text-[2vh] leading-[2.5vh]">
+                            Beli Sekarang
+                          </span>
+                          <img src={arrow_buy} alt="arrow-buy" width="20" />
+                        </button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </>
           )}
         </div>
