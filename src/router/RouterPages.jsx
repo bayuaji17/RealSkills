@@ -12,7 +12,10 @@ import { TopikKelas } from "../pages/TopikKelas";
 import FilterSide from "../components/FilterSide";
 import { FilterResultKelas } from "../pages/FilterResultKelas";
 import { FilterResultTopik } from "../pages/FilterResultTopik";
-
+// import RegisterPage from "../pages/authentication/ResetPassword/RegisterPage";
+import DetailKelasPage from "../pages/ClassDetail/DetailKelasPage";
+import DetailKelasPembayaran from "../pages/ClassDetail/DetailKelasPembayaran";
+import PembayaranSukses from "../pages/ClassDetail/PembayaranSukses";
 
 export const RouterPages = () => {
   return (
@@ -31,7 +34,11 @@ export const RouterPages = () => {
 
 
         <Route path="/reset" element={<ResetPasswordTautanPage />} />
+        {/* <Route path="/Cobareset" element={<RegisterPage />} /> */}
         <Route path="/resetPassword" element={<ResetPasswordPage />} />
+        <Route path="/detailKelas" element={<DetailKelasPage />} /> 
+        <Route path="/pembayaran" element={<DetailKelasPembayaran />} /> 
+        <Route path="/pembayaranSukses" element={<PembayaranSukses />} /> 
       </Routes>
     </BrowserRouter>
   );

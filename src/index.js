@@ -1,11 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
 import { ToastContainer } from 'react-toastify';
-import './index.css';
-import { RouterPages } from './router/RouterPages';
 import 'react-toastify/dist/ReactToastify.css';
 import { ThemeProvider } from "@material-tailwind/react";
-
+import { RouterPages } from "./router/RouterPages";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -14,5 +13,7 @@ root.render(
       <RouterPages />
       <ToastContainer />
       </ThemeProvider>
+      <RouterPages />
+      <ToastContainer />
     </React.StrictMode>
 );
