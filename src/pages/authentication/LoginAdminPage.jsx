@@ -4,14 +4,42 @@ import logo from "../../assets/img/logo.png";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { toast } from "react-toastify";
 import { postLoginAdmin } from "../../services/auth/login_admin";
+import { useNavigate } from "react-router-dom";
+import { CookieKeys, CookieStorage } from "../../utils/cookies";
 
 export const LoginAdminPage = () => {
- 
   const [showPassword, setShowPassword] = useState(false);
   const [FormInput, setFormInput] = useState({
     admin_id: "",
     password: "",
   });
+  const navigate = useNavigate();
+
+  const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,24}$/;
+  // const ADMIN_ID_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const ERROR_BORDER_COLOR = "border-red-600 focus:outline-red-600";
+  const SUCCESS_BORDER_COLOR = "border-green-600 focus:outline-green-600";
+
+  // const isAdminIDValid = ADMIN_ID_REGEX.test(FormInput.admin_id);
+  const isAdminIDLengthValid = FormInput.admin_id.length > 0;
+  const isPasswordValid = PASSWORD_REGEX.test(FormInput.password);
+  const isPasswordLengthValid = FormInput.password.length > 0;
+
+  // const colorBorderAdmin_id = () => {
+  //   if (isAdminIDLengthValid > 0 && !isAdminIDValid) {
+  //     return ERROR_BORDER_COLOR;
+  //   } else if (isAdminIDLengthValid > 0 && isAdminIDValid) {
+  //     return SUCCESS_BORDER_COLOR;
+  //   }
+  // };
+
+  const colorBorderPassword = () => {
+    if (isPasswordLengthValid && !isPasswordValid) {
+      return ERROR_BORDER_COLOR;
+    } else if (isPasswordLengthValid && isPasswordValid) {
+      return SUCCESS_BORDER_COLOR;
+    }
+  };
 
   const handleInput = (e) => {
     const { id, value } = e.target;
@@ -38,6 +66,8 @@ export const LoginAdminPage = () => {
         progress: undefined,
         theme: "light",
       });
+      CookieStorage.set(CookieKeys.AuthToken, response.data.data.token);
+      navigate("/");
     } catch (error) {
       toast.error(error.response.data.error, {
         position: "bottom-center",
@@ -96,7 +126,7 @@ export const LoginAdminPage = () => {
                 value={FormInput.password}
                 id="password"
                 type={showPassword ? "text" : "password"}
-                className="border rounded-xl p-3 laptop:w-[22rem] mobile: w-[94vw] mb-4 text-black"
+                className={`border rounded-xl p-3 laptop:w-[22rem] mobile: w-[94vw] mb-4 text-black ${colorBorderPassword()}`}
                 placeholder="Masukan Password"
               />
               <FontAwesomeIcon
@@ -116,7 +146,7 @@ export const LoginAdminPage = () => {
               onClick={() => {
                 handleLoginAdmin();
               }}
-              className="bg-[#6148FF] text-white p-3 rounded-2xl laptop:w-[22rem] mobile:w-[94vw]"
+              className="bg-blue-300 text-white p-3 rounded-2xl laptop:w-[22rem] mobile:w-[94vw] hover:bg-[#6148FF]"
               type="submit"
             >
               Masuk
