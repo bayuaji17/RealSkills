@@ -14,6 +14,7 @@ import undone_play_button from "../../assets/img/icon/dark-blue-play.svg";
 import locked from "../../assets/img/icon/bxs_lock.svg";
 import close_modal from "../../assets/img/icon/close-modal.svg";
 import arrow_buy from "../../assets/img/icon/carbon_next-filled.svg";
+import star from "../../assets/img/icon/ic_round-star.svg";
 import { useNavigate } from "react-router-dom";
 
 const DetailKelasPage = () => {
@@ -365,46 +366,42 @@ const DetailKelasPage = () => {
 
         <div className="mobile-materi-section flex flex-col gap-[.9rem] rounded-[1.5rem] -mt-[2rem] h-full bg-[#FFFF] py-[2rem]">
           <div className="mobile-course-category flex justify-between items-center ml-[1.35rem] mr-[1.5rem]">
-            <span className="font-montserrat text-dark-blue text-[1.25rem] font-black leading-[0.9rem]">
+            <span className="font-montserrat text-dark-blue text-[3vh] font-black leading-[1vh]">
               UI/UX Design
             </span>
-            <div className="rating-star-section flex gap-1 items-center">
-              <FontAwesomeIcon
-                icon={faStar}
-                size="sm"
-                style={{ color: "#F9CC00" }}
-              />
-              <span className="font-montserrat text-[#202244] font-bold leading-[0.9rem] text-[0.9rem]">
+            <div className="rating-star-section flex items-center">
+              <img src={star} alt="rate-star" style={{ width: "2vh" }} />
+              <span className="font-montserrat text-[#202244] font-bold leading-[1vh] text-[1.75vh]">
                 5.0
               </span>
             </div>
           </div>
 
-          <div className="mobile-title-course-section flex flex-col gap-1 ml-[1.35rem] mr-[1.5rem]">
-            <span className="course-title font-black font-montserrat text-[1rem] leading-[1.5rem] text-[#202244]">
+          <div className="mobile-title-course-section flex flex-col gap-[1vh] ml-[1.35rem] mr-[1.5rem]">
+            <span className="course-title font-black font-montserrat text-[2.5vh] leading-[2.5vh] text-[#202244]">
               Intro to Basic of User Introduction Design
             </span>
-            <span className="author-section font-bold text-[0.85rem] leading-[1.1rem] text-[#000] font-montserrat">
+            <span className="author-section font-bold text-[1.7vh] leading-[1.5vh] text-[#000] font-montserrat">
               by Simon Doe
             </span>
           </div>
 
-          <div className="mobile-deets-section flex items-center gap-[1.5rem] ml-[1.35rem] mr-[1.5rem] mt-1">
+          <div className="mobile-deets-section flex items-center gap-[6vh] mx-[1rem] mt-1">
             <div className="badge-level-section flex items-center gap-1">
-              <img src={badge} alt="badge-level" />
-              <span className="font-montserrat text-[0.75rem] leading-[0.9rem] font-bold hover:text-[#6148FF] cursor-pointer">
+              <img src={badge} alt="badge-level" style={{ width: "2.5vh" }} />
+              <span className="font-montserrat text-[1.5vh] leading-[2vh] font-bold hover:text-[#6148FF] cursor-pointer">
                 Beginner Level
               </span>
             </div>
             <div className="badge-level-section flex items-center gap-1">
-              <img src={modul} alt="modul-course" />
-              <span className="font-montserrat text-[0.75rem] leading-[0.9rem] font-bold hover:text-[#6148FF] cursor-pointer">
+              <img src={modul} alt="modul-course" style={{ width: "2.5vh" }} />
+              <span className="font-montserrat text-[1.5vh] leading-[2vh] font-bold hover:text-[#6148FF] cursor-pointer">
                 5 Modul
               </span>
             </div>
             <div className="badge-level-section flex items-center gap-1">
-              <img src={time} alt="course-time" />
-              <span className="font-montserrat text-[0.75rem] leading-[0.9rem] font-bold hover:text-[#6148FF] cursor-pointer">
+              <img src={time} alt="course-time" style={{ width: "2.5vh" }} />
+              <span className="font-montserrat text-[1.5vh] leading-[2vh] font-bold hover:text-[#6148FF] cursor-pointer">
                 45 Menit
               </span>
             </div>
@@ -460,15 +457,15 @@ const DetailKelasPage = () => {
                   </span>
                 </div>
               </div>
-              <div className="chapter-section flex flex-col gap-2 ml-[1.35rem] mr-[1.5rem] mt-2">
-                <span className="font-montserrat font-black text-[1.25rem] leading-[0.9rem]">
+              <div className="chapter-section flex flex-col gap-2 ml-[1.35rem] mr-[1.5rem] mt-[1vh]">
+                <span className="font-montserrat font-black text-[2.25vh] leading-[2vh]">
                   Materi Belajar
                 </span>
-                <div className="chapter-title-section flex items-center justify-between">
-                  <span className="font-montserrat font-extrabold text-dark-blue text-[0.8rem] leading-[2.25rem]">
+                <div className="chapter-title-section flex items-center justify-between mt-[1vh]">
+                  <span className="font-montserrat font-extrabold text-dark-blue text-[1.4vh] leading-[1.25vh]">
                     Chapter 1 - Pendahuluan
                   </span>
-                  <span className="font-montserrat text-[#489CFF] text-[0.8rem] font-extrabold leading-[2.25rem]">
+                  <span className="font-montserrat text-[#489CFF] text-[1.4vh] font-extrabold leading-[1.25vh]">
                     60 Menit
                   </span>
                 </div>
@@ -476,11 +473,11 @@ const DetailKelasPage = () => {
 
               <div className="chapter-card-section flex flex-col items-center gap-1 ml-[1.35rem] mr-[1.5rem]">
                 <div className="card-index-section flex justify-between w-full items-center border-b-2 border-[#EBF3FC] py-[0.25rem]">
-                  <div className="number-title-section flex items-center gap-2">
-                    <span className="index-number-section bg-[#EBF3FC] rounded-[100%] px-[1rem] py-[0.65rem] flex items-center font-montserrat text-[#202244] text-[0.8rem] font-bold leading-[0.9rem] hover:bg-dark-blue hover:text-white">
+                  <div className="number-title-section flex items-center gap-[1.25vh]">
+                    <span className="index-number-section bg-[#EBF3FC] rounded-[100%] px-[1rem] py-[0.65rem] flex items-center font-montserrat text-[#202244] text-[1.5vh] font-bold leading-[1.25vh] hover:bg-dark-blue hover:text-white">
                       1
                     </span>
-                    <span className="course-title-section text-[rgba(0,0,0,0.80)] text-[0.75rem] font-semibold leading-[1.25rem] font-montserrat">
+                    <span className="course-title-section text-[rgba(0,0,0,0.80)] text-[1.5vh] font-semibold leading-[1.25rem] font-montserrat">
                       Tujuan Mengikuti Kelas Design System
                     </span>
                   </div>
@@ -488,16 +485,16 @@ const DetailKelasPage = () => {
                     className="play-btn"
                     src={done_play_button}
                     alt="success-play-button"
-                    width="20"
+                    style={{ width : '2.25vh' }}
                   />
                 </div>
 
-                <div className="card-index-section flex justify-between w-full items-center border-b-2 border-[#EBF3FC] py-[0.25rem]">
-                  <div className="number-title-section flex items-center gap-2">
-                    <span className="index-number-section bg-[#EBF3FC] rounded-[100%] px-[1rem] py-[0.65rem] flex items-center font-montserrat text-[#202244] text-[0.8rem] font-bold leading-[0.9rem] hover:bg-dark-blue hover:text-white">
+               <div className="card-index-section flex justify-between w-full items-center border-b-2 border-[#EBF3FC] py-[0.25rem]">
+                  <div className="number-title-section flex items-center gap-[1.25vh]">
+                    <span className="index-number-section bg-[#EBF3FC] rounded-[100%] px-[1rem] py-[0.65rem] flex items-center font-montserrat text-[#202244] text-[1.5vh] font-bold leading-[1.25vh] hover:bg-dark-blue hover:text-white">
                       2
                     </span>
-                    <span className="course-title-section text-[rgba(0,0,0,0.80)] text-[0.75rem] font-semibold leading-[1.25rem] font-montserrat">
+                    <span className="course-title-section text-[rgba(0,0,0,0.80)] text-[1.5vh] font-semibold leading-[1.25rem] font-montserrat">
                       Pengenalan Design System
                     </span>
                   </div>
@@ -505,16 +502,16 @@ const DetailKelasPage = () => {
                     className="play-btn"
                     src={done_play_button}
                     alt="success-play-button"
-                    width="20"
+                    style={{ width : '2.25vh' }}
                   />
                 </div>
 
                 <div className="card-index-section flex justify-between w-full items-center border-b-2 border-[#EBF3FC] py-[0.25rem]">
-                  <div className="number-title-section flex items-center gap-2">
-                    <span className="index-number-section bg-[#EBF3FC] rounded-[100%] px-[1rem] py-[0.65rem] flex items-center font-montserrat text-[#202244] text-[0.75rem] font-bold leading-[0.9rem] hover:bg-dark-blue hover:text-white">
+                  <div className="number-title-section flex items-center gap-[1.25vh]">
+                    <span className="index-number-section bg-[#EBF3FC] rounded-[100%] px-[1rem] py-[0.65rem] flex items-center font-montserrat text-[#202244] text-[1.5vh] font-bold leading-[1.25vh] hover:bg-dark-blue hover:text-white">
                       3
                     </span>
-                    <span className="course-title-section text-[rgba(0,0,0,0.80)] text-[0.75rem] font-semibold leading-[1.25rem] font-montserrat">
+                    <span className="course-title-section text-[rgba(0,0,0,0.80)] text-[1.5vh] font-semibold leading-[1.25rem] font-montserrat">
                       Contoh Dalam Membangun Design System
                     </span>
                   </div>
@@ -522,17 +519,17 @@ const DetailKelasPage = () => {
                     className="play-btn"
                     src={undone_play_button}
                     alt="success-play-button"
-                    width="20"
+                    style={{ width : '2.25vh' }}
                   />
                 </div>
               </div>
 
-              <div className="chapter-section flex flex-col gap-2 ml-[1.35rem] mr-[1.5rem] mt-2">
+              <div className="chapter-section flex flex-col gap-2 ml-[1.35rem] mr-[1.5rem] mt-[1vh]">
                 <div className="chapter-title-section flex items-center justify-between">
-                  <span className="font-montserrat font-extrabold text-dark-blue text-[0.8rem] leading-[2.25rem]">
+                  <span className="font-montserrat font-extrabold text-dark-blue text-[1.4vh] leading-[1.25vh]">
                     Chapter 2 - Memulai Desain
                   </span>
-                  <span className="font-montserrat text-[#489CFF] text-[0.8rem] font-extrabold leading-[2.25rem]">
+                  <span className="font-montserrat text-[#489CFF] text-[1.4vh] font-extrabold leading-[1.25vh]">
                     120 Menit
                   </span>
                 </div>
@@ -540,19 +537,19 @@ const DetailKelasPage = () => {
 
               <div className="chapter-card-section flex flex-col items-center gap-1 ml-[1.35rem] mr-[1.5rem]">
                 <div className="card-index-section flex justify-between w-full items-center border-b-2 border-[#EBF3FC] py-[0.25rem]">
-                  <div className="number-title-section flex items-center gap-2">
-                    <span className="index-number-section bg-[#EBF3FC] rounded-[100%] px-[1rem] py-[0.65rem] flex items-center font-montserrat text-[#202244] text-[0.8rem] font-bold leading-[0.9rem]">
+                  <div className="number-title-section flex items-center gap-[1.25vh]">
+                    <span className="index-number-section bg-[#EBF3FC] rounded-[100%] px-[1rem] py-[0.65rem] flex items-center font-montserrat text-[#202244] text-[1.5vh] font-bold leading-[1.25vh] hover:bg-dark-blue hover:text-white">
                       4
                     </span>
-                    <span className="course-title-section text-[rgba(0,0,0,0.80)] text-[0.75rem] font-semibold leading-[1.25rem] font-montserrat">
+                    <span className="course-title-section text-[rgba(0,0,0,0.80)] text-[1.5vh] font-semibold leading-[1.25rem] font-montserrat">
                       Color Pallete
                     </span>
                   </div>
                   <img
                     className="play-btn"
                     src={locked}
-                    alt="success-play-button"
-                    width="20"
+                    alt="class-locked-button"
+                    style={{ width : '2.25vh' }}
                     onClick={tooglePayment}
                   />
                 </div>
@@ -561,12 +558,12 @@ const DetailKelasPage = () => {
               {PaymentModal && (
                 <div className="modal-payment-popup fixed h-screen bg-black bg-opacity-70 inset-0 font-montserrat cursor-pointer overflow-hidden">
                   <div className="flex justify-center items-end h-full w-full">
-                    <div className="flex flex-col gap-4 bg-[#FFFF] rounded-t-[1rem] px-[1.5rem] py-[1rem] w-full h-[65vh]">
+                    <div className="flex flex-col gap-4 bg-[#FFFF] rounded-t-[1rem] px-[1.5rem] pt-[1.5vh] pb-[2vh] w-full h-[65vh]">
                       <span className="flex justify-end">
                         <img
                           src={close_modal}
                           alt="close-modal"
-                          width="30"
+                          style={{ width: "3.5vh" }}
                           onClick={tooglePayment}
                         />
                       </span>
@@ -585,7 +582,7 @@ const DetailKelasPage = () => {
                           className="rounded-t-[1rem] bg-cover bg-no-repeat bg-center w-full h-[25vh]"
                           style={{
                             backgroundImage: `url(${background_uiux})`,
-                            backgroundSize: 'cover',
+                            backgroundSize: "cover",
                           }}
                         ></div>
                         <div className="modal-category-rate-section flex flex-col gap-[1vh]">
@@ -616,19 +613,31 @@ const DetailKelasPage = () => {
 
                           <div className="mobile-deets-section flex items-center gap-[1.5rem] mx-[1rem] mt-1">
                             <div className="badge-level-section flex items-center gap-1">
-                              <img src={badge} alt="badge-level" style={{ width : '2.5vh'}}/>
+                              <img
+                                src={badge}
+                                alt="badge-level"
+                                style={{ width: "2.5vh" }}
+                              />
                               <span className="font-montserrat text-[1.5vh] leading-[2vh] font-bold hover:text-[#6148FF] cursor-pointer">
                                 Beginner Level
                               </span>
                             </div>
                             <div className="badge-level-section flex items-center gap-1">
-                              <img src={modul} alt="modul-course" style={{ width : '2.5vh'}}/>
+                              <img
+                                src={modul}
+                                alt="modul-course"
+                                style={{ width: "2.5vh" }}
+                              />
                               <span className="font-montserrat text-[1.5vh] leading-[2vh] font-bold hover:text-[#6148FF] cursor-pointer">
                                 5 Modul
                               </span>
                             </div>
                             <div className="badge-level-section flex items-center gap-1">
-                              <img src={time} alt="course-time" style={{ width : '2.5vh'}}/>
+                              <img
+                                src={time}
+                                alt="course-time"
+                                style={{ width: "2.5vh" }}
+                              />
                               <span className="font-montserrat text-[1.5vh] leading-[2vh] font-bold hover:text-[#6148FF] cursor-pointer">
                                 45 Menit
                               </span>
@@ -640,18 +649,18 @@ const DetailKelasPage = () => {
                           <span>Rp 349.000</span>
                         </button>
                       </div>
-                      
+
                       <button
-                          className="mobile-buy-now-btn flex items-center justify-center mx-[1vh] rounded-[1.5rem] py-[1rem] bg-dark-blue gap-2"
-                          onClick={() => {
-                            navigate("/pembayaran");
-                          }}
-                        >
-                          <span className="font-montserrat font-black text-white text-[2vh] leading-[2.5vh]">
-                            Beli Sekarang
-                          </span>
-                          <img src={arrow_buy} alt="arrow-buy" width="20" />
-                        </button>
+                        className="mobile-buy-now-btn flex items-center justify-center rounded-[1.5rem] py-[1rem] bg-dark-blue gap-2"
+                        onClick={() => {
+                          navigate("/pembayaran");
+                        }}
+                      >
+                        <span className="font-montserrat font-black text-white text-[2vh] leading-[2.5vh]">
+                          Beli Sekarang
+                        </span>
+                        <img src={arrow_buy} alt="arrow-buy" width="20" />
+                      </button>
                     </div>
                   </div>
                 </div>
