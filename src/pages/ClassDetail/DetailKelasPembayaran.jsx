@@ -27,11 +27,12 @@ const DetailKelasPembayaran = () => {
 
   return (
     <div className="parents">
-      <div>
+      {/* Desktop */}
+      <div className="hidden laptop:block">
         <NavbarComponents />
       </div>
 
-      <div className="header-section flex flex-col gap-[1.25rem] justify-center w-full bg-[#FFFF] shadow-lg items-center px-[5rem] py-[1.5rem]">
+      <div className="header-section hidden laptop:flex laptop:flex-col gap-[1.25rem] justify-center w-full bg-[#FFFF] shadow-lg items-center px-[5rem] py-[1.5rem]">
         <div className="back-arrow-section flex items-center gap-4 w-[100%] ml-[1rem]">
           <FontAwesomeIcon
             className="cursor-pointer"
@@ -58,7 +59,7 @@ const DetailKelasPembayaran = () => {
         </div>
       </div>
 
-      <div className="payment-section flex items-center justify-center gap-[2.25rem] py-[3rem]">
+      <div className="payment-section hidden laptop:flex items-center justify-center gap-[2.25rem] py-[3rem]">
         <div className="left-payment-section flex flex-col gap-2 w-[40%] h-[25rem]">
           <div
             className="bank-transfer-container flex items-center justify-between bg-[#3C3C3C] rounded-[0.5rem] px-[1rem] py-[.75rem]"
@@ -174,7 +175,7 @@ const DetailKelasPembayaran = () => {
               UI/UX Design
             </span>
 
-            <div className="mobile-title-course-section flex flex-col gap-1 mx-[1rem]">
+            <div className="title-course-section flex flex-col gap-1 mx-[1rem]">
               <span className="course-title font-black font-montserrat text-[0.9rem] leading-[0.9rem] text-[#202244]">
                 Intro to Basic of User Introduction Design
               </span>
@@ -226,6 +227,62 @@ const DetailKelasPembayaran = () => {
           </button>
         </div>
       </div>
+      {/* End Desktop */}
+
+      {/* Mobile */}
+      <div className="mobile-container w-full h-[100vh] bg-[#EBF3FC] flex flex-col gap-[1.5vh] px-[3vh] py-[1.75vh]">
+        <div className="back-arrow ml-[2vh]">
+          <FontAwesomeIcon
+            className="cursor-pointer"
+            icon={faArrowLeft}
+            size="xl"
+            style={{ color: "black" }}
+            onClick={() => {
+              navigate("/detailKelas");
+            }}
+          />
+        </div>
+
+        <div className="course-container flex flex-col px-[2vh] py-[1.5vh] gap-2 rounded-[0.6rem] h-[35vh] mt-[2.5vh] bg-[#FFFF] shadow-lg">
+          <div className="course-box-container bg-[#FFFF] shadow-lg rounded-[1rem] flex flex-col gap-[1vh] h-[23vh]">
+            <div
+              className="img-course-container rounded-t-[1rem] bg-cover bg-center w-full h-[15vh]"
+              style={{ backgroundImage: `url(${background_uiux})` }}
+            ></div>
+            <span className="font-montserrat text-[2vh] font-black leading-[1.5vh] text-dark-blue mx-[1rem]">
+              UI/UX Design
+            </span>
+
+            <div className="title-course-section flex flex-col gap-[1vh] mx-[1rem] mb-[1.5vh]">
+              <span className="course-title font-black font-montserrat text-[2vh] leading-[1.5vh] text-[#202244]">
+                Intro to Basic of User Introduction Design
+              </span>
+              <span className="author-section font-semibold text-[1.5vh] leading-[1.5vh] text-[#000] font-montserrat">
+                by Simon Doe
+              </span>
+            </div>
+          </div>
+
+          <div className='mobile-all-price-container bg-[#FFFF] rounded-[.5rem] flex justify-between py-[1vh]'>
+            <div className='price-section flex flex-col gap-[2vh] mx-[1rem]'>
+              <span className='font-montserrat text-[2vh] font-black leading-[2vh]'>Harga</span>
+              <span className='font-montserrat text-[2vh] leading-[2vh]'>Rp 349.000</span>
+            </div>
+
+            <div className='tax-section flex flex-col gap-[2vh] mx-[1rem]'>
+              <span className='font-montserrat text-[2vh] font-black leading-[2vh]'>PPN 11%</span>
+              <span className='font-montserrat text-[2vh] leading-[2vh]'>Rp 38.390</span>
+            </div>
+
+            <div className='total-price-section flex flex-col gap-[2vh] mx-[1rem]'>
+              <span className='font-montserrat text-[2vh] font-black leading-[2vh]'>Total Bayar</span>
+              <span className='font-montserrat text-[2vh] leading-[2vh]'>Rp 387.390</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* End Mobile */}
     </div>
   );
 };
