@@ -230,7 +230,7 @@ const DetailKelasPembayaran = () => {
       {/* End Desktop */}
 
       {/* Mobile */}
-      <div className="mobile-container w-full h-[100vh] bg-[#EBF3FC] flex flex-col gap-[1.5vh] px-[3vh] py-[1.75vh]">
+      <div className="mobile-container w-full h-full bg-[#EBF3FC] flex flex-col gap-[1vh] px-[3vh] py-[1.75vh]">
         <div className="back-arrow ml-[2vh]">
           <FontAwesomeIcon
             className="cursor-pointer"
@@ -243,10 +243,10 @@ const DetailKelasPembayaran = () => {
           />
         </div>
 
-        <div className="course-container flex flex-col px-[2vh] py-[1.5vh] gap-2 rounded-[0.6rem] h-[35vh] mt-[2.5vh] bg-[#FFFF] shadow-lg">
+        <div className="course-container flex flex-col px-[2vh] py-[1.5vh] gap-2 rounded-[0.6rem] h-[35vh] mt-[1.5vh] bg-[#FFFF] shadow-lg">
           <div className="course-box-container bg-[#FFFF] shadow-lg rounded-[1rem] flex flex-col gap-[1vh] h-[23vh]">
             <div
-              className="img-course-container rounded-t-[1rem] bg-cover bg-center w-full h-[15vh]"
+              className="img-course-container rounded-t-[1rem] bg-cover bg-center w-full h-[12vh]"
               style={{ backgroundImage: `url(${background_uiux})` }}
             ></div>
             <span className="font-montserrat text-[2vh] font-black leading-[1.5vh] text-dark-blue mx-[1rem]">
@@ -263,23 +263,155 @@ const DetailKelasPembayaran = () => {
             </div>
           </div>
 
-          <div className='mobile-all-price-container bg-[#FFFF] rounded-[.5rem] flex justify-between py-[1vh]'>
-            <div className='price-section flex flex-col gap-[2vh] mx-[1rem]'>
-              <span className='font-montserrat text-[2vh] font-black leading-[2vh]'>Harga</span>
-              <span className='font-montserrat text-[2vh] leading-[2vh]'>Rp 349.000</span>
+          <div className="mobile-all-price-container bg-[#FFFF] rounded-[.5rem] flex justify-between py-[1vh]">
+            <div className="price-section flex flex-col gap-[2vh] mx-[1rem]">
+              <span className="font-montserrat text-[2vh] font-black leading-[2vh]">
+                Harga
+              </span>
+              <span className="font-montserrat text-[2vh] leading-[2vh]">
+                Rp 349.000
+              </span>
             </div>
 
-            <div className='tax-section flex flex-col gap-[2vh] mx-[1rem]'>
-              <span className='font-montserrat text-[2vh] font-black leading-[2vh]'>PPN 11%</span>
-              <span className='font-montserrat text-[2vh] leading-[2vh]'>Rp 38.390</span>
+            <div className="tax-section flex flex-col gap-[2vh] mx-[1rem]">
+              <span className="font-montserrat text-[2vh] font-black leading-[2vh]">
+                PPN 11%
+              </span>
+              <span className="font-montserrat text-[2vh] leading-[2vh]">
+                Rp 38.390
+              </span>
             </div>
 
-            <div className='total-price-section flex flex-col gap-[2vh] mx-[1rem]'>
-              <span className='font-montserrat text-[2vh] font-black leading-[2vh]'>Total Bayar</span>
-              <span className='font-montserrat text-[2vh] leading-[2vh]'>Rp 387.390</span>
+            <div className="total-price-section flex flex-col gap-[2vh] mx-[1rem]">
+              <span className="font-montserrat text-[2vh] font-black leading-[2vh]">
+                Total Bayar
+              </span>
+              <span className="font-montserrat text-[2vh] leading-[2vh]">
+                Rp 387.390
+              </span>
             </div>
           </div>
         </div>
+
+        <div className="payment-method-container h-[52vh] flex flex-col gap-[1vh] mt-[1vh]">
+          <div
+            className="bank-transfer-section flex justify-between items-center w-full rounded-[0.5rem] bg-[#3C3C3C] px-[2.5vh] py-[1.75vh]"
+            onClick={toogleBankAccordion}
+          >
+            <span className="text-white font-montserrat text-[2vh] leading-[1.5vh] font-semibold">
+              Bank Transfer
+            </span>
+            <img
+              src={BankAccordionOpen ? arrow_down : arrow_up}
+              alt="arrow-down"
+              style={{ width: "2.5vh" }}
+            />
+          </div>
+
+          {BankAccordionOpen && (
+            <div className="font-montserrat font-black text-[2vh] leading-[1.5vh] flex justify-center items-center">
+              Hello Bank
+            </div>
+          )}
+
+          <div
+            className="bank-transfer-section flex justify-between items-center w-full rounded-[0.5rem] bg-dark-blue px-[2.5vh] py-[1.75vh]"
+            onClick={toogleCreditAccordion}
+          >
+            <span className="text-white font-montserrat text-[2vh] leading-[1.5vh] font-semibold">
+              Credit Card
+            </span>
+            <img
+              src={CreditAccordionOpen ? arrow_down : arrow_up}
+              alt="arrow-down"
+              style={{ width: "2.5vh" }}
+            />
+          </div>
+
+          {CreditAccordionOpen && (
+            <div className="modal-credit-payment-container bg-[#FFFF] shadow-lg rounded-[1rem] flex flex-col gap-[2vh] px-[3vh] py-[2.75vh]">
+              <div className="card-number-form-section flex flex-col gap-[1.5vh]">
+                <span className="card-number-label font-montserrat text-[2vh] leading-[1.5vh] font-semibold text-[#151515]">
+                  Card Number
+                </span>
+                <div className="card-number-input gap-[1vh] border-b-2 border-[#D0D0D0] px-[1vh] py-[1vh]">
+                  <input
+                    placeholder="3350 0000 0000 0000"
+                    type="number"
+                    required
+                    className="font-montserrat font-semibold text-[2vh] leading-[1.5vh]"
+                  />
+                </div>
+              </div>
+
+              <div className="card-holder-form-section flex flex-col gap-[1vh]">
+                <span className="card-holder-label font-montserrat text-[2vh] leading-[1.5vh] font-semibold text-[#151515]">
+                  Card Holder Name
+                </span>
+                <div className="card-holder-input gap-[1vh] border-b-2 border-[#D0D0D0] px-[1vh] py-[1vh]">
+                  <input
+                    placeholder="Jeff Bezos"
+                    type="text"
+                    required
+                    className="font-montserrat font-semibold text-[2vh] leading-[1.5vh]"
+                  />
+                </div>
+              </div>
+
+              <div className="cvv-expiry_date-form-container flex items-center gap-[1.5vh]">
+                <div className="card-holder-form-section flex flex-col gap-[1vh] w-[40vh]">
+                  <span className="card-holder-label font-montserrat text-[2vh] leading-[1.5vh] font-semibold text-[#151515]">
+                    CVV
+                  </span>
+                  <div className="card-holder-input gap-[1vh] border-b-2 border-[#D0D0D0] px-[1vh] py-[1vh] w-[100%]">
+                    <input
+                      placeholder="***"
+                      type="password"
+                      required
+                      className="font-montserrat font-semibold text-[2vh] leading-[1.5vh] w-[100%]"
+                    />
+                  </div>
+                </div>
+
+                <div className="card-holder-form-section flex flex-col gap-[1vh] w-[40vh]">
+                  <span className="card-holder-label font-montserrat text-[2vh] leading-[1.5vh] font-semibold text-[#151515] w-[100%]">
+                    Expiry Date
+                  </span>
+                  <div className="card-holder-input gap-[1vh] border-b-2 border-[#D0D0D0] px-[1vh] py-[1vh] w-[100%]">
+                    <input
+                      placeholder="08/24"
+                      type="number"
+                      required
+                      className="font-montserrat font-semibold text-[2vh] leading-[1.5vh] w-[100%]"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="credit-card-logo-container flex gap-[1.5vh] justify-center items-center">
+                <img
+                  src={mastercard}
+                  alt="mastercard-credit"
+                  style={{ width: "4vh" }}
+                />
+                <img src={visa} alt="visa-credit" style={{ width: "4vh" }} />
+                <img src={amex} alt="amex-credit" style={{ width: "4vh" }} />
+                <img
+                  src={paypal}
+                  alt="paypal-credit"
+                  style={{ width: "4vh" }}
+                />
+              </div>
+            </div>
+          )}
+        </div>
+
+        <button className="buy-now-button-container flex justify-center items-center py-[1.5vh] bg-[#FF0000] rounded-[1.5rem] mt-[2.25vw]">
+          <span className="font-montserrat font-black text-white text-[2vh] leading-[1.5vh]">
+            Bayar dan Ikuti Kelas Selamanya
+          </span>
+          <img src={arrow_buy} alt="arrow-buy" style={{ width: "2.5vh" }} />
+        </button>
       </div>
 
       {/* End Mobile */}
