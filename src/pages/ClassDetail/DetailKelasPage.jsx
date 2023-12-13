@@ -1,7 +1,7 @@
 // import { faIdBadge } from "@fortawesome/free-regular-svg-icons";
 import { faArrowLeft, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavbarComponents from "../../assets/components/NavbarComponents";
 import badge from "../../assets/img/icon/badge-svg.svg";
 import modul from "../../assets/img/icon/clarity_book-line.svg";
@@ -15,7 +15,8 @@ import locked from "../../assets/img/icon/bxs_lock.svg";
 import close_modal from "../../assets/img/icon/close-modal.svg";
 import arrow_buy from "../../assets/img/icon/carbon_next-filled.svg";
 import star from "../../assets/img/icon/ic_round-star.svg";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { getClasses } from "../../services/class/get-classByID";
 
 const DetailKelasPage = () => {
   const [MateriBelajar, setMateriBelajar] = useState(false);
@@ -23,6 +24,22 @@ const DetailKelasPage = () => {
   const [PaymentModal, setPaymentModal] = useState(false);
   const background_uiux = require("../../assets/img/image/uiux-person.jpg");
   const navigate = useNavigate();
+  const [Detail, setDetail] = useState([]);
+  const { classId } = useParams();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getClasses(classId);
+        setDetail(response.data.data);
+        console.log(response.data.data);
+      } catch (error) {
+        console.error("Error mengambil data Kelas:", error);
+      }
+    };
+
+    fetchData();
+  }, [classId]);
 
   const toogleTentangKelas = () => {
     setTentangKelas(true);
@@ -58,7 +75,7 @@ const DetailKelasPage = () => {
         <div className="course-section flex flex-col gap-2 px-[1.5rem] py-[1rem]">
           <div className="name-rate-section w-[60%] h-[1rem] flex justify-between items-center mt-[.5rem]">
             <span className="course-name-text text-[#6148FF] font-montserrat font-black leading-[0.9rem] text-[1.25rem]">
-              UI/UX Design
+              {Detail.name}
             </span>
             <div className="rating-star-section flex gap-1 items-center">
               <FontAwesomeIcon
@@ -75,7 +92,7 @@ const DetailKelasPage = () => {
             Intro to Basic Of User Interaction Design
           </span>
           <span className="author-text-section font-[600] font-montserrat text-[0.9rem] leading-[1.2rem] ">
-            by Simon Doe
+            by {Detail.author}
           </span>
 
           {/* Deets Section */}
@@ -83,7 +100,15 @@ const DetailKelasPage = () => {
             <div className="badge-level-section flex items-center gap-1">
               <img src={badge} alt="badge-level" />
               <span className="font-montserrat text-[0.75rem] leading-[0.9rem] font-bold hover:text-[#6148FF] cursor-pointer">
-                Beginner Level
+                <p>
+                  {Detail.level_id === 1
+                    ? "Beginner Level"
+                    : Detail.level_id === 2
+                    ? "Intermediate Level"
+                    : Detail.level_id === 3
+                    ? "Advanced Level"
+                    : ""}
+                </p>
               </span>
             </div>
             <div className="badge-level-section flex items-center gap-1">
@@ -124,23 +149,7 @@ const DetailKelasPage = () => {
               Tentang Kelas
             </span>
             <span className="font-normal text-[.8rem] leading-[1.5rem] font-montserrat text-[rgba(0,0,0,0.80)]">
-              Design system adalah kumpulan komponen design, code, ataupun
-              dokumentasi yang dapat digunakan sebagai panduan utama yang
-              memunginkan designer serta developer memiliki lebih banyak kontrol
-              atas berbagai platform. Dengan hadirnya design system, dapat
-              menjaga konsistensi tampilan user interface dan meningkatkan user
-              experience menjadi lebih baik. Disisi bisnis, design system sangat
-              berguna dalam menghemat waktu dan biaya ketika mengembangkan suatu
-              produk. Bersama mentor XXX, kita akan mempelajari design system
-              dari mulai manfaat, alur kerja pembuatannya, tools yang digunakan,
-              hingga pada akhirnya, kita akan membuat MVP dari design system.
-              Selain itu, mentor juga akan menjelaskan berbagai resource yang
-              dibutuhkan untuk mencari inspirasi mengenai design system. Kelas
-              ini sesuai untuk Anda yang ingin memahami apa itu design system.
-              Tidak hanya ditujukan untuk UI/UX Designer ataupun Developer,
-              kelas ini sangat sesuai untuk stakeholder lain agar dapat
-              memudahkan tim dalam bekerja sama. Yuk segera daftar dan kami
-              tunggu di kelas ya!
+              {Detail.about}
             </span>
           </div>
 
@@ -286,7 +295,7 @@ const DetailKelasPage = () => {
                           <div className="modal-category-rate-section flex flex-col gap-1">
                             <div className="mobile-course-category flex justify-between items-center mx-[1rem] mt-[0.8rem]">
                               <span className="font-montserrat text-dark-blue text-[1.25rem] font-black leading-[0.9rem]">
-                                UI/UX Design
+                                {Detail.name}
                               </span>
                               <div className="rating-star-section flex gap-1 items-center">
                                 <FontAwesomeIcon
@@ -305,7 +314,7 @@ const DetailKelasPage = () => {
                                 Intro to Basic of User Introduction Design
                               </span>
                               <span className="author-section font-bold text-[0.85rem] leading-[1.1rem] text-[#000] font-montserrat">
-                                by Simon Doe
+                                by {Detail.author}
                               </span>
                             </div>
 
@@ -313,7 +322,13 @@ const DetailKelasPage = () => {
                               <div className="badge-level-section flex items-center gap-1">
                                 <img src={badge} alt="badge-level" />
                                 <span className="font-montserrat text-[0.75rem] leading-[0.9rem] font-bold hover:text-[#6148FF] cursor-pointer">
-                                  Beginner Level
+                                  {Detail.level_id === 1
+                                    ? "Beginner Level"
+                                    : Detail.level_id === 2
+                                    ? "Intermediate Level"
+                                    : Detail.level_id === 3
+                                    ? "Advanced Level"
+                                    : ""}
                                 </span>
                               </div>
                               <div className="badge-level-section flex items-center gap-1">
@@ -367,7 +382,7 @@ const DetailKelasPage = () => {
         <div className="mobile-materi-section flex flex-col gap-[.9rem] rounded-[1.5rem] -mt-[2rem] h-full bg-[#FFFF] py-[2rem]">
           <div className="mobile-course-category flex justify-between items-center ml-[1.35rem] mr-[1.5rem]">
             <span className="font-montserrat text-dark-blue text-[3vh] font-black leading-[1vh]">
-              UI/UX Design
+              {Detail.name}
             </span>
             <div className="rating-star-section flex items-center">
               <img src={star} alt="rate-star" style={{ width: "2vh" }} />
@@ -382,7 +397,7 @@ const DetailKelasPage = () => {
               Intro to Basic of User Introduction Design
             </span>
             <span className="author-section font-bold text-[1.7vh] leading-[1.5vh] text-[#000] font-montserrat">
-              by Simon Doe
+              by {Detail.author}
             </span>
           </div>
 
@@ -390,7 +405,15 @@ const DetailKelasPage = () => {
             <div className="badge-level-section flex items-center gap-1">
               <img src={badge} alt="badge-level" style={{ width: "2.5vh" }} />
               <span className="font-montserrat text-[1.5vh] leading-[2vh] font-bold hover:text-[#6148FF] cursor-pointer">
-                Beginner Level
+                <p>
+                  {Detail.level_id === 1
+                    ? "Beginner Level"
+                    : Detail.level_id === 2
+                    ? "Intermediate Level"
+                    : Detail.level_id === 3
+                    ? "Advanced Level"
+                    : ""}
+                </p>
               </span>
             </div>
             <div className="badge-level-section flex items-center gap-1">
@@ -431,7 +454,14 @@ const DetailKelasPage = () => {
                   </span>
                 </div>
               </div>
-              <div className="detail">Tentang Kelas</div>
+              <div className="about-class-container flex flex-col gap-[1rem]  ml-[1.35rem] mr-[1.5rem]">
+                <span className="font-montserrat font-black text-[1.5rem] leading-[0.9rem]">
+                  Tentang Kelas
+                </span>
+                <span className="font-normal text-[.8rem] leading-[1.5rem] font-montserrat text-[rgba(0,0,0,0.80)]">
+                  {Detail.about}
+                </span>
+              </div>
             </>
           ) : (
             <>
@@ -485,11 +515,11 @@ const DetailKelasPage = () => {
                     className="play-btn"
                     src={done_play_button}
                     alt="success-play-button"
-                    style={{ width : '2.25vh' }}
+                    style={{ width: "2.25vh" }}
                   />
                 </div>
 
-               <div className="card-index-section flex justify-between w-full items-center border-b-2 border-[#EBF3FC] py-[0.25rem]">
+                <div className="card-index-section flex justify-between w-full items-center border-b-2 border-[#EBF3FC] py-[0.25rem]">
                   <div className="number-title-section flex items-center gap-[1.25vh]">
                     <span className="index-number-section bg-[#EBF3FC] rounded-[100%] px-[1rem] py-[0.65rem] flex items-center font-montserrat text-[#202244] text-[1.5vh] font-bold leading-[1.25vh] hover:bg-dark-blue hover:text-white">
                       2
@@ -502,7 +532,7 @@ const DetailKelasPage = () => {
                     className="play-btn"
                     src={done_play_button}
                     alt="success-play-button"
-                    style={{ width : '2.25vh' }}
+                    style={{ width: "2.25vh" }}
                   />
                 </div>
 
@@ -519,7 +549,7 @@ const DetailKelasPage = () => {
                     className="play-btn"
                     src={undone_play_button}
                     alt="success-play-button"
-                    style={{ width : '2.25vh' }}
+                    style={{ width: "2.25vh" }}
                   />
                 </div>
               </div>
@@ -549,7 +579,7 @@ const DetailKelasPage = () => {
                     className="play-btn"
                     src={locked}
                     alt="class-locked-button"
-                    style={{ width : '2.25vh' }}
+                    style={{ width: "2.25vh" }}
                     onClick={tooglePayment}
                   />
                 </div>

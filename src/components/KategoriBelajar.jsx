@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import logo from "../assets/img/logo.png";
-import { useParams } from "react-router-dom";
-import { API_ENDPOINT } from "../utils/api-endpoint";
-import http from "../utils/http";
+// import { useParams } from "react-router-dom";
+// import { API_ENDPOINT } from "../utils/api-endpoint";
+// import http from "../utils/http";
 
 export const KategoriBelajar = () => {
 //   const [kategoriBelajar, setKategoriBelajar] = useState([])
@@ -34,7 +34,7 @@ export const KategoriBelajar = () => {
           {/* {kategoriBelajar.map((item) => (
              <div key={item.id}> */}
           {/* <div className="rounded-3xl mb-1  w-full h-[6rem]">{item.image}</div> */}
-          <img className="rounded-3xl mb-1  w-full h-[6rem]" src={logo} />
+          <img className="rounded-3xl mb-1  w-full h-[6rem]" src={logo} alt=''/>
           <h2 className=" text-center">RealSkills</h2>
           </div>
           {/* ))} */}
