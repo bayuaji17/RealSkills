@@ -21,7 +21,6 @@ const KelasDummy = () => {
 
   return (
     <div>
-      <h1>Kelas</h1>
       {Kelas.map((value) => (
         <>
             <div className='flex justify-center items-center gap-[1.5rem] w-full h-full'>

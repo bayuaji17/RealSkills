@@ -73,9 +73,21 @@ const DetailKelasPage = () => {
 
         {/* Title, Course Name, & Author Section */}
         <div className="course-section flex flex-col gap-2 px-[1.5rem] py-[1rem]">
-          <div className="name-rate-section w-[60%] h-[1rem] flex justify-between items-center mt-[.5rem]">
+          <div className="name-rate-section w-[60%] h-[1rem] flex justify-between items-center">
             <span className="course-name-text text-[#6148FF] font-montserrat font-black leading-[0.9rem] text-[1.25rem]">
-              {Detail.name}
+              {Detail.category_id === 1
+                ? "UI/UX Design"
+                : Detail.category_id === 2
+                ? "Product Management"
+                : Detail.category_id === 3
+                ? "Web Development"
+                : Detail.category_id === 4
+                ? "Android Development"
+                : Detail.category_id === 5
+                ? "IOS Development"
+                : Detail.category_id === 6
+                ? "Data Science"
+                : ""}
             </span>
             <div className="rating-star-section flex gap-1 items-center">
               <FontAwesomeIcon
@@ -89,7 +101,7 @@ const DetailKelasPage = () => {
             </div>
           </div>
           <span className="title-text-section font-black font-montserrat text-[#202244] text-[1.25rem] leading-[1.5rem]">
-            Intro to Basic Of User Interaction Design
+            {Detail.name}
           </span>
           <span className="author-text-section font-[600] font-montserrat text-[0.9rem] leading-[1.2rem] ">
             by {Detail.author}
@@ -295,7 +307,19 @@ const DetailKelasPage = () => {
                           <div className="modal-category-rate-section flex flex-col gap-1">
                             <div className="mobile-course-category flex justify-between items-center mx-[1rem] mt-[0.8rem]">
                               <span className="font-montserrat text-dark-blue text-[1.25rem] font-black leading-[0.9rem]">
-                                {Detail.name}
+                                {Detail.category_id === 1
+                                  ? "UI/UX Design"
+                                  : Detail.category_id === 2
+                                  ? "Product Management"
+                                  : Detail.category_id === 3
+                                  ? "Web Development"
+                                  : Detail.category_id === 4
+                                  ? "Android Development"
+                                  : Detail.category_id === 5
+                                  ? "IOS Development"
+                                  : Detail.category_id === 6
+                                  ? "Data Science"
+                                  : ""}
                               </span>
                               <div className="rating-star-section flex gap-1 items-center">
                                 <FontAwesomeIcon
@@ -311,7 +335,7 @@ const DetailKelasPage = () => {
 
                             <div className="mobile-title-course-section flex flex-col gap-1 mx-[1rem]">
                               <span className="course-title font-black font-montserrat text-[1rem] leading-[1.5rem] text-[#202244]">
-                                Intro to Basic of User Introduction Design
+                                {Detail.name}
                               </span>
                               <span className="author-section font-bold text-[0.85rem] leading-[1.1rem] text-[#000] font-montserrat">
                                 by {Detail.author}
@@ -382,7 +406,19 @@ const DetailKelasPage = () => {
         <div className="mobile-materi-section flex flex-col gap-[.9rem] rounded-[1.5rem] -mt-[2rem] h-full bg-[#FFFF] py-[2rem]">
           <div className="mobile-course-category flex justify-between items-center ml-[1.35rem] mr-[1.5rem]">
             <span className="font-montserrat text-dark-blue text-[3vh] font-black leading-[1vh]">
-              {Detail.name}
+              {Detail.category_id === 1
+                ? "UI/UX Design"
+                : Detail.category_id === 2
+                ? "Product Management"
+                : Detail.category_id === 3
+                ? "Web Development"
+                : Detail.category_id === 4
+                ? "Android Development"
+                : Detail.category_id === 5
+                ? "IOS Development"
+                : Detail.category_id === 6
+                ? "Data Science"
+                : ""}
             </span>
             <div className="rating-star-section flex items-center">
               <img src={star} alt="rate-star" style={{ width: "2vh" }} />
@@ -394,7 +430,7 @@ const DetailKelasPage = () => {
 
           <div className="mobile-title-course-section flex flex-col gap-[1vh] ml-[1.35rem] mr-[1.5rem]">
             <span className="course-title font-black font-montserrat text-[2.5vh] leading-[2.5vh] text-[#202244]">
-              Intro to Basic of User Introduction Design
+              {Detail.name}
             </span>
             <span className="author-section font-bold text-[1.7vh] leading-[1.5vh] text-[#000] font-montserrat">
               by {Detail.author}
