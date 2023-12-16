@@ -11,7 +11,14 @@ export const BerandaNoLogin = () => {
         <NavbarBeranda/>
         <Search/>
         <Banner/>
+        <div>
+        <h1 className="bg-[#EBF3FC] px-4 font-semibold text-md text-xl  laptop:hidden ">
+          Kategori
+        </h1>
+        <div className=' flex overflow-x-auto laptop:flex-wrap'>
         <KategoriBelajar/>
+        </div>
+        </div>
         <KursusPopuler/>
     </div>
   )
