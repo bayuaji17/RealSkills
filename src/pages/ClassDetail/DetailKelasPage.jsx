@@ -15,8 +15,7 @@ import locked from "../../assets/img/icon/bxs_lock.svg";
 import close_modal from "../../assets/img/icon/close-modal.svg";
 import arrow_buy from "../../assets/img/icon/carbon_next-filled.svg";
 import star from "../../assets/img/icon/ic_round-star.svg";
-import { Link, useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getClasses } from "../../services/class/get-classByID";
 import ChapterContainer from "../../components/DetailClassComponents/ChapterContainer";
 
@@ -90,14 +89,9 @@ const DetailKelasPage = () => {
       {/* Desktop */}
       {/* Hero Section */}
       <div className="hero-section hidden mobile:hidden laptop:flex laptop:flex-col gap-2 px-[5.5rem] py-[1rem] bg-[#EBF3FC] w-full">
-        <div
-          className="top-text-section flex items-center mt-[1.5rem] gap-[1.25rem]"
-          onClick={() => {
-            navigate("/dummy");
-          }}
-        >
-          <FontAwesomeIcon icon={faArrowLeft} size="xl" className='cursor-pointer'/>
-          <span className="font-montserrat text-[1rem] font-bold leading-[1.5rem] cursor-pointer">
+        <div className="top-text-section flex items-center mt-[1.5rem] gap-[1.25rem]">
+          <FontAwesomeIcon icon={faArrowLeft} size="xl" />
+          <span className="font-montserrat text-[1rem] font-bold leading-[1.5rem]">
             Kelas Lainnya
           </span>
         </div>
@@ -236,12 +230,12 @@ const DetailKelasPage = () => {
                 </div>
               </div>
             </div>
-            {renderChapters()}
-            <Link to={`/pembayaran/${classId}`}>
-              <button className="bg-dark-blue my-[2rem] rounded-md flex items-center justify-center font-montserrat font-bold px-[2rem] py-[1rem] hover:text-white">
-                Payment
-              </button>
-            </Link>
+          {renderChapters()}
+          <Link to={`/pembayaran/${classId}`}>
+          <button className='bg-dark-blue my-[2rem] rounded-md flex items-center justify-center font-montserrat font-bold px-[2rem] py-[1rem] hover:text-white'>
+            Payment
+          </button>
+          </Link>
           </div>
           {/* <div className="materi-container w-[100%] rounded-[1rem] px-[1.25rem] py-[1.25rem] flex flex-col -mt-[15rem] bg-[#FFFF] shadow-xl">
             <div className="top-text flex items-center gap-[1.5rem] w-full justify-between">
@@ -782,10 +776,10 @@ const DetailKelasPage = () => {
                           </div>
                         </div>
                         <Link to={`/pembayaran/${classId}`}>
-                          <button className="modal-buy-button w-[20vh] rounded-[1rem] bg-[#489CFF] hover:bg-dark-blue flex justify-center items-center gap-4 px-[2vh] py-[1.25vh] mb-[1.5vh] text-white mx-[1rem] mt-[1vh] font-montserrat text-[1.5vh] leading-[0.9rem] font-black">
-                            <span>Beli</span>
-                            <span>{rupiahFormat.format(Detail.price)}</span>
-                          </button>
+                        <button className="modal-buy-button w-[20vh] rounded-[1rem] bg-[#489CFF] hover:bg-dark-blue flex justify-center items-center gap-4 px-[2vh] py-[1.25vh] mb-[1.5vh] text-white mx-[1rem] mt-[1vh] font-montserrat text-[1.5vh] leading-[0.9rem] font-black">
+                          <span>Beli</span>
+                          <span>{rupiahFormat.format(Detail.price)}</span>
+                        </button>
                         </Link>
                       </div>
 
