@@ -9,37 +9,41 @@ import circle_red from "../../assets/img/icon/circle_red.png";
 export const Notifikasi = () => {
   return (
     <div className="parents">
-      <div className="navbar-component">
+      <div className="navbar-component hidden laptop:flex">
         <NavbarComponents />
       </div>
 
-      <div className="hero-section flex flex-col gap-2 px-[5.5rem] h-[9.7rem] bg-[#EBF3FC] w-full">
-        <div className="back-section flex items-center my-[1.5rem] gap-[1.25rem] mx-[10rem]">
+      <div className="hero-section flex flex-col gap-2 h-screen laptop:h-[11rem] laptop:bg-[#EBF3FC] w-full">
+        <div className="back-section hidden laptop:flex items-center mt-[2.3rem] mb-[0.7rem] gap-[1.25rem] mx-[11.5rem] ">
           <FontAwesomeIcon
             icon={faArrowLeft}
-            size="l"
+            size="lg"
             style={{ color: "#6148FF" }}
           />
           <a
-            className="font-bold font-montserrat text-l text-[#6148FF]"
+            className="font-black font-montserrat text-[1.2rem] text-[#6148FF] "
             href="/"
           >
             Kembali ke Beranda
           </a>
         </div>
-        <div className="flex justify-center items-center">
-          <div className="modal flex flex-col border border-[#6148FF] h-[35rem] w-[80%] rounded-[1rem]">
-            <div className="title w-full h-[4.7rem] bg-[#6148FF] rounded-t-[1rem]">
-              <span className=" flex justify-center items-center text-white font-bold text-2xl py-3">
+        <div className="flex mx-[0.9rem] mt-[1rem] laptop:justify-center laptop:items-center mobile:justify-items-start ">
+          <div className="modal flex flex-col laptop:border laptop:border-[#6148FF] laptop:h-[35rem] laptop:w-[75%] rounded-[1rem] mb-[5rem] mobile:w-full  ">
+            <div className="title w-full h-[4.7rem] laptop:bg-[#6148FF] rounded-t-[1rem]">
+              <span className=" flex laptop:justify-center mobile:justify-start items-center laptop:text-white font-bold text-[1.8rem] py-3 mobile:text-black">
                 Notifikasi
               </span>
             </div>
 
-            <div className="isi-notifikasi flex flex-col gap-[3rem] py-[1rem] mt-[2rem] mx-[3.5rem] font-montserrat">
+            <div className="isi-notifikasi flex flex-col gap-[2.5rem] py-[1rem] laptop:mt-[1rem] laptop:mx-[3.5rem] font-montserrat">
               <div className="first-notification">
                 <div className="promosi flex justify-between ">
                   <span className="flex flex-row gap-5">
-                    <img src={Vector} alt="" className="h-[2rem] w-[2rem]" />
+                    <img
+                      src={Vector}
+                      alt=""
+                      className="h-[1.9rem] w-[1.9rem]"
+                    />
                     <label className="font-semibold text-[#6148FF] text-xl">
                       Promosi
                     </label>
@@ -69,7 +73,11 @@ export const Notifikasi = () => {
               <div className="second-notification">
                 <div className="Notifikasi flex justify-between gap-5">
                   <span className="flex flex-row gap-5">
-                    <img src={Vector} alt="" className="w-[2] h-[2rem]" />
+                    <img
+                      src={Vector}
+                      alt=""
+                      className="w-[1.9rem] h-[1.9rem]"
+                    />
                     <label className="font-semibold text-[#6148FF] text-xl">
                       Notifikasi
                     </label>
@@ -82,7 +90,7 @@ export const Notifikasi = () => {
                     <img
                       src={circle_red}
                       alt=""
-                      className="w-[0.7rem] h-[0.7rem]"
+                      className="w-[0.7rem] h-[0.7rem] items-center"
                     />
                   </span>
                 </div>
@@ -96,7 +104,11 @@ export const Notifikasi = () => {
               <div className="third-notification">
                 <div className="Notifikasi flex justify-between gap-5">
                   <span className="flex flex-row gap-5">
-                    <img src={Vector} alt="" className="w-[2] h-[2rem]" />
+                    <img
+                      src={Vector}
+                      alt=""
+                      className="w-[1.9rem] h-[1.9rem]"
+                    />
                     <label className="font-semibold text-[#6148FF] text-xl">
                       Promosi
                     </label>

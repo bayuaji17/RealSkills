@@ -95,7 +95,7 @@ export const LoginAdminPage = () => {
         <h1 className="font-bold text-4xl text-white">RealSkills</h1>
       </div>
       {/* Right Section */}
-      <div className=" flex flex-row justify-center items-center font-poppins h-screen mx-[1rem] laptop:w-[60%] laptop:m-0">
+      <div className=" flex flex-row justify-center items-center font-poppins h-screen mx-[0.8rem] laptop:w-[60%] laptop:m-0">
         <div className="flex flex-col justify-center items-center h-full">
           <div className="flex flex-col justify-start text-sm">
             <h1 className="flex justify-center items-center mb-3 font-bold text-3xl text-[#6148FF]">

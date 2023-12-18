@@ -3,4 +3,6 @@ export const API_ENDPOINT = {
   LOGIN_ADMIN: "api/auth/login",
   FORGOT_PASSWORD: "api/auth/forgot-password",
   RESET_PASSWORD: "api/auth/reset-password",
+  NOTIFIKASI: "api/users/notifications",
+  GET_USER: "api/users",
 };

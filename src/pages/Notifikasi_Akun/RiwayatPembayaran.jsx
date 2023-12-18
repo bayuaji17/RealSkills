@@ -16,44 +16,44 @@ import { faStar } from "@fortawesome/free-regular-svg-icons";
 export const RiwayatPembayaran = () => {
   return (
     <div className="parent">
-      <div className="navbar-component">
+      <div className="navbar-component hidden laptop:flex">
         <NavbarComponents />
       </div>
 
-      <div className="hero-section flex flex-col gap-2 px-[5.5rem] h-[9.7rem] bg-[#EBF3FC] w-full">
-        <div className="back-section flex items-center my-[1.5rem] gap-[1.25rem] mx-[10rem]">
+      <div className="hero-section flex flex-col gap-2  w-full laptop:h-[11rem] bg-[#EBF3FC] ">
+        <div className="back-section hidden laptop:flex items-center mt-[2.3rem] mb-[0.7rem] gap-[1.25rem] mx-[11.5rem]">
           <FontAwesomeIcon
             icon={faArrowLeft}
-            size="l"
+            size="lg"
             style={{ color: "#6148FF" }}
           />
           <a
-            className="font-bold font-montserrat text-l text-[#6148FF]"
+            className="font-bold font-montserrat text-[1.2rem] text-[#6148FF]"
             href="/"
           >
             Kembali ke Beranda
           </a>
         </div>
 
-        <div className="flex justify-center items-center">
-          <div className="modal flex flex-col border border-[#6148FF] h-[100%] w-[80%] rounded-[1rem]">
-            <div className="title w-full h-[4.7rem] bg-[#6148FF] rounded-t-2xl">
-              <span className=" flex justify-center items-center text-white font-bold text-2xl py-3">
+        <div className="flex mx-[0.9rem] mt-[1rem] justify-center items-center">
+          <div className="modal flex flex-col laptop:border laptop:border-[#6148FF] laptop:h-[100%] w-full laptop:w-[75%] rounded-[1rem]">
+            <div className="title hidden laptop:flex w-full h-[4.7rem]  justify-center items-center  laptop:bg-[#6148FF] rounded-t-2xl">
+              <span className=" flex laptop:justify-center laptop:items-center text-white font-bold text-[1.8rem] py-3">
                 Akun
               </span>
             </div>
 
             <div className="flex flex-row w-full flex-grow rounded-b-2xl">
               {/* Left Section */}
-              <div class="left-section w-1/2 m-[2rem]">
+              <div class="left-section hidden laptop:flex w-1/2 m-[2rem]">
                 <div className="flex flex-col gap-5 font-montserrat">
                   <div className="flex flex-row gap-4">
                     <img
                       src={pencil}
                       alt=""
-                      className="w-[1.5rem] h-[1.5rem] "
+                      className="w-[1.6rem] h-[1.6rem] "
                     />
-                    <span className="text-black text-[0.8rem] ">
+                    <span className="text-black text-[0.9rem] font-semibold ">
                       Profil Saya
                     </span>
                   </div>
@@ -62,23 +62,25 @@ export const RiwayatPembayaran = () => {
                     <img
                       src={settings}
                       alt=""
-                      className="w-[1.5rem] h-[1.5rem]"
+                      className="w-[1.6rem] h-[1.6rem]"
                     />
-                    <span className="text-black text-[0.8rem]">
+                    <span className="text-black text-[0.9rem] font-semibold">
                       Ubah Password
                     </span>
                   </div>
                   <hr />
                   <div className=" flex flex-row gap-4">
-                    <img src={pay} alt="" className="w-[1.5rem] h-[1.5rem]" />
-                    <span className="text-[#6148FF] text-[1rem] font-bold">
+                    <img src={pay} alt="" className="w-[1.6rem] h-[1.6rem]" />
+                    <span className="text-[#6148FF] text-[1.1rem] font-bold">
                       Riwayat Pembelian
                     </span>
                   </div>
                   <hr />
                   <div className=" flex flex-row gap-4">
-                    <img src={out} alt="" className="w-[1.5rem] h-[1.5rem]" />
-                    <span className="text-black text-[0.8rem]">Keluar</span>
+                    <img src={out} alt="" className="w-[1.6rem] h-[1.6rem]" />
+                    <span className="text-black text-[0.9rem] font-semibold">
+                      Keluar
+                    </span>
                   </div>
                   <hr />
                   <div className=" flex justify-center items-center p-5">
@@ -88,16 +90,16 @@ export const RiwayatPembayaran = () => {
               </div>
 
               {/* Right Section */}
-              <div className="right-section w-1/2 my-[2rem] ">
-                <div className="title-section flex justify-evenly items-center">
-                  <h1 className="text-2xl font-bold text-black ">
+              <div className="right-section w-full laptop:w-1/2 laptop:my-[2rem] ">
+                <div className="title-section flex laptop:justify-evenly laptop:items-center mobile:justify-start mobile:items-start">
+                  <h1 className="text-[1.8rem] font-bold text-black ">
                     Riwayan Pembayaran
                   </h1>
                 </div>
 
                 {/* Riwayat Pembayaran*/}
                 <div className="flex flex-col ">
-                  <div className="first-payment rounded-[1rem] mx-[1rem] mt-[1.5rem] h-[40%] border-2 flex flex-col">
+                  <div className="first-payment rounded-[1rem] mx-[1rem] mt-[1.5rem] h-[20%] border-2 flex flex-col">
                     <img
                       src={background}
                       alt=""
@@ -148,19 +150,19 @@ export const RiwayatPembayaran = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="notif-payment flex items-center gap-1 bg-red-500 w-1/2 ml-4 my-2 rounded-lg">
+                    <div className="notif-payment flex items-center gap-1 bg-red-500 w-[30%] ml-4 my-2 rounded-lg">
                       <img
                         src={notif_pay}
                         alt=""
-                        className="w-[1.2rem] h-[1.2rem] ml-2"
+                        className="w-[1rem] h-[0.9rem] ml-2"
                       />
-                      <span className="  items-center text-white text-[0.7] font-bold  ">
+                      <span className="  items-center text-white text-[0.5rem] font-bold p-[0.4rem] ">
                         Waiting for Payment
                       </span>
                     </div>
                   </div>
 
-                  <div className="second-payment rounded-[1rem] mx-[1rem] mt-[1rem] h-[40%] border-2 flex flex-col">
+                  <div className="second-payment rounded-[1rem] mx-[1rem] mt-[1rem] h-[30%] border-2 flex flex-col">
                     <img
                       src={background}
                       alt=""
@@ -183,7 +185,7 @@ export const RiwayatPembayaran = () => {
                         </div>
                       </div>
                       <div className="mobile-title-course-section flex flex-col gap-1 mx-[1rem] font-montserrat">
-                        <span className="course-title font-bold font-montserrat text-[0.8rem] leading-[0.3rem] text-[#202244]">
+                        <span className="course-title font-bold font-montserrat text-[0.8rem] leading-[0.7rem] text-[#202244]">
                           Membuat Wireframe Hingga ke Visual Design
                         </span>
                         <span className="author-section pt-1 text-[0.5rem] leading-[0.7rem] text-[#000] font-montserrat font-bold">
@@ -211,18 +213,18 @@ export const RiwayatPembayaran = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="notif-payment flex items-center gap-1 bg-green-500 w-[20%] ml-4 my-2 rounded-lg">
+                    <div className="notif-payment flex items-center bg-green-500 w-[20%] ml-4 my-2 rounded-lg">
                       <img
                         src={notif_pay}
                         alt=""
-                        className="w-[1.2rem] h-[1.2rem] ml-2 items-center"
+                        className="w-[1rem] h-[0.9rem] ml-3 items-center"
                       />
-                      <span className="  items-center text-white text-[0.7] font-bold  ">
+                      <span className=" items-center text-white text-[0.7rem] font-bold p-[0.3rem] ">
                         Paid
                       </span>
                     </div>
                   </div>
-                  <div className="second-payment rounded-[1rem] mx-[1rem] mt-[1rem] h-[40%] border-2 flex flex-col">
+                  <div className="second-payment rounded-[1rem] mx-[1rem] mt-[1rem] h-[30%] border-2 flex flex-col">
                     <img
                       src={background}
                       alt=""
@@ -273,13 +275,13 @@ export const RiwayatPembayaran = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="notif-payment flex items-center gap-1 bg-green-500 w-[20%] ml-4 my-2 rounded-lg">
+                    <div className="notif-payment flex items-center  bg-green-500 w-[20%] ml-4 my-2 rounded-lg">
                       <img
                         src={notif_pay}
                         alt=""
-                        className="w-[1.2rem] h-[1.2rem] ml-2 items-center"
+                        className="w-[1rem] h-[0.9rem] ml-3 items-center"
                       />
-                      <span className="  items-center text-white text-[0.7] font-bold  ">
+                      <span className=" items-center text-white text-[0.7rem] font-bold p-[0.3rem]  ">
                         Paid
                       </span>
                     </div>
