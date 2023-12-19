@@ -40,7 +40,7 @@ const DetailKelasPage = () => {
       try {
         const response = await getClasses(classId);
         setDetail(response.data.data);
-        // console.log(response.data.data);
+        console.log(response.data.data,'classees');
       } catch (error) {
         console.error("Error mengambil data Kelas:", error);
       }
@@ -50,7 +50,7 @@ const DetailKelasPage = () => {
       try {
         const response = await getClasses(classId);
         setCourseChapter(response.data.data.chapters);
-        console.log(response.data.data.chapters);
+        console.log(response.data.data.chapters, 'chapters');
         // console.log(response.data.data.chapters[0].videos[0].title);
       } catch (error) {
         console.log(error, "error chapters");
@@ -251,7 +251,8 @@ const DetailKelasPage = () => {
             </Link> */}
 
             {CourseChapter.map((value, chapterIndex) => {
-              const isChapterUnlocked = chapterIndex === 0;
+              const isPremiumClass = Detail.type_id === 2
+              const isChapterUnlocked = chapterIndex === 0 || !isPremiumClass;
 
               return (
                 <div className="chapter-parents my-[.5rem]" key={chapterIndex}>
@@ -285,7 +286,7 @@ const DetailKelasPage = () => {
                               {vids.title}
                             </span>
                           </div>
-                          {!isChapterUnlocked ? (
+                          {!isChapterUnlocked && isPremiumClass ? (
                             <img
                               src={locked}
                               alt="locked-button"
@@ -434,227 +435,7 @@ const DetailKelasPage = () => {
               </>
             )}
           </div>
-          {/* <div className="materi-container w-[100%] rounded-[1rem] px-[1.25rem] py-[1.25rem] flex flex-col -mt-[15rem] bg-[#FFFF] shadow-xl">
-            <div className="top-text flex items-center gap-[1.5rem] w-full justify-between">
-              <div className="text-materi w-[50%]">
-                <span className="font-montserrat font-black text-[1.25rem] leading-[0.75rem]">
-                  Materi Belajar
-                </span>
-              </div>
-              <div className="progress-bar-section flex gap-2 w-[50%]">
-                <img src={progress_check} alt="progress-check" width="20" />
-                <span className="rounded-[1rem] bg-[#6148FF] w-[10rem] text-[0.9rem] font-montserrat text-white px-[1rem]">
-                  100% complete
-                </span>
-              </div>
-            </div>
-            <div className="chapter-section flex justify-between items-center w-[95%] mt-2">
-              <span className="chapter-title font-montserrat text-[#6148FF] font-black text-[1rem] leading-[2.25rem]">
-                {CourseChapter.map((value) => {
-                  return (
-                    <div className="bg-slate-600 w-full flex flex-col justify-center items-center">
-                      <div className="bg-red-600 w-full px-[2rem] py-[1.2rem] rounded-md my-[1.2rem] flex justify-between items-center">
-                        <span className="font-montserrat text-white text-[1rem] font-black leading-[1.25rem] w-1/2">
-                          {value.title}
-                        </span>
-                        <span className="font-montserrat text-dark-blue font-semibold text-[0.9rem] w-1/3">60 menit</span>
-                      </div>
-                        <span className="text-white font-montserrat text-[0.85rem] font-semibold leading-[0.9rem]">
-                          {value.videos.map((courseVideo, index) => {
-                            return (
-                              <div className="flex flex-col gap-[2rem] my-[1rem]" key={index}>
-                               {index + 1} - {courseVideo.title}
-                              </div>
-                            );
-                          })}
-                        </span>
-                    </div>
-                  );
-                })}
-              </span>
-            </div>
-            <div className="chapter-materi-section flex flex-col gap-2">
-              <div className="card-materi-section flex items-center justify-between w-[95%] border-b-2 border-[#EBF3FC] py-[0.25rem]">
-                <div className="card-number-title-section flex items-center gap-[0.75rem]">
-                  <span className="rounded-[100%] bg-[#EBF3FC] px-[1rem] py-[.5rem] hover:bg-dark-blue hover:text-white cursor-pointer">
-                    1
-                  </span>
-                  <span className="font-montserrat font-semibold text-[0.9rem] text-[rgba(0,0,0,0.80)] leading-[1.25rem]">
-                    Tujuan Mengikuti Kelas Design System
-                  </span>
-                </div>
-                <img src={done_play_button} alt="done-play" width="20" />
-              </div>
-
-              <div className="card-materi-section flex items-center justify-between w-[95%] border-b-2 border-[#EBF3FC] py-[0.25rem]">
-                <div className="card-number-title-section flex items-center gap-[0.75rem]">
-                  <span className="rounded-[100%] bg-[#EBF3FC] px-[1rem] py-[.5rem] hover:bg-dark-blue hover:text-white cursor-pointer">
-                    2
-                  </span>
-                  <span className="font-montserrat font-semibold text-[0.9rem] text-[rgba(0,0,0,0.80)] leading-[1.25rem]">
-                    Pengenalan Design System
-                  </span>
-                </div>
-                <img src={done_play_button} alt="done-play" width="20" />
-              </div>
-
-              <div className="card-materi-section flex items-center justify-between w-[95%] border-b-2 border-[#EBF3FC] py-[0.25rem]">
-                <div className="card-number-title-section flex items-center gap-[0.75rem]">
-                  <span className="rounded-[100%] bg-[#EBF3FC] px-[1rem] py-[.5rem] hover:bg-dark-blue hover:text-white cursor-pointer">
-                    3
-                  </span>
-                  <span className="font-montserrat font-semibold text-[0.9rem] text-[rgba(0,0,0,0.80)] leading-[1.25rem]">
-                    Contoh Dalam Membangun Design System
-                  </span>
-                </div>
-                <img src={undone_play_button} alt="done-play" width="20" />
-              </div>
-
-              <div className="chapter-section flex justify-between items-center w-[95%] mt-2">
-                <span className="chapter-title font-montserrat text-[#6148FF] font-black text-[1rem] leading-[2.25rem]">
-                  Chapter 2 - Memulai Desain
-                </span>
-                <span className="chapter-time font-black font-montserrat leading-[2.25rem] text-[0.9rem] text-[#489CFF]">
-                  120 menit
-                </span>
-              </div>
-
-              <div className="card-materi-section flex items-center justify-between w-[95%] border-b-2 border-[#EBF3FC] py-[0.25rem]">
-                <div className="card-number-title-section flex items-center gap-[0.75rem]">
-                  <span className="rounded-[100%] bg-[#EBF3FC] px-[1rem] py-[.5rem]">
-                    4
-                  </span>
-                  <span className="font-montserrat font-semibold text-[0.9rem] text-[rgba(0,0,0,0.80)] leading-[1.25rem]">
-                    Color Pallete
-                  </span>
-                </div>
-                <img
-                  src={locked}
-                  alt="done-play"
-                  width="20"
-                  onClick={() => {
-                    tooglePayment();
-                    console.log(PaymentModal);
-                  }}
-                />
-              </div>
-
-              {PaymentModal && (
-                <>
-                  <div className="modal-payment-popup fixed bg-black bg-opacity-70 inset-0 font-montserrat cursor-pointer">
-                    <div className="flex justify-center items-center font-montserrat h-full w-full">
-                      <div className="bg-[#FFFF] flex flex-col h-[60%] w-[40%] rounded-[1rem] px-[1rem] py-[1rem]">
-                        <span
-                          onClick={tooglePayment}
-                          className="flex justify-end"
-                        >
-                          <img src={close_modal} alt="close-modal" width="20" />
-                        </span>
-                        <div className="flex justify-center items-center">
-                          <span className="font-montserrat font-black text-[1.5rem] text-center leading-[2rem]">
-                            Selangkah lagi menuju
-                            <br />
-                            <span className="text-dark-blue font-black">
-                              Kelas Premium
-                            </span>
-                          </span>
-                        </div>
-
-                        <div className="course-container rounded-[1rem] mx-[1.25rem] mt-[1.25rem] mb-[1.2rem] h-[60%] border-2 border-dark-blue flex flex-col">
-                          <div
-                            className="rounded-t-[1rem] bg-cover bg-no-repeat bg-center w-full h-[40%]"
-                            style={{
-                              backgroundImage: `url(${background_uiux})`,
-                            }}
-                          ></div>
-                          <div className="modal-category-rate-section flex flex-col gap-1">
-                            <div className="mobile-course-category flex justify-between items-center mx-[1rem] mt-[0.8rem]">
-                              <span className="font-montserrat text-dark-blue text-[1.25rem] font-black leading-[0.9rem]">
-                                {Detail.category_id === 1
-                                  ? "UI/UX Design"
-                                  : Detail.category_id === 2
-                                  ? "Product Management"
-                                  : Detail.category_id === 3
-                                  ? "Web Development"
-                                  : Detail.category_id === 4
-                                  ? "Android Development"
-                                  : Detail.category_id === 5
-                                  ? "IOS Development"
-                                  : Detail.category_id === 6
-                                  ? "Data Science"
-                                  : ""}
-                              </span>
-                              <div className="rating-star-section flex gap-1 items-center">
-                                <FontAwesomeIcon
-                                  icon={faStar}
-                                  size="sm"
-                                  style={{ color: "#F9CC00" }}
-                                />
-                                <span className="font-montserrat text-[#202244] font-bold leading-[0.9rem] text-[0.9rem]">
-                                  5.0
-                                </span>
-                              </div>
-                            </div>
-
-                            <div className="mobile-title-course-section flex flex-col gap-1 mx-[1rem]">
-                              <span className="course-title font-black font-montserrat text-[1rem] leading-[1.5rem] text-[#202244]">
-                                {Detail.name}
-                              </span>
-                              <span className="author-section font-bold text-[0.85rem] leading-[1.1rem] text-[#000] font-montserrat">
-                                by {Detail.author}
-                              </span>
-                            </div>
-
-                            <div className="mobile-deets-section flex items-center gap-[1.5rem] mx-[1rem] mt-1">
-                              <div className="badge-level-section flex items-center gap-1">
-                                <img src={badge} alt="badge-level" />
-                                <span className="font-montserrat text-[0.75rem] leading-[0.9rem] font-bold hover:text-[#6148FF] cursor-pointer">
-                                  {Detail.level_id === 1
-                                    ? "Beginner Level"
-                                    : Detail.level_id === 2
-                                    ? "Intermediate Level"
-                                    : Detail.level_id === 3
-                                    ? "Advanced Level"
-                                    : ""}
-                                </span>
-                              </div>
-                              <div className="badge-level-section flex items-center gap-1">
-                                <img src={modul} alt="modul-course" />
-                                <span className="font-montserrat text-[0.75rem] leading-[0.9rem] font-bold hover:text-[#6148FF] cursor-pointer">
-                                  5 Moduls
-                                </span>
-                              </div>
-                              <div className="badge-level-section flex items-center gap-1">
-                                <img src={time} alt="course-time" />
-                                <span className="font-montserrat text-[0.75rem] leading-[0.9rem] font-bold hover:text-[#6148FF] cursor-pointer">
-                                  45 Menit
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                          <Link to={`/pembayaran/${classId}`}>
-                            <button className="modal-buy-button w-[28%] rounded-[1rem] bg-[#489CFF] hover:bg-dark-blue flex justify-center items-center gap-4 px-[5rem] py-[.5rem] text-white mx-[1rem] my-[0.5rem] font-montserrat text-[0.75rem] leading-[0.9rem] font-black">
-                              <span>Beli</span>
-                              <span>{rupiahFormat.format(Detail.price)}</span>
-                            </button>
-                          </Link>
-                        </div>
-
-                        <Link to={`/pembayaran/${classId}`}>
-                          <div className="buy-now-btn flex items-center justify-center mx-[5rem] rounded-[1.5rem] px-[.75rem] py-[1rem] bg-dark-blue gap-2 my-[1rem]">
-                            <span className="font-montserrat font-black text-white text-[1rem] leading-[1.5rem]">
-                              Beli Sekarang
-                            </span>
-                            <img src={arrow_buy} alt="arrow-buy" width="20" />
-                          </div>
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </>
-              )}
-            </div>
-          </div> */}
+         
         </div>
       </div>
       {/* End Desktop */}
