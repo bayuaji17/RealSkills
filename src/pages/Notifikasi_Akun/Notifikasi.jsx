@@ -1,12 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import NavbarComponents from "../../assets/components/NavbarNotif";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Vector from "../../assets/img/icon/Vector.png";
 import circle_green from "../../assets/img/icon/circle_green.png";
 import circle_red from "../../assets/img/icon/circle_red.png";
+import { postNotifikasi } from "../../services/notifikasi_akun/notifikasi";
 
 export const Notifikasi = () => {
+
+  // const [LoadData, setLoadData] = useState([]);
+
+  // const getNotifikasi = async () => {
+  //   const data = await postNotifikasi();
+  //   setLoadData(data.results);
+  //   console.log(data, "data profil");
+  // };
+  // useEffect(() => {
+  //   getNotifikasi();
+  // }, []);
+
+
   return (
     <div className="parents">
       <div className="navbar-component hidden laptop:flex">

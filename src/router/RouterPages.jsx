@@ -12,6 +12,7 @@ import { Notifikasi } from "../pages/Notifikasi_Akun/Notifikasi";
 import { AkunProfil } from "../pages/Notifikasi_Akun/AkunProfil";
 import { UbahPassword } from "../pages/Notifikasi_Akun/UbahPassword";
 import { RiwayatPembayaran } from "../pages/Notifikasi_Akun/RiwayatPembayaran";
+import { Settings } from "../components/Settings";
 
 export const RouterPages = () => {
   return (
@@ -26,6 +27,7 @@ export const RouterPages = () => {
         {/* <Route path="/Cobareset" element={<RegisterPage />} /> */}
         <Route path="/resetPassword" element={<ResetPasswordPage />} />
         <Route path="/detailKelas" element={<DetailKelasPage />} />
+        <Route path="/settings" element={<Settings />} />
         <Route path="/notifikasi" element={<Notifikasi />} />
         <Route path="/profil" element={<AkunProfil />} />
         <Route path="/ubahPassword" element={<UbahPassword />} />

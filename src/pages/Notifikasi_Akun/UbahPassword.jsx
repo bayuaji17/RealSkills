@@ -7,6 +7,7 @@ import settings from "../../assets/img/icon/settings.png";
 import pay from "../../assets/img/icon/pay.png";
 import out from "../../assets/img/icon/out.png";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
+import { Link } from "react-router-dom";
 
 export const UbahPassword = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -36,7 +37,7 @@ export const UbahPassword = () => {
           </a>
         </div>
         <div className="flex mx-[0.9rem] mt-[1rem] justify-center items-center">
-          <div className="modal flex flex-col laptop:border laptop:border-[#6148FF] h-full laptop:h-[45rem] w-full laptop:w-[75%] rounded-[1rem] mb-[5rem]">
+          <div className="modal flex flex-col laptop:border laptop:border-[#6148FF] min-h-screen laptop:h-[45rem] w-full laptop:w-[75%] rounded-[1rem] mb-[5rem]">
             <div className="title hidden laptop:flex w-full h-[4.7rem] justify-center items-center laptop:bg-[#6148FF] rounded-t-2xl">
               <span className=" flex laptop:justify-center laptop:items-center text-white font-bold text-[1.8rem] py-3">
                 Akun
@@ -52,9 +53,12 @@ export const UbahPassword = () => {
                       alt=""
                       className="w-[1.6rem] h-[1.6rem] "
                     />
-                    <span className="text-black text-[0.9rem] font-semibold">
+                    <a
+                      className="text-black text-[0.9rem] font-bold hover:text-[#6148FF]"
+                      href="/profil"
+                    >
                       Profil Saya
-                    </span>
+                    </a>
                   </div>
                   <hr />
                   <div className=" flex flex-row gap-4">
@@ -70,16 +74,22 @@ export const UbahPassword = () => {
                   <hr />
                   <div className=" flex flex-row gap-4">
                     <img src={pay} alt="" className="w-[1.5rem] h-[1.5rem]" />
-                    <span className="text-black text-[0.9rem] font-semibold">
-                      Riwayat Pembelian
-                    </span>
+                    <a
+                      className="text-black text-[0.9rem] font-bold hover:text-[#6148FF]"
+                      href="/riwayatPembayaran"
+                    >
+                      Riwayat Pembayaran
+                    </a>
                   </div>
                   <hr />
                   <div className=" flex flex-row gap-4">
                     <img src={out} alt="" className="w-[1.5rem] h-[1.5rem]" />
-                    <span className="text-black text-[0.9rem] font-semibold">
+                    <a
+                      className="text-black text-[0.9rem] font-bold hover:text-[#6148FF]"
+                      href="/"
+                    >
                       Keluar
-                    </span>
+                    </a>
                   </div>
                   <hr />
                   <div className=" flex justify-center items-center p-5">
@@ -89,14 +99,26 @@ export const UbahPassword = () => {
               </div>
 
               {/* Right Section*/}
-              <div className="right-section w-full laptop:w-1/2 laptop:mx-[4rem] my-[3rem]">
+              <div className="right-section w-full laptop:w-1/2 laptop:mx-[4rem] laptop:my-[3rem]">
+                <div className="back-section flex items-center gap-3 laptop:hidden ">
+                  <Link
+                    to="/settings"
+                    className="text-black text-[1rem] font-bold font-montserrat mb-[1rem]"
+                  >
+                    <FontAwesomeIcon
+                      icon={faArrowLeft}
+                      size="xl"
+                      style={{ color: "black" }}
+                    />
+                  </Link>
+                </div>
                 <div className="title-section flex laptop:justify-evenly laptop:items-center mobile:justify-start mobile:items-start">
                   <h1 className="text-[1.8rem] font-bold text-black ">
                     Ubah Password
                   </h1>
                 </div>
 
-                <div className="flex flex-col gap-3 font-montserrat mt-[2rem]">
+                <div className="flex flex-col gap-3 font-montserrat mt-[1.5rem]">
                   <span className="text-[1rem] ">Masukan Password Lama</span>
 
                   <div className="relative">

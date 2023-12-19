@@ -12,6 +12,7 @@ import time from "../../assets/img/icon/time.png";
 import notif_pay from "../../assets/img/icon/notif_pay.png";
 import background from "../../assets/img/icon/uiux_image.jpg";
 import { faStar } from "@fortawesome/free-regular-svg-icons";
+import { Link } from "react-router-dom";
 
 export const RiwayatPembayaran = () => {
   return (
@@ -36,7 +37,7 @@ export const RiwayatPembayaran = () => {
         </div>
 
         <div className="flex mx-[0.9rem] mt-[1rem] justify-center items-center">
-          <div className="modal flex flex-col laptop:border laptop:border-[#6148FF] laptop:h-[100%] w-full laptop:w-[75%] rounded-[1rem]">
+          <div className="modal flex flex-col laptop:border laptop:border-[#6148FF] min-h-screen laptop:h-[60rem] w-full laptop:w-[75%] rounded-[1rem] mb-[5rem]">
             <div className="title hidden laptop:flex w-full h-[4.7rem]  justify-center items-center  laptop:bg-[#6148FF] rounded-t-2xl">
               <span className=" flex laptop:justify-center laptop:items-center text-white font-bold text-[1.8rem] py-3">
                 Akun
@@ -51,36 +52,45 @@ export const RiwayatPembayaran = () => {
                     <img
                       src={pencil}
                       alt=""
-                      className="w-[1.6rem] h-[1.6rem] "
+                      className="w-[1.5rem] h-[1.5rem] "
                     />
-                    <span className="text-black text-[0.9rem] font-semibold ">
+                    <a
+                      className="text-black text-[0.9rem] font-bold hover:text-[#6148FF]"
+                      href="/profil"
+                    >
                       Profil Saya
-                    </span>
+                    </a>
                   </div>
                   <hr />
                   <div className=" flex flex-row gap-4">
                     <img
                       src={settings}
                       alt=""
-                      className="w-[1.6rem] h-[1.6rem]"
+                      className="w-[1.5rem] h-[1.5rem]"
                     />
-                    <span className="text-black text-[0.9rem] font-semibold">
+                    <a
+                      className="text-black text-[0.9rem] font-bold hover:text-[#6148FF]"
+                      href="/ubahPassword"
+                    >
                       Ubah Password
-                    </span>
+                    </a>
                   </div>
                   <hr />
                   <div className=" flex flex-row gap-4">
-                    <img src={pay} alt="" className="w-[1.6rem] h-[1.6rem]" />
+                    <img src={pay} alt="" className="w-[1.5rem] h-[1.5rem]" />
                     <span className="text-[#6148FF] text-[1.1rem] font-bold">
                       Riwayat Pembelian
                     </span>
                   </div>
                   <hr />
                   <div className=" flex flex-row gap-4">
-                    <img src={out} alt="" className="w-[1.6rem] h-[1.6rem]" />
-                    <span className="text-black text-[0.9rem] font-semibold">
+                    <img src={out} alt="" className="w-[1.5rem] h-[1.5rem]" />
+                    <a
+                      className="text-black text-[0.9rem] font-bold hover:text-[#6148FF]"
+                      href="/"
+                    >
                       Keluar
-                    </span>
+                    </a>
                   </div>
                   <hr />
                   <div className=" flex justify-center items-center p-5">
@@ -91,15 +101,27 @@ export const RiwayatPembayaran = () => {
 
               {/* Right Section */}
               <div className="right-section w-full laptop:w-1/2 laptop:my-[2rem] ">
+                <div className="back-section flex items-center gap-3 laptop:hidden ">
+                  <Link
+                    to="/settings"
+                    className="text-black text-[1rem] font-bold font-montserrat mb-[1rem]"
+                  >
+                    <FontAwesomeIcon
+                      icon={faArrowLeft}
+                      size="xl"
+                      style={{ color: "black" }}
+                    />
+                  </Link>
+                </div>
                 <div className="title-section flex laptop:justify-evenly laptop:items-center mobile:justify-start mobile:items-start">
-                  <h1 className="text-[1.8rem] font-bold text-black ">
+                  <h1 className="text-[1.8rem] font-bold text-black mt-[1rem] ">
                     Riwayan Pembayaran
                   </h1>
                 </div>
 
                 {/* Riwayat Pembayaran*/}
                 <div className="flex flex-col ">
-                  <div className="first-payment rounded-[1rem] mx-[1rem] mt-[1.5rem] h-[20%] border-2 flex flex-col">
+                  <div className="first-payment bg-white rounded-[1rem] mx-[1rem] mt-[1.5rem] h-[20%] border-2 flex flex-col">
                     <img
                       src={background}
                       alt=""
@@ -162,7 +184,7 @@ export const RiwayatPembayaran = () => {
                     </div>
                   </div>
 
-                  <div className="second-payment rounded-[1rem] mx-[1rem] mt-[1rem] h-[30%] border-2 flex flex-col">
+                  <div className="second-payment bg-white rounded-[1rem] mx-[1rem] mt-[1rem] h-[30%] border-2 flex flex-col">
                     <img
                       src={background}
                       alt=""
@@ -224,7 +246,7 @@ export const RiwayatPembayaran = () => {
                       </span>
                     </div>
                   </div>
-                  <div className="second-payment rounded-[1rem] mx-[1rem] mt-[1rem] h-[30%] border-2 flex flex-col">
+                  <div className="third-payment bg-white rounded-[1rem] mx-[1rem] mt-[1rem] h-[30%] border-2 flex flex-col">
                     <img
                       src={background}
                       alt=""
