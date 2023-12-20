@@ -1,7 +1,7 @@
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import NavbarComponents from "../../assets/components/NavbarComponents";
 import arrow_down from "../../assets/img/icon/arrow-down.svg";
 import arrow_up from "../../assets/img/icon/arrow-up.svg";
@@ -11,6 +11,7 @@ import amex from "../../assets/img/icon/amex logo.svg";
 import paypal from "../../assets/img/icon/paypal logo.svg";
 import arrow_buy from "../../assets/img/icon/carbon_next-filled.svg";
 import { getClasses } from "../../services/class/get-classByID";
+// import { Option, Select } from "@material-tailwind/react";
 
 const DetailKelasPembayaran = () => {
   const [BankAccordionOpen, setBankAccordionOpen] = useState(false);
@@ -42,6 +43,8 @@ const DetailKelasPembayaran = () => {
       day: "numeric",
       month: "long",
       year: "numeric",
+      // hour: "numeric",
+      // minute: "numeric"
     };
 
     const deadlineString = deadlineDate.toLocaleDateString("id-ID", options);
@@ -74,23 +77,25 @@ const DetailKelasPembayaran = () => {
 
       <div className="header-section hidden laptop:flex laptop:flex-col gap-[1.25rem] justify-center w-full bg-[#FFFF] shadow-lg items-center px-[5rem] py-[1.5rem]">
         <div className="back-arrow-section flex items-center gap-4 w-[100%] ml-[1rem]">
-          <FontAwesomeIcon
-            className="cursor-pointer"
-            icon={faArrowLeft}
-            size="md"
-            style={{ color: "black" }}
-            onClick={() => {
-              navigate("/detailKelas");
-            }}
-          />
-          <span
-            className="font-montserrat font-black text-[1rem] leading-[1.5rem] cursor-pointer"
-            onClick={() => {
-              navigate("/detailKelas");
-            }}
-          >
-            Kembali
-          </span>
+          <Link to={`/detailKelas/${classId}`}>
+            <FontAwesomeIcon
+              className="cursor-pointer"
+              icon={faArrowLeft}
+              size="md"
+              style={{ color: "black" }}
+            />
+          </Link>
+
+          <Link to={`/detailKelas/${classId}`}>
+            <span
+              className="font-montserrat font-black text-[1rem] leading-[1.5rem] cursor-pointer"
+              onClick={() => {
+                navigate("/detailKelas");
+              }}
+            >
+              Kembali
+            </span>
+          </Link>
         </div>
         <div className="deadline-button-container flex items-center justify-center bg-[#FF0000] rounded-[0.75rem] w-[60%] py-[0.8rem]">
           <span className="font-montserrat text-white text-[1rem] leading-[1.5rem] font-bold tracking-wide">
@@ -115,7 +120,19 @@ const DetailKelasPembayaran = () => {
             />
           </div>
 
-          {BankAccordionOpen && <div>Hello Bank</div>}
+          {BankAccordionOpen && (
+            <div className="modal-bank-transfer-container flex flex-col justify-center items-center gap-[1rem] w-full py-[1.5rem] bg-[#FFF] shadow-lg rounded-[1rem] -mt-2">
+              {/* <div className="select-container w-72"> */}
+                {/* <Select label="Select Version">
+                  <Option>Material Tailwind HTML</Option>
+                  <Option>Material Tailwind React</Option>
+                  <Option>Material Tailwind Vue</Option>
+                  <Option>Material Tailwind Angular</Option>
+                  <Option>Material Tailwind Svelte</Option>
+                </Select> */}
+              {/* </div> */}
+            </div>
+          )}
 
           <div
             className="credit-card-container flex items-center justify-between bg-dark-blue rounded-[0.5rem] px-[1rem] py-[.75rem]"
@@ -284,15 +301,17 @@ const DetailKelasPembayaran = () => {
       {/* Mobile */}
       <div className="mobile-container laptop:hidden w-full h-full bg-[#EBF3FC] flex flex-col gap-[1vh] px-[3vh] py-[1.75vh]">
         <div className="back-arrow ml-[2vh]">
-          <FontAwesomeIcon
-            className="cursor-pointer"
-            icon={faArrowLeft}
-            size="xl"
-            style={{ color: "black" }}
-            onClick={() => {
-              navigate("/detailKelas");
-            }}
-          />
+          <Link to={`/detailKelas/${classId}`}>
+            <FontAwesomeIcon
+              className="cursor-pointer"
+              icon={faArrowLeft}
+              size="xl"
+              style={{ color: "black" }}
+              // onClick={() => {
+              //   navigate("/detailKelas");
+              // }}
+            />
+          </Link>
         </div>
 
         <div className="course-container flex flex-col px-[2vh] py-[1.5vh] gap-2 rounded-[0.6rem] h-[35vh] mt-[1.5vh] bg-[#FFFF] shadow-lg">
