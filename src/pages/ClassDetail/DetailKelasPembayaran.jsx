@@ -11,7 +11,7 @@ import amex from "../../assets/img/icon/amex logo.svg";
 import paypal from "../../assets/img/icon/paypal logo.svg";
 import arrow_buy from "../../assets/img/icon/carbon_next-filled.svg";
 import { getClasses } from "../../services/class/get-classByID";
-// import { Option, Select } from "@material-tailwind/react";
+import { Option, Select } from "@material-tailwind/react";
 
 const DetailKelasPembayaran = () => {
   const [BankAccordionOpen, setBankAccordionOpen] = useState(false);
@@ -122,15 +122,13 @@ const DetailKelasPembayaran = () => {
 
           {BankAccordionOpen && (
             <div className="modal-bank-transfer-container flex flex-col justify-center items-center gap-[1rem] w-full py-[1.5rem] bg-[#FFF] shadow-lg rounded-[1rem] -mt-2">
-              {/* <div className="select-container w-72"> */}
-                {/* <Select label="Select Version">
-                  <Option>Material Tailwind HTML</Option>
-                  <Option>Material Tailwind React</Option>
-                  <Option>Material Tailwind Vue</Option>
-                  <Option>Material Tailwind Angular</Option>
-                  <Option>Material Tailwind Svelte</Option>
-                </Select> */}
-              {/* </div> */}
+              <div className="select-container w-72 h-50">
+                <Select label="Select Version">
+                  <Option>BRI</Option>
+                  <Option>BNI</Option>
+                  <Option>BCA</Option>
+                </Select>
+              </div>
             </div>
           )}
 

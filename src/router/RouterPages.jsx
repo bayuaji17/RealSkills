@@ -18,7 +18,7 @@ import { FilterResultKelas } from "../pages/FilterResultKelas";
 import { FilterResultTopik } from "../pages/FilterResultTopik";
 // import TestDetailKelas from "../pages/ClassDetail/TestDetailKelas";
 import KelasDummy from "../pages/ClassDetail/KelasDummy";
-import SelectDefault from "../pages/ClassDetail/SelectDefault";
+// import SelectDefault from "../pages/ClassDetail/SelectDefault";
 // import { SelectDefault } from "../pages/ClassDetail/SelectDefault";
 
 export const RouterPages = () => {
@@ -42,7 +42,7 @@ export const RouterPages = () => {
         <Route path="/pembayaran/:classId" element={<DetailKelasPembayaran />} />
         <Route path="/pembayaranSukses" element={<PembayaranSukses />} />
         <Route path="/dummy" element={<KelasDummy/>}/>
-        <Route path="/select" element={<SelectDefault/>}/>
+        {/* <Route path="/select" element={<SelectDefault/>}/> */}
         {/* <Route path="/detailKelas/:classId" element={<TestDetailKelas/>}/> */}
       </Routes>
     </BrowserRouter>

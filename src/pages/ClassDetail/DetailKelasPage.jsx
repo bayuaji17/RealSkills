@@ -7,7 +7,7 @@ import badge from "../../assets/img/icon/badge-svg.svg";
 import modul from "../../assets/img/icon/clarity_book-line.svg";
 import time from "../../assets/img/icon/ri_time-fill.svg";
 import message from "../../assets/img/icon/gridicons_chat.svg";
-import play_video from "../../assets/img/icon/play video.svg";
+// import play_video from "../../assets/img/icon/play video.svg";
 import progress_check from "../../assets/img/icon/progress-check.svg";
 import done_play_button from "../../assets/img/icon/green-play.svg";
 import undone_play_button from "../../assets/img/icon/dark-blue-play.svg";
@@ -17,6 +17,7 @@ import arrow_buy from "../../assets/img/icon/carbon_next-filled.svg";
 import star from "../../assets/img/icon/ic_round-star.svg";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getClasses } from "../../services/class/get-classByID";
+import ReactPlayer from "react-player";
 // import ChapterContainer from "../../components/DetailClassComponents/ChapterContainer";
 
 const DetailKelasPage = () => {
@@ -25,6 +26,8 @@ const DetailKelasPage = () => {
   const [PaymentModal, setPaymentModal] = useState(false);
   const [Detail, setDetail] = useState([]);
   const [CourseChapter, setCourseChapter] = useState([]);
+  const [SelectedVideo, setSelectedVideo] = useState("");
+  const [isVideoClicked, setisVideoClicked] = useState(false);
   const background_uiux = require("../../assets/img/image/uiux-person.jpg");
   const navigate = useNavigate();
   const { classId } = useParams();
@@ -60,7 +63,8 @@ const DetailKelasPage = () => {
 
     fetchDetailClasses();
     fetchClassesChapters();
-  }, [classId]);
+    console.log(SelectedVideo);
+  }, [classId, SelectedVideo]);
 
   const toogleTentangKelas = () => {
     setTentangKelas(true);
@@ -188,8 +192,25 @@ const DetailKelasPage = () => {
       {/* Class Detail Section */}
       <div className="class-detail-section hidden mobile:hidden laptop:flex w-full py-[2rem]">
         <div className="left-class-section w-[60%] flex flex-col gap-[1.5rem] mx-[6.5rem]">
-          <div className="video-play-container bg-[rgba(0,0,0,0.85)] w-full h-[25rem] rounded-[1.525rem] flex justify-center items-center">
-            <img src={play_video} alt="play-video" />
+          <div className="video-play-container w-full h-[25rem] rounded-[1.525rem]">
+            {/* <img src={play_video} alt="play-video" /> */}
+            <div className="player-wrapper h-full">
+              {!isVideoClicked ? (
+                <div className="flex justify-center items-center w-full h-full bg-[rgba(0,0,0,0.80)] rounded-[1.5rem]">
+                  <span className="text-[1.5rem] text-dark-blue font-montserrat font-bold leading-[1.25rem]">
+                    Klik Dulu Videonya
+                  </span>
+                </div>
+              ) : (
+                <ReactPlayer
+                  className="react-player"
+                  url={SelectedVideo}
+                  width="100%"
+                  height="100%"
+                  controls={true}
+                />
+              )}
+            </div>
           </div>
           <div className="about-class-container flex flex-col gap-[1rem]">
             <span className="font-montserrat font-black text-[1.5rem] leading-[0.9rem]">
@@ -310,6 +331,10 @@ const DetailKelasPage = () => {
                               }
                               width="20"
                               className="cursor-pointer"
+                              onClick={() => {
+                                setSelectedVideo(vids.link);
+                                setisVideoClicked(true);
+                              }}
                             />
                           )}
                         </div>
@@ -442,7 +467,16 @@ const DetailKelasPage = () => {
       {/* Mobile */}
       <div className="mobile-section w-full h-screen bg-slate-600 block laptop:hidden">
         <div className="play-video-mobile-container bg-[rgba(0,0,0,0.85)] w-full h-[30%] flex justify-center items-center">
-          <img src={play_video} alt="play-video-course" />
+          {/* <img src={play_video} alt="play-video-course" /> */}
+          <div className="player-wrapper h-[90%] w-full">
+            <ReactPlayer
+              className="react-player"
+              url="https://youtu.be/DwTkyMJi890"
+              width="100%"
+              height="100%"
+              controls={true}
+            />
+          </div>
         </div>
 
         <div className="mobile-materi-section flex flex-col gap-[.9rem] rounded-[1.5rem] -mt-[2rem] h-full bg-[#FFFF] py-[2rem]">
