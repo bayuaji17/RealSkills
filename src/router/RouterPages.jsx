@@ -12,7 +12,7 @@ import { TopikKelas } from "../pages/TopikKelas";
 import FilterSide from "../components/FilterSide";
 import { FilterResultKelas } from "../pages/FilterResultKelas";
 import { FilterResultTopik } from "../pages/FilterResultTopik";
-
+import {SearchResult} from "../components/SearchResult"
 
 export const RouterPages = () => {
   return (
@@ -30,6 +30,8 @@ export const RouterPages = () => {
         <Route path="/filterResultTopik" element={<FilterResultTopik/>}/>
         <Route path="/reset" element={<ResetPasswordTautanPage />} />
         <Route path="/resetPassword" element={<ResetPasswordPage />} />
+        <Route path="/search" element={<SearchResult/>} />
+
       </Routes>
     </BrowserRouter>
   );

@@ -1,10 +1,9 @@
-// import { API_ENDPOINT } from "../utils/api-endpoint";
-// import http from "../utils/http";
+import { API_ENDPOINT } from "../utils/api-endpoint";
+import http from "../utils/http";
 
-// const fetchSearch = async ({ query }) => {
-//   const { dataSearch } = await http.get(API_ENDPOINT.SEARCH(query));
-//   return dataSearch;
+export const fetchSearch = async (query) => {
+  return await http.get(API_ENDPOINT.SEARCH(query));
+  // console.log(dataSearch.data, "ininiiiiiiiiidata")
+  // return dataSearch.data;
  
-// };
-
-// export {fetchSearch};
+};

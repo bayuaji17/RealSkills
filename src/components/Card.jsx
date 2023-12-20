@@ -14,6 +14,7 @@ export const Card = ({ isCourse, myClass, isTopik,  filteredType, filterCategory
   const fetchData = async () => {
     try {
       const data = await allClass(page);
+      console.log(data)
       setClassData(data.data.classes);
     } catch (error) {
       console.error("Error fetching class data:", error);
@@ -24,6 +25,7 @@ export const Card = ({ isCourse, myClass, isTopik,  filteredType, filterCategory
     fetchData();
   }, [authToken, page]);
 
+  
   const getById = (id, mapping) => {
     const match = mapping.find((item) => item.id === id);
     return match ? match.label : "Unknown";
@@ -84,7 +86,6 @@ export const Card = ({ isCourse, myClass, isTopik,  filteredType, filterCategory
     return filterResult;
   };
   
-
   const data = filteredClasses()
   return (
     // <div className="flex justify-between gap-3 overflow-x-auto  laptop:flex-wrap">
@@ -145,7 +146,7 @@ export const Card = ({ isCourse, myClass, isTopik,  filteredType, filterCategory
                     fill="#73CA5C"
                   />
                 </svg>
-                {value.modules} Modul
+                {value.module} Modul
               </p>
               <p className=" flex  items-center text-xs">
                 <svg

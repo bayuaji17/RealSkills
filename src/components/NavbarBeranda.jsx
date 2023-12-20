@@ -1,7 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../assets/img/logo.png";
+import { useNavigate } from "react-router-dom";
 
 export const NavbarBeranda = () => {
+  const [result, setResult] = useState();
+  const navigate = useNavigate();
+  
+  const searchResults = (e) => {
+    e.preventDefault();
+    navigate(`/search`);
+    setResult();
+  };
+
+  const enter = (e) => {
+    if (e.key === "Enter") {
+      searchResults(e); 
+    }
+  }
   return (
     
       <div className="hidden laptop:flex flex-row bg-[#6148FF] p-2 justify-between">
@@ -10,10 +25,14 @@ export const NavbarBeranda = () => {
           <h1 className=" text-lg mr-20">RealSkills</h1>
         <div className="flex relative">
           <input
-            className="p-3 w-[25rem] flex justify-between rounded-lg"
+            className="p-3 w-[25rem] flex justify-between rounded-lg text-[#6148FF]"
             placeholder="Cari Kursus terbaik...."
+            onChange={(e) => setResult(e.target.value)}
+            onKeyDown={enter}
           />
-          <button className=" bg-[#6148FF] absolute right-3 mt-3 rounded-md">
+          <button 
+          onClick={searchResults}
+          className=" bg-[#6148FF] absolute right-3 mt-3 rounded-md">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"

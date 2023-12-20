@@ -8,6 +8,7 @@ import { faStar } from "@fortawesome/free-solid-svg-icons"; // Import the specif
 
 export const FilterResultTopik = () => {
   
+  
   return (
     <div className="bg-[#EBF3FC] h-screen flex flex-col">
       <NavbarKelas />

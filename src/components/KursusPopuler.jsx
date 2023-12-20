@@ -2,17 +2,15 @@ import React, { useState } from "react";
 import { Card } from "./Card";
 
 export const KursusPopuler = () => {
-
-    // State untuk melacak kategori yang dipilih
-    const [filterCategory, setFilterCategory] = useState("all");
+  const [filterCategory, setFilterCategory] = useState("all");
   
 
     
   return (
-    <div className="px-4 py-1 laptop:mx-[6rem] laptop:px-0">
+    <div className="px-4 py-1 laptop:mx-[6rem] laptop:px-0 bg-[#EBF3FC] laptop:bg-white">
       <h1 className="font-semibold text-xl text-md">Kursus Populer</h1>
       <div className=" flex justify-between item-center">
-        <div className="flex p-2 font-bold  gap-5 w-full text-sm overflow-x-auto">
+        <div className="flex p-2 justify-between item-center font-bold  gap-5 w-full text-sm overflow-x-auto">
           <button 
           onClick={() => setFilterCategory("all")}
           className=" py-1 px-3 rounded-2xl bg-[#E8F1FF] hover:bg-[#6148FF] hover:text-white active:bg-[#6148FF] active:text-white focus:text-white focus:outline-none focus:ring focus:ring-violet-300 focus:bg-[#6148FF] laptop:py-1 laptop:px-3 laptop:rounded-2xl">
