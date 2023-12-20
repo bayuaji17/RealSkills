@@ -6,6 +6,12 @@ import { RegisterPage } from "../pages/authentication/RegisterPage";
 import { LoginAdminPage } from "../pages/authentication/LoginAdminPage";
 import ResetPasswordPage from "../pages/authentication/ResetPassword/ResetPasswordPage";
 import ResetPasswordTautanPage from "../pages/authentication/ResetPassword/ResetPasswordTautanPage";
+import { AdminDashboard } from "../pages/admin/AdminDashboard";
+import { KelolaKelas } from "../pages/admin/KelolaKelas";
+import { NotFoundPage } from "../pages/NotFoundPage";
+import { TestGrid } from "../pages/admin/TestGrid";
+import { DetailsKelolaKelas } from "../pages/DetailsKelolaKelas";
+
 
 export const RouterPages = () => {
   return (
@@ -15,6 +21,15 @@ export const RouterPages = () => {
         <Route path="login" element={<LoginPage />} />
         <Route path="admin" element={<LoginAdminPage />} />
         <Route path="register" element={<RegisterPage />} />
+        <Route path="admin/dashboard" element={<AdminDashboard/>} />
+        <Route path="admin/kelola-kelas" element={<KelolaKelas/>} />
+        <Route path="admin/kelola-kelas/:id" element={<DetailsKelolaKelas/>} />
+
+
+
+        <Route path="test" element={<TestGrid/>} />
+        <Route path="*" element={<NotFoundPage/>} />
+
 
         <Route path="/reset" element={<ResetPasswordTautanPage />} />
         <Route path="/resetPassword" element={<ResetPasswordPage />} />
