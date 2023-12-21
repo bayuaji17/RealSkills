@@ -27,6 +27,7 @@ const DetailKelasPage = () => {
   const [Detail, setDetail] = useState([]);
   const [CourseChapter, setCourseChapter] = useState([]);
   const [SelectedVideo, setSelectedVideo] = useState("");
+  const [FirstVideoPlay, setFirstVideoPlay] = useState("")
   const [isVideoClicked, setisVideoClicked] = useState(false);
   const background_uiux = require("../../assets/img/image/uiux-person.jpg");
   const navigate = useNavigate();
@@ -54,8 +55,9 @@ const DetailKelasPage = () => {
       try {
         const response = await getClasses(classId);
         setCourseChapter(response.data.data.chapters);
+        setFirstVideoPlay(response.data.data.chapters[0].videos[0].link)
         // console.log(response.data.data.chapters, "chapters");
-        // console.log(response.data.data.chapters[0].videos[0].title);
+        // console.log(response.data.data.chapters[0].videos[0].link, 'link');
       } catch (error) {
         console.log(error, "error chapters");
       }
@@ -63,7 +65,7 @@ const DetailKelasPage = () => {
 
     fetchDetailClasses();
     fetchClassesChapters();
-    console.log(SelectedVideo);
+    // console.log(SelectedVideo);
   }, [classId, SelectedVideo]);
 
   const toogleTentangKelas = () => {
@@ -138,7 +140,7 @@ const DetailKelasPage = () => {
                 style={{ color: "#F9CC00" }}
               />
               <span className="font-montserrat text-[#202244] font-bold leading-[0.9rem] text-[0.9rem]">
-                5.0
+                {Detail.rating}
               </span>
             </div>
           </div>
@@ -196,11 +198,14 @@ const DetailKelasPage = () => {
             {/* <img src={play_video} alt="play-video" /> */}
             <div className="player-wrapper h-full">
               {!isVideoClicked ? (
-                <div className="flex justify-center items-center w-full h-full bg-[rgba(0,0,0,0.80)] rounded-[1.5rem]">
-                  <span className="text-[1.5rem] text-dark-blue font-montserrat font-bold leading-[1.25rem]">
-                    Klik Dulu Videonya
-                  </span>
-                </div>
+                <ReactPlayer
+                className='react-player'
+                url={FirstVideoPlay}
+                width="100%"
+                height="100%"
+                controls={true}
+
+                />
               ) : (
                 <ReactPlayer
                   className="react-player"
@@ -279,7 +284,7 @@ const DetailKelasPage = () => {
                 <div className="chapter-parents my-[.5rem]" key={chapterIndex}>
                   <div className="title-chapter-section flex justify-between items-center">
                     <span className="font-montserrat font-black text-[0.9rem] text-dark-blue leading-[2.25rem]">
-                      {value.title}
+                      Chapter {value.no_chapter} - {value.title}
                     </span>
                     <span className="font-montserrat text-[#489CFF] font-black leading-[2.25rem] text-[0.9rem]">
                       60 Menit
@@ -397,7 +402,7 @@ const DetailKelasPage = () => {
                                 style={{ color: "#F9CC00" }}
                               />
                               <span className="font-montserrat text-[#202244] font-bold leading-[0.9rem] text-[0.9rem]">
-                                5.0
+                                {Detail.rating}
                               </span>
                             </div>
                           </div>
@@ -499,7 +504,7 @@ const DetailKelasPage = () => {
             <div className="rating-star-section flex items-center">
               <img src={star} alt="rate-star" style={{ width: "2vh" }} />
               <span className="font-montserrat text-[#202244] font-bold leading-[1vh] text-[1.75vh]">
-                5.0
+                {Detail.rating}
               </span>
             </div>
           </div>
@@ -752,7 +757,7 @@ const DetailKelasPage = () => {
                                 style={{ color: "#F9CC00" }}
                               />
                               <span className="font-montserrat text-[#202244] font-bold leading-[0.9rem] text-[1.8vh]">
-                                5.0
+                                {Detail.rating}
                               </span>
                             </div>
                           </div>
