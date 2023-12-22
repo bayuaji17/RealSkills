@@ -18,7 +18,7 @@ const http = axios.create({
 http.interceptors.request.use((config) => {
   config.headers = {
     ...config.headers,
-    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZlODk3ODgwLWRiNmMtNGU5MC1hYjY3LWU3ODMwOTk1M2IzNCIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzAzMjE0MDY4fQ.mDqhDRKSQjJfIIPXe24T-uaBn7Ga7D9rpSlhFnygRHc`,
+    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM3ZDZmMjkxLTYwMzUtNGEzZS05ZjVjLWEyMmIyZjkzZWI3ZiIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzAzMjcyODE4fQ.p6M1Phc9FTurDyotLk6ltm1XHONf3oW77y5z1Wlg2rY`,
   };
   return config;
 });
