@@ -1,10 +1,11 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import NavbarComponents from "../../assets/components/NavbarComponents";
 import shopping_list from "../../assets/img/icon/shopping list_.svg";
 
 const PembayaranSukses = () => {
   const navigate = useNavigate();
+  const { classId } = useParams();
   return (
     <div className="overflow-hidden">
       <div>
@@ -31,9 +32,11 @@ const PembayaranSukses = () => {
           </span>
         </span>
         <div className="button-container flex flex-col gap-[.75rem] justify-center items-center w-full">
-          <button className="font-black text-white text-[1rem] bg-dark-blue rounded-[1.5rem] leading-[1.5rem] px-[1rem] py-[.75rem] w-[30%] font-montserrat">
-            Mulai Belajar
-          </button>
+          <Link to={`/detailKelas/${classId}`}>
+            <button className="font-black text-white text-[1rem] bg-dark-blue rounded-[1.5rem] leading-[1.5rem] px-[1rem] py-[.75rem] w-full font-montserrat">
+              Mulai Belajar
+            </button>
+          </Link>
           <span
             className="text-[#489CFF] font-black font-montserrat text-[1rem] leading-[1.5rem] cursor-pointer"
             onClick={() => {

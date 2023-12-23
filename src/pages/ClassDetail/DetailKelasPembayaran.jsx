@@ -1,7 +1,7 @@
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import NavbarComponents from "../../assets/components/NavbarComponents";
 import arrow_down from "../../assets/img/icon/arrow-down.svg";
 import arrow_up from "../../assets/img/icon/arrow-up.svg";
@@ -30,7 +30,7 @@ const DetailKelasPembayaran = () => {
   const [isNominalToMuch, setIsNominalToMuch] = useState(true);
   const [SelectedBank, setSelectedBank] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState("");
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { classId } = useParams();
 
   const rupiahFormat = new Intl.NumberFormat("id-ID", {
@@ -125,13 +125,13 @@ const DetailKelasPembayaran = () => {
         console.error("Error mengambil data Kelas:", error);
       }
     };
-    
+
     // const fetchPaymentPaid = async () => {
     //   try {
     //     const response = await updatePayment(classId);
     //     console.log(response)
     //   } catch (error) {
-        
+
     //   }
     // }
 
@@ -177,13 +177,13 @@ const DetailKelasPembayaran = () => {
   };
 
   const handleUpdatePayment = async (id) => {
-  try {
-    const response = await updatePayment(id);
-    console.log(response, 'paid payment');
-  } catch (error) {
-    console.error("Error updating payment:", error);
-  }
-};
+    try {
+      const response = await updatePayment(id);
+      console.log(response, "paid payment");
+    } catch (error) {
+      console.error("Error updating payment:", error);
+    }
+  };
 
   return (
     <div className="parents">
@@ -204,12 +204,7 @@ const DetailKelasPembayaran = () => {
           </Link>
 
           <Link to={`/detailKelas/${classId}`}>
-            <span
-              className="font-montserrat font-black text-[1rem] leading-[1.5rem] cursor-pointer"
-              onClick={() => {
-                navigate("/detailKelas");
-              }}
-            >
+            <span className="font-montserrat font-black text-[1rem] leading-[1.5rem] cursor-pointer">
               Kembali
             </span>
           </Link>
@@ -472,18 +467,20 @@ const DetailKelasPembayaran = () => {
             </div>
           </div>
 
-          <button
-            className="buy-now-btn flex items-center justify-center rounded-[1.5rem] px-[1rem] py-[.75rem] bg-[#F00] gap-2 mt-[1.5rem] mb-[0.75rem]"
-            onClick={() => {
-              // navigate("/pembayaranSukses");
-              handleUpdatePayment(classId);
-            }}
-          >
-            <span className="font-montserrat font-black text-white text-[1rem] leading-[1.5rem]">
-              Bayar dan Ikuti Kelas Selamanya
-            </span>
-            <img src={arrow_buy} alt="arrow-buy" width="20" />
-          </button>
+          <Link to={`/pembayaranSukses/${classId}`}>
+            <button
+              className="buy-now-btn flex items-center justify-center rounded-[1.5rem] px-[1rem] py-[.75rem] bg-[#F00] gap-2 mt-[1.5rem] mb-[0.75rem] w-full"
+              onClick={() => {
+                // navigate("/pembayaranSukses");
+                handleUpdatePayment(classId);
+              }}
+            >
+              <span className="font-montserrat font-black text-white text-[1rem] leading-[1.5rem]">
+                Bayar dan Ikuti Kelas Selamanya
+              </span>
+              <img src={arrow_buy} alt="arrow-buy" width="20" />
+            </button>
+          </Link>
         </div>
       </div>
       {/* End Desktop */}
