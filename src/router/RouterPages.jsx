@@ -28,7 +28,7 @@ export const RouterPages = () => {
         <Route path="/reset" element={<ResetPasswordTautanPage />} />
         <Route path="/resetPassword" element={<ResetPasswordPage />} />
         <Route path="/search" element={<SearchResult/>} />
-        <Route path="/coba" element={<Coba/>} />
+        <Route path="/coba/:id" element={<Coba/>} />
 
       </Routes>
     </BrowserRouter>

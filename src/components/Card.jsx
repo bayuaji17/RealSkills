@@ -246,7 +246,7 @@ export const Card = ({
               ) : (
                 <button 
                 onClick={() => {
-                  navigate("/coba" , {
+                  navigate(`/coba/${value.id}`, {
                     state: {
                       id : value.id,
                     },

@@ -137,10 +137,10 @@ function NavListMenu() {
       style={{ textDecoration: "none", color: "inherit" }}
     >
       <MenuItem>
-        <Typography variant="h6" color="blue-gray" className="mb-1">
+        <Typography variant="h6" color="blue-gray" className="mb-1 text-white hover:text-blue-gray-900">
           {title}
         </Typography>
-        <Typography variant="small" color="gray" className="font-normal">
+        <Typography variant="small" color="gray" className="font-normal text-white hover:text-blue-gray-900">
           {description}
         </Typography>
       </MenuItem>
@@ -153,7 +153,7 @@ function NavListMenu() {
         <MenuHandler>
           <Typography as="a" href="#" variant="small" className="font-normal">
             <MenuItem className="hidden items-center gap-2 font-medium text-white lg:flex lg:rounded-full">
-              <Square3Stack3DIcon className="h-[18px] w-[18px] text-white" />{" "}
+              <Square3Stack3DIcon className="h-[18px] w-[18px] " />{" "}
               Course{" "}
               <ChevronDownIcon
                 strokeWidth={2}
@@ -170,8 +170,8 @@ function NavListMenu() {
           </ul>
         </MenuList>
       </Menu>
-      <MenuItem className="flex items-center gap-2 font-medium text-white lg:hidden">
-        <Square3Stack3DIcon className="h-[18px] w-[18px] text-white" />{" "}
+      <MenuItem className="flex items-center gap-2 font-medium  text-white lg:hidden">
+        <Square3Stack3DIcon className="h-[18px] w-[18px]  text-base" />{" "}
         Course{" "}
       </MenuItem>
       <ul className="ml-6 flex w-full flex-col gap-1 lg:hidden">
@@ -207,11 +207,11 @@ function NavList() {
           to={path}
           variant="small"
           color="gray"
-          className="font-medium text-white"
+          className="font-medium text-white "
         >
-          <MenuItem className="flex items-center gap-2 lg:rounded-full">
+          <MenuItem className="flex items-center gap-2 lg:rounded-full text-base">
             {React.createElement(icon, { className: "h-[18px] w-[18px]" })}{" "}
-            <span className="text-white"> {label}</span>
+            <span className="text-white hover:text-blue-gray-900"> {label}</span>
           </MenuItem>
         </Typography>
       ))}
@@ -235,7 +235,6 @@ export const NavbarLogin = () => {
   };
 
   useEffect(() => {
-    console.log(searchData, "apa iniiii") //benar
       if (searchData) {
         navigate('/search?query=' + search, { state: { results: searchData.classes, query: search} });
 
@@ -269,11 +268,11 @@ export const NavbarLogin = () => {
             <NavList />
           </div>
           <IconButton
-            size="lg"
-            color="blue-gray"
+            size="base"
+            color="white"
             variant="text"
             onClick={toggleIsNavOpen}
-            className="ml-auto mr-2 lg:hidden"
+            className="ml-auto mr-2 lg:hidden "
           >
             <Bars2Icon className="h-6 w-6" />
           </IconButton>
@@ -281,7 +280,7 @@ export const NavbarLogin = () => {
         <div className="flex gap-2">
           <div className="flex relative">
             <input
-              className="p-2 text-sm flex justify-between rounded-lg shadow-sm w-full text-[#6148FF]"
+              className="p-2 text-sm flex justify-between rounded-lg shadow-sm w-[7.2rem] laptop:w-full text-[#6148FF]"
               placeholder="Cari Kursus terbaik...."
               onChange={(e) => setSearch(e.target.value)}
               onKeyDown={enter}
