@@ -14,8 +14,7 @@ const FormInput = ({
   value,
   onChange,
   isValid,
-  isIconValid,
-  isPassword,
+  isIconValid
 }) => {
   const inputClassName = () => {
     if (isValid === true) {
