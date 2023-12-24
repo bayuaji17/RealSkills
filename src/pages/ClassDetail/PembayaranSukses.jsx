@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import NavbarComponents from "../../assets/components/NavbarComponents";
 import shopping_list from "../../assets/img/icon/shopping list_.svg";
+import { NavbarKelas } from "../../components/NavbarKelas";
 
 const PembayaranSukses = () => {
   const navigate = useNavigate();
@@ -9,7 +9,7 @@ const PembayaranSukses = () => {
   return (
     <div className="overflow-hidden">
       <div>
-        <NavbarComponents />
+        <NavbarKelas />
       </div>
 
       <div className="header-section flex flex-col justify-center w-full bg-[#FFFF] shadow-lg items-center px-[5rem] py-[1.5rem] overflow-hidden">

@@ -2,7 +2,7 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import NavbarComponents from "../../assets/components/NavbarComponents";
+// import NavbarComponents from "../../assets/components/NavbarComponents";
 import arrow_down from "../../assets/img/icon/arrow-down.svg";
 import arrow_up from "../../assets/img/icon/arrow-up.svg";
 import mastercard from "../../assets/img/icon/mastercard logo.svg";
@@ -17,6 +17,7 @@ import { getClasses } from "../../services/class/get-classByID";
 import { Option, Select } from "@material-tailwind/react";
 import { postPayments } from "../../services/payments/create-payments";
 import { updatePayment } from "../../services/payments/update-payments";
+import { NavbarKelas } from "../../components/NavbarKelas";
 
 const DetailKelasPembayaran = () => {
   const [BankAccordionOpen, setBankAccordionOpen] = useState(false);
@@ -189,7 +190,7 @@ const DetailKelasPembayaran = () => {
     <div className="parents">
       {/* Desktop */}
       <div className="hidden laptop:block">
-        <NavbarComponents />
+        <NavbarKelas />
       </div>
 
       <div className="header-section hidden laptop:flex laptop:flex-col gap-[1.25rem] justify-center w-full bg-[#FFFF] shadow-lg items-center px-[5rem] py-[1.5rem]">

@@ -30,6 +30,7 @@ const DetailKelasPage = () => {
   const [SelectedVideo, setSelectedVideo] = useState("");
   const [FirstVideoPlay, setFirstVideoPlay] = useState("");
   const [isVideoClicked, setisVideoClicked] = useState(false);
+  const [VideoID, setVideoID] = useState("");
   // const background_uiux = require("../../assets/img/image/uiux-person.jpg");
   const navigate = useNavigate();
   const { classId } = useParams();
@@ -79,7 +80,7 @@ const DetailKelasPage = () => {
 
     const fetchWatchedVideos = async () => {
       try {
-        const response = await getWatchedVideos();
+        const response = await getWatchedVideos(VideoID);
         console.log(response, "watchedVideos");
       } catch (error) {
         console.error(error);
@@ -91,7 +92,7 @@ const DetailKelasPage = () => {
     fetchPaymentsDetail();
     fetchWatchedVideos();
     // console.log(SelectedVideo);
-  }, [classId]);
+  }, [classId, VideoID]);
 
   const toogleTentangKelas = () => {
     setTentangKelas(true);
@@ -298,7 +299,7 @@ const DetailKelasPage = () => {
                   PaymentDetail.find(
                     (payment) => payment.class_id === Detail.id
                   )?.class_id &&
-                PaymentDetail.some((payment) => payment.is_paid));
+                  PaymentDetail.some((payment) => payment.is_paid));
               return (
                 <div className="chapter-parents my-[.5rem]" key={chapterIndex}>
                   <div className="title-chapter-section flex justify-between items-center">
@@ -357,6 +358,7 @@ const DetailKelasPage = () => {
                                         className="cursor-pointer"
                                         onClick={() => {
                                           if (isChapterUnlocked) {
+                                            setVideoID(watched.video_id);
                                             setSelectedVideo(vids.link);
                                             setisVideoClicked(true);
                                           } else {
@@ -366,11 +368,18 @@ const DetailKelasPage = () => {
                                       />
                                     ) : (
                                       <img
-                                        src={undone_play_button}
+                                        src={
+                                          isChapterUnlocked
+                                            ? watched.is_watched
+                                              ? done_play_button
+                                              : undone_play_button
+                                            : locked
+                                        }
                                         alt="play-undone-button"
                                         width="20"
                                         className="cursor-pointer"
                                         onClick={() => {
+                                          setVideoID(watched.video_id);
                                           setSelectedVideo(vids.link);
                                           setisVideoClicked(true);
                                         }}
