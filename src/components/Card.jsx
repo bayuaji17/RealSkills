@@ -3,18 +3,25 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { allClass } from "../services/get-allclass";
 import { Progress } from "@material-tailwind/react";
-import { CookieKeys, CookieStorage } from "../utils/cookies";
+import { useNavigate } from "react-router-dom";
 
-export const Card = ({ isCourse, myClass, isTopik,  filteredType, filterCategory}) => {
-  const authToken = CookieStorage.get(CookieKeys.AuthToken);
 
+export const Card = ({
+  isCourse,
+  myClass,
+  isTopik,
+  filteredType,
+  filterCategory,
+}) => {
   const [classData, setClassData] = useState([]);
   const [page, setPage] = useState(1);
+  const navigate = useNavigate();
+
 
   const fetchData = async () => {
     try {
       const data = await allClass(page);
-      console.log(data)
+      // console.log(data);
       setClassData(data.data.classes);
     } catch (error) {
       console.error("Error fetching class data:", error);
@@ -22,10 +29,11 @@ export const Card = ({ isCourse, myClass, isTopik,  filteredType, filterCategory
   };
 
   useEffect(() => {
-    fetchData();
-  }, [authToken, page]);
+    fetchData()
+  }, [page]);
 
-  
+
+
   const getById = (id, mapping) => {
     const match = mapping.find((item) => item.id === id);
     return match ? match.label : "Unknown";
@@ -49,21 +57,15 @@ export const Card = ({ isCourse, myClass, isTopik,  filteredType, filterCategory
     { id: 6, label: "Data Science" },
   ];
 
-  // const filteredClasses = classData.filter((value) => {
-  //   if (filteredType === "all") return true;
-  //   if (filteredType === "premium" && value.type_id === 2) return true;
-  //   if (filteredType === "gratis" && value.type_id === 1) return true;
-  //   return false;
-  // });
 
   const filteredClasses = () => {
     let filterResult = classData;
-  
+
     const typeFilters = {
-      "premium": 2,
-      "gratis": 1,
+      premium: 2,
+      gratis: 1,
     };
-  
+
     const categoryFilters = {
       "UI/UX Design": 1,
       "Product Management": 2,
@@ -73,20 +75,38 @@ export const Card = ({ isCourse, myClass, isTopik,  filteredType, filterCategory
       "Data Science": 6,
     };
 
-  
     if (filteredType in typeFilters) {
-      filterResult = filterResult.filter((value) => value.type_id === typeFilters[filteredType]);
-    }
-  
-    if (filterCategory in categoryFilters) {
-      filterResult = filterResult.filter((value) => value.category_id === categoryFilters[filterCategory]);
+      filterResult = filterResult.filter(
+        (value) => value.type_id === typeFilters[filteredType]
+      );
     }
 
-  
+    if (filterCategory in categoryFilters) {
+      filterResult = filterResult.filter(
+        (value) => value.category_id === categoryFilters[filterCategory]
+      );
+    }
+
     return filterResult;
   };
-  
-  const data = filteredClasses()
+
+  const data = filteredClasses();
+
+  const calculateTotalDuration = (classItem) => {
+    let totalDuration = 0;
+    classItem.chapters.forEach((chapter) => {
+      chapter.videos.forEach((video) => {
+        totalDuration += video.time || 0;
+      });
+    });
+
+    const totalHours = Math.floor(totalDuration / 60);
+    const totalMinutes = totalDuration % 60;
+
+    return `${totalHours} jam ${totalMinutes} menit`;
+  };
+
+
   return (
     // <div className="flex justify-between gap-3 overflow-x-auto  laptop:flex-wrap">
     <>
@@ -96,22 +116,24 @@ export const Card = ({ isCourse, myClass, isTopik,  filteredType, filterCategory
           key={value.id}
           className=" bg-white w-[22rem] laptop:w-[18rem]  rounded-3xl shadow-md "
         >
+          <div className="h-[6rem] relative overflow-hidden rounded-t-3xl mb-1">
           <img
-            className="mb-1 w-[20rem] laptop:w-[18rem] h-[5rem]"
-            src={value.image}
+            className="h-full w-full object-cover"
+            src={value.image_url}
             alt="Logo"
           />
-          <div className="px-3 pb-3 w-full">
+          </div>
+          <div className="px-3 pb-3 w-[22rem] laptop:w-[18rem] ">
             <div className="flex justify-between   ">
               <p className="font-bold text-xs text-[#6148FF]">
                 {getById(value.category_id, categoryMapping)}
               </p>
               <p className="flex gap-1 text-xs">
                 <FontAwesomeIcon icon={faStar} className=" text-[#F9CC00]" />
-                4.7
+                {value.rating}
               </p>
             </div>
-            <p className="font-bold text-xs py-1 ">{value.name}</p>
+            <p className="font-bold text-xs ">{value.name}</p>
             <p className="text-xs">by {value.author}</p>
             <div className="flex w-full  justify-between">
               <p className="text-[#6148FF] flex  items-center py-1 text-xs">
@@ -146,7 +168,7 @@ export const Card = ({ isCourse, myClass, isTopik,  filteredType, filterCategory
                     fill="#73CA5C"
                   />
                 </svg>
-                {value.module} Modul
+                {value.modules} Modul
               </p>
               <p className=" flex  items-center text-xs">
                 <svg
@@ -161,7 +183,7 @@ export const Card = ({ isCourse, myClass, isTopik,  filteredType, filterCategory
                     fill="#73CA5C"
                   />
                 </svg>
-                120 Menit
+                {calculateTotalDuration(value)}
               </p>
             </div>
             {isCourse && (
@@ -195,31 +217,46 @@ export const Card = ({ isCourse, myClass, isTopik,  filteredType, filterCategory
                     fill="#73CA5C"
                   />
                 </svg>
-                <Progress value={50} size="md" color="indigo" label="Completed" />;
-                
+                <Progress
+                  value={50}
+                  size="md"
+                  color="indigo"
+                  label="Completed"
+                />
+                ;
               </div>
             )}
-            {isTopik && (value.type_id === 2 ? (
-              <button className="flex items-center text-xs text-white bg-[#6148FF] py-1 px-3 rounded-xl gap-3 ">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="12"
-                  height="12"
-                  viewBox="0 0 12 12"
-                  fill="none"
-                >
-                  <path
-                    d="M2.99992 1H4.04592L2.99692 4H1.19092L2.55292 1.276C2.59448 1.19305 2.65831 1.12331 2.73725 1.07456C2.81619 1.02582 2.90714 1 2.99992 1ZM1.22692 5L4.24092 9.687L2.96992 5H1.22692ZM4.00592 5L5.53592 10.645C5.56303 10.7474 5.62324 10.8379 5.70716 10.9025C5.79109 10.9671 5.89402 11.0021 5.99992 11.0021C6.10582 11.0021 6.20875 10.9671 6.29267 10.9025C6.3766 10.8379 6.4368 10.7474 6.46392 10.645L7.99792 5H4.00592ZM9.03392 5L7.75992 9.685L10.7729 5H9.03292H9.03392ZM10.8089 4H9.00592L7.95592 1H8.99992C9.09287 0.999818 9.18403 1.02555 9.26316 1.0743C9.3423 1.12305 9.40628 1.1929 9.44792 1.276L10.8089 4ZM7.94692 4H4.05692L5.10492 1H6.89492L7.94692 4Z"
-                    fill="#EBF3FC"
-                  />
-                </svg>
-                {getById(value.type_id, typeMapping)}
-              </button>
-            ) : (
-              <button className="flex items-center text-xs text-white bg-[#6148FF] py-1 px-3 rounded-xl gap-3 ">
-                {getById(value.type_id, typeMapping)}
-              </button>
-            ))}
+            {isTopik &&
+              (value.type_id === 2 ? (
+                <button className="flex items-center text-xs text-white bg-[#6148FF] py-1 px-3 rounded-xl gap-3 ">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="12"
+                    height="12"
+                    viewBox="0 0 12 12"
+                    fill="none"
+                  >
+                    <path
+                      d="M2.99992 1H4.04592L2.99692 4H1.19092L2.55292 1.276C2.59448 1.19305 2.65831 1.12331 2.73725 1.07456C2.81619 1.02582 2.90714 1 2.99992 1ZM1.22692 5L4.24092 9.687L2.96992 5H1.22692ZM4.00592 5L5.53592 10.645C5.56303 10.7474 5.62324 10.8379 5.70716 10.9025C5.79109 10.9671 5.89402 11.0021 5.99992 11.0021C6.10582 11.0021 6.20875 10.9671 6.29267 10.9025C6.3766 10.8379 6.4368 10.7474 6.46392 10.645L7.99792 5H4.00592ZM9.03392 5L7.75992 9.685L10.7729 5H9.03292H9.03392ZM10.8089 4H9.00592L7.95592 1H8.99992C9.09287 0.999818 9.18403 1.02555 9.26316 1.0743C9.3423 1.12305 9.40628 1.1929 9.44792 1.276L10.8089 4ZM7.94692 4H4.05692L5.10492 1H6.89492L7.94692 4Z"
+                      fill="#EBF3FC"
+                    />
+                  </svg>
+                  {getById(value.type_id, typeMapping)}
+                </button>
+              ) : (
+                <button 
+                onClick={() => {
+                  navigate("/coba" , {
+                    state: {
+                      id : value.id,
+                    },
+                    
+                  })
+                }} 
+                className="flex items-center text-xs text-white bg-[#6148FF] py-1 px-3 rounded-xl gap-3 ">
+                  {getById(value.type_id, typeMapping)}
+                </button>
+              ))}
           </div>
         </div>
       ))}

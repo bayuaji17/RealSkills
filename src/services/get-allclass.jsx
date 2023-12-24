@@ -1,12 +1,9 @@
 import { API_ENDPOINT } from "../utils/api-endpoint";
 import http from "../utils/http";
 
-const allClass = async (authToken, page) => {
+const allClass = async (page) => {
   try {
       const config = {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
         params: {
           page,
         },

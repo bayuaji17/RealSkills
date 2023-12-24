@@ -1,16 +1,15 @@
 import React, {  useState } from "react";
-import { NavbarKelas } from "../components/NavbarKelas";
-import { Search } from "../components/Search";
 import FilterSide from "../components/FilterSide";
 import { Card } from "../components/Card";
+import { NavbarLogin } from "../components/NavbarLogin";
 
 export const TopikKelas = () => {
   const [filteredType, setFilteredType] = useState("all"); // "all", "premium", "gratis"
   
   return (
     <div className="bg-[#EBF3FC] min-h-screen  flex flex-col">
-      <NavbarKelas />
-      <Search />
+      <NavbarLogin />
+      {/* <Search /> */}
       <div className=" w-full laptop:flex flex-col flex-wrap justify-center items-center">
         <div>
           <div className="flex items-center justify-between mx-5 pt-0 pb-2 laptop:py-6 laptop:ml-0 laptop:mr-4  text-lg ">
@@ -18,7 +17,7 @@ export const TopikKelas = () => {
             <div className="laptop:hidden">
               <FilterSide />
             </div>
-            <div className="hidden laptop:flex relative  w-[16rem] text-xs bg-[#EBF3FC] ">
+            {/* <div className="hidden laptop:flex relative  w-[16rem] text-xs bg-[#EBF3FC] ">
               <input
                 className="p-4 w-full flex justify-between rounded-lg shadow-lg"
                 placeholder="Cari Kelas terbaik...."
@@ -42,7 +41,7 @@ export const TopikKelas = () => {
                   />
                 </svg>
               </button>
-            </div>
+            </div> */}
           </div>
           <div className="flex gap-20 px-4 justify-center mb-3 laptop:pl-0 laptop:pr-0">
             {/* filter&(button&card) */}

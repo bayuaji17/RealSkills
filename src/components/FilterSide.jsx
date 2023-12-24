@@ -211,7 +211,7 @@ const FilterSide = () => {
         </div>
       </div>
 
-      <div className="flex laptop:hidden ">
+      <div className="flex w-full laptop:hidden ">
       {/* Modal Trigger Button */}
       <button
         className="text-[#6148FF] font-bold "
@@ -223,7 +223,7 @@ const FilterSide = () => {
       {/* Modal Popup */}
       {isFilterModalOpen && (
         
-        <div className="fixed inset-x-0 bottom-0 p-4 bg-white shadow-lg max-w-md mx-auto rounded-t-xl text-base overflow-hidden">
+        <div className="fixed inset-x-0 bottom-0 p-4 bg-white shadow-lg  rounded-t-xl text-base overflow-hidden">
           <button
             onClick={() => {
               setIsFilterModalOpen(false);

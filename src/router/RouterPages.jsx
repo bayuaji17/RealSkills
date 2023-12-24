@@ -10,9 +10,8 @@ import { KelasSaya } from "../pages/KelasSaya";
 import { Beranda } from "../pages/Beranda";
 import { TopikKelas } from "../pages/TopikKelas";
 import FilterSide from "../components/FilterSide";
-import { FilterResultKelas } from "../pages/FilterResultKelas";
-import { FilterResultTopik } from "../pages/FilterResultTopik";
 import {SearchResult} from "../components/SearchResult"
+import { Coba } from "../pages/Coba";
 
 export const RouterPages = () => {
   return (
@@ -26,11 +25,10 @@ export const RouterPages = () => {
         <Route path="/kelas" element={<KelasSaya/>} />
         <Route path="/topik" element={<TopikKelas/>} />
         <Route path="/filterSide" element={<FilterSide/>} />
-        <Route path="/filterResultKelas" element={<FilterResultKelas/>}/>
-        <Route path="/filterResultTopik" element={<FilterResultTopik/>}/>
         <Route path="/reset" element={<ResetPasswordTautanPage />} />
         <Route path="/resetPassword" element={<ResetPasswordPage />} />
         <Route path="/search" element={<SearchResult/>} />
+        <Route path="/coba" element={<Coba/>} />
 
       </Routes>
     </BrowserRouter>

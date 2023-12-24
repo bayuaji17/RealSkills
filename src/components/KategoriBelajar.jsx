@@ -17,7 +17,7 @@ export const KategoriBelajar = () => {
 
   useEffect(() => {
     fetchKategori();
-  }); //[id]
+  }, []); //[id]
 
   return (
     <>

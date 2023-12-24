@@ -1,29 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { NavbarKelas } from "../components/NavbarKelas";
 import { Search } from "../components/Search";
 import FilterSide from "../components/FilterSide";
 import { KategoriBelajar } from "../components/KategoriBelajar";
-import { auth, getMe } from "../services/get-me";
+import { getMe } from "../services/get-me";
 import { Progress } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { CookieKeys, CookieStorage } from "../utils/cookies";
+import { NavbarLogin } from "../components/NavbarLogin";
 
 export const KelasSaya = () => {
-  const authToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkYjIyOTg4LTc1NGMtNDZlMC05NjI4LWNhNWY3ODFkZDkyNiIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzAyOTkxNDYzfQ.PJ8mhpClJYmHxGnObp2giyUkxLk6xFSKM_PpOeYnTTU"
+  const authToken = CookieStorage.get(CookieKeys.AuthToken);
   const [dataUser, setDataUser] = useState([]);
   // const id = useParams();
 
   const fetchData = async () => {
-  try {
-    const data = await getMe(authToken);
-    console.log(data);
-    setDataUser(data.data.class);
-  } catch (error) {
-    console.error("Error fetching class data:", error);
-  }
-};
-
+    try {
+      const data = await getMe(authToken);
+      console.log(data);
+      setDataUser(data.data.class);
+    } catch (error) {
+      console.error("Error fetching class data:", error);
+    }
+  };
 
   useEffect(() => {
     fetchData();
@@ -34,10 +33,6 @@ export const KelasSaya = () => {
     return match ? match.label : "Unknown";
   };
 
-  const typeMapping = [
-    { id: 1, label: "GRATIS" },
-    { id: 2, label: "PREMIUM" },
-  ];
   const levelMapping = [
     { id: 1, label: "Beginner" },
     { id: 2, label: "Intermediate" },
@@ -51,10 +46,30 @@ export const KelasSaya = () => {
     { id: 5, label: "IOS Development" },
     { id: 6, label: "Data Science" },
   ];
+
+  const calculateTotalDuration = (classItem) => {
+    let totalDuration = 0;
+      if (classItem && classItem.chapters) {
+      classItem.chapters.forEach((chapter) => {
+        if (chapter && chapter.videos) {
+          chapter.videos.forEach((video) => {
+            totalDuration += video.time || 0;
+          });
+        }
+      });
+    }
+  
+    const totalHours = Math.floor(totalDuration / 60);
+    const totalMinutes = totalDuration % 60;
+  
+    return `${totalHours} jam ${totalMinutes} menit`;
+  };
+  
+
   return (
     <div className="bg-[#EBF3FC] min-h-screen flex flex-col">
-      <NavbarKelas />
-      <Search />
+      <NavbarLogin />
+      {/* <Search /> */}
       <div className=" w-full laptop:flex flex-col flex-wrap justify-center items-center">
         <div>
           <div className="flex items-center justify-between mx-5 pt-0 pb-4 laptop:py-6 laptop:ml-0 laptop:mr-4  text-lg ">
@@ -62,7 +77,7 @@ export const KelasSaya = () => {
             {/* <div className="laptop:hidden">
               <FilterSide/>
             </div> */}
-            <div className="hidden laptop:flex relative  w-[16rem] text-xs bg-[#EBF3FC] ">
+            {/* <div className="hidden laptop:flex relative  w-[16rem] text-xs bg-[#EBF3FC] ">
               <input
                 className="p-4 w-full flex justify-between rounded-lg shadow-lg"
                 placeholder="Cari Kelas terbaik...."
@@ -86,7 +101,7 @@ export const KelasSaya = () => {
                   />
                 </svg>
               </button>
-            </div>
+            </div> */}
           </div>
           <div className="flex w-full gap-20 mb-3 justify-center laptop:pl-0 laptop:pr-0">
             {/* filter&(button&card) */}
@@ -117,11 +132,13 @@ export const KelasSaya = () => {
                       key={value.id}
                       className=" bg-white w-[22rem] laptop:w-[18rem]  rounded-3xl shadow-md "
                     >
-                      <img
-                        className="mb-1 w-[20rem] laptop:w-[18rem] h-[5rem]"
-                        src={value.image}
-                        alt="Logo"
-                      />
+                      <div className="h-[6rem] relative overflow-hidden rounded-t-3xl mb-1">
+                        <img
+                          className="h-full w-full object-cover"
+                          src={value.image_url}
+                          alt="Logo"
+                        />
+                      </div>
                       <div className="px-3 pb-3 w-full">
                         <div className="flex justify-between   ">
                           <p className="font-bold text-xs text-[#6148FF]">
@@ -132,7 +149,7 @@ export const KelasSaya = () => {
                               icon={faStar}
                               className=" text-[#F9CC00]"
                             />
-                            4.7
+                            {value.rating}
                           </p>
                         </div>
                         <p className="font-bold text-xs py-1 ">{value.name}</p>
@@ -185,7 +202,7 @@ export const KelasSaya = () => {
                                 fill="#73CA5C"
                               />
                             </svg>
-                            120 Menit
+                            {calculateTotalDuration(value)}
                           </p>
                         </div>
                         <div className="flex items-center text-xs text-white rounded-xl gap-1 ">

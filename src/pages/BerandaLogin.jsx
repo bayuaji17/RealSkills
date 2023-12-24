@@ -4,11 +4,12 @@ import { Banner } from "../components/Banner";
 import { KategoriBelajar } from "../components/KategoriBelajar";
 import { KursusPopuler } from "../components/KursusPopuler";
 import { Search } from "../components/Search";
+import { NavbarLogin } from "../components/NavbarLogin";
 
 export const BerandaNoLogin = () => {
   return (
     <div className="flex flex-col min-h-screen bg-[#EBF3FC] laptop:bg-white">
-      <NavbarBeranda />
+      <NavbarLogin />
       <Search />
       <Banner />
       <div className="bg-[#EBF3FC] ">
