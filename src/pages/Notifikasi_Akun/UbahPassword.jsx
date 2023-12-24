@@ -37,7 +37,7 @@ export const UbahPassword = () => {
           </a>
         </div>
         <div className="flex mx-[0.9rem] mt-[1rem] justify-center items-center">
-          <div className="modal flex flex-col laptop:border laptop:border-[#6148FF] min-h-screen laptop:h-[45rem] w-full laptop:w-[75%] rounded-[1rem] mb-[5rem]">
+          <div className="modal flex flex-col laptop:border laptop:border-[#6148FF] min-h-screen laptop:h-auto w-full laptop:w-[75%] rounded-[1rem] mb-[4rem]">
             <div className="title hidden laptop:flex w-full h-[4.7rem] justify-center items-center laptop:bg-[#6148FF] rounded-t-2xl">
               <span className=" flex laptop:justify-center laptop:items-center text-white font-bold text-[1.8rem] py-3">
                 Akun

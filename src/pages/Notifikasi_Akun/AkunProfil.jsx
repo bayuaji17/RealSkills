@@ -6,21 +6,99 @@ import pencil from "../../assets/img/icon/pencil.png";
 import settings from "../../assets/img/icon/settings.png";
 import pay from "../../assets/img/icon/pay.png";
 import out from "../../assets/img/icon/out.png";
-import foto from "../../assets/img/icon/foto.png";
-import { getUsers } from "../../services/notifikasi_akun/get_user";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { getUserById } from "../../services/notifikasi_akun/get_user";
+import { putUpdate } from "../../services/notifikasi_akun/update_profile";
+import { toast } from "react-toastify";
 
 export const AkunProfil = () => {
-  const [LoadData, setLoadData] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const { AuthToken } = useParams();
+  const [userData, setUserData] = useState({
+    profile_picture: null,
+    name: "",
+    email: "",
+    phone_number: "",
+    country: "",
+    city: "",
+  });
 
-  const getDataUser = async () => {
-    const data = await getUsers();
-    setLoadData(data.results);
-    console.log(data.data, "data profil");
+  const handleInputFile = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setSelectedImage(file);
+    }
   };
+
+  // const handleInputFile = (e) => {
+  //   setUserData({ ...userData, profile_picture: e.target.files[0] });
+  // };
+
   useEffect(() => {
-    getDataUser();
-  }, []);
+    const fetchDetailUser = async () => {
+      try {
+        const data = await getUserById(AuthToken);
+        setUserData(data);
+        console.log(data, "data user");
+      } catch (error) {
+        console.log("data error", error);
+      }
+    };
+
+    fetchDetailUser();
+  }, [AuthToken]);
+
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    setUserData((prevUserData) => ({
+      data: {
+        ...prevUserData.data,
+        profile: {
+          ...prevUserData.data.profile,
+          [id]: value,
+        },
+        [id]: value,
+      },
+    }));
+    console.log(e.target.value, "ini isinya");
+  };
+
+  const handleSaveProfile = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("profile_picture", selectedImage);
+      formData.append("name", userData.data?.name);
+      formData.append("email", userData.data?.email);
+      formData.append("phone_number", userData.data?.profile?.phone_number);
+      formData.append("country", userData.data?.profile?.country);
+      formData.append("city", userData.data?.profile?.city);
+
+      const response = await putUpdate(AuthToken, formData);
+      toast.success(response.data.message, {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      console.log("User profile updated successfully");
+    } catch (error) {
+      toast.error(error.response.data.error, {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      console.error("Error updating user profile", error);
+    }
+  };
 
   return (
     <div className="parents">
@@ -43,13 +121,13 @@ export const AkunProfil = () => {
           </a>
         </div>
         <div className="flex mx-[0.9rem] mt-[1rem] justify-center items-center  ">
-          <div className="modal flex flex-col laptop:border laptop:border-[#6148FF] min-h-screen laptop:h-[52rem] w-full laptop:w-[75%] rounded-[1rem] mb-[5rem]">
+          <div className="modal flex flex-col laptop:border laptop:border-[#6148FF] min-h-screen laptop:h-auto w-full laptop:w-[75%] rounded-[1rem] mb-[4rem]">
             <div className="title hidden laptop:flex w-full h-[4.7rem] justify-center items-center laptop:bg-[#6148FF] rounded-t-2xl ">
               <span className=" flex laptop:justify-center laptop:items-center text-white font-bold text-[1.8rem] py-5">
                 Akun
               </span>
             </div>
-            <div className="flex flex-row w-full flex-grow rounded-b-2xl">
+            <div className="flex flex-row w-full flex-grow rounded-b-2xl mb-[2rem]">
               {/* Left Section */}
               <div className="left-section hidden laptop:flex w-1/2 m-[2rem]">
                 <div className="flex flex-col gap-5 font-montserrat ">
@@ -119,47 +197,85 @@ export const AkunProfil = () => {
                   </Link>
                 </div>
                 <div className="picture-section flex justify-evenly items-center mt-10">
-                  <img src={foto} alt="" className="w-[6rem] h-[6rem]" />
+                  <label htmlFor="profile_picture" className="cursor-pointer">
+                    <div className="flex justify-center items-center w-[8rem] h-[8rem]  border-4 border-[#6148FF] rounded-full overflow-hidden">
+                      {selectedImage ? (
+                        <img
+                          src={URL.createObjectURL(selectedImage)}
+                          alt="Profile"
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        // Placeholder or default image
+                        <span className="text-[1.5rem]">+</span>
+                      )}
+                    </div>
+                    <input
+                      id="profile_picture"
+                      type="file"
+                      accept="image/*"
+                      style={{ display: "none" }}
+                      // value={userData.data?.profile?.profile_picture}
+                      onChange={handleInputFile}
+                    />
+                  </label>
                 </div>
-                <div className="flex flex-col gap-2 font-montserrat mt-[2rem] ">
+
+                <div className="flex flex-col gap-2 font-montserrat mt-[1rem] ">
                   <span className="text-[1rem] ">Nama</span>
                   <input
+                    id="name"
                     type="text"
                     className="border-2 border-[#D0D0D0] text-black rounded-2xl py-[0.7rem] px-[1rem] "
-                    placeholder="John Doe"
+                    placeholder="Name"
+                    value={userData.data?.name}
+                    onChange={(e) => handleInputChange(e)}
                   />
 
                   <span className="text-[1rem]">Email</span>
                   <input
+                    id="email"
                     type="email"
                     className="border-2 border-[#D0D0D0] text-black rounded-2xl py-[0.7rem] px-[1rem] "
-                    placeholder="Johndoe@gmail.com"
+                    placeholder="Email"
+                    value={userData.data?.email}
+                    onChange={(e) => handleInputChange(e)}
                   />
 
                   <span className="text-[1rem]">Nomor Telepon</span>
                   <input
+                    id="phone_number"
                     type="tel"
                     className="border-2 border-[#D0D0D0] text-black rounded-2xl py-[0.7rem] px-[1rem] "
-                    placeholder="+62 812121121121"
+                    placeholder="Phone Number"
+                    value={userData.data?.profile?.phone_number}
+                    onChange={(e) => handleInputChange(e)}
                   />
 
                   <span className="text-[1rem]">Negara</span>
                   <input
-                    type="negara"
+                    id="country"
+                    type="text"
                     className="border-2 border-[#D0D0D0] text-black rounded-2xl py-[0.7rem] px-[1rem] "
                     placeholder="Masukkan Negara tempat tinggal"
+                    value={userData.data?.profile?.country}
+                    onChange={(e) => handleInputChange(e)}
                   />
 
                   <span className="text-[1rem]">Kota</span>
                   <input
-                    type="negara"
+                    id="city"
+                    type="text"
                     className="border-2 border-[#D0D0D0] text-black rounded-2xl py-[0.7rem] px-[1rem] "
                     placeholder="Masukkan kota tempat tinggal"
+                    value={userData.data?.profile?.city}
+                    onChange={(e) => handleInputChange(e)}
                   />
 
                   <button
                     className="bg-blue-300 text-white py-[1rem] px-[1rem] mt-[1rem] rounded-2xl hover:bg-[#6148FF] "
                     type="submit"
+                    onClick={handleSaveProfile}
                   >
                     Simpan Profil Saya
                   </button>
