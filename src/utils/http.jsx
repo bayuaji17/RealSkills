@@ -2,7 +2,7 @@ import axios from "axios";
 import { CookieKeys, CookieStorage } from "./cookies";
 
 const http = axios.create({
-  baseURL: process.env.REACT_APP_BASE_URL,
+  baseURL: process.env.REACT_APP_BASEURL,
   timeout: 30000,
   headers: {
     Accept: "application/json",
@@ -21,4 +21,5 @@ http.interceptors.request.use((config) => {
   };
   return config;
 });
+
 export default http;
