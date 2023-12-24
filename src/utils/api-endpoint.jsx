@@ -8,4 +8,11 @@ export const API_ENDPOINT = {
   GET_USER: "api/users",
   GET_ME: "/api/auth/authenticated",
   UPDATE_PROFILE: "api/profiles",
+  AUTHENTICATED: "api/auth/authenticated",
+  CLASSES: "api/classes",
+  PAYMENTS: "api/payments",
+  UPDATE_PAYMENTS: "api/payments/paid",
+  FREE_CLASS: "api/users/class/access/free",
+  WATCHED_VIDEOS: "api/users/videos/watched"
+
 };
