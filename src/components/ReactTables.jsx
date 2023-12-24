@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Button,
   Card,
@@ -9,12 +9,17 @@ import {
   DialogHeader,
   Typography,
 } from "@material-tailwind/react";
-import { getClass } from "../services/get-all-class";
+import { getClass, getClassByQuery } from "../services/get-all-class";
 import { FormSelect } from "./form/FormSelect";
 import FormInput from "./form/FormInput";
 import { editClassById } from "../services/edit-class";
 import { deleteClassById } from "../services/delete-class";
 import { useNavigate } from "react-router-dom";
+import { FilterAdmin } from "./FilterAdmin";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons";
+import filter from "../assets/Filter.svg";
+import { TambahKelas } from "./TambahKelas";
 const TABLE_HEAD = [
   "Kode Kelas",
   "Kategori",
@@ -29,9 +34,23 @@ export const ReactTables = () => {
   const [edit, setEdit] = useState(false);
   const [hapus, setHapus] = useState(false);
   const [page, setPage] = useState(1);
-  const [limit] = useState(5);
+  const [limit] = useState(10);
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("");
+  const [type, setType] = useState("");
+  const [level, setLevel] = useState("");
   const [dataTables, setDataTables] = useState([]);
   const [selectedRow, setSelectedRow] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [openFilter, setOpenFilter] = useState(false);
+  const [openTambah, setOpenTambah] = useState(false);
+  const [notFound, setNotFound] = useState(null);
+  const handleOpenFilter = () => setOpenFilter(true);
+  const handleCloseFilter = () => setOpenFilter(false);
+  const show = () => {
+    setOpen(!open);
+  };
+  const handleOpenTambah = () => setOpenTambah(!openTambah);
   const [formData, setFormData] = useState({
     name: "",
     code: "",
@@ -43,15 +62,68 @@ export const ReactTables = () => {
     level_id: 1,
   });
   const navigate = useNavigate();
-  const handleGetClass = async () => {
+
+  const handleGetClass = useCallback(async () => {
     try {
-      const response = await getClass(page, limit);
-      setDataTables(response.data.data.classes);
-      console.log(response.data.data.classes, "dari ReactTables");
+      const response = await getClassByQuery(
+        page,
+        limit,
+        search,
+        category,
+        type,
+        level
+      );
+
+      if (response.data.data.classes.length === 0) {
+        setDataTables([]);
+        setNotFound("Kelas Tidak Ditemukan");
+      } else {
+        setDataTables(response.data.data.classes);
+        setNotFound(null);
+      }
+
+      // setDataTables(response.data.data.classes);
+      // console.log(response.data.data.classes, "dari ReactTables");
     } catch (error) {
-      console.error(error);
+      console.error(error.response.data.error);
+      setNotFound(error.response.data.error);
+      setDataTables([]);
     }
+  }, [page, limit, search, category, type, level]);
+
+  useEffect(() => {
+    handleGetClass();
+  }, [handleGetClass]);
+
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
   };
+  console.log(search);
+  // const handleGetClass = async () => {
+  //   try {
+  //     const response = await getClassByQuery(
+  //       page,
+  //       limit,
+  //       search,
+  //       category,
+  //       type,
+  //       level
+  //     );
+  //     setDataTables(response.data.data.classes);
+  //     console.log(response.data.data.classes, "dari ReactTables");
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+  // const handleGetClass = async () => {
+  //   try {
+  //     const response = await getClass(page, limit);
+  //     setDataTables(response.data.data.classes);
+  //     console.log(response.data.data.classes, "dari ReactTables");
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   const handlePreviousPage = () => {
     if (page > 1) {
@@ -63,9 +135,9 @@ export const ReactTables = () => {
     setPage(page + 1);
   };
 
-  useEffect(() => {
-    handleGetClass();
-  }, [page]);
+  // useEffect(() => {
+  //   handleGetClass();
+  // }, [page, limit, search, category, type, level]);
 
   const getLabelById = (id, mapping) => {
     const match = mapping.find((item) => item.id === id);
@@ -174,8 +246,71 @@ export const ReactTables = () => {
   };
   return (
     <div>
+      {/* Tambah KELAS */}
+      <TambahKelas open={openTambah} handler={handleOpenTambah} />
+      {/* Tambah KELAS */}
+      <div className="flex flex-row justify-between pb-2 items-center flex-wrap">
+        <h1 className="text-xl font-bold">Kelola Kelas</h1>
+        <div className="flex flex-row gap-2">
+          <Button
+            variant="filled"
+            className="rounded-3xl h-10 w-28 flex items-center gap-2 normal-case pl-4 bg-blue-600"
+            onClick={handleOpenTambah}
+          >
+            <FontAwesomeIcon
+              icon={faPlus}
+              size="sm"
+              className="border-2 border-white rounded-full w-3 h-3 p-1"
+            />
+            <h1 className="text-sm">Tambah</h1>
+          </Button>
+          <Button
+            variant="outlined"
+            className="rounded-3xl border-blue-600 h-10 w-28 flex items-center gap-2 normal-case hover:bg-purple-600"
+            onClick={handleOpenFilter}
+          >
+            <img src={filter} alt="logo" />
+            <h1 className="text-sm text-blue-600">Filter</h1>
+          </Button>
+          <div className={`relative pb-2`}>
+            <input
+              type="text"
+              className={`rounded-full px-4 border-2 border-[#6148FF] h-10 transition-all duration-500 w-0 focus:w-40 ${
+                open ? "w-40 mobile:w-40 mobile:focus:w-40" : "w-10 mobile:w-10"
+              }`}
+              onChange={handleSearch}
+            />
+            <Typography>
+              <FontAwesomeIcon
+                icon={faMagnifyingGlass}
+                style={{ color: "#6148FF" }}
+                className={`absolute inset-y-0 py-3 right-3 transition-all duration-500 cursor-pointer`}
+                onClick={show}
+              />
+            </Typography>
+          </div>
+        </div>
+      </div>
+      {/* Filter Admin */}
+      <FilterAdmin
+        open={openFilter}
+        onClose={handleCloseFilter}
+        category={category}
+        type={type}
+        level={level}
+        handleCategory={(e) => setCategory(e.target.value)}
+        handleType={(e) => setType(e.target.value)}
+        handleLevel={(e) => setLevel(e.target.value)}
+        getFilter={handleGetClass}
+        setFilter={(filter) => {
+          setPage(1);
+          setCategory(filter.category || "");
+          setType(filter.type || "");
+          setLevel(filter.level || "");
+        }}
+      />
+      {/* Filter Admin */}
       {/* UNTUK UBAH */}
-
       <Dialog open={edit} handler={handleEditDialogClose}>
         <DialogHeader className="justify-center">Edit Kelas</DialogHeader>
 
@@ -249,7 +384,15 @@ export const ReactTables = () => {
           <Button
             variant="gradient"
             color="blue"
-            onClick={()=>navigate(`/admin/kelola-kelas/${selectedRow.id}`)}
+            onClick={() => navigate(`/test/${selectedRow.id}`)}
+            className="mr-1"
+          >
+            <span>Chapter Kelas</span>
+          </Button>
+          <Button
+            variant="gradient"
+            color="blue"
+            onClick={() => navigate(`/admin/kelola-kelas/${selectedRow.id}`)}
             className="mr-1"
           >
             <span>Tambah Chapter</span>
@@ -314,7 +457,94 @@ export const ReactTables = () => {
             </tr>
           </thead>
           <tbody>
-            {dataTables.map((data, index) => {
+            {dataTables.length === 0 ? (
+              <tr>
+                <td className="p-4 border-b border-blue-gray-50">
+                  <h1 className="text-lg uppercase">{notFound}</h1>
+                </td>
+              </tr>
+            ) : (
+              dataTables.map((data, index) => {
+                return (
+                  <tr key={index}>
+                    <td className="p-4 border-b border-blue-gray-50">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {data.code}
+                      </Typography>
+                    </td>
+                    <td className="p-4 border-b border-blue-gray-50">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {getLabelById(data.category_id, categoryMapping)}
+                      </Typography>
+                    </td>
+                    <td className="p-4 border-b border-blue-gray-50">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {data.name}
+                      </Typography>
+                    </td>
+                    <td className="p-4 border-b border-blue-gray-50">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {getLabelById(data.type_id, typeMapping)}
+                      </Typography>
+                    </td>
+                    <td className="p-4 border-b border-blue-gray-50">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {getLabelById(data.level_id, levelMapping)}
+                      </Typography>
+                    </td>
+                    <td className="p-4 border-b border-blue-gray-50">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {data.price}
+                      </Typography>
+                    </td>
+                    <td className="p-4 border-b border-blue-gray-50">
+                      <div className="flex flex-row gap-1">
+                        <Button
+                          size="sm"
+                          className="normal-case rounded-2xl bg-blue-600"
+                          onClick={() => handleEdit(data)}
+                        >
+                          Ubah
+                        </Button>
+                        <Button
+                          size="sm"
+                          className="normal-case rounded-2xl bg-red-600"
+                          onClick={() => handleHapus(data)}
+                        >
+                          Hapus
+                        </Button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })
+            )}
+
+            {/* {dataTables.map((data, index) => {
               return (
                 <tr key={index}>
                   <td className="p-4 border-b border-blue-gray-50">
@@ -391,7 +621,7 @@ export const ReactTables = () => {
                   </td>
                 </tr>
               );
-            })}
+            })} */}
           </tbody>
         </table>
         <CardFooter className="flex items-center laptop:justify-end gap-2 border-t border-blue-gray-50 p-4">

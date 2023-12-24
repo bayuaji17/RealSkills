@@ -4,8 +4,8 @@ import { TambahChapters } from "../components/TambahChapters";
 
 export const DetailsKelolaKelas = () => {
   return (
-    <div>
-      <DetailsClassAdmin />
+    <div className="h-auto p-4">
+      {/* <DetailsClassAdmin /> */}
       <TambahChapters/>
     </div>
   );

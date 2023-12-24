@@ -10,23 +10,16 @@ export const http = axios.create({
   },
 });
 
-// http.interceptors.request.use((config) => {
-//   config.headers = {
-//     ...config.headers,
-//     Authorization: `Bearer ${
-//       CookieStorage.get(CookieKeys.AuthToken)
-//         ? CookieStorage.get(CookieKeys.AuthToken)
-//         : ""
-//     }`,
-//   };
-//   return config;
-// });
 http.interceptors.request.use((config) => {
   config.headers = {
     ...config.headers,
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZDkzNDRiLWNjZjAtNDE0YS1hZDNjLTBhZDAzNWQyZjRiNSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTcwMjgyODc5NX0.yO25awFpONd_bReSw6zbHNLvLSXPfwEqqswCjbYgOhA",
+    Authorization: `Bearer ${
+      CookieStorage.get(CookieKeys.AuthToken)
+        ? CookieStorage.get(CookieKeys.AuthToken)
+        : ""
+    }`,
   };
   return config;
 });
+
 export default http;

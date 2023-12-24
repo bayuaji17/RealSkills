@@ -5,5 +5,7 @@ export const API_ENDPOINT = {
   EDIT_CLASS: "api/classes/",
   DELETE_CLASS:"api/classes/",
   ALL_USER:"api/users",
+  CREATE_CHAPTERS:"api/classes/chapters",
+  EDIT_CHAPTERS:"api/classes/chapters/"
   
 };

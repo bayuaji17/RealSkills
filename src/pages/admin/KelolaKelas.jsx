@@ -28,101 +28,101 @@ export const KelolaKelas = () => {
   const [openFilter, setOpenFilter] = useState(false);
   const [openTambah, setOpenTambah] = useState(false);
   // const [open, setOpen] = useState(false)
-  const openDrawer = () => setOpen(true);
+  // const openDrawer = () => setOpen(true);
   const handleOpenFilter = () => setOpenFilter(true);
   const handleCloseFilter = () => setOpenFilter(false);
-  const closeDrawer = () => setOpen(false);
-  const [formKelas, setFormKelas] = useState({
-    class_image: null,
-    name: "",
-    code: "",
-    price: "",
-    author: "",
-    about: "",
-    category_id: "1",
-    type_id: "1",
-    level_id: "1",
-  });
+  // const closeDrawer = () => setOpen(false);
+  // const [formKelas, setFormKelas] = useState({
+  //   class_image: null,
+  //   name: "",
+  //   code: "",
+  //   price: "",
+  //   author: "",
+  //   about: "",
+  //   category_id: "1",
+  //   type_id: "1",
+  //   level_id: "1",
+  // });
 
 
-  const handleInputFile = (e) => {
-    setFormKelas({ ...formKelas, class_image: e.target.files[0] });
-  };
+  // const handleInputFile = (e) => {
+  //   setFormKelas({ ...formKelas, class_image: e.target.files[0] });
+  // };
 
-  const handleParseIntChange = (e) => {
-    setFormKelas({ ...formKelas, price: parseInt(e.target.value, 10) });
-  };
+  // const handleParseIntChange = (e) => {
+  //   setFormKelas({ ...formKelas, price: parseInt(e.target.value, 10) });
+  // };
 
   //TODO
-  const handleInputParseIntChange = (e) => {
-    const { id, value } = e.target;
-    setFormKelas({
-      ...formKelas,
-      [id]: parseInt(value, 10),
-    });
-    console.log(e.target.value, formKelas, "ini isinya");
-  };
+  // const handleInputParseIntChange = (e) => {
+  //   const { id, value } = e.target;
+  //   setFormKelas({
+  //     ...formKelas,
+  //     [id]: parseInt(value, 10),
+  //   });
+  //   console.log(e.target.value, formKelas, "ini isinya");
+  // };
   //TODO
-  const handleInputChange = (e) => {
-    const { id, value } = e.target;
-    setFormKelas({
-      ...formKelas,
-      [id]: value,
-    });
-    console.log(e.target.value, formKelas, "ini isinya");
-  };
+  // const handleInputChange = (e) => {
+  //   const { id, value } = e.target;
+  //   setFormKelas({
+  //     ...formKelas,
+  //     [id]: value,
+  //   });
+  //   console.log(e.target.value, formKelas, "ini isinya");
+  // };
 
   const show = () => {
     setOpen(!open);
   };
   const handleOpenTambah = () => setOpenTambah(!openTambah);
-  const kategoriOptions = [
-    { label: "UI/UX Design", value: "1" },
-    { label: "Product Management", value: "2" },
-    { label: "Web Development", value: "3" },
-    { label: "Android Development", value: "4" },
-    { label: "IOS Development", value: "5" },
-    { label: "Data Science", value: "6" },
-  ];
-  const tipeKelas = [
-    { label: "Gratis", value: 1 },
-    { label: "Premium", value: 2 },
-  ];
-  const levelKesulitan = [
-    { label: "Beginner", value: 1 },
-    { label: "Intermediate", value: 2 },
-    { label: "Advanced", value: 3 },
-  ];
+  // const kategoriOptions = [
+  //   { label: "UI/UX Design", value: "1" },
+  //   { label: "Product Management", value: "2" },
+  //   { label: "Web Development", value: "3" },
+  //   { label: "Android Development", value: "4" },
+  //   { label: "IOS Development", value: "5" },
+  //   { label: "Data Science", value: "6" },
+  // ];
+  // const tipeKelas = [
+  //   { label: "Gratis", value: 1 },
+  //   { label: "Premium", value: 2 },
+  // ];
+  // const levelKesulitan = [
+  //   { label: "Beginner", value: 1 },
+  //   { label: "Intermediate", value: 2 },
+  //   { label: "Advanced", value: 3 },
+  // ];
 
-  const handleCreateClass = async () => {
-    const tambahKelas = {
-      class_image: formKelas.class_image,
-      name: formKelas.name,
-      code: formKelas.code,
-      price: formKelas.price,
-      author: formKelas.author,
-      about: formKelas.about,
-      category_id: formKelas.category_id,
-      type_id: formKelas.type_id,
-      level_id: formKelas.level_id,
-    };
-    try {
-      const response = await postClass(tambahKelas);
-      console.log(postClass);
-      setOpenTambah(false);
-      toast.success("sukses");
-      console.log(response.data.message, "ini response");
-    } catch (error) {
-      toast.error(error);
-      setOpenTambah(false);
-      console.error(error);
-    }
-  };
-  console.log(open);
+  // const handleCreateClass = async () => {
+  //   const tambahKelas = {
+  //     class_image: formKelas.class_image,
+  //     name: formKelas.name,
+  //     code: formKelas.code,
+  //     price: formKelas.price,
+  //     author: formKelas.author,
+  //     about: formKelas.about,
+  //     category_id: formKelas.category_id,
+  //     type_id: formKelas.type_id,
+  //     level_id: formKelas.level_id,
+  //   };
+  //   try {
+  //     const response = await postClass(tambahKelas);
+  //     console.log(postClass);
+  //     setOpenTambah(false);
+  //     toast.success("sukses");
+  //     console.log(response.data.message, "ini response");
+  //   } catch (error) {
+  //     toast.error(error);
+  //     setOpenTambah(false);
+  //     console.error(error);
+  //   }
+  // };
+  // console.log(open);
   return (
     <div>
       {/* //!FORM INPUT KELAS */}
-      <TambahKelas open={openTambah} handler={handleOpenTambah}/>
+      {/* <TambahKelas open={openTambah} handler={handleOpenTambah}/> */}
       {/* <Dialog open={openTambah} handler={handleOpenTambah}>
         <DialogHeader className="justify-center">Tambah Kelas</DialogHeader>
 
@@ -241,30 +241,12 @@ export const KelolaKelas = () => {
           <div className="py-2">
             <div className="">
              <CardAdminApi/>
-              {/* <CardAdmin
-                totalUsers={500}
-                tittleCards={"Active Users"}
-                bgColor={"bg-blue-600"}
-                logoUser={logoUsers}
-              />
-              <CardAdmin
-                totalUsers={500}
-                tittleCards={"Active Users"}
-                bgColor={"bg-green-600"}
-                logoUser={logoUsers}
-              />
-              <CardAdmin
-                totalUsers={500}
-                tittleCards={"Active Users"}
-                bgColor={"bg-blue-600"}
-                logoUser={logoUsers}
-              /> */}
             </div>
           </div>
           {/* //!EndCard */}
           {/* Table */}
           <div className="container mx-auto w-10/12 pb-4">
-            <div className="flex flex-row justify-between pb-2 items-center flex-wrap">
+            {/* <div className="flex flex-row justify-between pb-2 items-center flex-wrap">
               <h1 className="text-xl font-bold">Kelola Kelas</h1>
               <div className="flex flex-row gap-2">
                 <Button
@@ -306,11 +288,11 @@ export const KelolaKelas = () => {
                   </Typography>
                 </div>
               </div>
-            </div>
+            </div> */}
             <ReactTables />
           </div>
           {/* End Table */}
-          <FilterAdmin open={openFilter} onClose={handleCloseFilter}/>
+          {/* <FilterAdmin open={openFilter} onClose={handleCloseFilter}/> */}
         </div>
       </div>
     </div>

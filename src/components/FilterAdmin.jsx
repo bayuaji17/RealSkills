@@ -2,9 +2,6 @@ import {
   Button,
   Card,
   CardBody,
-  CardFooter,
-  Checkbox,
-  Dialog,
   Drawer,
   IconButton,
   List,
@@ -13,10 +10,61 @@ import {
   Radio,
   Typography,
 } from "@material-tailwind/react";
-import React from "react";
-import filter from "../assets/Filter.svg";
+import React, { useState } from "react";
+import { getFilterClass } from "../services/get-all-class";
+//! BLOM KELAR
+export const FilterAdmin = ({
+  open,
+  onClose,
+  category,
+  type,
+  level,
+  handleCategory,
+  handleType,
+  handleLevel,
+  getFilter,
+  setFilter,
+}) => {
+  // const [category, setCategory] = useState("");
+  // const [type, setType] = useState("");
+  // const [level, setLevel] = useState("");
+  // const [isError, setIsError] = useState("")
 
-export const FilterAdmin = ({ open, onClose }) => {
+  // const handleCategory = (e) => {
+  //   setCategory(e.target.value);
+  // };
+
+  // const handleType = (e) => {
+  //   setType(e.target.value);
+  // };
+
+  // const handleLevel = (e) => {
+  //   setLevel(e.target.value);
+  // };
+  // console.log("category", category);
+  // console.log("type", type);
+  // console.log("level", level);
+
+  // const getFilter = async () => {
+  //   try {
+  //     const response = await getFilterClass(category, type, level);
+  //     console.log(response, "ini dari filterADmin");
+  //     return response;
+  //   } catch (error) {
+  //     setIsError(error)
+  //     console.log(error,"ini dari error")
+  //     console.error(error);
+  //   }
+  // };
+  // const handleClear = () => {
+  //   handleCategory({ target: { value: null } }); // Menetapkan nilai null atau yang sesuai
+  //   handleType({ target: { value: null } });
+  //   handleLevel({ target: { value: null } });
+  // };
+  const handleClear = () => {
+    setFilter({ category: "", type: "", level: "" });
+  };
+
   return (
     <div>
       <Drawer
@@ -61,13 +109,16 @@ export const FilterAdmin = ({ open, onClose }) => {
                 >
                   <ListItemPrefix className="mr-3">
                     <Radio
-                      name="vertical-list"
+                      name="uiuxDesign"
                       id="uiuxDesign"
                       ripple={false}
                       className="hover:before:opacity-0"
                       containerProps={{
                         className: "p-0",
                       }}
+                      value="1"
+                      checked={category === "1"}
+                      onChange={(e) => handleCategory(e)}
                     />
                   </ListItemPrefix>
                   <Typography
@@ -85,13 +136,16 @@ export const FilterAdmin = ({ open, onClose }) => {
                 >
                   <ListItemPrefix className="mr-3">
                     <Radio
-                      name="vertical-list"
+                      name="productManagement"
                       id="productManagement"
                       ripple={false}
                       className="hover:before:opacity-0"
                       containerProps={{
                         className: "p-0",
                       }}
+                      value="2"
+                      checked={category === "2"}
+                      onChange={(e) => handleCategory(e)}
                     />
                   </ListItemPrefix>
                   <Typography
@@ -109,13 +163,16 @@ export const FilterAdmin = ({ open, onClose }) => {
                 >
                   <ListItemPrefix className="mr-3">
                     <Radio
-                      name="vertical-list"
+                      name="webDevelopment"
                       id="webDevelopment"
                       ripple={false}
                       className="hover:before:opacity-0"
                       containerProps={{
                         className: "p-0",
                       }}
+                      value="3"
+                      checked={category === "3"}
+                      onChange={(e) => handleCategory(e)}
                     />
                   </ListItemPrefix>
                   <Typography
@@ -133,13 +190,16 @@ export const FilterAdmin = ({ open, onClose }) => {
                 >
                   <ListItemPrefix className="mr-3">
                     <Radio
-                      name="vertical-list"
+                      name="androidDevelopment"
                       id="androidDevelopment"
                       ripple={false}
                       className="hover:before:opacity-0"
                       containerProps={{
                         className: "p-0",
                       }}
+                      value="4"
+                      checked={category === "4"}
+                      onChange={(e) => handleCategory(e)}
                     />
                   </ListItemPrefix>
                   <Typography
@@ -157,13 +217,16 @@ export const FilterAdmin = ({ open, onClose }) => {
                 >
                   <ListItemPrefix className="mr-3">
                     <Radio
-                      name="vertical-list"
+                      name="iosDevelopment"
                       id="iosDevelopment"
                       ripple={false}
                       className="hover:before:opacity-0"
                       containerProps={{
                         className: "p-0",
                       }}
+                      value="5"
+                      checked={category === "5"}
+                      onChange={(e) => handleCategory(e)}
                     />
                   </ListItemPrefix>
                   <Typography
@@ -181,13 +244,16 @@ export const FilterAdmin = ({ open, onClose }) => {
                 >
                   <ListItemPrefix className="mr-3">
                     <Radio
-                      name="vertical-list"
+                      name="dataScience"
                       id="dataScience"
                       ripple={false}
                       className="hover:before:opacity-0"
                       containerProps={{
                         className: "p-0",
                       }}
+                      value="6"
+                      checked={category === "6"}
+                      onChange={(e) => handleCategory(e)}
                     />
                   </ListItemPrefix>
                   <Typography
@@ -216,13 +282,16 @@ export const FilterAdmin = ({ open, onClose }) => {
                 >
                   <ListItemPrefix className="mr-3">
                     <Radio
-                      name="vertical-list"
+                      name="beginner"
                       id="beginner"
                       ripple={false}
                       className="hover:before:opacity-0"
                       containerProps={{
                         className: "p-0",
                       }}
+                      value="1"
+                      checked={type === "1"}
+                      onChange={(e) => handleType(e)}
                     />
                   </ListItemPrefix>
                   <Typography
@@ -240,13 +309,16 @@ export const FilterAdmin = ({ open, onClose }) => {
                 >
                   <ListItemPrefix className="mr-3">
                     <Radio
-                      name="vertical-list"
+                      name="intermediate"
                       id="intermediate"
                       ripple={false}
                       className="hover:before:opacity-0"
                       containerProps={{
                         className: "p-0",
                       }}
+                      value="2"
+                      checked={type === "2"}
+                      onChange={(e) => handleType(e)}
                     />
                   </ListItemPrefix>
                   <Typography
@@ -264,13 +336,16 @@ export const FilterAdmin = ({ open, onClose }) => {
                 >
                   <ListItemPrefix className="mr-3">
                     <Radio
-                      name="vertical-list"
+                      name="advanced"
                       id="advanced"
                       ripple={false}
                       className="hover:before:opacity-0"
                       containerProps={{
                         className: "p-0",
                       }}
+                      value="3"
+                      checked={type === "3"}
+                      onChange={(e) => handleType(e)}
                     />
                   </ListItemPrefix>
                   <Typography
@@ -299,13 +374,16 @@ export const FilterAdmin = ({ open, onClose }) => {
                 >
                   <ListItemPrefix className="mr-3">
                     <Radio
-                      name="vertical-list"
+                      name="kelasGratis"
                       id="kelasGratis"
                       ripple={false}
                       className="hover:before:opacity-0"
                       containerProps={{
                         className: "p-0",
                       }}
+                      value="1"
+                      checked={level === "1"}
+                      onChange={(e) => handleLevel(e)}
                     />
                   </ListItemPrefix>
                   <Typography
@@ -323,13 +401,16 @@ export const FilterAdmin = ({ open, onClose }) => {
                 >
                   <ListItemPrefix className="mr-3">
                     <Radio
-                      name="vertical-list"
+                      name="kelasPremium"
                       id="kelasPremium"
                       ripple={false}
                       className="hover:before:opacity-0"
                       containerProps={{
                         className: "p-0",
                       }}
+                      value="2"
+                      checked={level === "2"}
+                      onChange={(e) => handleLevel(e)}
                     />
                   </ListItemPrefix>
                   <Typography
@@ -345,10 +426,12 @@ export const FilterAdmin = ({ open, onClose }) => {
         </Card>
         {/* END Level Kelas */}
         <div className="flex gap-2 justify-between">
-          <Button size="sm" variant="outlined">
+          <Button size="sm" variant="outlined" onClick={handleClear}>
             Bersihkan
           </Button>
-          <Button size="sm">Terapkan Filter</Button>
+          <Button size="sm" onClick={getFilter}>
+            Terapkan Filter
+          </Button>
         </div>
       </Drawer>
     </div>

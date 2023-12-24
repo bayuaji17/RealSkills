@@ -9,8 +9,8 @@ import ResetPasswordTautanPage from "../pages/authentication/ResetPassword/Reset
 import { AdminDashboard } from "../pages/admin/AdminDashboard";
 import { KelolaKelas } from "../pages/admin/KelolaKelas";
 import { NotFoundPage } from "../pages/NotFoundPage";
-import { TestGrid } from "../pages/admin/TestGrid";
 import { DetailsKelolaKelas } from "../pages/DetailsKelolaKelas";
+import { Chapters } from "../pages/Chapters";
 
 
 export const RouterPages = () => {
@@ -27,7 +27,7 @@ export const RouterPages = () => {
 
 
 
-        <Route path="test" element={<TestGrid/>} />
+        <Route path="test/:id" element={<Chapters/>} />
         <Route path="*" element={<NotFoundPage/>} />
 
 

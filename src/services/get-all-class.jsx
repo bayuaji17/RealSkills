@@ -8,6 +8,21 @@ export const getClass = async (page, limit) => {
   console.log(getAllClass, "dari getClass");
   return getAllClass;
 };
+//*GetAllClassByAllQuery
+export const getClassByQuery = async (
+  page,
+  limit,
+  search,
+  category,
+  type,
+  level
+) => {
+  const getAllClass = await http.get(
+    `${API_ENDPOINT.GET_CLASS}?page=${page}&limit=${limit}&search=${search}&category=${category}&type=${type}&level=${level}`
+  );
+  console.log(getAllClass, "dari getClass");
+  return getAllClass;
+};
 //* Get All Class
 export const getTotalClass = async () => {
   const getAllClass = await http.get(API_ENDPOINT.GET_CLASS);
@@ -22,7 +37,7 @@ export const getPremiumClass = async () => {
 };
 //*GetClass By ID
 export const getClassById = async (id) => {
-  const getClassId = await http.get(`${API_ENDPOINT.GET_CLASS}${id}`);
+  const getClassId = await http.get(`${API_ENDPOINT.GET_CLASS}/${id}`);
   console.log(getClassId);
   return getClassId;
 };
@@ -33,4 +48,11 @@ export const getSearchClass = async (query) => {
     `${API_ENDPOINT.GET_CLASS}?search=${query}`
   );
   return searchClass;
+};
+
+export const getFilterClass = async (category, type, level) => {
+  const filterClass = await http.get(
+    `${API_ENDPOINT.GET_CLASS}?category=${category}&type=${type}&level=${level}`
+  );
+  return filterClass;
 };
