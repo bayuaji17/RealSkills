@@ -5,7 +5,6 @@ import badge from "../../assets/img/icon/badge-svg.svg";
 import modul from "../../assets/img/icon/clarity_book-line.svg";
 import time from "../../assets/img/icon/ri_time-fill.svg";
 import message from "../../assets/img/icon/gridicons_chat.svg";
-// import play_video from "../../assets/img/icon/play video.svg";
 import progress_check from "../../assets/img/icon/progress-check.svg";
 import done_play_button from "../../assets/img/icon/green-play.svg";
 import undone_play_button from "../../assets/img/icon/dark-blue-play.svg";
@@ -47,27 +46,29 @@ const DetailKelasPage = () => {
       try {
         const response = await getClasses(classId);
         setDetail(response.data.data);
-        // console.log(response.data.data, "classees");
       } catch (error) {
         console.error("Error mengambil data Kelas:", error);
       }
     };
 
+    // function get API classes by id
     const fetchClassesChapters = async () => {
       try {
         const response = await getClasses(classId);
+        // function untuk sort chapters berdasarkan no_chapter (ascending)
         const sortedChapters = response.data.data.chapters.sort(
           (a, b) => a.no_chapter - b.no_chapter
         );
         setCourseChapter(sortedChapters);
+        // agar video dari chapter index paling awal yg tampil di ReactPlayer
         setFirstVideoPlay(response.data.data.chapters[0].videos[0].link);
-        // console.log(response.data.data.chapters, "chapters");
         console.log(response.data.data.chapters[0].videos[0], "videos status");
       } catch (error) {
         console.log(error, "error chapters");
       }
     };
 
+    // function get API payments
     const fetchPaymentsDetail = async () => {
       try {
         const response = await getAuthenticated();
@@ -78,6 +79,7 @@ const DetailKelasPage = () => {
       }
     };
 
+    // function untuk set is_watched pada video menjadi true
     const fetchWatchedVideos = async () => {
       try {
         const response = await getWatchedVideos(VideoID);

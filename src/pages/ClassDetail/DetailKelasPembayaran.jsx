@@ -2,7 +2,6 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-// import NavbarComponents from "../../assets/components/NavbarComponents";
 import arrow_down from "../../assets/img/icon/arrow-down.svg";
 import arrow_up from "../../assets/img/icon/arrow-up.svg";
 import mastercard from "../../assets/img/icon/mastercard logo.svg";
@@ -18,6 +17,7 @@ import { Option, Select } from "@material-tailwind/react";
 import { postPayments } from "../../services/payments/create-payments";
 import { updatePayment } from "../../services/payments/update-payments";
 import { NavbarKelas } from "../../components/NavbarKelas";
+// const EXPIRY_DATE_REGEX = /^((0[1-9])|(1[0-2]))\/\d{2}$/;
 
 const DetailKelasPembayaran = () => {
   const [BankAccordionOpen, setBankAccordionOpen] = useState(false);
@@ -26,12 +26,22 @@ const DetailKelasPembayaran = () => {
   const [FormInputNominal, setFormInputNominal] = useState({
     nominal: 0,
   });
+  const [FormInputCredit, setFormInputCredit] = useState({
+    cardNumber: "",
+    holderName: "",
+    cvv: "",
+    expiry_date: "",
+  });
+  // const [IsCreditCardDisabled, setIsCreditCardDisabled] = useState(true);
+  const [IsCardNumberLengthValid, setIsCardNumberLengthValid] = useState(false);
+  const [IsHolderNameLengthValid, setIsHolderNameLengthValid] = useState(false);
+  const [IsCvvLengthValid, setIsCvvLengthValid] = useState(false);
+  const [isExpiryDateValid, setisExpiryDateValid] = useState(false);
   const [isNominalValid, setIsNominalValid] = useState(true);
   const [isNominalLengthValid, setIsNominalLengthValid] = useState(true);
   const [isNominalToMuch, setIsNominalToMuch] = useState(true);
   const [SelectedBank, setSelectedBank] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState("");
-  // const navigate = useNavigate();
   const { classId } = useParams();
 
   const rupiahFormat = new Intl.NumberFormat("id-ID", {
@@ -92,6 +102,34 @@ const DetailKelasPembayaran = () => {
     setSelectedBank(value);
   };
 
+  const handleInputCredit = (e) => {
+    const { id, value } = e.target;
+    setFormInputCredit({
+      ...FormInputCredit,
+      [id]: value,
+    });
+
+    if (e.target.id === "cardNumber") {
+      const isInputCardNumberLengthValid = value.trim().length > 0;
+      setIsCardNumberLengthValid(isInputCardNumberLengthValid);
+    }
+
+    if (e.target.id === "holderName") {
+      const isInputNameLengthValid = value.trim().length > 0;
+      setIsHolderNameLengthValid(isInputNameLengthValid);
+    }
+
+    if (e.target.id === "cvv") {
+      const isInputCvvLengthValid = value.trim().length >= 3;
+      setIsCvvLengthValid(isInputCvvLengthValid);
+    }
+
+    if (e.target.id === "expiryDate") {
+      const formattedDate = value.replace(/\D/g, "");
+      const isInputExpiryDateValid = formattedDate.trim().length > 0;
+      setisExpiryDateValid(isInputExpiryDateValid);
+    }
+  };
   // const handlePayments = async () => {
   //   const selectedPaymentMethod = paymentMethod; // Ambil nilai terkini
   //   if (
@@ -269,7 +307,6 @@ const DetailKelasPembayaran = () => {
                       placeholder="Masukkan Nominal"
                       className="outline-none font-poppins text-[0.9rem] leading-[1.25rem] w-full"
                       type="number"
-                      // value={FormInputNominal.nominal}
                       onChange={(e) => handleInputNominal(e)}
                       disabled={!SelectedBank}
                       required
@@ -340,6 +377,12 @@ const DetailKelasPembayaran = () => {
                     <div className="card-number-input w-[100%] border-b-2 border-[#D0D0D0] pb-[.2rem] px-1">
                       <input
                         placeholder="4480 0000 0000 0000"
+                        id="cardNumber"
+                        onChange={(e) => {
+                          handleInputCredit(e);
+                          console.log(e.target.value);
+                          console.log(IsCardNumberLengthValid);
+                        }}
                         className="outline-none font-poppins text-[0.9rem] leading-[1.25rem] w-full"
                         type="number"
                         required
@@ -354,6 +397,12 @@ const DetailKelasPembayaran = () => {
                     <div className="card-holder-name-input w-[100%] border-b-2 border-[#D0D0D0] pb-[.2rem] px-1">
                       <input
                         placeholder="John Doe"
+                        id="holderName"
+                        onChange={(e) => {
+                          handleInputCredit(e);
+                          console.log(e.target.value);
+                          console.log(IsHolderNameLengthValid, e.target.value);
+                        }}
                         className="outline-none font-poppins text-[0.9rem] leading-[1.25rem] w-full"
                         type="name"
                         required
@@ -368,7 +417,13 @@ const DetailKelasPembayaran = () => {
                       </span>
                       <div className="card-holder-name-input w-[95%] border-b-2 border-[#D0D0D0] pb-[.2rem] px-1">
                         <input
+                          id="cvv"
                           placeholder="000"
+                          onChange={(e) => {
+                            handleInputCredit(e);
+                            console.log(e.target.value);
+                            console.log(IsCvvLengthValid, e.target.value);
+                          }}
                           className="outline-none font-poppins text-[0.9rem] leading-[1.25rem] w-full"
                           type="number"
                           required
@@ -383,16 +438,28 @@ const DetailKelasPembayaran = () => {
                       <div className="card-holder-name-input w-[95%] border-b-2 border-[#D0D0D0] pb-[.2rem] px-1">
                         <input
                           placeholder="07/24"
+                          id="expiryDate"
+                          onChange={(e) => {
+                            handleInputCredit(e);
+                            console.log(e.target.value);
+                            console.log(isExpiryDateValid);
+                          }}
                           className="outline-none font-poppins text-[0.9rem] leading-[1.25rem] w-full"
-                          type="number"
+                          type="text"
                           required
                         />
                       </div>
                     </div>
                   </div>
                   <button
-                    className="credit-card-btn flex justify-center items-center py-[1rem] rounded-[1.5rem] text-white bg-dark-blue w-full hover:bg-light-blue-300"
+                    className="credit-card-btn flex justify-center items-center py-[1rem] rounded-[1.5rem] text-white bg-dark-blue w-full hover:bg-light-blue-300 disabled:bg-gray-300"
                     onClick={handleCreditCardClick}
+                    disabled={
+                      !IsCardNumberLengthValid ||
+                      !IsHolderNameLengthValid ||
+                      !IsCvvLengthValid ||
+                      !isExpiryDateValid
+                    }
                   >
                     <span className="font-poppins text-[1rem] font-bold leading-[0.9rem]">
                       Kirim
