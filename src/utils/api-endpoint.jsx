@@ -11,4 +11,10 @@ export const API_ENDPOINT = {
   SEARCH: (query) => {
     return `/api/classes?search=${query}`;
   },
+  AUTHENTICATED: "api/auth/authenticated",
+  CLASSES: "api/classes",
+  PAYMENTS: "api/payments",
+  UPDATE_PAYMENTS: "api/payments/paid",
+  FREE_CLASS: "api/users/class/access/free",
+  WATCHED_VIDEOS: "api/users/videos/watched"
 };

@@ -7,6 +7,8 @@ import { RouterPages } from "./router/RouterPages";
 
 
 
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
@@ -14,3 +16,5 @@ root.render(
       <ToastContainer />
     </React.StrictMode>
 );
+
+
