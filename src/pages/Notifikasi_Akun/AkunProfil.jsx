@@ -29,10 +29,6 @@ export const AkunProfil = () => {
     }
   };
 
-  // const handleInputFile = (e) => {
-  //   setUserData({ ...userData, profile_picture: e.target.files[0] });
-  // };
-
   useEffect(() => {
     const fetchDetailUser = async () => {
       try {
