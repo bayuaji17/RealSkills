@@ -236,69 +236,6 @@ export const RiwayatPembayaran = () => {
                           {payments.is_paid ? "Paid" : "Waiting for Payment"}
                         </div>
                       </div>
-
-                      {/* <div className="second-payment bg-white rounded-[1rem] mx-[1rem] mt-[1rem] h-[30%] border-2 flex flex-col">
-                    <img
-                      src={background}
-                      alt=""
-                      className=" object-cover w-full h-[6rem] rounded-t-[1rem]"
-                    />
-                    <div className="modal-category-rate-section flex flex-col gap-2">
-                      <div className="mobile-course-category flex justify-between items-center mx-[1rem] mt-[0.2rem]">
-                        <span className="font-montserrat text-dark-blue text-[1rem] font-bold ">
-                          UI/UX Design
-                        </span>
-                        <div className="rating-star-section flex gap-1 items-center">
-                          <FontAwesomeIcon
-                            icon={faStar}
-                            size="sm"
-                            style={{ color: "#F9CC00" }}
-                          />
-                          <span className="font-montserrat text-[#202244] font-bold leading-[0.9rem] text-[0.9rem]">
-                            4.8
-                          </span>
-                        </div>
-                      </div>
-                      <div className="mobile-title-course-section flex flex-col gap-1 mx-[1rem] font-montserrat">
-                        <span className="course-title font-bold font-montserrat text-[0.8rem] leading-[0.7rem] text-[#202244]">
-                          Membuat Wireframe Hingga ke Visual Design
-                        </span>
-                        <span className="author-section pt-1 text-[0.5rem] leading-[0.7rem] text-[#000] font-montserrat font-bold">
-                          by Angela Doe
-                        </span>
-                      </div>
-                      <div className="mobile-deets-section flex items-center gap-[1.5rem] mx-[1rem] mt-[0.5]">
-                        <div className="badge-level-section flex items-center gap-1">
-                          <img src={bedge} alt="badge-level" />
-                          <span className="font-montserrat text-[0.7rem] leading-[0.9rem] font-bold hover:text-[#6148FF] cursor-pointer">
-                            Intermediate Level
-                          </span>
-                        </div>
-                        <div className="badge-level-section flex items-center gap-1">
-                          <img src={modul} alt="modul-course" />
-                          <span className="font-montserrat text-[0.7rem] leading-[0.9rem] font-bold hover:text-[#6148FF] cursor-pointer">
-                            5 Modul
-                          </span>
-                        </div>
-                        <div className="badge-level-section flex items-center gap-1">
-                          <img src={time} alt="course-time" />
-                          <span className="font-montserrat text-[0.7rem] leading-[0.9rem] font-bold hover:text-[#6148FF] cursor-pointer">
-                            60 Menit
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="notif-payment flex items-center bg-green-500 w-[20%] ml-4 my-2 rounded-lg">
-                      <img
-                        src={notif_pay}
-                        alt=""
-                        className="w-[1rem] h-[0.9rem] ml-3 items-center"
-                      />
-                      <span className=" items-center text-white text-[0.7rem] font-bold p-[0.3rem] ">
-                        Paid
-                      </span>
-                    </div>
-                  </div> */}
                     </div>
                   ))}
                 </div>

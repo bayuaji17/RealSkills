@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Vector from "../../assets/img/icon/Vector.png";
 import circle_green from "../../assets/img/icon/circle_green.png";
-import circle_red from "../../assets/img/icon/circle_red.png";
 import { getUserById } from "../../services/notifikasi_akun/get_user";
 import { useParams } from "react-router-dom";
 import { NavbarLogin } from "../../assets/components/NavbarLogin";
