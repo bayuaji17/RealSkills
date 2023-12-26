@@ -7,13 +7,13 @@ const PembayaranSukses = () => {
   const navigate = useNavigate();
   const { classId } = useParams();
   return (
-    <div className="overflow-hidden">
+    <div className="parents">
       <div>
         <NavbarKelas />
       </div>
 
-      <div className="header-section flex flex-col justify-center w-full bg-[#FFFF] shadow-lg items-center px-[5rem] py-[1.5rem] overflow-hidden">
-        <div className="deadline-button-container flex items-center justify-center bg-[#73CA5C] rounded-[0.75rem] w-[60%] py-[0.8rem]">
+      <div className="header-section flex flex-col justify-center w-full bg-[#FFFF] shadow-lg items-center py-[1.5rem] overflow-hidden">
+        <div className="deadline-button-container flex items-center justify-center bg-[#73CA5C] rounded-[0.75rem] w-[80vw] laptop:w-[60%] py-[0.8rem]">
           <span className="font-montserrat text-white text-[1rem] leading-[1.5rem] font-black">
             Terimakasih atas pembayaran transaksi
           </span>
