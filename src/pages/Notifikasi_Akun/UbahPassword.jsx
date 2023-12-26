@@ -1,15 +1,130 @@
 import React, { useState } from "react";
-import NavbarComponents from "../../assets/components/NavbarAkun";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowLeft,
+  faCircleCheck,
+  faCircleXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import pencil from "../../assets/img/icon/pencil.png";
 import settings from "../../assets/img/icon/settings.png";
 import pay from "../../assets/img/icon/pay.png";
 import out from "../../assets/img/icon/out.png";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { Link } from "react-router-dom";
+import { NavbarLogin } from "../../assets/components/NavbarLogin";
+import { toast } from "react-toastify";
+import { postReset } from "../../services/auth/reset-password";
+import { CookieKeys, CookieStorage } from "../../utils/cookies";
 
 export const UbahPassword = () => {
+  const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,24}$/;
+  const ERROR_BORDER_COLOR = "border-red-600 focus:outline-red-600";
+  const SUCCESS_BORDER_COLOR = "border-green-600 focus:outline-green-600";
+
+  const [FormInput, setFormInput] = useState({
+    password: "",
+    changePassword: "",
+    confirmChangePassword: "",
+  });
+
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [ChangePasswordVisible, setChangePasswordVisible] = useState(false);
+  const [ConfirmChangePasswordVisible, setConfirmChangePasswordVisible] =
+    useState(false);
+
+  const isPasswordLengthValid = FormInput.password.length > 0;
+  const isPasswordValid = PASSWORD_REGEX.test(FormInput.password);
+
+  const isChangePasswordLengthValid = FormInput.changePassword.length > 0;
+  const isChangePasswordValid = PASSWORD_REGEX.test(FormInput.changePassword);
+
+  const isConfirmPasswordLengthValid =
+    FormInput.confirmChangePassword.length > 0;
+  const isConfirmPasswordValid = PASSWORD_REGEX.test(
+    FormInput.confirmChangePassword
+  );
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible((prevVisible) => !prevVisible);
+  };
+
+  const toggleChangePassword = () => {
+    setChangePasswordVisible((prevVisible2) => !prevVisible2);
+  };
+  const toggleConfirmChangePassword = () => {
+    setConfirmChangePasswordVisible((prevVisible3) => !prevVisible3);
+  };
+
+  const handleInput = (e) => {
+    const { id, value } = e.target;
+    setFormInput({
+      ...FormInput,
+      [id]: value,
+    });
+  };
+
+  const passwordBorderClass = () => {
+    if (isPasswordLengthValid && !isPasswordValid) {
+      return ERROR_BORDER_COLOR;
+    } else if (isPasswordLengthValid && isPasswordValid) {
+      return SUCCESS_BORDER_COLOR;
+    }
+  };
+
+  const ChangePasswordBorderClass = () => {
+    if (isChangePasswordLengthValid && !isChangePasswordValid) {
+      return ERROR_BORDER_COLOR;
+    } else if (isChangePasswordLengthValid && isChangePasswordValid) {
+      return SUCCESS_BORDER_COLOR;
+    }
+  };
+
+  const ConfirmPasswordBorderClass = () => {
+    if (isConfirmPasswordLengthValid && !isConfirmPasswordValid) {
+      return ERROR_BORDER_COLOR;
+    } else if (isConfirmPasswordLengthValid && isConfirmPasswordValid) {
+      return SUCCESS_BORDER_COLOR;
+    }
+  };
+
+  const handleChangePassword = async () => {
+    const formReset = {
+      old_password: FormInput.password,
+      new_password: FormInput.changePassword,
+      confirm_new_password: FormInput.changePassword,
+    };
+    try {
+      const response = await postReset(formReset);
+      if (response && response.data) {
+        toast.success(response.data.message, {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        CookieStorage.set(CookieKeys.AuthToken, response.data.data.token);
+      } else {
+        console.error("Invalid response format:", response);
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.error, {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      console.log(error, "err reset");
+    }
+  };
+
   const [showPassword, setShowPassword] = useState(false);
 
   const password = () => {
@@ -19,18 +134,18 @@ export const UbahPassword = () => {
   return (
     <div className="parents">
       <div className="navbar-component hidden laptop:flex">
-        <NavbarComponents />
+        <NavbarLogin />
       </div>
 
       <div className="hero-section flex flex-col gap-2 w-full laptop:h-[11rem] bg-[#EBF3FC] ">
         <div className="back-section hidden laptop:flex items-center mt-[2.3rem] mb-[0.7rem] gap-[1.25rem] mx-[11.5rem]">
           <FontAwesomeIcon
             icon={faArrowLeft}
-            size="lg"
+            size="l"
             style={{ color: "#6148FF" }}
           />
           <a
-            className="font-black font-montserrat text-[1.2rem] text-[#6148FF]"
+            className="font-black font-montserrat text-[1rem] text-[#6148FF]"
             href="/"
           >
             Kembali ke Beranda
@@ -99,7 +214,7 @@ export const UbahPassword = () => {
               </div>
 
               {/* Right Section*/}
-              <div className="right-section w-full laptop:w-1/2 laptop:mx-[4rem] laptop:my-[3rem]">
+              <div className="right-section w-full laptop:w-1/2 laptop:mx-[4rem] laptop:my-[2rem]">
                 <div className="back-section flex items-center gap-3 laptop:hidden ">
                   <Link
                     to="/settings"
@@ -118,80 +233,173 @@ export const UbahPassword = () => {
                   </h1>
                 </div>
 
-                <div className="flex flex-col gap-3 font-montserrat mt-[1.5rem]">
+                <div className="password-lama flex flex-col gap-2 font-montserrat mt-[1.5rem]">
                   <span className="text-[1rem] ">Masukan Password Lama</span>
 
                   <div className="relative">
                     <input
-                      type={showPassword ? "text" : "password"}
-                      className="border-2 border-[#D0D0D0] text-black rounded-2xl w-full py-[0.7rem] px-[1rem] relative"
+                      id="password"
+                      type={passwordVisible ? "text" : "password"}
                       placeholder="Masukan Password Lama"
+                      onChange={(e) => handleInput(e)}
+                      value={FormInput.password}
+                      className={`border-2 border-[#D0D0D0] rounded-[1rem] py-[0.7rem] px-[1rem] w-full relative ${passwordBorderClass()}`}
+                      required
                     />
+                    <div className="cursor-pointer absolute right-[3rem] top-1/2 transform -translate-y-1/2">
+                      {isPasswordLengthValid && !isPasswordValid && (
+                        <FontAwesomeIcon
+                          icon={faCircleXmark}
+                          size="xl"
+                          style={{ color: "#FF0000" }}
+                        />
+                      )}
+                      {isPasswordLengthValid && isPasswordValid && (
+                        <FontAwesomeIcon
+                          icon={faCircleCheck}
+                          size="xl"
+                          style={{ color: "#188E55" }}
+                        />
+                      )}
+                    </div>
                     <FontAwesomeIcon
-                      icon={showPassword}
-                      className="absolute w-full top-2 right-2 cursor-pointer"
-                      onClick={password}
-                    />
-                    <FontAwesomeIcon
-                      icon={showPassword ? faEyeSlash : faEye}
+                      icon={passwordVisible ? faEyeSlash : faEye}
                       size="xl"
-                      className="absolute top-3 right-4 cursor-pointer text-gray-400"
-                      onClick={password}
+                      style={{ color: "#8A8A8A" }}
+                      onClick={togglePasswordVisibility}
+                      className="cursor-pointer eye-icon absolute right-[1rem] top-1/2 transform -translate-y-1/2"
                     />
                   </div>
+                </div>
 
+                <div className="password-baru flex flex-col gap-2 font-montserrat mt-[0.8rem]">
                   <span className="text-[1rem]">Masukan Password Baru</span>
                   <div className="relative">
                     <input
-                      type={showPassword ? "text" : "password"}
-                      className="border-2 border-[#D0D0D0] text-black rounded-2xl w-full py-[0.7rem] px-[1rem] relative"
+                      id="changePassword"
+                      type={ChangePasswordVisible ? "text" : "password"}
                       placeholder="Masukan Password Baru"
+                      onChange={(e) => handleInput(e)}
+                      value={FormInput.changePassword}
+                      className={`border-2 border-[#D0D0D0] rounded-[1rem] py-[0.7rem] px-[1rem] w-full relative ${ChangePasswordBorderClass()}`}
+                      required
                     />
+                    <div className="cursor-pointer absolute right-[3rem] top-1/2 transform -translate-y-1/2">
+                      {isChangePasswordLengthValid &&
+                        !isChangePasswordValid && (
+                          <FontAwesomeIcon
+                            icon={faCircleXmark}
+                            size="xl"
+                            style={{ color: "#FF0000" }}
+                          />
+                        )}
+                      {isChangePasswordLengthValid && isChangePasswordValid && (
+                        <FontAwesomeIcon
+                          icon={faCircleCheck}
+                          size="xl"
+                          style={{ color: "#188E55" }}
+                        />
+                      )}
+                    </div>
                     <FontAwesomeIcon
-                      icon={showPassword}
-                      className="absolute w-full top-2 right-2 cursor-pointer"
-                      onClick={password}
-                    />
-                    <FontAwesomeIcon
-                      icon={showPassword ? faEyeSlash : faEye}
+                      icon={ChangePasswordVisible ? faEyeSlash : faEye}
                       size="xl"
-                      className="absolute top-3 right-4 cursor-pointer text-gray-400"
-                      onClick={password}
+                      style={{ color: "#8A8A8A" }}
+                      onClick={toggleChangePassword}
+                      className="cursor-pointer eye-icon absolute right-[1rem] top-1/2 transform -translate-y-1/2"
                     />
                   </div>
+                  {isChangePasswordLengthValid && !isChangePasswordValid && (
+                    <div className="text-red-600 text-xs mt-2">
+                      Setidaknya satu huruf besar. <br />
+                      Setidaknya satu huruf kecil. <br />
+                      Setidaknya satu angka.
+                      <br />
+                      Panjang total antara 8 dan 24 karakter.
+                    </div>
+                  )}
 
+                  {isChangePasswordLengthValid && isChangePasswordValid && (
+                    <div className="text-green-600 text-sm mt-2 font-bold">
+                      Password Sangat Kuat
+                    </div>
+                  )}
+                </div>
+
+                <div className="ulangi-password-baru flex flex-col gap-2 font-montserrat mt-[0.8rem]">
                   <span className="text-[1rem]">Ulangi Password Baru</span>
                   <div className="relative">
                     <input
-                      type={showPassword ? "text" : "password"}
-                      className="border-2 border-[#D0D0D0] text-black rounded-2xl w-full py-[0.7rem] px-[1rem] relative"
+                      id="confirmChangePassword"
+                      type={ConfirmChangePasswordVisible ? "text" : "password"}
                       placeholder="Ulangi Password Baru"
+                      onChange={(e) => handleInput(e)}
+                      value={FormInput.confirmChangePassword}
+                      className={`border-2 border-[#D0D0D0] rounded-[1rem] py-[0.7rem] px-[1rem] w-full relative ${ConfirmPasswordBorderClass()}`}
                     />
+                    <div className="cursor-pointer absolute right-[3rem] top-1/2 transform -translate-y-1/2">
+                      {isConfirmPasswordLengthValid &&
+                        !isConfirmPasswordValid && (
+                          <FontAwesomeIcon
+                            icon={faCircleXmark}
+                            size="xl"
+                            style={{ color: "#FF0000" }}
+                          />
+                        )}
+                      {isConfirmPasswordLengthValid &&
+                        isConfirmPasswordValid && (
+                          <FontAwesomeIcon
+                            icon={faCircleCheck}
+                            size="xl"
+                            style={{ color: "#188E55" }}
+                          />
+                        )}
+                    </div>
                     <FontAwesomeIcon
-                      icon={showPassword}
-                      className="absolute w-full top-2 right-2 cursor-pointer"
-                      onClick={password}
-                    />
-                    <FontAwesomeIcon
-                      icon={showPassword ? faEyeSlash : faEye}
+                      icon={ConfirmChangePasswordVisible ? faEyeSlash : faEye}
                       size="xl"
-                      className="absolute  top-3 right-4 cursor-pointer text-gray-400"
-                      onClick={password}
+                      style={{ color: "#8A8A8A" }}
+                      onClick={toggleConfirmChangePassword}
+                      className="cursor-pointer eye-icon absolute right-[1rem] top-1/2 transform -translate-y-1/2"
                     />
                   </div>
+                  {isConfirmPasswordLengthValid && !isConfirmPasswordValid && (
+                    <div className="text-red-600 text-xs mt-2">
+                      Setidaknya satu huruf besar. <br />
+                      Setidaknya satu huruf kecil. <br />
+                      Setidaknya satu angka.
+                      <br />
+                      Panjang total antara 8 dan 24 karakter.
+                    </div>
+                  )}
 
-                  <button
-                    className="bg-blue-300 text-white py-[1rem] px-[1rem] mt-[1rem] rounded-2xl hover:bg-[#6148FF]  relative"
-                    type="submit"
-                  >
-                    Ubah Password
-                  </button>
+                  {isConfirmPasswordLengthValid && isConfirmPasswordValid && (
+                    <div className="text-green-600 text-sm mt-2 font-bold">
+                      Password Sangat Kuat
+                    </div>
+                  )}
                 </div>
+                <button
+                  className="bg-blue-300 w-full text-white py-[0.8rem] px-[1rem] mt-[1rem] rounded-2xl hover:bg-[#6148FF]  relative"
+                  type="submit"
+                  disabled={
+                    !isPasswordLengthValid ||
+                    !isPasswordValid ||
+                    !isConfirmPasswordLengthValid ||
+                    !isConfirmPasswordValid
+                  }
+                  onClick={() => {
+                    handleChangePassword();
+                  }}
+                >
+                  Ubah Password
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <div />
     </div>
   );
 };

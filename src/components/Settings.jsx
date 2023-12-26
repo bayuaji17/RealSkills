@@ -1,17 +1,20 @@
 import React, { useState } from "react";
-import NavbarComponents from "../assets/components/NavbarAkun";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import pencil from "../assets/img/icon/pencil.png";
 import settings from "../assets/img/icon/settings.png";
 import pay from "../assets/img/icon/pay.png";
 import out from "../assets/img/icon/out.png";
+import { useNavigate } from "react-router-dom";
+import { CookieKeys, CookieStorage } from "../../src/utils/cookies";
+import { NavbarLogin } from "../assets/components/NavbarLogin";
 
 export const Settings = () => {
+  const navigate = useNavigate();
   return (
     <div className="parents">
       <div className="navbar-component hidden laptop:flex">
-        <NavbarComponents />
+        <NavbarLogin />
       </div>
 
       <div className="hero-section flex flex-col gap-2 w-full laptop:h-[11rem] bg-[#EBF3FC] ">
@@ -82,6 +85,10 @@ export const Settings = () => {
                     <a
                       className="text-black text-[1rem] font-bold hover:text-[#6148FF]"
                       href="./"
+                      onClick={() => {
+                        CookieStorage.remove(CookieKeys.AuthToken);
+                        navigate("/");
+                      }}
                     >
                       Keluar
                     </a>

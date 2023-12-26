@@ -8,4 +8,7 @@ export const API_ENDPOINT = {
   GET_USER: "api/users",
   GET_ME: "/api/auth/authenticated",
   UPDATE_PROFILE: "api/profiles",
+  SEARCH: (query) => {
+    return `/api/classes?search=${query}`;
+  },
 };

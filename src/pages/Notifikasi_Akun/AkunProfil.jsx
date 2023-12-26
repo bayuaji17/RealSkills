@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import NavbarComponents from "../../assets/components/NavbarAkun";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import pencil from "../../assets/img/icon/pencil.png";
@@ -10,7 +9,7 @@ import { Link, useParams } from "react-router-dom";
 import { getUserById } from "../../services/notifikasi_akun/get_user";
 import { putUpdate } from "../../services/notifikasi_akun/update_profile";
 import { toast } from "react-toastify";
-
+import { NavbarLogin } from "../../assets/components/NavbarLogin";
 export const AkunProfil = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const { AuthToken } = useParams();
@@ -65,15 +64,7 @@ export const AkunProfil = () => {
 
   const handleSaveProfile = async () => {
     try {
-      const formData = new FormData();
-      formData.append("profile_picture", selectedImage);
-      formData.append("name", userData.data?.name);
-      formData.append("email", userData.data?.email);
-      formData.append("phone_number", userData.data?.profile?.phone_number);
-      formData.append("country", userData.data?.profile?.country);
-      formData.append("city", userData.data?.profile?.city);
-
-      const response = await putUpdate(AuthToken, formData);
+      const response = await putUpdate(AuthToken, userData);
       toast.success(response.data.message, {
         position: "bottom-center",
         autoClose: 5000,
@@ -103,18 +94,18 @@ export const AkunProfil = () => {
   return (
     <div className="parents">
       <div className="navbar-component hidden laptop:flex">
-        <NavbarComponents />
+        <NavbarLogin />
       </div>
 
       <div className="hero-section flex flex-col gap-2  w-full  laptop:h-[11rem] bg-[#EBF3FC]  ">
         <div className="back-section hidden laptop:flex items-center mt-[2.3rem] mb-[0.7rem] gap-[1.25rem] mx-[11.5rem]">
           <FontAwesomeIcon
             icon={faArrowLeft}
-            size="lg"
+            size="l"
             style={{ color: "#6148FF" }}
           />
           <a
-            className="font-black font-montserrat text-[1.2rem] text-[#6148FF]"
+            className="font-black font-montserrat text-[1rem] text-[#6148FF]"
             href="/"
           >
             Kembali ke Beranda

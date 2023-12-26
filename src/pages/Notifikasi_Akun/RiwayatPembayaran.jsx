@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import NavbarComponents from "../../assets/components/NavbarAkun";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import pencil from "../../assets/img/icon/pencil.png";
@@ -10,10 +9,10 @@ import bedge from "../../assets/img/icon/bedge.png";
 import modul from "../../assets/img/icon/modul.png";
 import time from "../../assets/img/icon/time.png";
 import notif_pay from "../../assets/img/icon/notif_pay.png";
-import background from "../../assets/img/icon/uiux_image.jpg";
 import { faStar } from "@fortawesome/free-regular-svg-icons";
 import { Link, useParams } from "react-router-dom";
 import { getUserById } from "../../services/notifikasi_akun/get_user";
+import { NavbarLogin } from "../../assets/components/NavbarLogin";
 
 export const RiwayatPembayaran = () => {
   const { AuthToken } = useParams();
@@ -28,6 +27,25 @@ export const RiwayatPembayaran = () => {
         return "Advanced";
       default:
         return "Unknown Level";
+    }
+  };
+
+  const categories = (categoryId) => {
+    switch (categoryId) {
+      case 1:
+        return "UI/UX Design";
+      case 2:
+        return "Product Management";
+      case 3:
+        return "Web Development";
+      case 4:
+        return "Android Development";
+      case 5:
+        return "IOS Development";
+      case 6:
+        return "Data Science";
+      default:
+        return "Unknown Category";
     }
   };
 
@@ -48,18 +66,18 @@ export const RiwayatPembayaran = () => {
   return (
     <div className="parent">
       <div className="navbar-component hidden laptop:flex">
-        <NavbarComponents />
+        <NavbarLogin />
       </div>
 
       <div className="hero-section flex flex-col gap-2  w-full laptop:h-[11rem] bg-[#EBF3FC] ">
         <div className="back-section hidden laptop:flex items-center mt-[2.3rem] mb-[0.7rem] gap-[1.25rem] mx-[11.5rem]">
           <FontAwesomeIcon
             icon={faArrowLeft}
-            size="lg"
+            size="l"
             style={{ color: "#6148FF" }}
           />
           <a
-            className="font-bold font-montserrat text-[1.2rem] text-[#6148FF]"
+            className="font-bold font-montserrat text-[1rem] text-[#6148FF]"
             href="/"
           >
             Kembali ke Beranda
@@ -153,16 +171,16 @@ export const RiwayatPembayaran = () => {
                 <div className="flex flex-col ">
                   {payment.map((payments, index) => (
                     <div key={index}>
-                      <div className="first-payment bg-white rounded-[1rem] mx-[1rem] mt-[1.5rem] h-[20%] border-2 flex flex-col">
+                      <div className="first-payment bg-white rounded-[1rem] mx-[1rem] mt-[1.5rem] h-[50%] border-2 flex flex-col">
                         <img
                           src={payments.class?.image_url}
                           alt=""
-                          className=" object-cover w-full h-[6rem] rounded-t-[1rem]"
+                          className=" object-cover w-full h-[6.5rem] rounded-t-[1rem]"
                         />
                         <div className="modal-category-rate-section flex flex-col gap-1">
-                          <div className="mobile-course-category flex justify-between items-center mx-[1rem] mt-[0.2rem]">
-                            <span className="title font-montserrat text-dark-blue text-[1.2rem] font-bold mt-[.3rem] ">
-                              {payments.class?.name}
+                          <div className="mobile-course-category flex justify-between items-center mx-[1rem] mt-[0.15rem]">
+                            <span className="title font-montserrat text-dark-blue text-[1rem] font-bold mt-[.3rem] ">
+                              {categories(payments.class?.category_id)}
                             </span>
                             <div className="rating-star-section flex gap-1 items-center">
                               <FontAwesomeIcon
@@ -177,7 +195,7 @@ export const RiwayatPembayaran = () => {
                           </div>
                           <div className="mobile-title-course-section flex flex-col gap-1 mx-[1rem] font-montserrat">
                             <span className="course-title font-bold font-montserrat text-[0.8rem] text-[#202244]">
-                              {payments.class?.about}
+                              {payments.class?.name}
                             </span>
                             <span className="author-section text-[0.7rem] ml-[0.1rem] text-[#000] font-montserrat font-bold">
                               {payments.class?.author}
@@ -204,21 +222,18 @@ export const RiwayatPembayaran = () => {
                             </div>
                           </div>
                         </div>
+
                         <div
-                          className={`paid flex flex-row w-[50%] items-center gap-1 ${
+                          className={`flex w-fit items-center text-xs text-white py-[0.2rem] px-3 rounded-xl gap-[0.4rem] ml-3 my-2 ${
                             payments.is_paid ? "bg-green-500" : "bg-red-500"
-                          }  ml-4 my-2 rounded-lg`}
+                          }`}
                         >
                           <img
                             src={notif_pay}
                             alt=""
-                            className="w-[1rem] h-[1rem] ml-2"
+                            className="w-[0.9rem] h-[0.9rem]"
                           />
-                          <span
-                            className={`flex items-center text-white text-[0.8rem] font-bold p-[0.4rem]`}
-                          >
-                            {payments.is_paid ? "Paid" : "Waiting for Payment"}
-                          </span>
+                          {payments.is_paid ? "Paid" : "Waiting for Payment"}
                         </div>
                       </div>
 

@@ -16,7 +16,6 @@ export const LoginAdminPage = () => {
   const navigate = useNavigate();
 
   const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,24}$/;
-  // const ADMIN_ID_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const ERROR_BORDER_COLOR = "border-red-600 focus:outline-red-600";
   const SUCCESS_BORDER_COLOR = "border-green-600 focus:outline-green-600";
 
@@ -25,13 +24,6 @@ export const LoginAdminPage = () => {
   const isPasswordValid = PASSWORD_REGEX.test(FormInput.password);
   const isPasswordLengthValid = FormInput.password.length > 0;
 
-  // const colorBorderAdmin_id = () => {
-  //   if (isAdminIDLengthValid > 0 && !isAdminIDValid) {
-  //     return ERROR_BORDER_COLOR;
-  //   } else if (isAdminIDLengthValid > 0 && isAdminIDValid) {
-  //     return SUCCESS_BORDER_COLOR;
-  //   }
-  // };
 
   const colorBorderPassword = () => {
     if (isPasswordLengthValid && !isPasswordValid) {
