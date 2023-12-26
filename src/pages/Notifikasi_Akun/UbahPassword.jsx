@@ -11,14 +11,10 @@ import pay from "../../assets/img/icon/pay.png";
 import out from "../../assets/img/icon/out.png";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { Link } from "react-router-dom";
-<<<<<<< Updated upstream
 import { NavbarLogin } from "../../assets/components/NavbarLogin";
 import { toast } from "react-toastify";
-import { postReset } from "../../services/auth/reset-password";
 import { CookieKeys, CookieStorage } from "../../utils/cookies";
-=======
-import NavbarComponents from "../../assets/components/NavbarAkun";
->>>>>>> Stashed changes
+import { postUbahPassword } from "../../services/notifikasi_akun/ubah_password";
 
 export const UbahPassword = () => {
   const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,24}$/;
@@ -98,7 +94,7 @@ export const UbahPassword = () => {
       confirm_new_password: FormInput.changePassword,
     };
     try {
-      const response = await postReset(formReset);
+      const response = await postUbahPassword(formReset);
       if (response && response.data) {
         toast.success(response.data.message, {
           position: "bottom-center",
@@ -145,7 +141,7 @@ export const UbahPassword = () => {
         <div className="back-section hidden laptop:flex items-center mt-[2.3rem] mb-[0.7rem] gap-[1.25rem] mx-[11.5rem]">
           <FontAwesomeIcon
             icon={faArrowLeft}
-            size="l"
+            size="lg"
             style={{ color: "#6148FF" }}
           />
           <a
@@ -157,14 +153,14 @@ export const UbahPassword = () => {
         </div>
         <div className="flex mx-[0.9rem] mt-[1rem] justify-center items-center">
           <div className="modal flex flex-col laptop:border laptop:border-[#6148FF] min-h-screen laptop:h-auto w-full laptop:w-[75%] rounded-[1rem] mb-[4rem]">
-            <div className="title hidden laptop:flex w-full h-[4.7rem] justify-center items-center laptop:bg-[#6148FF] rounded-t-2xl">
+            <div className="title hidden laptop:flex w-full h-[4.8rem] justify-center items-center laptop:bg-[#6148FF] rounded-t-2xl">
               <span className=" flex laptop:justify-center laptop:items-center text-white font-bold text-[1.8rem] py-3">
                 Akun
               </span>
             </div>
             <div className="flex flex-row w-full flex-grow rounded-b-2xl">
               {/* Left Section */}
-              <div class="left-section hidden laptop:flex w-1/2 m-[2rem]">
+              <div className="left-section hidden laptop:flex w-1/2 m-[2rem]">
                 <div className="flex flex-col gap-5 font-montserrat">
                   <div className="flex flex-row gap-4">
                     <img

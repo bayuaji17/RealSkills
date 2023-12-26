@@ -9,13 +9,7 @@ import { Link, useParams } from "react-router-dom";
 import { getUserById } from "../../services/notifikasi_akun/get_user";
 import { putUpdate } from "../../services/notifikasi_akun/update_profile";
 import { toast } from "react-toastify";
-<<<<<<< Updated upstream
 import { NavbarLogin } from "../../assets/components/NavbarLogin";
-=======
-import NavbarComponents from "../../assets/components/NavbarAkun";
-
-
->>>>>>> Stashed changes
 export const AkunProfil = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const { AuthToken } = useParams();
@@ -103,7 +97,7 @@ export const AkunProfil = () => {
         <div className="back-section hidden laptop:flex items-center mt-[2.3rem] mb-[0.7rem] gap-[1.25rem] mx-[11.5rem]">
           <FontAwesomeIcon
             icon={faArrowLeft}
-            size="l"
+            size="lg"
             style={{ color: "#6148FF" }}
           />
           <a
@@ -115,7 +109,7 @@ export const AkunProfil = () => {
         </div>
         <div className="flex mx-[0.9rem] mt-[1rem] justify-center items-center  ">
           <div className="modal flex flex-col laptop:border laptop:border-[#6148FF] min-h-screen laptop:h-auto w-full laptop:w-[75%] rounded-[1rem] mb-[4rem]">
-            <div className="title hidden laptop:flex w-full h-[4.7rem] justify-center items-center laptop:bg-[#6148FF] rounded-t-2xl ">
+            <div className="title hidden laptop:flex w-full h-[4.8rem] justify-center items-center laptop:bg-[#6148FF] rounded-t-2xl ">
               <span className=" flex laptop:justify-center laptop:items-center text-white font-bold text-[1.8rem] py-5">
                 Akun
               </span>

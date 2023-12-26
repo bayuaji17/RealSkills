@@ -11,6 +11,7 @@ import {
   MenuItem,
   Avatar,
   IconButton,
+  Collapse,
 } from "@material-tailwind/react";
 import {
   UserCircleIcon,
@@ -276,7 +277,7 @@ export const NavbarLogin = () => {
             <NavList />
           </div>
           <IconButton
-            size="base"
+            size="md"
             color="white"
             variant="text"
             onClick={toggleIsNavOpen}
@@ -320,9 +321,9 @@ export const NavbarLogin = () => {
         </div>
       </div>
 
-      <MobileNav open={isNavOpen} className="overflow-scroll">
+      <Collapse open={isNavOpen} className="overflow-scroll">
         <NavList />
-      </MobileNav>
+      </Collapse>
     </Navbar>
   );
 };

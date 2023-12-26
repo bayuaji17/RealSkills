@@ -5,11 +5,7 @@ import Vector from "../../assets/img/icon/Vector.png";
 import circle_green from "../../assets/img/icon/circle_green.png";
 import { getUserById } from "../../services/notifikasi_akun/get_user";
 import { useParams } from "react-router-dom";
-<<<<<<< Updated upstream
 import { NavbarLogin } from "../../assets/components/NavbarLogin";
-=======
-import NavbarComponents from "../../assets/components/NavbarNotif";
->>>>>>> Stashed changes
 
 export const Notifikasi = () => {
   const { AuthToken } = useParams();
@@ -39,7 +35,7 @@ export const Notifikasi = () => {
         <div className="back-section hidden laptop:flex items-center mt-[2.3rem] mb-[0.7rem] gap-[1.25rem] mx-[11.5rem] ">
           <FontAwesomeIcon
             icon={faArrowLeft}
-            size="l"
+            size="lg"
             style={{ color: "#6148FF" }}
           />
           <a
