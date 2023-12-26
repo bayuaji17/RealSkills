@@ -1,5 +1,5 @@
 import React from "react";
-import { ChaptersTables } from "../components/ChaptersTables";
+import { ChaptersTables } from "../components/admin/ChaptersTables";
 
 export const Chapters = () => {
   return (

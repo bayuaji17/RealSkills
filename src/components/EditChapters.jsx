@@ -12,16 +12,14 @@ import { editChaptersById } from "../services/edit-chapters";
 
 //! Masih NGEBUG
 
-
-export const EditChapters = ({ open, handleOpen, editChaptersId }) => {
-
+export const EditChapters = ({ open, handleOpen, editChaptersId, cancel }) => {
   const [editChapters, setEditChapters] = useState({
     no_chapter: undefined,
     title: undefined,
     videos: [
       {
         no_video: "",
-        title: "",
+        titleVideo: "",
         link: "",
         time: "",
       },
@@ -30,13 +28,19 @@ export const EditChapters = ({ open, handleOpen, editChaptersId }) => {
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
-    setEditChapters({ ...editChapters, [id]: value });
+    const updatedValue = id === "no_chapter" ? parseInt(value, 10) : value;
+    setEditChapters({ ...editChapters, [id]: updatedValue });
   };
 
   const handleVideoChange = (e, index, field) => {
     const { value } = e.target;
     const updatedVideos = [...editChapters.videos];
-    updatedVideos[index][field] = value;
+
+    if (field === "time" || field === "no_video") {
+      updatedVideos[index][field] = parseInt(value, 10) || 0;
+    } else {
+      updatedVideos[index][field] = value;
+    }
     setEditChapters({ ...editChapters, videos: updatedVideos });
     console.log(editChapters, e.target.value);
   };
@@ -58,18 +62,31 @@ export const EditChapters = ({ open, handleOpen, editChaptersId }) => {
   };
 
   const handleSubmit = async () => {
-    const dataEditSubmit = {
-      no_chapter: editChapters.no_chapter,
-      title: editChapters.title,
-      videos: editChapters.videos.map((video) => ({
-        no_video: video.no_video,
-        title: video.title,
-        link: video.link,
-        time: video.time,
-      })),
-    };
+    let dataEditSubmit;
+
+    if (
+      editChapters.videos.some((video) =>
+        Object.values(video).some((value) => value !== "")
+      )
+    ) {
+      dataEditSubmit = {
+        no_chapter: editChapters.no_chapter,
+        title: editChapters.title,
+        videos: editChapters.videos.map((video) => ({
+          no_video: video.no_video,
+          title: video.titleVideo,
+          link: video.link,
+          time: video.time,
+        })),
+      };
+    } else {
+      dataEditSubmit = {
+        no_chapter: editChapters.no_chapter,
+        title: editChapters.title,
+      };
+    }
     try {
-      const response = await editChaptersById(editChaptersId,dataEditSubmit);
+      const response = await editChaptersById(editChaptersId, dataEditSubmit);
       console.log(response);
       return response;
     } catch (error) {
@@ -109,7 +126,7 @@ export const EditChapters = ({ open, handleOpen, editChaptersId }) => {
                 <div className="w-[30rem] px-4">
                   <FormInput
                     type="text"
-                    id="goals"
+                    label="no_video"
                     name="Nomor Video"
                     value={videos.no_video}
                     placeholder="Input No Video Chapter"
@@ -117,7 +134,7 @@ export const EditChapters = ({ open, handleOpen, editChaptersId }) => {
                   />
                   <FormInput
                     type="text"
-                    id="goals"
+                    label="title"
                     name="Title Video"
                     value={videos.title}
                     placeholder="Input Title Video Chapter"
@@ -125,7 +142,7 @@ export const EditChapters = ({ open, handleOpen, editChaptersId }) => {
                   />
                   <FormInput
                     type="text"
-                    id="goals"
+                    label="link"
                     name="Link Video"
                     value={videos.link}
                     placeholder="Input Link Video Chapter"
@@ -133,7 +150,7 @@ export const EditChapters = ({ open, handleOpen, editChaptersId }) => {
                   />
                   <FormInput
                     type="text"
-                    id="goals"
+                    label="link"
                     name="Durasi Video"
                     value={videos.time}
                     placeholder="Input No Video Chapter"
@@ -154,12 +171,7 @@ export const EditChapters = ({ open, handleOpen, editChaptersId }) => {
           </Button>
         </DialogBody>
         <DialogFooter>
-          <Button
-            variant="text"
-            color="red"
-            onClick={handleOpen}
-            className="mr-1"
-          >
+          <Button variant="text" color="red" onClick={cancel} className="mr-1">
             <span>Cancel</span>
           </Button>
           <Button variant="gradient" color="green" onClick={handleSubmit}>

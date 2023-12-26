@@ -9,17 +9,17 @@ import {
   DialogHeader,
   Typography,
 } from "@material-tailwind/react";
-import { getClass, getClassByQuery } from "../services/get-all-class";
+import { getClassByQuery } from "../services/get-all-class";
 import { FormSelect } from "./form/FormSelect";
 import FormInput from "./form/FormInput";
 import { editClassById } from "../services/edit-class";
 import { deleteClassById } from "../services/delete-class";
 import { useNavigate } from "react-router-dom";
-import { FilterAdmin } from "./FilterAdmin";
+import { FilterAdmin } from "./admin/FilterAdmin";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons";
 import filter from "../assets/Filter.svg";
-import { TambahKelas } from "./TambahKelas";
+import { TambahKelas } from "./admin/TambahKelas";
 const TABLE_HEAD = [
   "Kode Kelas",
   "Kategori",
@@ -81,9 +81,6 @@ export const ReactTables = () => {
         setDataTables(response.data.data.classes);
         setNotFound(null);
       }
-
-      // setDataTables(response.data.data.classes);
-      // console.log(response.data.data.classes, "dari ReactTables");
     } catch (error) {
       console.error(error.response.data.error);
       setNotFound(error.response.data.error);
@@ -96,34 +93,10 @@ export const ReactTables = () => {
   }, [handleGetClass]);
 
   const handleSearch = (e) => {
-    setSearch(e.target.value);
+    setTimeout(() => {
+      setSearch(e.target.value);
+    }, 1500);
   };
-  console.log(search);
-  // const handleGetClass = async () => {
-  //   try {
-  //     const response = await getClassByQuery(
-  //       page,
-  //       limit,
-  //       search,
-  //       category,
-  //       type,
-  //       level
-  //     );
-  //     setDataTables(response.data.data.classes);
-  //     console.log(response.data.data.classes, "dari ReactTables");
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-  // const handleGetClass = async () => {
-  //   try {
-  //     const response = await getClass(page, limit);
-  //     setDataTables(response.data.data.classes);
-  //     console.log(response.data.data.classes, "dari ReactTables");
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
 
   const handlePreviousPage = () => {
     if (page > 1) {
@@ -134,10 +107,6 @@ export const ReactTables = () => {
   const handleNextPage = () => {
     setPage(page + 1);
   };
-
-  // useEffect(() => {
-  //   handleGetClass();
-  // }, [page, limit, search, category, type, level]);
 
   const getLabelById = (id, mapping) => {
     const match = mapping.find((item) => item.id === id);
@@ -384,7 +353,7 @@ export const ReactTables = () => {
           <Button
             variant="gradient"
             color="blue"
-            onClick={() => navigate(`/test/${selectedRow.id}`)}
+            onClick={() => navigate(`/admin/kelola-kelas/chapters/${selectedRow.id}`)}
             className="mr-1"
           >
             <span>Chapter Kelas</span>
@@ -543,85 +512,6 @@ export const ReactTables = () => {
                 );
               })
             )}
-
-            {/* {dataTables.map((data, index) => {
-              return (
-                <tr key={index}>
-                  <td className="p-4 border-b border-blue-gray-50">
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {data.code}
-                    </Typography>
-                  </td>
-                  <td className="p-4 border-b border-blue-gray-50">
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {getLabelById(data.category_id, categoryMapping)}
-                    </Typography>
-                  </td>
-                  <td className="p-4 border-b border-blue-gray-50">
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {data.name}
-                    </Typography>
-                  </td>
-                  <td className="p-4 border-b border-blue-gray-50">
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {getLabelById(data.type_id, typeMapping)}
-                    </Typography>
-                  </td>
-                  <td className="p-4 border-b border-blue-gray-50">
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {getLabelById(data.level_id, levelMapping)}
-                    </Typography>
-                  </td>
-                  <td className="p-4 border-b border-blue-gray-50">
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {data.price}
-                    </Typography>
-                  </td>
-                  <td className="p-4 border-b border-blue-gray-50">
-                    <div className="flex flex-row gap-1">
-                      <Button
-                        size="sm"
-                        className="normal-case rounded-2xl bg-blue-600"
-                        onClick={() => handleEdit(data)}
-                      >
-                        Ubah
-                      </Button>
-                      <Button
-                        size="sm"
-                        className="normal-case rounded-2xl bg-red-600"
-                        onClick={() => handleHapus(data)}
-                      >
-                        Hapus
-                      </Button>
-                    </div>
-                  </td>
-                </tr>
-              );
-            })} */}
           </tbody>
         </table>
         <CardFooter className="flex items-center laptop:justify-end gap-2 border-t border-blue-gray-50 p-4">

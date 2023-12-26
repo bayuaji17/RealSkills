@@ -6,9 +6,9 @@ import {
   DialogHeader,
 } from "@material-tailwind/react";
 import React, { useState } from "react";
-import { FormSelect } from "./form/FormSelect";
-import FormInput from "./form/FormInput";
-import { postClassForm } from "../services/create-class";
+import { FormSelect } from "../form/FormSelect";
+import FormInput from "../form/FormInput";
+import { postClassForm } from "../../services/create-class";
 import { toast } from "react-toastify";
 
 export const TambahKelas = ({ open, handler }) => {
@@ -181,7 +181,7 @@ export const TambahKelas = ({ open, handler }) => {
                 Tujuan Kelas
               </label>
               {formKelas.goals.map((goal, index) => (
-                // <div key={index} className="relative py-4">
+      
                 <div key={index} className="flex flex-row pb-2 pt-1">
                   <input
                     type="text"
@@ -193,7 +193,7 @@ export const TambahKelas = ({ open, handler }) => {
                   />
                   <button
                     className="px-2 border-2 bg-red-600 rounded-xl mx-4 w-24 h-12 text-white"
-                    // className="absolute inset-y-4 px-2 border-2 border-red-600 rounded-xl mx-4 w-24 h-12"
+                 
                     onClick={() => handleRemoveGoals(index)}
                   >
                     Hapus
@@ -254,9 +254,6 @@ export const TambahKelas = ({ open, handler }) => {
               color="green"
               className="rounded-2xl"
               type="submit"
-              // onClick={(e) => {
-              //   handleCreateClass(e);
-              // }}
             >
               <span>Simpan</span>
             </Button>

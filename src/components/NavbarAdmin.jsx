@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import iconSearch from "../assets/IconSearch.svg";
-import { CardAdmin } from "./CardAdmin";
-import logoUser from "../assets/Users.svg";
+// import iconSearch from "../assets/IconSearch.svg";
+// import { CardAdmin } from "./CardAdmin";
+// import logoUser from "../assets/Users.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { SideBarAdmin } from "./SideBarAdmin";
+// import { SideBarAdmin } from "./SideBarAdmin";
 import {
   Button,
   Drawer,
@@ -12,7 +12,6 @@ import {
   Input,
   List,
   ListItem,
-  MobileNav,
   Collapse,
   Navbar,
   Typography,
@@ -46,7 +45,7 @@ export const NavbarAdmin = () => {
         </Typography>
         <div className="hidden items-center gap-x-2 lg:flex">
           <div className="relative flex w-full gap-2 md:w-max">
-            <Input
+            {/* <Input
               type="search"
               placeholder="Search"
               containerProps={{
@@ -56,8 +55,8 @@ export const NavbarAdmin = () => {
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
-            />
-              <div className="!absolute left-3 top-[13px]">
+            /> */}
+              {/* <div className="!absolute left-3 top-[13px]">
                 <svg
                   width="13"
                   height="14"
@@ -77,7 +76,7 @@ export const NavbarAdmin = () => {
                     stroke-linejoin="round"
                   />
                 </svg>
-              </div>
+              </div> */}
           </div>
           <Button size="md" className="rounded-lg bg-blue-600">
             Search
@@ -194,42 +193,5 @@ export const NavbarAdmin = () => {
       </List>
     </Drawer>
   </div>
-
-    // !Hapus SOON
-    // <nav class="flex h-[6.25rem] items-center justify-end laptop:justify-between px-5 bg-[#EBF3FC] shadow-lg ">
-    //   <h1 className="laptop:inline hidden ">Hi Admin</h1>
-    //   <div className="relative">
-    //     <input
-    //       type="text"
-    //       class="h-[3.875rem] w-[18.75rem] rounded-2xl px-4 border-2"
-    //       placeholder="Search"
-    //     />
-    //     <img
-    //       src={iconSearch}
-    //       alt="searchIcon"
-    //       className="absolute inset-y-0 end-3 py-3"
-    //     />
-    //   </div>
-    // </nav>
-
-    // !Hapus SOON
-    // <div className="w-[80%] ml-auto h-[6.25rem] bg-[#EBF3FC]">
-    //   <nav className="flex flex-row items-center h-full justify-between px-4">
-    //     <h1>Hi, Admin !</h1>
-    //     <div className="relative">
-    //       <input
-    //         type="text"
-    //         placeholder="Search"
-    //         className="border-2 rounded-xl h-[3.875rem] w-[18.75rem] px-3"
-    //       />
-    //       <img
-    //         src={iconSearch}
-    //         alt="search class"
-    //         className="absolute inset-y-0 end-0 py-3 px-3"
-    //       />
-    //     </div>
-    //   </nav>
-    //   {/* <CardAdmin allUsers="500" logoUser={logoUser } /> */}
-    // </div>
   );
 };

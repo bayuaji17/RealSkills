@@ -24,10 +24,10 @@ export const RouterPages = () => {
         <Route path="admin/dashboard" element={<AdminDashboard/>} />
         <Route path="admin/kelola-kelas" element={<KelolaKelas/>} />
         <Route path="admin/kelola-kelas/:id" element={<DetailsKelolaKelas/>} />
+        <Route path="admin/kelola-kelas/chapters/:id" element={<Chapters/>} />
 
 
 
-        <Route path="test/:id" element={<Chapters/>} />
         <Route path="*" element={<NotFoundPage/>} />
 
 

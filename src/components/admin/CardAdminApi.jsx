@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { CardAdmin } from "./CardAdmin";
-import { getPremiumClass, getTotalClass } from "../services/get-all-class";
-import { getUsers } from "../services/all-users";
-import logoUsers from "../assets/LogoUsers.svg"
-import premiumCourse from "../assets/PremiumCourse.svg"
-import logoFreeCourse from "../assets/LogoFreeCourse.svg"
+import { CardAdmin } from "../../components/admin/CardAdmin";
+import { getPremiumClass, getTotalClass } from "../../services/get-all-class";
+import { getUsers } from "../../services/all-users";
+import logoUsers from "../../assets/LogoUsers.svg";
+import premiumCourse from "../../assets/PremiumCourse.svg";
+import logoFreeCourse from "../../assets/LogoFreeCourse.svg";
 export const CardAdminApi = () => {
   const [totalClass, setTotalClass] = useState();
   const [allPremiumClass, setAllPremiumClass] = useState();
@@ -15,21 +15,27 @@ export const CardAdminApi = () => {
       const response = await getTotalClass();
       console.log(response.data.data, "dari CARD");
       setTotalClass(response.data.data.pagination.total_items);
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   };
   const getAllPremiumClass = async () => {
     try {
       const response = await getPremiumClass();
       console.log(response.data.data, "dari Premium");
       setAllPremiumClass(response.data.data.pagination.total_items);
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   };
   const getAllUsers = async () => {
     try {
       const response = await getUsers();
       console.log(response.data.data.pagination, "dari Users");
       setAllUsers(response.data.data.pagination.total_items);
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {

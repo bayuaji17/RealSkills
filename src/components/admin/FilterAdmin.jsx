@@ -10,8 +10,8 @@ import {
   Radio,
   Typography,
 } from "@material-tailwind/react";
-import React, { useState } from "react";
-import { getFilterClass } from "../services/get-all-class";
+import React from "react";
+
 //! BLOM KELAR
 export const FilterAdmin = ({
   open,
@@ -25,42 +25,7 @@ export const FilterAdmin = ({
   getFilter,
   setFilter,
 }) => {
-  // const [category, setCategory] = useState("");
-  // const [type, setType] = useState("");
-  // const [level, setLevel] = useState("");
-  // const [isError, setIsError] = useState("")
 
-  // const handleCategory = (e) => {
-  //   setCategory(e.target.value);
-  // };
-
-  // const handleType = (e) => {
-  //   setType(e.target.value);
-  // };
-
-  // const handleLevel = (e) => {
-  //   setLevel(e.target.value);
-  // };
-  // console.log("category", category);
-  // console.log("type", type);
-  // console.log("level", level);
-
-  // const getFilter = async () => {
-  //   try {
-  //     const response = await getFilterClass(category, type, level);
-  //     console.log(response, "ini dari filterADmin");
-  //     return response;
-  //   } catch (error) {
-  //     setIsError(error)
-  //     console.log(error,"ini dari error")
-  //     console.error(error);
-  //   }
-  // };
-  // const handleClear = () => {
-  //   handleCategory({ target: { value: null } }); // Menetapkan nilai null atau yang sesuai
-  //   handleType({ target: { value: null } });
-  //   handleLevel({ target: { value: null } });
-  // };
   const handleClear = () => {
     setFilter({ category: "", type: "", level: "" });
   };
@@ -428,9 +393,6 @@ export const FilterAdmin = ({
         <div className="flex gap-2 justify-between">
           <Button size="sm" variant="outlined" onClick={handleClear}>
             Bersihkan
-          </Button>
-          <Button size="sm" onClick={getFilter}>
-            Terapkan Filter
           </Button>
         </div>
       </Drawer>

@@ -88,8 +88,6 @@ export const TambahChapters = () => {
       const response = await postChapters(formSubmit);
       console.log(response);
       toast.success("success");
-
-      // return response;
     } catch (error) {
       toast.error("error");
       console.error(error);
@@ -99,6 +97,7 @@ export const TambahChapters = () => {
   return (
     <div className="container mx-auto w-screen ">
       <h1>Input Chapter</h1>
+      <a href="/admin/kelola-kelas">back</a>
 
       <Card className="w-full p-3 bg-gradient-to-br from-pink-500 via-red-500 to-yellow-500">
         <form onSubmit={handleSubmit}>
@@ -176,34 +175,6 @@ export const TambahChapters = () => {
               </Card>
             ))}
           </div>
-          {/* {chapterData.videos.map((video, index) => (
-          <div key={index}>
-            <FormInput
-              name="Judul Video"
-              label="videosTittle"
-              type="text"
-              placeholder="Judul Video"
-              value={video.title}
-              onChange={(e) => handleInputChange(e, index)}
-            />
-            <FormInput
-              name="Link Video"
-              label="videosLink"
-              type="text"
-              placeholder="Link Video"
-              value={video.link}
-              onChange={(e) => handleInputChange(e, index)}
-            />
-            <FormInput
-              name="Durasi Video"
-              label="videosTime"
-              type="number"
-              placeholder="Durasi Video"
-              value={video.time}
-              onChange={(e) => handleInputChange(e, index)}
-            />
-          </div>
-        ))} */}
           <div className="flex justify-between">
             <Button variant="gradient" onClick={handleAddVideo}>
               Tambah Video
