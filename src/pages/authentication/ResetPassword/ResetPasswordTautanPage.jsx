@@ -1,17 +1,25 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import logo from "../../../assets/img/logo.png";
+import { postForgotPassword } from "../../../services/auth/forgot-password";
+import { CookieKeys, CookieStorage } from "../../../utils/cookies";
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 const ResetPasswordTautanPage = () => {
-  const [Email, setEmail] = useState("");
-  const isEmailValid = EMAIL_REGEX.test(Email);
-  const isEmailLengthValid = Email.length > 0;
+  const [FormInput, setFormInput] = useState(
+    {
+      email: ""
+    }
+  )
+  // const [Email, setEmail] = useState("");
+  const isEmailValid = EMAIL_REGEX.test(FormInput.email);
+  const isEmailLengthValid = FormInput.email.length > 0;
   const ERROR_BORDER_COLOR = "border-red-600 focus:outline-red-600";
   const SUCCESS_BORDER_COLOR = "border-green-600 focus:outline-green-600";
-  const navigate = useNavigate()
-
+  // const navigate = useNavigate()
+  
   const emailBorderClass = () => {
     if (isEmailLengthValid > 0 && !isEmailValid) {
       return ERROR_BORDER_COLOR;
@@ -20,10 +28,47 @@ const ResetPasswordTautanPage = () => {
     }
   };
 
-  const handleEmailChange = (e) => {
-    const newEmail = e.target.value;
-    setEmail(newEmail);
-  };
+  const handleInput = (e) => {
+     const { id, value } = e.target;
+    setFormInput({
+      ...FormInput,
+      [id]: value,
+    });
+  }
+
+  const handleForgotPassword = async () => {
+    const formForgot = {
+      email: FormInput.email
+    }
+    try {
+      const response = await postForgotPassword(formForgot);
+      toast.success(response.data.message, {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      console.log(response.data.data.token)
+      console.log('sukses')
+      CookieStorage.set(CookieKeys.ForgotPasswordToken, response.data.data.token)
+      // navigate("/login");
+    } catch (error) {
+      toast.error(error.response.data.error, {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  }
 
   return (
     <>
@@ -38,10 +83,12 @@ const ResetPasswordTautanPage = () => {
               <div className="input-email-section flex flex-col gap-[0.2rem]">
                 <span className="text-[0.9rem]">Email/No. Telepon</span>
                 <input
-                  onChange={handleEmailChange}
-                  value={Email}
+                  onChange={handleInput}
                   required
+                  id="email"
                   type="email"
+                  label="email"
+                  value={FormInput.email}
                   placeholder="example@gmail.com"
                   className={`border-2 border-[#D0D0D0] rounded-[1rem] py-[0.5rem] px-[1rem] ${emailBorderClass()}`}
                 />
@@ -56,7 +103,8 @@ const ResetPasswordTautanPage = () => {
               className="reset-btn font-poppins text-white bg-blue-700 rounded-[1rem] py-[0.75rem] px-[1.5rem] text-[1rem] disabled:cursor-not-allowed disabled:bg-blue-300"
               disabled={!isEmailLengthValid || !isEmailValid}
               onClick={()=>{
-                navigate("/resetPassword")  
+                console.log('hello')
+                handleForgotPassword();
               }}
             >
               Masuk

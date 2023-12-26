@@ -11,7 +11,16 @@ import { KelolaKelas } from "../pages/admin/KelolaKelas";
 import { NotFoundPage } from "../pages/NotFoundPage";
 import { DetailsKelolaKelas } from "../pages/DetailsKelolaKelas";
 import { Chapters } from "../pages/Chapters";
-
+import DetailKelasPage from "../pages/ClassDetail/DetailKelasPage";
+import DetailKelasPembayaran from "../pages/ClassDetail/DetailKelasPembayaran";
+import PembayaranSukses from "../pages/ClassDetail/PembayaranSukses";
+import { BerandaNoLogin } from "../pages/BerandaNoLogin";
+import { KelasSaya } from "../pages/KelasSaya";
+import { TopikKelas } from "../pages/TopikKelas";
+import FilterSide from "../components/FilterSide";
+import { FilterResultKelas } from "../pages/FilterResultKelas";
+import { FilterResultTopik } from "../pages/FilterResultTopik";
+import KelasContainer from "../pages/ClassDetail/KelasContainer";
 
 export const RouterPages = () => {
   return (
@@ -33,6 +42,17 @@ export const RouterPages = () => {
 
         <Route path="/reset" element={<ResetPasswordTautanPage />} />
         <Route path="/resetPassword" element={<ResetPasswordPage />} />
+        <Route path="/berandaNoLog" element={<BerandaNoLogin />} />
+        <Route path="/kelas" element={<KelasSaya />} />
+        <Route path="/topik" element={<TopikKelas />} />
+        <Route path="/filterSide" element={<FilterSide />} />
+        <Route path="/filterResultKelas" element={<FilterResultKelas />} />
+        <Route path="/filterResultTopik" element={<FilterResultTopik />} />
+        <Route path="/detailKelas/:classId" element={<DetailKelasPage />} />
+        <Route path="/pembayaran/:classId" element={<DetailKelasPembayaran />} />
+        <Route path="/pembayaranSukses/:classId" element={<PembayaranSukses />} />
+        <Route path="/tesFilter" element={<KelasContainer/>}/>
+
       </Routes>
     </BrowserRouter>
   );
