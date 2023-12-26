@@ -32,7 +32,6 @@ const DetailKelasPembayaran = () => {
     cvv: "",
     expiry_date: "",
   });
-  // const [IsCreditCardDisabled, setIsCreditCardDisabled] = useState(true);
   const [IsCardNumberLengthValid, setIsCardNumberLengthValid] = useState(false);
   const [IsHolderNameLengthValid, setIsHolderNameLengthValid] = useState(false);
   const [IsCvvLengthValid, setIsCvvLengthValid] = useState(false);
@@ -66,8 +65,6 @@ const DetailKelasPembayaran = () => {
       day: "numeric",
       month: "long",
       year: "numeric",
-      // hour: "numeric",
-      // minute: "numeric"
     };
 
     const deadlineString = deadlineDate.toLocaleDateString("id-ID", options);
@@ -125,54 +122,20 @@ const DetailKelasPembayaran = () => {
     }
 
     if (e.target.id === "expiryDate") {
-      const formattedDate = value.replace(/\D/g, "");
-      const isInputExpiryDateValid = formattedDate.trim().length > 0;
+      const isInputExpiryDateValid = /^\d{2}\/\d{2}$/.test(value);
       setisExpiryDateValid(isInputExpiryDateValid);
     }
   };
-  // const handlePayments = async () => {
-  //   const selectedPaymentMethod = paymentMethod; // Ambil nilai terkini
-  //   if (
-  //     selectedPaymentMethod === "Bank" ||
-  //     selectedPaymentMethod === "Credit Card"
-  //   ) {
-  //     const formPayments = {
-  //       payment_method: selectedPaymentMethod,
-  //       class_id: classId,
-  //     };
-  //     try {
-  //       const response = await postPayments(formPayments);
-  //       console.log(TestMethod, "testMethod");
-  //       console.log(response);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   } else {
-  //     console.error(
-  //       "Pilih metode pembayaran yang valid (Bank Transfer atau Credit Card)"
-  //     );
-  //   }
-  // };
 
   useEffect(() => {
     const fetchDetailClasses = async () => {
       try {
         const response = await getClasses(classId);
         setDetail(response.data.data);
-        // console.log(paymentMethod)
       } catch (error) {
         console.error("Error mengambil data Kelas:", error);
       }
     };
-
-    // const fetchPaymentPaid = async () => {
-    //   try {
-    //     const response = await updatePayment(classId);
-    //     console.log(response)
-    //   } catch (error) {
-
-    //   }
-    // }
 
     fetchDetailClasses();
   }, [classId]);
@@ -298,11 +261,11 @@ const DetailKelasPembayaran = () => {
                 </Select>
               </div>
               <div className="flex items-center w-[50%] flex-col gap-[1rem]">
-                <div className="card-number-container flex flex-col gap-2 w-[100%]">
-                  <span className="font-poppins font-semibold text-[0.9] leading-[1.25rem]">
+                <div className="nominal-container flex flex-col gap-2 w-[100%]">
+                  <span className="font-poppins font-semibold text-[0.9rem] leading-[1.25rem]">
                     Nominal
                   </span>
-                  <div className="card-number-input w-[100%] border-b-2 border-[#D0D0D0] pb-[.2rem] px-1">
+                  <div className="nominal-input w-[100%] border-b-2 border-[#D0D0D0] pb-[.2rem] px-1">
                     <input
                       placeholder="Masukkan Nominal"
                       className="outline-none font-poppins text-[0.9rem] leading-[1.25rem] w-full"
@@ -539,7 +502,6 @@ const DetailKelasPembayaran = () => {
             <button
               className="buy-now-btn flex items-center justify-center rounded-[1.5rem] px-[1rem] py-[.75rem] bg-[#F00] gap-2 mt-[1.5rem] mb-[0.75rem] w-full"
               onClick={() => {
-                // navigate("/pembayaranSukses");
                 handleUpdatePayment(classId);
               }}
             >
@@ -562,29 +524,38 @@ const DetailKelasPembayaran = () => {
               icon={faArrowLeft}
               size="xl"
               style={{ color: "black" }}
-              // onClick={() => {
-              //   navigate("/detailKelas");
-              // }}
             />
           </Link>
         </div>
 
         <div className="course-container flex flex-col px-[2vh] py-[1.5vh] gap-2 rounded-[0.6rem] h-[35vh] mt-[1.5vh] bg-[#FFFF] shadow-lg">
-          <div className="course-box-container bg-[#FFFF] shadow-lg rounded-[1rem] flex flex-col gap-[1vh] h-[23vh]">
+          <div className="course-box-container bg-[#FFFF] shadow-lg rounded-[1rem] flex flex-col gap-[1vh] h-[30vh]">
             <div
               className="img-course-container rounded-t-[1rem] bg-cover bg-center w-full h-[12vh]"
               style={{ backgroundImage: `url(${Detail.image_url})` }}
             ></div>
             <span className="font-montserrat text-[2vh] font-black leading-[1.5vh] text-dark-blue mx-[1rem]">
-              UI/UX Design
+              {Detail.category_id === 1
+                ? "UI/UX Design"
+                : Detail.category_id === 2
+                ? "Product Management"
+                : Detail.category_id === 3
+                ? "Web Development"
+                : Detail.category_id === 4
+                ? "Android Development"
+                : Detail.category_id === 5
+                ? "IOS Development"
+                : Detail.category_id === 6
+                ? "Data Science"
+                : ""}
             </span>
 
             <div className="title-course-section flex flex-col gap-[1vh] mx-[1rem] mb-[1.5vh]">
               <span className="course-title font-black font-montserrat text-[2vh] leading-[1.5vh] text-[#202244]">
-                Intro to Basic of User Introduction Design
+                {Detail.name}
               </span>
               <span className="author-section font-semibold text-[1.5vh] leading-[1.5vh] text-[#000] font-montserrat">
-                by Simon Doe
+                {Detail.author}
               </span>
             </div>
           </div>
@@ -594,8 +565,8 @@ const DetailKelasPembayaran = () => {
               <span className="font-montserrat text-[2vh] font-black leading-[2vh]">
                 Harga
               </span>
-              <span className="font-montserrat text-[2vh] leading-[2vh]">
-                Rp 349.000
+              <span className="font-montserrat text-[1.75vh] font-black text-[#151515] leading-[2vh]">
+                {rupiahFormat.format(Detail.price)}
               </span>
             </div>
 
@@ -603,8 +574,8 @@ const DetailKelasPembayaran = () => {
               <span className="font-montserrat text-[2vh] font-black leading-[2vh]">
                 PPN 11%
               </span>
-              <span className="font-montserrat text-[2vh] leading-[2vh]">
-                Rp 38.390
+              <span className="font-montserrat text-[1.75vh] font-black text-[#151515] leading-[2vh]">
+                {rupiahFormat.format(taxPrice)}
               </span>
             </div>
 
@@ -612,14 +583,14 @@ const DetailKelasPembayaran = () => {
               <span className="font-montserrat text-[2vh] font-black leading-[2vh]">
                 Total Bayar
               </span>
-              <span className="font-montserrat text-[2vh] leading-[2vh]">
-                Rp 387.390
+              <span className="font-montserrat text-[1.75vh] font-black text-dark-blue leading-[2vh]">
+                {rupiahFormat.format(Detail.price + taxPrice)}
               </span>
             </div>
           </div>
         </div>
 
-        <div className="payment-method-container h-[52vh] flex flex-col gap-[1vh] mt-[1vh]">
+        <div className="payment-method-container h-[85vh] flex flex-col gap-[1vh] mt-[1vh] mb-[3vh]">
           <div
             className="bank-transfer-section flex justify-between items-center w-full rounded-[0.5rem] bg-[#3C3C3C] px-[2.5vh] py-[1.75vh]"
             onClick={toogleBankAccordion}
@@ -635,8 +606,86 @@ const DetailKelasPembayaran = () => {
           </div>
 
           {BankAccordionOpen && (
-            <div className="font-montserrat font-black text-[2vh] leading-[1.5vh] flex justify-center items-center">
-              Hello Bank
+            <div className="mobile-modal-bank-transfer-container flex flex-col justify-center items-center gap-[1rem] w-full py-[1.25vh] shadow-lg rounded-[1rem]">
+              <div className="mobile-bank-icon-contaier flex items-center justify-center gap-[2vh]">
+                <img
+                  src={bri_logo}
+                  alt="bri_logo icon"
+                  style={{ width: "5vh" }}
+                />
+                <img
+                  src={bni_logo}
+                  alt="bni_logo icon"
+                  style={{ width: "5vh" }}
+                />
+                <img
+                  src={bca_logo}
+                  alt="bca_logo icon"
+                  style={{ width: "5vh" }}
+                />
+              </div>
+
+              <div className="select-container w-[50vh] font-poppins font-semibold">
+                <Select
+                  size="md"
+                  color="blue"
+                  label="Pilih Bank"
+                  className="font-poppins font-semibold"
+                  onChange={(value) => {
+                    handleSelectedBank(value);
+                  }}
+                >
+                  <Option value="BRI">BRI</Option>
+                  <Option value="BNI">BNI</Option>
+                  <Option value="BCA">BCA</Option>
+                </Select>
+              </div>
+              <div className="flex items-center w-[50vh] flex-col gap-[1.5vh]">
+                <div className="nominal-container flex flex-col gap-[.5vh] w-full">
+                  <span className="font-poppins font-semibold text-[2vh] leading-[2vh]">
+                    Nominal
+                  </span>
+                  <div className="nominal-input w-full border-b-2 border-[#D0D0D0] pb-[.5vh] px-[.5vh]">
+                    <input
+                      placeholder="Masukkan Nominal"
+                      className="outline-none font-poppins text-[2vh] leading-[2vh] w-full bg-transparent"
+                      type="number"
+                      onChange={(e) => handleInputNominal(e)}
+                      disable={!SelectedBank}
+                      required
+                    />
+                  </div>
+                  {FormInputNominal.nominal > 0 &&
+                    !isNominalValid &&
+                    isNominalLengthValid &&
+                    !isNominalToMuch && (
+                      <div className="font-poppins text-xs text-red-600 mt-2">
+                        Nominal kurang dari harga kelass
+                      </div>
+                    )}
+                  {FormInputNominal.nominal > 0 &&
+                    !isNominalValid &&
+                    isNominalLengthValid &&
+                    isNominalToMuch && (
+                      <div className="font-poppins text-xs text-dark-blue mt-2">
+                        Nominal melebihi dari harga kelass
+                      </div>
+                    )}
+                </div>
+              </div>
+              <button
+                className="mobile-credit-card-btn flex justify-center items-center py-[1vh] rounded-[1.5rem] text-white bg-dark-blue w-full hover:bg-light-blue-300 disabled:bg-gray-300"
+                onClick={handleBankTransferClick}
+                disabled={
+                  FormInputNominal.nominal <= 0 ||
+                  !isNominalValid ||
+                  !isNominalLengthValid
+                }
+              >
+                <span className="font-poppins text-[2vh] tracking-wide py-[1vh] font-bold leading-[1.2vh]">
+                  Kirim
+                </span>
+              </button>
             </div>
           )}
 
@@ -656,64 +705,6 @@ const DetailKelasPembayaran = () => {
 
           {CreditAccordionOpen && (
             <div className="modal-credit-payment-container bg-[#FFFF] shadow-lg rounded-[1rem] flex flex-col gap-[2vh] px-[3vh] py-[2.75vh]">
-              <div className="card-number-form-section flex flex-col gap-[1.5vh]">
-                <span className="card-number-label font-montserrat text-[2vh] leading-[1.5vh] font-semibold text-[#151515]">
-                  Card Number
-                </span>
-                <div className="card-number-input gap-[1vh] border-b-2 border-[#D0D0D0] px-[1vh] py-[1vh]">
-                  <input
-                    placeholder="3350 0000 0000 0000"
-                    type="number"
-                    required
-                    className="font-montserrat font-semibold text-[2vh] leading-[1.5vh]"
-                  />
-                </div>
-              </div>
-
-              <div className="card-holder-form-section flex flex-col gap-[1vh]">
-                <span className="card-holder-label font-montserrat text-[2vh] leading-[1.5vh] font-semibold text-[#151515]">
-                  Card Holder Name
-                </span>
-                <div className="card-holder-input gap-[1vh] border-b-2 border-[#D0D0D0] px-[1vh] py-[1vh]">
-                  <input
-                    placeholder="Jeff Bezos"
-                    type="text"
-                    required
-                    className="font-montserrat font-semibold text-[2vh] leading-[1.5vh]"
-                  />
-                </div>
-              </div>
-
-              <div className="cvv-expiry_date-form-container flex items-center gap-[1.5vh]">
-                <div className="card-holder-form-section flex flex-col gap-[1vh] w-[40vh]">
-                  <span className="card-holder-label font-montserrat text-[2vh] leading-[1.5vh] font-semibold text-[#151515]">
-                    CVV
-                  </span>
-                  <div className="card-holder-input gap-[1vh] border-b-2 border-[#D0D0D0] px-[1vh] py-[1vh] w-[100%]">
-                    <input
-                      placeholder="***"
-                      type="password"
-                      required
-                      className="font-montserrat font-semibold text-[2vh] leading-[1.5vh] w-[100%]"
-                    />
-                  </div>
-                </div>
-
-                <div className="card-holder-form-section flex flex-col gap-[1vh] w-[40vh]">
-                  <span className="card-holder-label font-montserrat text-[2vh] leading-[1.5vh] font-semibold text-[#151515] w-[100%]">
-                    Expiry Date
-                  </span>
-                  <div className="card-holder-input gap-[1vh] border-b-2 border-[#D0D0D0] px-[1vh] py-[1vh] w-[100%]">
-                    <input
-                      placeholder="08/24"
-                      type="number"
-                      required
-                      className="font-montserrat font-semibold text-[2vh] leading-[1.5vh] w-[100%]"
-                    />
-                  </div>
-                </div>
-              </div>
-
               <div className="credit-card-logo-container flex gap-[1.5vh] justify-center items-center">
                 <img
                   src={mastercard}
@@ -728,16 +719,118 @@ const DetailKelasPembayaran = () => {
                   style={{ width: "4vh" }}
                 />
               </div>
+              <div className="card-number-form-section flex flex-col gap-[1.5vh]">
+                <span className="card-number-label font-montserrat text-[2vh] leading-[1.5vh] font-semibold text-[#151515]">
+                  Card Number
+                </span>
+                <div className="card-number-input gap-[1vh] border-b-2 border-[#D0D0D0] px-[1vh] py-[1vh]">
+                  <input
+                    placeholder="4480 0000 0000 0000"
+                    type="number"
+                    id="cardNumber"
+                    onChange={(e) => {
+                      handleInputCredit(e);
+                      console.log(e.target.value);
+                      console.log(IsCardNumberLengthValid);
+                    }}
+                    required
+                    className="font-montserrat font-semibold text-[2vh] leading-[1.5vh] outline-none w-full"
+                  />
+                </div>
+              </div>
+
+              <div className="card-holder-form-section flex flex-col gap-[1vh]">
+                <span className="card-holder-label font-montserrat text-[2vh] leading-[1.5vh] font-semibold text-[#151515]">
+                  Card Holder Name
+                </span>
+                <div className="card-holder-input gap-[1vh] border-b-2 border-[#D0D0D0] px-[1vh] py-[1vh]">
+                  <input
+                    placeholder="John Doe"
+                    id="holderName"
+                    type="name"
+                    required
+                    onChange={(e) => {
+                      handleInputCredit(e);
+                      console.log(e.target.value);
+                      console.log(IsHolderNameLengthValid, e.target.value);
+                    }}
+                    className="font-montserrat font-semibold text-[2vh] leading-[1.5vh] w-full outline-none"
+                  />
+                </div>
+              </div>
+
+              <div className="cvv-expiry_date-form-container flex items-center gap-[1.5vh]">
+                <div className="card-holder-form-section flex flex-col gap-[1vh] w-[40vh]">
+                  <span className="card-holder-label font-montserrat text-[2vh] leading-[1.5vh] font-semibold text-[#151515]">
+                    CVV
+                  </span>
+                  <div className="card-holder-input gap-[1vh] border-b-2 border-[#D0D0D0] px-[1vh] py-[1vh] w-[100%]">
+                    <input
+                      id="cvv"
+                      placeholder="000"
+                      onChange={(e) => {
+                        handleInputCredit(e);
+                        console.log(e.target.value);
+                        console.log(IsCvvLengthValid, e.target.value);
+                      }}
+                      type="number"
+                      required
+                      className="font-montserrat font-semibold text-[2vh] leading-[1.5vh] w-full outline-none"
+                    />
+                  </div>
+                </div>
+
+                <div className="card-holder-form-section flex flex-col gap-[1vh] w-[40vh]">
+                  <span className="card-holder-label font-montserrat text-[2vh] leading-[1.5vh] font-semibold text-[#151515] w-[100%]">
+                    Expiry Date
+                  </span>
+                  <div className="card-holder-input gap-[1vh] border-b-2 border-[#D0D0D0] px-[1vh] py-[1vh] w-[100%]">
+                    <input
+                      placeholder="07/24"
+                      type="text"
+                      id="expiryDate"
+                      onChange={(e) => {
+                        handleInputCredit(e);
+                        console.log(e.target.value);
+                        console.log(isExpiryDateValid);
+                      }}
+                      required
+                      className="font-montserrat font-semibold text-[2vh] leading-[1.5vh] w-full outline-none"
+                    />
+                  </div>
+                </div>
+              </div>
+              <button
+                className="mobile-credit-card-btn flex justify-center items-center py-[1vh] rounded-[1.5rem] text-white bg-dark-blue w-full hover:bg-light-blue-300 disabled:bg-gray-300"
+                onClick={handleCreditCardClick}
+                disabled={
+                  !IsCardNumberLengthValid ||
+                  !IsHolderNameLengthValid ||
+                  !IsCvvLengthValid ||
+                  !isExpiryDateValid
+                }
+              >
+                <span className="font-poppins text-[2vh] tracking-wide py-[1vh] font-bold leading-[1.2vh]">
+                  Kirim
+                </span>
+              </button>
             </div>
           )}
         </div>
 
-        <button className="buy-now-button-container flex justify-center items-center py-[1.5vh] bg-[#FF0000] rounded-[1.5rem] mt-[2.25vw]">
-          <span className="font-montserrat font-black text-white text-[2vh] leading-[1.5vh]">
-            Bayar dan Ikuti Kelas Selamanya
-          </span>
-          <img src={arrow_buy} alt="arrow-buy" style={{ width: "2.5vh" }} />
-        </button>
+        <Link to={`/pembayaranSukses/${classId}`}>
+          <button
+            className="buy-now-button-container flex justify-center items-center py-[1.5vh] bg-[#FF0000] rounded-[1.5rem] mt-[2.25vw] w-full"
+            onClick={() => {
+              handleUpdatePayment(classId);
+            }}
+          >
+            <span className="font-montserrat font-black text-white text-[2vh] leading-[1.5vh]">
+              Bayar dan Ikuti Kelas Selamanya
+            </span>
+            <img src={arrow_buy} alt="arrow-buy" style={{ width: "2.5vh" }} />
+          </button>
+        </Link>
       </div>
 
       {/* End Mobile */}
