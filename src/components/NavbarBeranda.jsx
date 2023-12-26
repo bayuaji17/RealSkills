@@ -1,25 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../assets/img/logo.png";
 import { useNavigate } from "react-router-dom";
+import { fetchSearch } from "../services/search";
 
 export const NavbarBeranda = () => {
-  const [result, setResult] = useState();
+  const [search, setSearch] = useState("");
+  const [searchData, setSearchData] = useState("");
   const navigate = useNavigate();
-  
-  const searchResults = (e) => {
-    e.preventDefault();
-    navigate(`/search`);
-    setResult();
+  const handleSearch = async () => {
+    try {
+      const dataSearch = await fetchSearch(search);
+      setSearchData(dataSearch);
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  useEffect(() => {
+      if (searchData) {
+        navigate('/search?query=' + search, { state: { results: searchData.classes, query: search} });
+
+      }
+  },[searchData, search])
+
 
   const enter = (e) => {
     if (e.key === "Enter") {
-      searchResults(e); 
+      handleSearch();
     }
-  }
+  };
   return (
     
-      <div className="hidden laptop:flex flex-row bg-[#6148FF] p-2 justify-between">
+      <div className="hidden laptop:flex flex-row text-[#6148FF] p-2 justify-between">
         <div className="flex  items-center text-white ml-[5rem]">
           <img src={logo} alt=" " className="w-12 h-12" />
           <h1 className=" text-lg mr-20">RealSkills</h1>
@@ -27,12 +39,12 @@ export const NavbarBeranda = () => {
           <input
             className="p-3 w-[25rem] flex justify-between rounded-lg text-[#6148FF]"
             placeholder="Cari Kursus terbaik...."
-            onChange={(e) => setResult(e.target.value)}
-            onKeyDown={enter}
+            onChange={(e) => setSearch(e.target.value)}
+              onKeyDown={enter}
           />
           <button 
-          onClick={searchResults}
-          className=" bg-[#6148FF] absolute right-3 mt-3 rounded-md">
+              onClick={handleSearch}
+              className=" bg-[#6148FF] absolute right-3 mt-3 rounded-md">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Drawer,
   Button,
@@ -35,7 +35,6 @@ const handleSearch = async () => {
 
 
 useEffect(() => {
-    console.log(searchData, "apa iniiii") //benar
       if (searchData) {
         navigate('/search?query=' + search, { state: { results: searchData.classes, query: search} });
 

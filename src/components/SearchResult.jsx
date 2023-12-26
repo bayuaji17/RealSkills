@@ -1,10 +1,6 @@
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import React, { useEffect, useState } from "react";
-import { Progress } from "@material-tailwind/react";
-import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { fetchSearch } from "../services/search";
 
 export const SearchResult = ({ isCourse, myClass, isTopik }) => {
   const location = useLocation();
@@ -83,7 +79,7 @@ export const SearchResult = ({ isCourse, myClass, isTopik }) => {
               key={value.id}
               className=" bg-white w-[22rem] laptop:w-[18rem]  rounded-3xl shadow-md "
             >
-              <div className="h-[6rem] relative overflow-hidden rounded-t-3xl mb-1">
+              <div className="h-[6rem] overflow-hidden rounded-t-3xl mb-1">
                 <img
                   className="h-full w-full object-cover"
                   src={value.image_url}

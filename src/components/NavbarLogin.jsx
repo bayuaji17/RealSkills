@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import logo from "../assets/img/logo.png";
 import {
   Navbar,
-  MobileNav,
+  Collapse,
   Typography,
   Button,
   Menu,
@@ -151,7 +151,7 @@ function NavListMenu() {
     <React.Fragment>
       <Menu allowHover open={isMenuOpen} handler={setIsMenuOpen}>
         <MenuHandler>
-          <Typography as="a" href="#" variant="small" className="font-normal">
+          <Typography as="a" href="#" variant="small" className="font-normal text-md ">
             <MenuItem className="hidden items-center gap-2 font-medium text-white lg:flex lg:rounded-full">
               <Square3Stack3DIcon className="h-[18px] w-[18px] " />{" "}
               Course{" "}
@@ -256,7 +256,7 @@ export const NavbarLogin = () => {
   }, []);
 
   return (
-    <Navbar className="w-full  max-w-full p-2 lg:rounded-lg lg:pl-6 bg-[#6148FF] ">
+    <Navbar className="w-full  max-w-full p-2  lg:pl-6 bg-[#6148FF]  shadow-none border-0 rounded-none lg:rounded-none bg-opacity-100">
       <div className="relative  flex items-center justify-between text-blue-gray-900">
         <div className="flex">
           <img src={logo} alt=" " className="w-12 h-12" />
@@ -268,7 +268,7 @@ export const NavbarLogin = () => {
             <NavList />
           </div>
           <IconButton
-            size="base"
+            size="md"
             color="white"
             variant="text"
             onClick={toggleIsNavOpen}
@@ -312,9 +312,9 @@ export const NavbarLogin = () => {
         </div>
       </div>
 
-      <MobileNav open={isNavOpen} className="overflow-scroll">
+      <Collapse open={isNavOpen} className="overflow-scroll">
         <NavList />
-      </MobileNav>
+      </Collapse>
     </Navbar>
   );
 };

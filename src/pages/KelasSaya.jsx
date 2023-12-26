@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Search } from "../components/Search";
 import FilterSide from "../components/FilterSide";
 import { KategoriBelajar } from "../components/KategoriBelajar";
 import { getMe } from "../services/get-me";
@@ -12,12 +11,10 @@ import { NavbarLogin } from "../components/NavbarLogin";
 export const KelasSaya = () => {
   const authToken = CookieStorage.get(CookieKeys.AuthToken);
   const [dataUser, setDataUser] = useState([]);
-  // const id = useParams();
 
   const fetchData = async () => {
     try {
       const data = await getMe(authToken);
-      console.log(data);
       setDataUser(data.data.class);
     } catch (error) {
       console.error("Error fetching class data:", error);
@@ -49,11 +46,16 @@ export const KelasSaya = () => {
 
   const calculateTotalDuration = (classItem) => {
     let totalDuration = 0;
-      if (classItem && classItem.chapters) {
+    let completedDuration = 0;
+  
+    if (classItem && classItem.chapters) {
       classItem.chapters.forEach((chapter) => {
         if (chapter && chapter.videos) {
           chapter.videos.forEach((video) => {
             totalDuration += video.time || 0;
+            if (video.is_completed) {
+              completedDuration += video.time || 0;
+            }
           });
         }
       });
@@ -62,9 +64,52 @@ export const KelasSaya = () => {
     const totalHours = Math.floor(totalDuration / 60);
     const totalMinutes = totalDuration % 60;
   
-    return `${totalHours} jam ${totalMinutes} menit`;
-  };
+    const completedHours = Math.floor(completedDuration / 60);
+    const completedMinutes = completedDuration % 60;
   
+    const completionPercentage =
+      totalDuration !== 0 ? (completedDuration / totalDuration) * 100 : 0;
+  
+    return {
+      totalDuration: `${totalHours} jam ${totalMinutes} menit`,
+      completedDuration: `${completedHours} jam ${completedMinutes} menit`,
+      completionPercentage,
+    };
+  };
+
+  const filterClasses = (filterType) => {
+    console.log("Filter Type:", filterType);
+    console.log("Data User:", dataUser);
+  
+    let filteredClasses = dataUser;
+  
+    switch (filterType) {
+      case "all":
+      break;
+      case "inProgress":
+        filteredClasses = dataUser.filter((item) => {
+          const inProgress = item.chapters.some((chapter) => {
+            const hasInProgressVideo = chapter.videos.some((video) => !video.is_completed);
+            console.log("Video Status:", hasInProgressVideo, "Class:", item.name);
+            return hasInProgressVideo;
+          });
+          return inProgress;
+        });
+        break;
+      case "completed":
+        filteredClasses = dataUser.filter(
+          (item) => calculateTotalDuration(item).completionPercentage === 100
+        );
+        break;
+      default:
+        // Default case, menampilkan all classes
+        break;
+    }
+  
+    return filteredClasses;
+  };
+
+  const data = filterClasses()
 
   return (
     <div className="bg-[#EBF3FC] min-h-screen flex flex-col">
@@ -112,27 +157,34 @@ export const KelasSaya = () => {
             <div className="flex  flex-col w-[100vw] gap-3 laptop:w-[40rem] ">
               {/* button */}
               <div className="flex px-4 justify-between   laptop:gap-14 laptop:w-full mb-2 ">
-                <button className="py-1 px-5  rounded-xl bg-white hover:bg-[#6148FF] hover:text-white active:bg-[#6148FF] active:text-white focus:text-white focus:outline-none focus:ring focus:ring-violet-300 focus:bg-[#6148FF] laptop:py-1 laptop:px-10 ">
+                <button 
+                onClick={() => filterClasses("all")}
+                className="py-1 px-5  rounded-xl bg-white hover:bg-[#6148FF] hover:text-white active:bg-[#6148FF] active:text-white focus:text-white focus:outline-none focus:ring focus:ring-violet-300 focus:bg-[#6148FF] laptop:py-1 laptop:px-10 ">
                   All
                 </button>
-                <button className="py-1 px-7  rounded-xl bg-white hover:bg-[#6148FF] hover:text-white active:text-white focus:text-white active:bg-[#6148FF] focus:outline-none focus:ring focus:ring-violet-300 focus:bg-[#6148FF] laptop:py-1 laptop:px-14 ">
+                <button 
+                onClick={() => filterClasses("inProgress")}
+                className="py-1 px-7  rounded-xl bg-white hover:bg-[#6148FF] hover:text-white active:text-white focus:text-white active:bg-[#6148FF] focus:outline-none focus:ring focus:ring-violet-300 focus:bg-[#6148FF] laptop:py-1 laptop:px-14 ">
                   In Progress
                 </button>
-                <button className="py-1 px-6 rounded-xl bg-white hover:bg-[#6148FF] hover:text-white active:text-white focus:text-white active:bg-[#6148FF] focus:outline-none focus:ring focus:ring-violet-300 focus:bg-[#6148FF] laptop:py-1 laptop:px-12">
-                  Selesai
+                <button 
+                onClick={() => filterClasses("completed")}
+                className="py-1 px-6 rounded-xl bg-white hover:bg-[#6148FF] hover:text-white active:text-white focus:text-white active:bg-[#6148FF] focus:outline-none focus:ring focus:ring-violet-300 focus:bg-[#6148FF] laptop:py-1 laptop:px-12">
+                  Completed
                 </button>
               </div>
               {/* <div className="bg-red-500 py-6 rounded-lg"> */}
               <div className="flex justify-between gap-4 overflow-x-auto  laptop:flex-wrap mx-4">
                 {/* <Card myClass={true} /> */}
                 <>
-                  {dataUser.map((value) => (
+                  {data.map((value) => (
+                    
                     <div
                       div
                       key={value.id}
                       className=" bg-white w-[22rem] laptop:w-[18rem]  rounded-3xl shadow-md "
                     >
-                      <div className="h-[6rem] relative overflow-hidden rounded-t-3xl mb-1">
+                      <div className="h-[6rem] overflow-hidden rounded-t-3xl mb-1">
                         <img
                           className="h-full w-full object-cover"
                           src={value.image_url}
@@ -202,7 +254,7 @@ export const KelasSaya = () => {
                                 fill="#73CA5C"
                               />
                             </svg>
-                            {calculateTotalDuration(value)}
+                            {calculateTotalDuration(value).totalDuration}
                           </p>
                         </div>
                         <div className="flex items-center text-xs text-white rounded-xl gap-1 ">
@@ -219,7 +271,7 @@ export const KelasSaya = () => {
                             />
                           </svg>
                           <Progress
-                            value={50}
+                            value={calculateTotalDuration(value).completionPercentage}
                             size="md"
                             color="indigo"
                             label="Completed"

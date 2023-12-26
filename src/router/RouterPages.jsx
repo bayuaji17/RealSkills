@@ -12,7 +12,8 @@ import { TopikKelas } from "../pages/TopikKelas";
 import FilterSide from "../components/FilterSide";
 import {SearchResult} from "../components/SearchResult"
 import { Coba } from "../pages/Coba";
-
+import { ResultCategory } from "../pages/ResultCategory";
+import { BerandaLogin } from "../pages/BerandaLogin"
 export const RouterPages = () => {
   return (
     <BrowserRouter>
@@ -22,6 +23,7 @@ export const RouterPages = () => {
         <Route path="admin" element={<LoginAdminPage />} />
         <Route path="register" element={<RegisterPage />} />
         <Route path="/berandaNoLog" element={<BerandaNoLogin/>} />
+        <Route path="/berandaLogin" element={<BerandaLogin/>} />
         <Route path="/kelas" element={<KelasSaya/>} />
         <Route path="/topik" element={<TopikKelas/>} />
         <Route path="/filterSide" element={<FilterSide/>} />
@@ -29,7 +31,7 @@ export const RouterPages = () => {
         <Route path="/resetPassword" element={<ResetPasswordPage />} />
         <Route path="/search" element={<SearchResult/>} />
         <Route path="/coba/:id" element={<Coba/>} />
-
+        <Route path="/kategori/:id" element={<ResultCategory/>} />
       </Routes>
     </BrowserRouter>
   );

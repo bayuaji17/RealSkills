@@ -87,13 +87,12 @@ export const LoginPage = () => {
     }
   };
   
-        //Testing
   return (
     <div className="flex flex-row justify-center items-center h-screen font-poppins  ">
       <div className="flex flex-col justify-center items-center  h-full  laptop:w-7/12">
         <div className="flex flex-col justify-start text-sm">
         <h3 className="flex  mb-3 text-3xl font-bold text-[#6148FF] justify-center laptop:justify-start">Masuk</h3>
-        <label className="flex flex-col mb-2">Email/Telepon
+        <label className="flex flex-col mb-2">Email
         </label>
         <input type="email" className={`border rounded-xl p-3 mb-3  laptop:w-[22rem]  mobile: w-[94vw] ${colorBorderEmailTelp()}`} placeholder="Contoh: johndee@gmail.com/62..." onChange={(e) => inputEmailTelp(e)}></input>
         <span className="flex justify-between mb-2">

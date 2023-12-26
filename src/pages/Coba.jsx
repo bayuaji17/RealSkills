@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getFreeClass } from "../services/freeClass";
-import { useLocation, useParams } from 'react-router-dom';
+import {useParams } from 'react-router-dom';
 // import { CookieKeys, CookieStorage } from '../utils/cookies';
 
 export const Coba = () => {
@@ -13,7 +13,6 @@ export const Coba = () => {
       console.log("data", data);
       setFree(data);
     } catch (error) {
-      // Handle error
     }
   };
 

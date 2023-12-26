@@ -6,4 +6,5 @@ export const API_ENDPOINT = {
   SEARCH : (query) => { return `/api/classes?search=${query}`},
   GET_ME : "/api/auth/authenticated",
   FREE_CLASS : (id) => { return `/api/users/class/access/free/${id}`},
+  CLASS_CATEGORY : (id) => {return `/api/classes?category=${id}`}
 };

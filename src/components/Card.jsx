@@ -116,7 +116,7 @@ export const Card = ({
           key={value.id}
           className=" bg-white w-[22rem] laptop:w-[18rem]  rounded-3xl shadow-md "
         >
-          <div className="h-[6rem] relative overflow-hidden rounded-t-3xl mb-1">
+          <div className="h-[6rem] overflow-hidden rounded-t-3xl mb-1">
           <img
             className="h-full w-full object-cover"
             src={value.image_url}
