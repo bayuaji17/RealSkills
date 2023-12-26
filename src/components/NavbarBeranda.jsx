@@ -1,19 +1,50 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../assets/img/logo.png";
+import { useNavigate } from "react-router-dom";
+import { fetchSearch } from "../services/search";
 
 export const NavbarBeranda = () => {
+  const [search, setSearch] = useState("");
+  const [searchData, setSearchData] = useState("");
+  const navigate = useNavigate();
+  const handleSearch = async () => {
+    try {
+      const dataSearch = await fetchSearch(search);
+      setSearchData(dataSearch);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+      if (searchData) {
+        navigate('/search?query=' + search, { state: { results: searchData.classes, query: search} });
+
+      }
+  },[searchData, search])
+
+
+  const enter = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
   return (
     
-      <div className="hidden laptop:flex flex-row bg-[#6148FF] p-2 justify-between">
+      <div className="hidden laptop:flex flex-row text-[#6148FF] p-2 justify-between">
         <div className="flex  items-center text-white ml-[5rem]">
           <img src={logo} alt=" " className="w-12 h-12" />
           <h1 className=" text-lg mr-20">RealSkills</h1>
         <div className="flex relative">
           <input
-            className="p-3 w-[25rem] flex justify-between rounded-lg"
+            className="p-3 w-[25rem] flex justify-between rounded-lg text-[#6148FF]"
             placeholder="Cari Kursus terbaik...."
+            onChange={(e) => setSearch(e.target.value)}
+              onKeyDown={enter}
           />
-          <button className=" bg-[#6148FF] absolute right-3 mt-3 rounded-md">
+          <button 
+              onClick={handleSearch}
+              className=" bg-[#6148FF] absolute right-3 mt-3 rounded-md">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -45,23 +76,23 @@ export const NavbarBeranda = () => {
               <path
                 d="M8.8335 14.1666L13.0002 9.99992L8.8335 5.83325"
                 stroke="white"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
               <path
                 d="M13 10H3"
                 stroke="white"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
               <path
                 d="M13 2.5H16.3333C16.7754 2.5 17.1993 2.67559 17.5118 2.98816C17.8244 3.30072 18 3.72464 18 4.16667V15.8333C18 16.2754 17.8244 16.6993 17.5118 17.0118C17.1993 17.3244 16.7754 17.5 16.3333 17.5H13"
                 stroke="white"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
             <p>Masuk</p>

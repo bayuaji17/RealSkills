@@ -14,5 +14,12 @@ export const API_ENDPOINT = {
   PAYMENTS: "api/payments",
   UPDATE_PAYMENTS: "api/payments/paid",
   FREE_CLASS: "api/users/class/access/free",
-  WATCHED_VIDEOS: "api/users/videos/watched"
+  WATCHED_VIDEOS: "api/users/videos/watched",
+  LOGIN_USER : "api/auth/login",
+  KATEGORI : "/api/general/categories",
+  ALL_CLASS : "/api/classes",
+  SEARCH : (query) => { return `/api/classes?search=${query}`},
+  GET_ME : "/api/auth/authenticated",
+  FREE_CLASS : (id) => { return `/api/users/class/access/free/${id}`},
+  CLASS_CATEGORY : (id) => {return `/api/classes?category=${id}`}
 };
