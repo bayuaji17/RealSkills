@@ -11,9 +11,3 @@ export const fetchSearch = async (query) => {
     throw error; // Anda dapat mengatasi atau melemparkan kembali kesalahan di sini
   }
 };
-
-
-// export const fetchSearch = async (query) => {
-//   const searchQuery = await http.get(`${API_ENDPOINT.ALL_CLASS}?search=${query}`);
-//   return searchQuery;
-// }

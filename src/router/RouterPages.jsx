@@ -12,6 +12,12 @@ import { NotFoundPage } from "../pages/NotFoundPage";
 import { DetailsKelolaKelas } from "../pages/DetailsKelolaKelas";
 import { Chapters } from "../pages/Chapters";
 import DetailKelasPage from "../pages/ClassDetail/DetailKelasPage";
+import { Notifikasi } from "../pages/Notifikasi_Akun/Notifikasi";
+import { AkunProfil } from "../pages/Notifikasi_Akun/AkunProfil";
+import { UbahPassword } from "../pages/Notifikasi_Akun/UbahPassword";
+import { RiwayatPembayaran } from "../pages/Notifikasi_Akun/RiwayatPembayaran";
+import { Settings } from "../components/Settings";
+
 import DetailKelasPembayaran from "../pages/ClassDetail/DetailKelasPembayaran";
 import PembayaranSukses from "../pages/ClassDetail/PembayaranSukses";
 import { BerandaNoLogin } from "../pages/BerandaNoLogin";
@@ -21,6 +27,9 @@ import FilterSide from "../components/FilterSide";
 import { FilterResultKelas } from "../pages/FilterResultKelas";
 import { FilterResultTopik } from "../pages/FilterResultTopik";
 import KelasContainer from "../pages/ClassDetail/KelasContainer";
+
+import KelasContainer from "../pages/ClassDetail/KelasContainer";
+
 
 import {SearchResult} from "../components/SearchResult"
 import { Coba } from "../pages/Coba";
@@ -46,6 +55,12 @@ export const RouterPages = () => {
 
         <Route path="/reset" element={<ResetPasswordTautanPage />} />
         <Route path="/resetPassword" element={<ResetPasswordPage />} />
+        <Route path="/detailKelas" element={<DetailKelasPage />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/notifikasi" element={<Notifikasi />} />
+        <Route path="/profil" element={<AkunProfil />} />
+        <Route path="/ubahPassword" element={<UbahPassword />} />
+        <Route path="/riwayatPembayaran" element={<RiwayatPembayaran />} />
         <Route path="/berandaNoLog" element={<BerandaNoLogin />} />
         <Route path="/kelas" element={<KelasSaya />} />
         <Route path="/topik" element={<TopikKelas />} />
@@ -67,6 +82,9 @@ export const RouterPages = () => {
         <Route path="/search" element={<SearchResult/>} />
         <Route path="/coba/:id" element={<Coba/>} />
         <Route path="/kategori/:id" element={<ResultCategory/>} />
+        {/* <Route path="/select" element={<SelectDefault/>}/> */}
+        {/* <Route path="/detailKelas/:classId" element={<TestDetailKelas/>}/> */}
+
       </Routes>
     </BrowserRouter>
   );
