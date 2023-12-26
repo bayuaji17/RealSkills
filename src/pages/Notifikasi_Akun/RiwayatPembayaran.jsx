@@ -12,11 +12,17 @@ import notif_pay from "../../assets/img/icon/notif_pay.png";
 import { faStar } from "@fortawesome/free-regular-svg-icons";
 import { Link, useParams } from "react-router-dom";
 import { getUserById } from "../../services/notifikasi_akun/get_user";
+<<<<<<< Updated upstream
 import { NavbarLogin } from "../../assets/components/NavbarLogin";
+=======
+import NavbarComponents from "../../assets/components/NavbarAkun";
+
+>>>>>>> Stashed changes
 
 export const RiwayatPembayaran = () => {
   const { AuthToken } = useParams();
   const [payment, setPayment] = useState([]);
+
   const getLevelText = (levelId) => {
     switch (levelId) {
       case 1:
@@ -30,6 +36,7 @@ export const RiwayatPembayaran = () => {
     }
   };
 
+<<<<<<< Updated upstream
   const categories = (categoryId) => {
     switch (categoryId) {
       case 1:
@@ -48,6 +55,21 @@ export const RiwayatPembayaran = () => {
         return "Unknown Category";
     }
   };
+=======
+  // const calculateTotalDuration = (classItem) => {
+  //   let totalDuration = 0;
+  //   classItem.chapters.forEach((chapter) => {
+  //     chapter.videos.forEach((video) => {
+  //       totalDuration += video.time || 0;
+  //     });
+  //   });
+
+  //   const totalHours = Math.floor(totalDuration / 60);
+  //   const totalMinutes = totalDuration % 60;
+
+  //   return `${totalHours} jam ${totalMinutes} menit`;
+  // };
+>>>>>>> Stashed changes
 
   useEffect(() => {
     const fetchDetailUser = async () => {

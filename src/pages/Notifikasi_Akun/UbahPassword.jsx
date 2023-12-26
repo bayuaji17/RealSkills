@@ -11,10 +11,14 @@ import pay from "../../assets/img/icon/pay.png";
 import out from "../../assets/img/icon/out.png";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { Link } from "react-router-dom";
+<<<<<<< Updated upstream
 import { NavbarLogin } from "../../assets/components/NavbarLogin";
 import { toast } from "react-toastify";
 import { postReset } from "../../services/auth/reset-password";
 import { CookieKeys, CookieStorage } from "../../utils/cookies";
+=======
+import NavbarComponents from "../../assets/components/NavbarAkun";
+>>>>>>> Stashed changes
 
 export const UbahPassword = () => {
   const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,24}$/;
