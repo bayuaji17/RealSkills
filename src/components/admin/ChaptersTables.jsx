@@ -20,11 +20,17 @@ import { toast } from "react-toastify";
 export const ChaptersTables = () => {
   const [dataChapters, setDataChapters] = useState([]);
   const [editChaptersId, setEditChaptersId] = useState(null);
+  const [editVideosId, setEditVideosId] = useState(null);
+  const [selectedVideos, setSelectedVideos] = useState(null);
   const [edit, setEdit] = useState(false);
   const [editVideo, setEditVideo] = useState(false);
   const [selectedChapters, setSelectedChapters] = useState(null);
   const [hapus, setHapus] = useState(false);
-
+  const [editDataVideo, setEditDataVideo] = useState({
+    title: "",
+    link: "",
+    time: "",
+  });
   const [editChapters, setEditChapters] = useState({
     no_chapter: "",
     title: "",
@@ -39,12 +45,38 @@ export const ChaptersTables = () => {
   });
 
   // *EDIT Video
+  const handleEditVideo = (id, row) => {
+    setEditVideosId(id);
+    setSelectedVideos(row);
+    setEditVideo(true);
+    setEditDataVideo({
+      title: row.title,
+      link: row.link,
+      time: row.time,
+    });
+  };
   const editVideoClose = () => {
     setEditVideo(false);
+    setSelectedVideos(null);
+    setEditDataVideo({
+      title: "",
+      link: "",
+      time: "",
+    });
   };
-  const handleEditVideo = () => {
-    setEditVideo(true);
-  
+
+  const handleInputChangeVideo = (e) => {
+    const { id, value } = e.target;
+    setEditVideo({ ...editDataVideo, [id]: value });
+  };
+  const handleEditSubmitVideo = () => {
+    const editSubmit = {
+      title: editDataVideo.title,
+      link: editDataVideo.link,
+      time: editDataVideo.time,
+    };
+
+    console.log(editSubmit);
   };
   // *EDIT Video
 
@@ -87,7 +119,6 @@ export const ChaptersTables = () => {
     updatedVideos.splice(index, 1);
     setEditChapters({ ...editChapters, videos: updatedVideos });
   };
-
 
   const handleEdit = (id, card) => {
     setEditChaptersId(id);
@@ -162,9 +193,9 @@ export const ChaptersTables = () => {
   const handleDeleteChapterSubmit = async () => {
     try {
       await deleteChaptersById(selectedChapters.id);
-      setHapus(false)
-      toast.success("kelas Berhasil dihapus")
-      getClasById()
+      setHapus(false);
+      toast.success("kelas Berhasil dihapus");
+      getClasById();
     } catch (error) {
       console.error(error);
     }
@@ -201,36 +232,32 @@ export const ChaptersTables = () => {
   return (
     <div className="bg-blue-gray-200">
       {/* //! EDIT Video */}
-      <Dialog
-        open={editVideo}
-        handler={editVideoClose}
-        className="overflow-y-scroll h-4/5"
-      >
+      <Dialog open={editVideo} handler={editVideoClose} className=" h-[70%]">
         <DialogHeader>Edit Video</DialogHeader>
         <DialogBody>
           <FormInput
             label="title"
-            type="number"
+            type="text"
             placeholder="Judul Video"
             name="Title Video"
-            value={editChapters.no_chapter}
-            onChange={(e) => handleInputParseIntChange(e)}
+            value={editDataVideo.title}
+            onChange={(e) => handleInputChangeVideo(e)}
           />
           <FormInput
             label="link"
             type="text"
             placeholder="Link Video"
             name="Link Video"
-            value={editChapters.title}
-            onChange={(e) => handleInputChange(e)}
+            value={editDataVideo.link}
+            onChange={(e) => handleInputChangeVideo(e)}
           />
           <FormInput
             label="time"
             type="text"
             placeholder="Durasi Video"
             name="Durasi Video"
-            value={editChapters.title}
-            onChange={(e) => handleInputChange(e)}
+            value={editDataVideo.time}
+            onChange={(e) => handleInputChangeVideo(e)}
           />
         </DialogBody>
         <DialogFooter>
@@ -242,7 +269,7 @@ export const ChaptersTables = () => {
           >
             <span>Cancel</span>
           </Button>
-          <Button variant="gradient" color="green" onClick={handleSubmit}>
+          <Button variant="gradient" color="green" onClick={handleEditSubmitVideo}>
             <span>Confirm</span>
           </Button>
         </DialogFooter>
@@ -443,8 +470,16 @@ export const ChaptersTables = () => {
                             </td>
                             <td className="p-4 border-b border-blue-gray-50">
                               <div className="flex gap-2">
-                                <Button onClick={handleEditVideo}>Edit</Button>
-                                <Button onClick={editVideoClose}>Hapus</Button>
+                                <Button
+                                  onClick={() =>
+                                    handleEditVideo(videos.id, videos)
+                                  }
+                                >
+                                  Edit
+                                </Button>
+                                <Button onClick={editVideoClose} color="red">
+                                  Hapus
+                                </Button>
                               </div>
                             </td>
                           </tr>

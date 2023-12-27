@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { NavbarAdmin } from "../../components/NavbarAdmin";
+import { NavbarAdmin } from "../../components/admin/NavbarAdmin";
 import {faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import filterAdmin from "../../assets/Filter.svg";
 import { SideBarAdmin } from "../../components/admin/SideBarAdmin";

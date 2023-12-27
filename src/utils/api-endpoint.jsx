@@ -8,6 +8,7 @@ export const API_ENDPOINT = {
   CREATE_CHAPTERS:"api/classes/chapters",
   EDIT_CHAPTERS:"api/classes/chapters/",
   ALL_PAYMENT:"api/payments",
-  DELETE_CHAPTER:"api/classes/chapters/"
+  DELETE_CHAPTER:"api/classes/chapters/",
+  VIDEOS:"api/classes/chapters/videos/",
   
 };
