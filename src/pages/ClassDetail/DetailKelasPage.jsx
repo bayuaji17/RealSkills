@@ -16,9 +16,9 @@ import star from "../../assets/img/icon/ic_round-star.svg";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getClasses } from "../../services/class/get-classByID";
 import ReactPlayer from "react-player";
-import { NavbarKelas } from "../../components/NavbarKelas";
 import { getAuthenticated } from "../../services/auth/get-authenticated";
 import { getWatchedVideos } from "../../services/users/get-watched-videos";
+import { NavbarLogin } from "../../components/NavbarLogin";
 
 const DetailKelasPage = () => {
   const [MateriBelajar, setMateriBelajar] = useState(false);
@@ -111,7 +111,7 @@ const DetailKelasPage = () => {
   return (
     <div className="parents">
       <div className="nav-component-section hidden laptop:flex">
-        <NavbarKelas />
+        <NavbarLogin/>
       </div>
 
       {/* Desktop */}

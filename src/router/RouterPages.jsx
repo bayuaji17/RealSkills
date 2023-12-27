@@ -24,11 +24,8 @@ import { BerandaNoLogin } from "../pages/BerandaNoLogin";
 import { KelasSaya } from "../pages/KelasSaya";
 import { TopikKelas } from "../pages/TopikKelas";
 import FilterSide from "../components/FilterSide";
-import { FilterResultKelas } from "../pages/FilterResultKelas";
-import { FilterResultTopik } from "../pages/FilterResultTopik";
-import KelasContainer from "../pages/ClassDetail/KelasContainer";
-
-import KelasContainer from "../pages/ClassDetail/KelasContainer";
+// import { FilterResultKelas } from "../pages/FilterResultKelas";
+// import { FilterResultTopik } from "../pages/FilterResultTopik";
 
 
 import {SearchResult} from "../components/SearchResult"
@@ -39,52 +36,47 @@ export const RouterPages = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Beranda />} />
+        {/* <Route path="/" element={<Beranda />} /> */}
+        <Route path="/" element={<BerandaNoLogin />} />
+        {/* //*Auth */}
         <Route path="login" element={<LoginPage />} />
         <Route path="admin" element={<LoginAdminPage />} />
         <Route path="register" element={<RegisterPage />} />
+        <Route path="/reset" element={<ResetPasswordTautanPage />} />
+        <Route path="/resetPassword" element={<ResetPasswordPage />} />
+        {/* //*Auth */}
+        {/* //*ADMIN AREA */}
         <Route path="admin/dashboard" element={<AdminDashboard/>} />
         <Route path="admin/kelola-kelas" element={<KelolaKelas/>} />
         <Route path="admin/kelola-kelas/:id" element={<DetailsKelolaKelas/>} />
         <Route path="admin/kelola-kelas/chapters/:id" element={<Chapters/>} />
+        {/* //*ADMIN AREA */}
 
 
-
-        <Route path="*" element={<NotFoundPage/>} />
-
-
-        <Route path="/reset" element={<ResetPasswordTautanPage />} />
-        <Route path="/resetPassword" element={<ResetPasswordPage />} />
         <Route path="/detailKelas" element={<DetailKelasPage />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/notifikasi" element={<Notifikasi />} />
         <Route path="/profil" element={<AkunProfil />} />
         <Route path="/ubahPassword" element={<UbahPassword />} />
         <Route path="/riwayatPembayaran" element={<RiwayatPembayaran />} />
-        <Route path="/berandaNoLog" element={<BerandaNoLogin />} />
         <Route path="/kelas" element={<KelasSaya />} />
         <Route path="/topik" element={<TopikKelas />} />
         <Route path="/filterSide" element={<FilterSide />} />
-        <Route path="/filterResultKelas" element={<FilterResultKelas />} />
-        <Route path="/filterResultTopik" element={<FilterResultTopik />} />
         <Route path="/detailKelas/:classId" element={<DetailKelasPage />} />
         <Route path="/pembayaran/:classId" element={<DetailKelasPembayaran />} />
         <Route path="/pembayaranSukses/:classId" element={<PembayaranSukses />} />
-        <Route path="/tesFilter" element={<KelasContainer/>}/>
 
         <Route path="/berandaNoLog" element={<BerandaNoLogin/>} />
-        <Route path="/berandaLogin" element={<BerandaLogin/>} />
+        <Route path="/beranda" element={<BerandaLogin/>} />
         <Route path="/kelas" element={<KelasSaya/>} />
         <Route path="/topik" element={<TopikKelas/>} />
         <Route path="/filterSide" element={<FilterSide/>} />
         <Route path="/reset" element={<ResetPasswordTautanPage />} />
         <Route path="/resetPassword" element={<ResetPasswordPage />} />
         <Route path="/search" element={<SearchResult/>} />
-        <Route path="/coba/:id" element={<Coba/>} />
         <Route path="/kategori/:id" element={<ResultCategory/>} />
-        {/* <Route path="/select" element={<SelectDefault/>}/> */}
-        {/* <Route path="/detailKelas/:classId" element={<TestDetailKelas/>}/> */}
 
+        <Route path="*" element={<NotFoundPage/>} />
       </Routes>
     </BrowserRouter>
   );

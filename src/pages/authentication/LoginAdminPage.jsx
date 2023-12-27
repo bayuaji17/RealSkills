@@ -59,7 +59,7 @@ export const LoginAdminPage = () => {
         theme: "light",
       });
       CookieStorage.set(CookieKeys.AuthToken, response.data.data.token);
-      navigate("/profil");
+      navigate("/admin/dashboard");
     } catch (error) {
       toast.error(error.response.data.error, {
         position: "bottom-center",

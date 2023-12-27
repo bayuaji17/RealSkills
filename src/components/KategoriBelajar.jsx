@@ -1,10 +1,6 @@
-import React from "react";
-import logo from "../assets/img/logo.png";
-// import { useParams } from "react-router-dom";
-// import { API_ENDPOINT } from "../utils/api-endpoint";
-// import http from "../utils/http";
+
 import React, { useEffect, useState } from "react";
-import { kategori } from "../services/kategori";
+import { kategori } from "../services/general/kategori";
 import { Link } from "react-router-dom";
 
 export const KategoriBelajar = () => {
@@ -21,7 +17,7 @@ export const KategoriBelajar = () => {
 
   useEffect(() => {
     fetchKategori();
-  }, []); //[id]
+  }, []); 
 
   return (
     <>
@@ -29,7 +25,7 @@ export const KategoriBelajar = () => {
         <h1 className="hidden laptop:flex laptop:font-semibold laptop:text-md laptop:text-xl laptop:pt-1">
           Kategori Belajar
         </h1>
-        <div className="flex justify-between gap-4   ">          
+        <div className="flex justify-between gap-4">          
         {dataKategori.map((value) => (
           <div key={value.id} >
              <Link to={`/kategori/${value.id}`}>

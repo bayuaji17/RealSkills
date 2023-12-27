@@ -71,7 +71,7 @@ export const LoginPage = () => {
         theme: "light",
       });
       CookieStorage.set(CookieKeys.AuthToken, response.data.data.token);
-      navigate("/profil");
+      navigate("/kelas");
     } catch (error) {
       toast.error(error?.response?.data?.error?.detail, {
         position: "bottom-center",
