@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
-import { Card } from "../components/Card";
+import {  useParams } from "react-router-dom";
 import { byCategory } from "../services/byCategory";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
@@ -63,7 +62,7 @@ export const ResultCategory = () => {
     <div>
       <div className="bg-[#6148FF]  text-center">
         <div className="flex justify-start items-center p-3">
-          <a href="/">
+          {/* <a href="/">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -79,7 +78,7 @@ export const ResultCategory = () => {
                 d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
               />
             </svg>
-          </a>
+          </a> */}
           <h1 className="text-white text-center m-6 font-bold w-full">
             Category
           </h1>

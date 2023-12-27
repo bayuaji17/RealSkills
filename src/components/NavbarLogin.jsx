@@ -137,10 +137,10 @@ function NavListMenu() {
       style={{ textDecoration: "none", color: "inherit" }}
     >
       <MenuItem>
-        <Typography variant="h6" color="blue-gray" className="mb-1 text-white hover:text-blue-gray-900">
+        <Typography variant="h6" color="blue-gray" className="mb-1 lg:text-blue-gray-700 lg:hover:text-black text-white hover:text-blue-gray-900">
           {title}
         </Typography>
-        <Typography variant="small" color="gray" className="font-normal text-white hover:text-blue-gray-900">
+        <Typography variant="small" color="gray" className="font-normal lg:text-blue-gray-700 lg:hover:text-black text-white hover:text-blue-gray-900">
           {description}
         </Typography>
       </MenuItem>
