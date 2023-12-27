@@ -89,13 +89,14 @@ const DetailKelasPage = () => {
         }
       } catch (error) {
         console.error(error);
+        navigate("/login")
       }
     };
 
     fetchDetailClasses();
     fetchClassesChapters();
     fetchPaymentsDetail();
-  }, [classId, Detail.id]);
+  }, [classId, Detail.id, navigate]);
 
   useEffect(() => {
     

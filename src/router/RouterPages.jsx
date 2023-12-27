@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-// import { Beranda } from "../pages/Beranda";
 import { LoginPage } from "../pages/authentication/LoginPage";
 import { RegisterPage } from "../pages/authentication/RegisterPage";
 import { LoginAdminPage } from "../pages/authentication/LoginAdminPage";
@@ -17,17 +16,12 @@ import { AkunProfil } from "../pages/Notifikasi_Akun/AkunProfil";
 import { UbahPassword } from "../pages/Notifikasi_Akun/UbahPassword";
 import { RiwayatPembayaran } from "../pages/Notifikasi_Akun/RiwayatPembayaran";
 import { Settings } from "../components/Settings";
-
 import DetailKelasPembayaran from "../pages/ClassDetail/DetailKelasPembayaran";
 import PembayaranSukses from "../pages/ClassDetail/PembayaranSukses";
 import { BerandaNoLogin } from "../pages/BerandaNoLogin";
 import { KelasSaya } from "../pages/KelasSaya";
 import { TopikKelas } from "../pages/TopikKelas";
-// import { FilterResultKelas } from "../pages/FilterResultKelas";
-// import { FilterResultTopik } from "../pages/FilterResultTopik";
-
 import { SearchResult } from "../components/SearchResult";
-// import { Coba } from "../pages/Coba";
 import { ResultCategory } from "../pages/ResultCategory";
 import { BerandaLogin } from "../pages/BerandaLogin";
 import ProtectedToken from "../components/ProtectedComponents/ProtectedToken";
@@ -45,10 +39,38 @@ export const RouterPages = () => {
         <Route path="/resetPassword" element={<ResetPasswordPage />} />
         {/* //*Auth */}
         {/* //*ADMIN AREA */}
-        <Route path="admin/dashboard" element={<AdminDashboard />} />
-        <Route path="admin/kelola-kelas" element={<KelolaKelas />} />
-        <Route path="admin/kelola-kelas/:id" element={<DetailsKelolaKelas />} />
-        <Route path="admin/kelola-kelas/chapters/:id" element={<Chapters />} />
+        <Route
+          path="admin/dashboard"
+          element={
+            <ProtectedToken>
+              <AdminDashboard />
+            </ProtectedToken>
+          }
+        />
+        <Route
+          path="admin/kelola-kelas"
+          element={
+            <ProtectedToken>
+              <KelolaKelas />
+            </ProtectedToken>
+          }
+        />
+        <Route
+          path="admin/kelola-kelas/:id"
+          element={
+            <ProtectedToken>
+              <DetailsKelolaKelas />
+            </ProtectedToken>
+          }
+        />
+        <Route
+          path="admin/kelola-kelas/chapters/:id"
+          element={
+            <ProtectedToken>
+              <Chapters />
+            </ProtectedToken>
+          }
+        />
         {/* //*ADMIN AREA */}
         {/* PROFILE AREA */}
         <Route
@@ -92,7 +114,11 @@ export const RouterPages = () => {
           }
         />
         {/* PROFILE AREA */}
-        <Route path="/kelas" element={<KelasSaya />} />
+        <Route path="/kelas" element={
+        <ProtectedToken>
+        <KelasSaya />
+        </ProtectedToken>
+        } />
         <Route path="/topik" element={<TopikKelas />} />
         {/* DetailKelas Area */}
         <Route
@@ -130,9 +156,6 @@ export const RouterPages = () => {
             </ProtectedToken>
           }
         />
-        <Route path="/topik" element={<TopikKelas />} />
-        <Route path="/reset" element={<ResetPasswordTautanPage />} />
-        <Route path="/resetPassword" element={<ResetPasswordPage />} />
         <Route path="/search" element={<SearchResult />} />
         <Route path="/kategori/:id" element={<ResultCategory />} />
         <Route path="*" element={<NotFoundPage />} />
