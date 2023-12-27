@@ -47,7 +47,7 @@ export const SearchResult = ({ isCourse, myClass, isTopik }) => {
     <div>
       <div className="bg-[#6148FF]  text-center">
         <div className="flex justify-start items-center p-3">
-          <a href="/">
+          {/* <a href="/">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -63,17 +63,17 @@ export const SearchResult = ({ isCourse, myClass, isTopik }) => {
                 d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
               />
             </svg>
-          </a>
+          </a> */}
           <h1 className="text-white text-center m-6 font-bold w-full">
             Search Result "{searchQuery}"
           </h1>
         </div>
       </div>
-      <div className=" flex justify-start flex-wrap p-4">
+      <div className=" flex justify-center laptop:justify-start flex-wrap p-4">
         {/* <hr /> */}
         <br></br>
         <div className=" flex gap-5 justify-center text-start flex-wrap grid-cols-5">
-          {result.map((value) => (
+          {result?.map((value) => (
             <div
               div
               key={value.id}
