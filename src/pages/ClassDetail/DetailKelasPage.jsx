@@ -5,7 +5,6 @@ import badge from "../../assets/img/icon/badge-svg.svg";
 import modul from "../../assets/img/icon/clarity_book-line.svg";
 import time from "../../assets/img/icon/ri_time-fill.svg";
 import message from "../../assets/img/icon/gridicons_chat.svg";
-// import play_video from "../../assets/img/icon/play video.svg";
 import progress_check from "../../assets/img/icon/progress-check.svg";
 import done_play_button from "../../assets/img/icon/green-play.svg";
 import undone_play_button from "../../assets/img/icon/dark-blue-play.svg";
@@ -13,6 +12,7 @@ import locked from "../../assets/img/icon/bxs_lock.svg";
 import close_modal from "../../assets/img/icon/close-modal.svg";
 import arrow_buy from "../../assets/img/icon/carbon_next-filled.svg";
 import star from "../../assets/img/icon/ic_round-star.svg";
+import prerequisites from "../../assets/img/icon/Group.svg";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getClasses } from "../../services/class/get-classByID";
 import ReactPlayer from "react-player";
@@ -31,7 +31,8 @@ const DetailKelasPage = () => {
   const [FirstVideoPlay, setFirstVideoPlay] = useState("");
   const [isVideoClicked, setisVideoClicked] = useState(false);
   const [VideoID, setVideoID] = useState("");
-  // const background_uiux = require("../../assets/img/image/uiux-person.jpg");
+  const [TotalClassMinutes, setTotalClassMinutes] = useState(0);
+  const [PrerequisitesModal, setPrerequisitesModal] = useState(false);
   const navigate = useNavigate();
   const { classId } = useParams();
   let totalVideosDesktop = 0;
@@ -47,37 +48,47 @@ const DetailKelasPage = () => {
       try {
         const response = await getClasses(classId);
         setDetail(response.data.data);
-        // console.log(response.data.data, "classees");
       } catch (error) {
         console.error("Error mengambil data Kelas:", error);
       }
     };
 
+    // function get API classes by id
     const fetchClassesChapters = async () => {
       try {
         const response = await getClasses(classId);
+        // function untuk sort chapters berdasarkan no_chapter (ascending)
         const sortedChapters = response.data.data.chapters.sort(
           (a, b) => a.no_chapter - b.no_chapter
         );
         setCourseChapter(sortedChapters);
+        // agar video dari chapter index paling awal yg tampil di ReactPlayer
         setFirstVideoPlay(response.data.data.chapters[0].videos[0].link);
-        // console.log(response.data.data.chapters, "chapters");
         console.log(response.data.data.chapters[0].videos[0], "videos status");
       } catch (error) {
         console.log(error, "error chapters");
       }
     };
 
+    // function get API payments
     const fetchPaymentsDetail = async () => {
       try {
         const response = await getAuthenticated();
         setPaymentDetail(response.data.data.payments);
         console.log(response.data.data.payments, "detailPayments");
+        const isClassPaidAndAccessed = response.data.data.payments.some(
+          (payment) => payment.class_id === Detail.id && payment.is_paid
+        );
+
+        if (isClassPaidAndAccessed) {
+          setPrerequisitesModal(true);
+        }
       } catch (error) {
         console.error(error);
       }
     };
 
+    // function untuk set is_watched pada video menjadi true
     const fetchWatchedVideos = async () => {
       try {
         const response = await getWatchedVideos(VideoID);
@@ -91,8 +102,19 @@ const DetailKelasPage = () => {
     fetchClassesChapters();
     fetchPaymentsDetail();
     fetchWatchedVideos();
-    // console.log(SelectedVideo);
-  }, [classId, VideoID]);
+  }, [classId, VideoID, Detail.id]);
+
+  // useEffect untuk mendapatkan total menit seluruh chapters
+  useEffect(() => {
+    let totalDuration = 0;
+    CourseChapter.forEach((chapter) => {
+      chapter.videos.forEach((video) => {
+        totalDuration += video.time || 0;
+      });
+    });
+
+    setTotalClassMinutes(totalDuration);
+  }, [CourseChapter]);
 
   const toogleTentangKelas = () => {
     setTentangKelas(true);
@@ -106,6 +128,10 @@ const DetailKelasPage = () => {
 
   const tooglePayment = () => {
     setPaymentModal((PaymentModal) => !PaymentModal);
+  };
+
+  const tooglePrerequisites = () => {
+    setPrerequisitesModal((PrerequisitesModal) => !PrerequisitesModal);
   };
 
   return (
@@ -196,7 +222,7 @@ const DetailKelasPage = () => {
             <div className="badge-level-section flex items-center gap-1">
               <img src={time} alt="course-time" />
               <span className="font-montserrat text-[0.75rem] leading-[0.9rem] font-bold hover:text-[#6148FF] cursor-pointer">
-                45 Menit
+                {TotalClassMinutes} Menit
               </span>
             </div>
           </div>
@@ -291,7 +317,6 @@ const DetailKelasPage = () => {
 
             {CourseChapter.map((value, chapterIndex) => {
               const isPremiumClass = Detail.type_id === 2;
-
               const isChapterUnlocked =
                 chapterIndex === 0 ||
                 !isPremiumClass ||
@@ -300,6 +325,10 @@ const DetailKelasPage = () => {
                     (payment) => payment.class_id === Detail.id
                   )?.class_id &&
                   PaymentDetail.some((payment) => payment.is_paid));
+              const totalVideoMinutes = value.videos.reduce(
+                (total, video) => total + (video.time || 0),
+                0
+              );
               return (
                 <div className="chapter-parents my-[.5rem]" key={chapterIndex}>
                   <div className="title-chapter-section flex justify-between items-center">
@@ -307,7 +336,7 @@ const DetailKelasPage = () => {
                       Chapter {value.no_chapter} - {value.title}
                     </span>
                     <span className="font-montserrat text-[#489CFF] font-black leading-[2.25rem] text-[0.9rem]">
-                      60 Menit
+                      {totalVideoMinutes} menit
                     </span>
                   </div>
                   {value.videos
@@ -429,51 +458,6 @@ const DetailKelasPage = () => {
                                 )}
                               </div>
                             )}
-
-                            {/* {vids.watch_status.map((watched, watchedIndex) => {
-                              return (
-                                
-                              );
-                            })} */}
-                            {/* <div>
-                                  {isPremiumClass ? (
-                                    <img
-                                      src={
-                                        isChapterUnlocked
-                                          ? vids.is_watched
-                                            ? done_play_button
-                                            : undone_play_button
-                                          : locked
-                                      }
-                                      alt={
-                                        isChapterUnlocked
-                                          ? "play-button"
-                                          : "locked-button"
-                                      }
-                                      width="20"
-                                      className="cursor-pointer"
-                                      onClick={() => {
-                                        if (isChapterUnlocked) {
-                                          setSelectedVideo(vids.link);
-                                          setisVideoClicked(true);
-                                        } else {
-                                          tooglePayment();
-                                        }
-                                      }}
-                                    />
-                                  ) : (
-                                    <img
-                                      src={undone_play_button}
-                                      alt="play-undone-button"
-                                      width="20"
-                                      className="cursor-pointer"
-                                      onClick={() => {
-                                        setSelectedVideo(vids.link);
-                                        setisVideoClicked(true);
-                                      }}
-                                    />
-                                  )}
-                                </div> */}
                           </div>
                         </div>
                       );
@@ -481,6 +465,50 @@ const DetailKelasPage = () => {
                 </div>
               );
             })}
+
+            {PrerequisitesModal && (
+              <div className="modal-payment-popup fixed bg-black bg-opacity-70 inset-0 font-montserrat cursor-pointer">
+                <div className="flex justify-center items-center font-montserrat h-full w-full">
+                  <div className="bg-[#FFFF] flex flex-col gap-[1rem] h-[70%] w-[30%] rounded-[1rem] px-[1rem] py-[1rem]">
+                    <div
+                      onClick={tooglePrerequisites}
+                      className="flex justify-end"
+                    >
+                      <img src={close_modal} alt="close-modal" width="20" />
+                    </div>
+                    <span className="font-montserrat flex justify-center text-dark-blue font-bold text-[2rem] leading-[0.9rem]">
+                      Onboarding...
+                    </span>
+                    <div className="flex justify-center items-center w-full">
+                      <img
+                        src={prerequisites}
+                        alt="prerequisites-modal"
+                        style={{ width: "50%" }}
+                        className="flex justify-center items-center"
+                      />
+                    </div>
+                   <div className='prerequisites-section flex justify-center items-center w-full mt-[.75rem] mb-[1.5rem]'>
+                    <div className='w-[80%] flex flex-col gap-[1.25rem] justify-center items-center'>
+                      <span className='font-montserrat font-bold text-[0.75rem] text-center leading-[1.5rem]'>
+                        Persiapkan hal berikut untuk belajar yang maksimal:
+                      </span>
+                      <span className='font-montserrat text-[0.75rem] text-center leading-[1.25rem]'>
+                        {Detail.prerequisites}
+                      </span>
+                    </div>
+                   </div>
+                    <button
+                      className="rounded-[1.5rem] bg-dark-blue flex justify-center items-center w-full py-[1rem]"
+                      onClick={tooglePrerequisites}
+                    >
+                      <span className="font-montserrat font-black text-white text-[1rem] leading-[1.5rem]">
+                        Ikuti Kelas
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
             {PaymentModal && (
               <>
                 <div className="modal-payment-popup fixed bg-black bg-opacity-70 inset-0 font-montserrat cursor-pointer">
@@ -603,7 +631,6 @@ const DetailKelasPage = () => {
       {/* Mobile */}
       <div className="mobile-section w-full h-screen bg-slate-600 block laptop:hidden">
         <div className="play-video-mobile-container bg-[rgba(0,0,0,0.85)] w-full h-[30%] flex justify-center items-center">
-          {/* <img src={play_video} alt="play-video-course" /> */}
           <div className="player-wrapper h-[90%] w-full">
             {!isVideoClicked ? (
               <ReactPlayer
@@ -626,6 +653,16 @@ const DetailKelasPage = () => {
         </div>
 
         <div className="mobile-materi-section flex flex-col gap-[.9rem] rounded-[1.5rem] -mt-[2rem] h-full bg-[#FFFF] py-[2rem]">
+          <div className="back-arrow ml-[1.35rem]">
+            <Link to={`/tesFilter`}>
+              <FontAwesomeIcon
+                className="cursor-pointer"
+                icon={faArrowLeft}
+                size="xl"
+                style={{ color: "black" }}
+              />
+            </Link>
+          </div>
           <div className="mobile-course-category flex justify-between items-center ml-[1.35rem] mr-[1.5rem]">
             <span className="font-montserrat text-dark-blue text-[3vh] font-black leading-[1vh]">
               {Detail.category_id === 1
@@ -777,7 +814,13 @@ const DetailKelasPage = () => {
                 {CourseChapter?.map((value, chapterIndex) => {
                   const isPremiumClass = Detail.type_id === 2;
                   const isChapterUnlocked =
-                    chapterIndex === 0 || !isPremiumClass;
+                    chapterIndex === 0 ||
+                    !isPremiumClass ||
+                    (Detail.id ===
+                      PaymentDetail.find(
+                        (payment) => payment.class_id === Detail.id
+                      )?.class_id &&
+                      PaymentDetail.some((payment) => payment.is_paid));
                   return (
                     <div
                       className="mobile-chapter-parents mt-[1vh]"
@@ -785,64 +828,133 @@ const DetailKelasPage = () => {
                     >
                       <div className="chapter-title-section flex items-center justify-between">
                         <span className="font-montserrat font-extrabold text-dark-blue text-[1.7vh] leading-[1.25vh]">
-                          {value.title}
+                          Chapter {value.no_chapter} - {value.title}
                         </span>
                         <span className="font-montserrat text-[#489CFF] text-[1.7vh] font-extrabold leading-[1.25vh]">
                           60 Menit
                         </span>
                       </div>
 
-                      {value.videos?.map((vids, videoIndex) => {
-                        totalVideosMobile++;
-                        const adjustedVideoIndex = totalVideosMobile;
-                        return (
-                          <div
-                            className="course-chapters-container border-b-[0.25vh] border-[#EBF3FC] py-[.75vh] mt-[1vh]"
-                            key={videoIndex}
-                          >
-                            <div className="chapter-card-section flex items-center justify-between w-[95%]">
-                              <div className="card-number-title-section flex items-center gap-[0.75rem]">
-                                <span className="rounded-[100%] text-[2vh] px-[2.1vh] py-[1.25vh] hover:bg-dark-blue hover:text-white cursor-pointer bg-[#EBF3FC]">
-                                  {adjustedVideoIndex}
-                                </span>
-                                <span className="course-title-section text-[rgba(0,0,0,0.80)] text-[1.75vh] font-semibold leading-[1.25rem] font-montserrat">
-                                  {vids.title}
-                                </span>
+                      {value.videos
+                        .sort((a, b) => a.no_video - b.no_video)
+                        .map((vids, videoIndex) => {
+                          totalVideosMobile++;
+                          const adjustedVideoIndex = totalVideosMobile;
+                          const WatchedVideosTrue =
+                            vids.watch_status && vids.watch_status.length > 0;
+                          return (
+                            <div
+                              className="course-chapters-container border-b-[0.25vh] border-[#EBF3FC] py-[.75vh] mt-[1vh]"
+                              key={videoIndex}
+                            >
+                              <div className="chapter-card-section flex items-center justify-between w-[95%]">
+                                <div className="card-number-title-section flex items-center gap-[0.75rem]">
+                                  <span className="rounded-[100%] text-[2vh] px-[2.1vh] py-[1.25vh] hover:bg-dark-blue hover:text-white cursor-pointer bg-[#EBF3FC]">
+                                    {adjustedVideoIndex}
+                                  </span>
+                                  <span className="course-title-section text-[rgba(0,0,0,0.80)] text-[1.75vh] font-semibold leading-[1.25rem] font-montserrat">
+                                    {vids.title}
+                                  </span>
+                                </div>
+                                {WatchedVideosTrue ? (
+                                  vids.watch_status.map(
+                                    (watched, watchedIndex) => {
+                                      return (
+                                        <div key={watchedIndex}>
+                                          {isPremiumClass ? (
+                                            <img
+                                              src={
+                                                isChapterUnlocked
+                                                  ? watched.is_watched
+                                                    ? done_play_button
+                                                    : undone_play_button
+                                                  : locked
+                                              }
+                                              alt={
+                                                isChapterUnlocked
+                                                  ? "play-button"
+                                                  : "locked-button"
+                                              }
+                                              style={{ width: "2.5vh" }}
+                                              className="cursor-pointer"
+                                              onClick={() => {
+                                                if (isChapterUnlocked) {
+                                                  setVideoID(watched.video_id);
+                                                  setSelectedVideo(vids.link);
+                                                  setisVideoClicked(true);
+                                                } else {
+                                                  tooglePayment();
+                                                }
+                                              }}
+                                            />
+                                          ) : (
+                                            <img
+                                              src={
+                                                isChapterUnlocked
+                                                  ? watched.is_watched
+                                                    ? done_play_button
+                                                    : undone_play_button
+                                                  : locked
+                                              }
+                                              alt="play-undone-button"
+                                              style={{ width: "2.5vh" }}
+                                              className="cursor-pointer"
+                                              onClick={() => {
+                                                setVideoID(watched.video_id);
+                                                setSelectedVideo(vids.link);
+                                                setisVideoClicked(true);
+                                              }}
+                                            />
+                                          )}
+                                        </div>
+                                      );
+                                    }
+                                  )
+                                ) : (
+                                  <div>
+                                    {isPremiumClass ? (
+                                      <img
+                                        src={
+                                          isChapterUnlocked
+                                            ? vids.is_watched
+                                              ? done_play_button
+                                              : undone_play_button
+                                            : locked
+                                        }
+                                        alt={
+                                          isChapterUnlocked
+                                            ? "play-button"
+                                            : "locked-button"
+                                        }
+                                        style={{ width: "2.5vh" }}
+                                        className="cursor-pointer"
+                                        onClick={() => {
+                                          if (isChapterUnlocked) {
+                                            setSelectedVideo(vids.link);
+                                            setisVideoClicked(true);
+                                          } else {
+                                            tooglePayment();
+                                          }
+                                        }}
+                                      />
+                                    ) : (
+                                      <img
+                                        src={undone_play_button}
+                                        alt="play-undone-button"
+                                        style={{ width: "2.5vh" }}
+                                        className="cursor-pointer"
+                                        onClick={() => {
+                                          setSelectedVideo(vids.link);
+                                          setisVideoClicked(true);
+                                        }}
+                                      />
+                                    )}
+                                  </div>
+                                )}
                               </div>
-                              {!isChapterUnlocked && isPremiumClass ? (
-                                <img
-                                  src={locked}
-                                  alt="locked-button"
-                                  onClick={tooglePayment}
-                                  style={{ width: "2.5vh" }}
-                                  className="cursor-pointer"
-                                />
-                              ) : (
-                                <img
-                                  src={
-                                    isChapterUnlocked
-                                      ? vids.is_watched
-                                        ? done_play_button
-                                        : undone_play_button
-                                      : locked
-                                  }
-                                  alt={
-                                    isChapterUnlocked
-                                      ? "play-button"
-                                      : "locked-button"
-                                  }
-                                  style={{ width: "2.5vh" }}
-                                  className="cursor-pointer"
-                                  onClick={() => {
-                                    setSelectedVideo(vids.link);
-                                    setisVideoClicked(true);
-                                  }}
-                                />
-                              )}
                             </div>
-                          </div>
-                        );
-                      })}
+                          );
+                        })}
                     </div>
                   );
                 })}
