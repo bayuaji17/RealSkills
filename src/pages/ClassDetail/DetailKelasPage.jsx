@@ -12,6 +12,7 @@ import locked from "../../assets/img/icon/bxs_lock.svg";
 import close_modal from "../../assets/img/icon/close-modal.svg";
 import arrow_buy from "../../assets/img/icon/carbon_next-filled.svg";
 import star from "../../assets/img/icon/ic_round-star.svg";
+import prerequisites from "../../assets/img/icon/Group.svg";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getClasses } from "../../services/class/get-classByID";
 import ReactPlayer from "react-player";
@@ -31,6 +32,7 @@ const DetailKelasPage = () => {
   const [isVideoClicked, setisVideoClicked] = useState(false);
   const [VideoID, setVideoID] = useState("");
   const [TotalClassMinutes, setTotalClassMinutes] = useState(0);
+  const [PrerequisitesModal, setPrerequisitesModal] = useState(false);
   const navigate = useNavigate();
   const { classId } = useParams();
   let totalVideosDesktop = 0;
@@ -74,6 +76,13 @@ const DetailKelasPage = () => {
         const response = await getAuthenticated();
         setPaymentDetail(response.data.data.payments);
         console.log(response.data.data.payments, "detailPayments");
+        const isClassPaidAndAccessed = response.data.data.payments.some(
+          (payment) => payment.class_id === Detail.id && payment.is_paid
+        );
+
+        if (isClassPaidAndAccessed) {
+          setPrerequisitesModal(true);
+        }
       } catch (error) {
         console.error(error);
       }
@@ -93,8 +102,9 @@ const DetailKelasPage = () => {
     fetchClassesChapters();
     fetchPaymentsDetail();
     fetchWatchedVideos();
-  }, [classId, VideoID]);
+  }, [classId, VideoID, Detail.id]);
 
+  // useEffect untuk mendapatkan total menit seluruh chapters
   useEffect(() => {
     let totalDuration = 0;
     CourseChapter.forEach((chapter) => {
@@ -118,6 +128,10 @@ const DetailKelasPage = () => {
 
   const tooglePayment = () => {
     setPaymentModal((PaymentModal) => !PaymentModal);
+  };
+
+  const tooglePrerequisites = () => {
+    setPrerequisitesModal((PrerequisitesModal) => !PrerequisitesModal);
   };
 
   return (
@@ -451,6 +465,50 @@ const DetailKelasPage = () => {
                 </div>
               );
             })}
+
+            {PrerequisitesModal && (
+              <div className="modal-payment-popup fixed bg-black bg-opacity-70 inset-0 font-montserrat cursor-pointer">
+                <div className="flex justify-center items-center font-montserrat h-full w-full">
+                  <div className="bg-[#FFFF] flex flex-col gap-[1rem] h-[70%] w-[30%] rounded-[1rem] px-[1rem] py-[1rem]">
+                    <div
+                      onClick={tooglePrerequisites}
+                      className="flex justify-end"
+                    >
+                      <img src={close_modal} alt="close-modal" width="20" />
+                    </div>
+                    <span className="font-montserrat flex justify-center text-dark-blue font-bold text-[2rem] leading-[0.9rem]">
+                      Onboarding...
+                    </span>
+                    <div className="flex justify-center items-center w-full">
+                      <img
+                        src={prerequisites}
+                        alt="prerequisites-modal"
+                        style={{ width: "50%" }}
+                        className="flex justify-center items-center"
+                      />
+                    </div>
+                   <div className='prerequisites-section flex justify-center items-center w-full mt-[.75rem] mb-[1.5rem]'>
+                    <div className='w-[80%] flex flex-col gap-[1.25rem] justify-center items-center'>
+                      <span className='font-montserrat font-bold text-[0.75rem] text-center leading-[1.5rem]'>
+                        Persiapkan hal berikut untuk belajar yang maksimal:
+                      </span>
+                      <span className='font-montserrat text-[0.75rem] text-center leading-[1.25rem]'>
+                        {Detail.prerequisites}
+                      </span>
+                    </div>
+                   </div>
+                    <button
+                      className="rounded-[1.5rem] bg-dark-blue flex justify-center items-center w-full py-[1rem]"
+                      onClick={tooglePrerequisites}
+                    >
+                      <span className="font-montserrat font-black text-white text-[1rem] leading-[1.5rem]">
+                        Ikuti Kelas
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
             {PaymentModal && (
               <>
                 <div className="modal-payment-popup fixed bg-black bg-opacity-70 inset-0 font-montserrat cursor-pointer">
