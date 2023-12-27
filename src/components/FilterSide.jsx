@@ -68,7 +68,7 @@ const FilterSide = (props) => {
 
   const applyFilters = () => {
     props.onFilterChange(filters);
-    setIsFilterModalOpen(false);
+    // setIsFilterModalOpen(false);
   };
 
   const resetFilters = () => {
@@ -253,7 +253,7 @@ const FilterSide = (props) => {
       <div className="flex w-full laptop:hidden ">
         {/* Modal Trigger Button */}
         <button
-          className="text-[#6148FF] font-bold "
+          className="text-[#6148FF] font-bold mobile:flex laptop:hidden"
           onClick={() => setIsFilterModalOpen(!isFilterModalOpen)}
         >
           Filter
@@ -283,41 +283,29 @@ const FilterSide = (props) => {
             </button>
             {/* Checkbox Inputs */}
             <div className="mb-4">
-              <p className="text-md font-semibold mb-2  ">Filter</p>
+              <p className="text-md font-semibold mb-2  ">Tipe Kelas</p>
               <label className=" mb-2 flex items-center">
                 <input
                   type="checkbox"
-                  checked={filters.palingBaru}
+                  checked={filters.freeClass}
                   onChange={(e) =>
-                    handleCheckboxChange("palingBaru", e.target.checked)
+                    handleCheckboxChange("freeClass", e.target.checked)
                   }
-                  className=" h-5 w-5 rounded-xl  mr-2 "
+                  className="h-5 w-5 rounded-xl  mr-2 "
                 />
-                Paling Baru
+                Kelas Gratis
               </label>
 
               <label className="mb-2 text-md flex items-center">
                 <input
                   type="checkbox"
-                  checked={filters.palingPopuler}
+                  checked={filters.premiumClass}
                   onChange={(e) =>
-                    handleCheckboxChange("palingPopuler", e.target.checked)
+                    handleCheckboxChange("premiumClass", e.target.checked)
                   }
                   className="h-5 w-5 rounded-xl  mr-2"
                 />
-                Paling Populer
-              </label>
-
-              <label className="mb-2 text-md flex items-center">
-                <input
-                  type="checkbox"
-                  checked={filters.promo}
-                  onChange={(e) =>
-                    handleCheckboxChange("promo", e.target.checked)
-                  }
-                  className="h-5 w-5 rounded-xl  mr-2"
-                />
-                Promo
+                Kelas Premium
               </label>
             </div>
 
@@ -333,6 +321,18 @@ const FilterSide = (props) => {
                   className="h-5 w-5 rounded-xl  mr-2"
                 />
                 UI/UX Design
+              </label>
+
+              <label className="mb-2 text-md flex items-center">
+                <input
+                  type="checkbox"
+                  checked={filters.productManagement}
+                  onChange={(e) =>
+                    handleCheckboxChange("productManagement", e.target.checked)
+                  }
+                  className="h-5 w-5 rounded-xl  mr-2"
+                />
+                Product Management
               </label>
 
               <label className="mb-2 text-md flex items-center">
@@ -362,21 +362,6 @@ const FilterSide = (props) => {
               <label className="mb-2 text-md flex items-center">
                 <input
                   type="checkbox"
-                  checked={filters.businessIntelligence}
-                  onChange={(e) =>
-                    handleCheckboxChange(
-                      "businessIntelligence",
-                      e.target.checked
-                    )
-                  }
-                  className="h-5 w-5 rounded-xl  mr-2"
-                />
-                Business Intelligence
-              </label>
-
-              <label className="mb-2 text-md flex items-center">
-                <input
-                  type="checkbox"
                   checked={filters.iosDevelopment}
                   onChange={(e) =>
                     handleCheckboxChange("iosDevelopment", e.target.checked)
@@ -385,22 +370,22 @@ const FilterSide = (props) => {
                 />
                 IOS Development
               </label>
-            </div>
 
-            <div className="mb-4">
-              <p className="text-md font-semibold mb-2">Level Kesulitan</p>
               <label className="mb-2 text-md flex items-center">
                 <input
                   type="checkbox"
-                  checked={filters.semuaLevel}
+                  checked={filters.dataScience}
                   onChange={(e) =>
-                    handleCheckboxChange("semuaLevel", e.target.checked)
+                    handleCheckboxChange("dataScience", e.target.checked)
                   }
                   className="h-5 w-5 rounded-xl  mr-2"
                 />
-                Semua Level
+                Data Science
               </label>
+            </div>
 
+            <div className="mb-4">
+              <p className="text-md font-semibold mb-2">Level</p>
               <label className="mb-2 text-md flex items-center">
                 <input
                   type="checkbox"
@@ -438,15 +423,15 @@ const FilterSide = (props) => {
               </label>
             </div>
 
+            <div className="mb-4">
+              <p className="text-md font-semibold mb-2">Level Kesulitan</p>
+            </div>
+
             <div className="flex justify-around">
-              <button className="text-[#6148FF] ">Terapkan Filter</button>
-              {/* Reset Filters Button */}
-              <button
-                onClick={() => {
-                  resetFilters();
-                }}
-                className="text-red-500 "
-              >
+              <button className="text-[#6148FF] " onClick={applyFilters}>
+                Terapkan Filter
+              </button>
+              <button onClick={resetFilters} className="text-red-500 ">
                 Hapus Filter
               </button>
             </div>

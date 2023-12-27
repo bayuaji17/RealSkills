@@ -78,7 +78,7 @@ export const TopikKelas = () => {
           <div className="flex gap-20 px-4 justify-center mb-3 laptop:pl-0 laptop:pr-0">
             {/* filter&(button&card) */}
 
-            <div className="hidden laptop:flex">
+            <div className="laptop:flex">
               <FilterSide onFilterChange={handleFilterChange}/>
             </div>
 
