@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { SideBarAdmin } from "../../components/admin/SideBarAdmin";
-import { NavbarAdmin } from "../../components/NavbarAdmin";
+import { NavbarAdmin } from "../../components/admin/NavbarAdmin";
 import { ReactTables } from "../../components/ReactTables";
 import { CardAdminApi } from "../../components/admin/CardAdminApi";
 

@@ -33,4 +33,6 @@ export const API_ENDPOINT = {
   },
   ALL_PAYMENT: "api/payments",
   DELETE_CHAPTER: "api/classes/chapters/",
+  VIDEOS:"api/classes/chapters/videos/",
+  
 };
