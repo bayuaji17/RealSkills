@@ -16,8 +16,7 @@ import { getClasses } from "../../services/class/get-classByID";
 import { Option, Select } from "@material-tailwind/react";
 import { postPayments } from "../../services/payments/create-payments";
 import { updatePayment } from "../../services/payments/update-payments";
-import { NavbarKelas } from "../../components/NavbarKelas";
-// const EXPIRY_DATE_REGEX = /^((0[1-9])|(1[0-2]))\/\d{2}$/;
+import { NavbarLogin } from "../../components/NavbarLogin";
 
 const DetailKelasPembayaran = () => {
   const [BankAccordionOpen, setBankAccordionOpen] = useState(false);
@@ -191,7 +190,7 @@ const DetailKelasPembayaran = () => {
     <div className="parents">
       {/* Desktop */}
       <div className="hidden laptop:block">
-        <NavbarKelas />
+        <NavbarLogin />
       </div>
 
       <div className="header-section hidden laptop:flex laptop:flex-col gap-[1.25rem] justify-center w-full bg-[#FFFF] shadow-lg items-center px-[5rem] py-[1.5rem]">

@@ -16,9 +16,9 @@ import prerequisites from "../../assets/img/icon/Group.svg";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getClasses } from "../../services/class/get-classByID";
 import ReactPlayer from "react-player";
-import { NavbarKelas } from "../../components/NavbarKelas";
 import { getAuthenticated } from "../../services/auth/get-authenticated";
 import { getWatchedVideos } from "../../services/users/get-watched-videos";
+import { NavbarLogin } from "../../components/NavbarLogin";
 
 const DetailKelasPage = () => {
   const [MateriBelajar, setMateriBelajar] = useState(false);
@@ -47,7 +47,7 @@ const DetailKelasPage = () => {
     const fetchDetailClasses = async () => {
       try {
         const response = await getClasses(classId);
-        setDetail(response.data.data);
+        setDetail(response?.data?.data);
       } catch (error) {
         console.error("Error mengambil data Kelas:", error);
       }
@@ -58,13 +58,16 @@ const DetailKelasPage = () => {
       try {
         const response = await getClasses(classId);
         // function untuk sort chapters berdasarkan no_chapter (ascending)
-        const sortedChapters = response.data.data.chapters.sort(
+        const sortedChapters = response?.data?.data?.chapters?.sort(
           (a, b) => a.no_chapter - b.no_chapter
         );
         setCourseChapter(sortedChapters);
         // agar video dari chapter index paling awal yg tampil di ReactPlayer
-        setFirstVideoPlay(response.data.data.chapters[0].videos[0].link);
-        console.log(response.data.data.chapters[0].videos[0], "videos status");
+        setFirstVideoPlay(response?.data?.data?.chapters[0]?.videos[0]?.link);
+        console.log(
+          response.data?.data?.chapters[0]?.videos[0],
+          "videos status"
+        );
       } catch (error) {
         console.log(error, "error chapters");
       }
@@ -74,10 +77,11 @@ const DetailKelasPage = () => {
     const fetchPaymentsDetail = async () => {
       try {
         const response = await getAuthenticated();
-        setPaymentDetail(response.data.data.payments);
-        console.log(response.data.data.payments, "detailPayments");
-        const isClassPaidAndAccessed = response.data.data.payments.some(
-          (payment) => payment.class_id === Detail.id && payment.is_paid
+        setPaymentDetail(response?.data?.data?.user?.payments || []);
+        console.log(response?.data?.data?.user?.payments, "detailPayments");
+
+        const isClassPaidAndAccessed = response?.data?.data?.user?.payments?.some(
+          (payment) => payment?.class.id === Detail?.id && payment?.is_paid
         );
 
         if (isClassPaidAndAccessed) {
@@ -88,7 +92,13 @@ const DetailKelasPage = () => {
       }
     };
 
-    // function untuk set is_watched pada video menjadi true
+    fetchDetailClasses();
+    fetchClassesChapters();
+    fetchPaymentsDetail();
+  }, [classId, Detail.id]);
+
+  useEffect(() => {
+    
     const fetchWatchedVideos = async () => {
       try {
         const response = await getWatchedVideos(VideoID);
@@ -97,19 +107,18 @@ const DetailKelasPage = () => {
         console.error(error);
       }
     };
-
-    fetchDetailClasses();
-    fetchClassesChapters();
-    fetchPaymentsDetail();
+  
     fetchWatchedVideos();
-  }, [classId, VideoID, Detail.id]);
+  
+  }, [VideoID])
+  
 
   // useEffect untuk mendapatkan total menit seluruh chapters
   useEffect(() => {
     let totalDuration = 0;
     CourseChapter.forEach((chapter) => {
       chapter.videos.forEach((video) => {
-        totalDuration += video.time || 0;
+        totalDuration += video?.time || 0;
       });
     });
 
@@ -137,7 +146,7 @@ const DetailKelasPage = () => {
   return (
     <div className="parents">
       <div className="nav-component-section hidden laptop:flex">
-        <NavbarKelas />
+        <NavbarLogin />
       </div>
 
       {/* Desktop */}
@@ -148,13 +157,13 @@ const DetailKelasPage = () => {
             icon={faArrowLeft}
             size="xl"
             onClick={() => {
-              navigate("/tesFilter");
+              navigate("/topik");
             }}
           />
           <span
             className="font-montserrat text-[1rem] font-bold leading-[1.5rem]"
             onClick={() => {
-              navigate("/tesFilter");
+              navigate("/topik");
             }}
           >
             Kelas Lainnya
@@ -315,33 +324,33 @@ const DetailKelasPage = () => {
               </div>
             </div>
 
-            {CourseChapter.map((value, chapterIndex) => {
+            {CourseChapter?.map((value, chapterIndex) => {
               const isPremiumClass = Detail.type_id === 2;
               const isChapterUnlocked =
                 chapterIndex === 0 ||
                 !isPremiumClass ||
-                (Detail.id ===
-                  PaymentDetail.find(
-                    (payment) => payment.class_id === Detail.id
-                  )?.class_id &&
-                  PaymentDetail.some((payment) => payment.is_paid));
-              const totalVideoMinutes = value.videos.reduce(
-                (total, video) => total + (video.time || 0),
+                (Detail?.id ===
+                  PaymentDetail?.find(
+                    (payment) => payment?.class?.id === Detail?.id
+                  )?.class.id &&
+                  PaymentDetail?.some((payment) => payment?.is_paid));
+              const totalVideoMinutes = value?.videos?.reduce(
+                (total, video) => total + (video?.time || 0),
                 0
               );
               return (
                 <div className="chapter-parents my-[.5rem]" key={chapterIndex}>
                   <div className="title-chapter-section flex justify-between items-center">
                     <span className="font-montserrat font-black text-[0.9rem] text-dark-blue leading-[2.25rem]">
-                      Chapter {value.no_chapter} - {value.title}
+                      Chapter {value?.no_chapter} - {value?.title}
                     </span>
                     <span className="font-montserrat text-[#489CFF] font-black leading-[2.25rem] text-[0.9rem]">
                       {totalVideoMinutes} menit
                     </span>
                   </div>
-                  {value.videos
-                    .sort((a, b) => a.no_video - b.no_video)
-                    .map((vids, videoIndex) => {
+                  {value?.videos
+                    ?.sort((a, b) => a?.no_video - b?.no_video)
+                    ?.map((vids, videoIndex) => {
                       totalVideosDesktop++;
                       const adjustedVideoIndex = totalVideosDesktop;
                       const WatchedVideosTrue =
@@ -409,7 +418,7 @@ const DetailKelasPage = () => {
                                         className="cursor-pointer"
                                         onClick={() => {
                                           setVideoID(watched.video_id);
-                                          setSelectedVideo(vids.link);
+                                          setSelectedVideo(vids?.link);
                                           setisVideoClicked(true);
                                         }}
                                       />
@@ -487,16 +496,16 @@ const DetailKelasPage = () => {
                         className="flex justify-center items-center"
                       />
                     </div>
-                   <div className='prerequisites-section flex justify-center items-center w-full mt-[.75rem] mb-[1.5rem]'>
-                    <div className='w-[80%] flex flex-col gap-[1.25rem] justify-center items-center'>
-                      <span className='font-montserrat font-bold text-[0.75rem] text-center leading-[1.5rem]'>
-                        Persiapkan hal berikut untuk belajar yang maksimal:
-                      </span>
-                      <span className='font-montserrat text-[0.75rem] text-center leading-[1.25rem]'>
-                        {Detail.prerequisites}
-                      </span>
+                    <div className="prerequisites-section flex justify-center items-center w-full mt-[.75rem] mb-[1.5rem]">
+                      <div className="w-[80%] flex flex-col gap-[1.25rem] justify-center items-center">
+                        <span className="font-montserrat font-bold text-[0.75rem] text-center leading-[1.5rem]">
+                          Persiapkan hal berikut untuk belajar yang maksimal:
+                        </span>
+                        <span className="font-montserrat text-[0.75rem] text-center leading-[1.25rem]">
+                          {Detail.prerequisites}
+                        </span>
+                      </div>
                     </div>
-                   </div>
                     <button
                       className="rounded-[1.5rem] bg-dark-blue flex justify-center items-center w-full py-[1rem]"
                       onClick={tooglePrerequisites}
