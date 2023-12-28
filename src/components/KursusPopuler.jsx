@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card } from "./Card";
+import { CardBeranda } from "./CardBeranda";
 
 export const KursusPopuler = () => {
   const [filterCategory, setFilterCategory] = useState("all");
@@ -50,7 +50,7 @@ export const KursusPopuler = () => {
         </div>
       </div>
       <div className="flex gap-5 overflow-x-auto">
-      <Card isCourse={true} filterCategory={filterCategory} />
+      <CardBeranda isCourse={true} filterCategory={filterCategory} />
       </div>
     </div>
   );

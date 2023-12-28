@@ -8,6 +8,7 @@ import { NavbarLogin } from "../components/NavbarLogin";
 export const ResultCategory = () => {
   const params = useParams();
   const [dataKategori, setDataKategori] = useState([]);
+  const [categoryName, setCategoryName] = useState("");
 
   console.log(dataKategori);
   const fetchByKategori = async () => {
@@ -22,6 +23,11 @@ export const ResultCategory = () => {
   useEffect(() => {
     fetchByKategori();
   }, []); //[id]
+
+  useEffect(() => {
+    const category = categoryMapping.find((cat) => cat.id === parseInt(params.id));
+    setCategoryName(category ? category.label : "");
+  }, [params.id]);
 
   const getById = (id, mapping) => {
     const match = mapping.find((item) => item.id === id);
@@ -61,11 +67,11 @@ export const ResultCategory = () => {
 
   return (
     <div>
-      <NavbarLogin/>
+      <NavbarLogin/><hr/>
       <div className="bg-[#6148FF]  text-center">
         <div className="flex justify-start items-center p-2">
           <h1 className="text-white text-center font-bold w-full">
-            Category
+            Category {categoryName}
           </h1>
         </div>
       </div>

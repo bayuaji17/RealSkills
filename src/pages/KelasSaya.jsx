@@ -11,10 +11,8 @@ export const KelasSaya = () => {
   const [search, setSearch] = useState("");
   const [searchData, setSearchData] = useState("");
   const [filter, setFilter] = useState("all"); 
-  const navigate = useNavigate();
-
-
   
+  const navigate = useNavigate();
 
 const handleSearch = async () => {
   try {
@@ -43,9 +41,9 @@ useEffect(() => {
     <div className="bg-[#EBF3FC] min-h-screen flex flex-col">
       <NavbarLogin />
       {/* <Search /> */}
-      <div className=" w-full laptop:flex flex-col flex-wrap justify-center items-center">
+      <div className=" w-full laptop:flex px-2  flex-col flex-wrap justify-center items-center">
         <div>
-          <div className="flex items-center justify-between mx-5 pt-0 pb-4 laptop:py-6 laptop:ml-0 laptop:mr-4  text-lg ">
+          <div className="flex items-center justify-between mx-2 mt-3 pt-0 pb-4 laptop:mt-0 laptop:py-6 laptop:ml-0 laptop:mr-4  text-lg ">
             <h1 className="font-bold">Kelas Berjalan</h1>
             <div className="hidden laptop:flex relative  w-[16rem] text-xs bg-[#EBF3FC] ">
               <input
@@ -84,7 +82,7 @@ useEffect(() => {
             </div>
             
             {/* button&card */}
-            <div className="flex  flex-col w-[100vw] gap-3 laptop:w-[40rem] ">
+            <div className="flex px-2 flex-col w-[100vw] gap-3 laptop:w-[40rem] ">
               {/* button */}
               <div className="flex px-4 justify-between   laptop:gap-14 laptop:w-full mb-2 ">
                 <button 

@@ -46,10 +46,10 @@ export const SearchResultMyclass = ({ isCourse, myClass, isTopik }) => {
 
   return (
     <div>
-      <NavbarLogin/>
+      <NavbarLogin/><hr></hr>
       <div className="bg-[#6148FF]  text-center">
         <div className="flex justify-start items-center p-2">
-          <h1 className="text-white text-center font-bold w-full">
+          <h1 className="text-white text-start font-bold w-full">
             Search Result "{searchQuery}"
           </h1>
         </div>

@@ -1,28 +1,116 @@
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useState } from "react";
-import { Progress } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
-import { getFilterClasses } from "../services/get-allClasses";
+import React, { useCallback, useEffect, useState } from "react";
+import { allClass, topikClass } from "../services/get-allclass";
+import { Button, Progress } from "@material-tailwind/react";
+import { useNavigate } from "react-router-dom";
 
-export const Card = (props) => {
+export const Card = ({
+  isCourse,
+  myClass,
+  isTopik,
+  filteredType,
+  filterCategory,
+}) => {
   const [classData, setClassData] = useState([]);
-  // const [page, setPage] = useState(1);
-  // const navigate = useNavigate();
+  const [page, setPage] = useState(1);
+  const [limit] = useState(4);
+  const [notFound, setNotFound] = useState(null);
+
+  const navigate = useNavigate();
+
+  const handleGetClass = useCallback(async () => {
+    try {
+      const response = await topikClass(
+        page,
+        limit,
+       
+      );
+
+      if (response.data.data.classes.length === 0) {
+        setClassData([]);
+        setNotFound("Kelas Tidak Ditemukan");
+      } else {
+        setClassData(response.data.data.classes);
+        setNotFound(null);
+      }
+    } catch (error) {
+      console.error(error.response.data.error);
+      setNotFound(error.response.data.error);
+      setClassData([]);
+    }
+  }, [page, limit]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getFilterClasses(props.classesFilter);
-        setClassData(data.data.data.classes);
-      } catch (error) {
-        console.error("Error fetching class data:", error);
-        alert(error.response.data.error);
-      }
+    handleGetClass();
+  }, [handleGetClass]);
+  
+  const handlePreviousPage = () => {
+    if (page > 1) {
+      setPage(page - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    setPage(page + 1);
+  };
+
+  const getById = (id, mapping) => {
+    const match = mapping.find((item) => item.id === id);
+    return match ? match.label : "Unknown";
+  };
+
+  const typeMapping = [
+    { id: 1, label: "GRATIS" },
+    { id: 2, label: "PREMIUM" },
+  ];
+  const levelMapping = [
+    { id: 1, label: "Beginner" },
+    { id: 2, label: "Intermediate" },
+    { id: 3, label: "Advanced" },
+  ];
+  const categoryMapping = [
+    { id: 1, label: "UI/UX Design" },
+    { id: 2, label: "Product Management" },
+    { id: 3, label: "Web Development" },
+    { id: 4, label: "Android Development" },
+    { id: 5, label: "IOS Development" },
+    { id: 6, label: "Data Science" },
+  ];
+
+  const filteredClasses = () => {
+    let filterResult = classData;
+
+    const typeFilters = {
+      premium: 2,
+      gratis: 1,
     };
 
-    fetchData();
-  }, [props.classesFilter]);
+    const categoryFilters = {
+      "UI/UX Design": 1,
+      "Product Management": 2,
+      "Web Development": 3,
+      "Android Development": 4,
+      "IOS Development": 5,
+      "Data Science": 6,
+    };
+
+    if (filteredType in typeFilters) {
+      filterResult = filterResult.filter(
+        (value) => value.type_id === typeFilters[filteredType]
+      );
+    }
+
+    if (filterCategory in categoryFilters) {
+      filterResult = filterResult.filter(
+        (value) => value.category_id === categoryFilters[filterCategory]
+      );
+    }
+
+    return filterResult;
+  };
+
+  const data = filteredClasses();
 
   const calculateTotalDuration = (classItem) => {
     let totalDuration = 0;
@@ -38,44 +126,23 @@ export const Card = (props) => {
     return `${totalHours} jam ${totalMinutes} menit`;
   };
 
-  const filteredClassData = classData.filter((value) => {
-    if (props.filteredType === "all") {
-      return true;
-    } else if (props.filteredType === "premium") {
-      return value.type_id === 2;
-    } else if (props.filteredType === "gratis") {
-      return value.type_id === 1;
-    }
-
-    if (props.filterCategory === "All") {
-      return true;
-    } else if (props.filterCategory === "UI/UX Design") {
-      return value.category_id === 1;
-    } else if (props.filterCategory === "Product Management") {
-      return value.category_id === 2;
-    } else if (props.filterCategory === "Web Development") {
-      return value.category_id === 3;
-    } else if (props.filterCategory === "Android Development") {
-      return value.category_id === 4;
-    } else if (props.filterCategory === "IOS Development") {
-      return value.category_id === 5;
-    } else if (props.filterCategory === "Data Science") {
-      return value.category_id === 6;
-    }
-
-    return false;
-  });
-
   return (
     // <div className="flex justify-between gap-3 overflow-x-auto  laptop:flex-wrap">
-    <>
-      {filteredClassData.map((value) => (
-        <div
-          div
-          key={value.id}
-          className=" bg-white w-[22rem] laptop:w-[18rem]  rounded-3xl shadow-md "
-        >
-          <Link to={`/detailKelas/${value.id}`}>
+    <div className="flex flex-col w-full gap-3">
+      <div className="flex flex-wrap justify-between ">
+        {data.length === 0 ? (
+              <tr>
+                <td className="p-4 border-b border-blue-gray-50">
+                  <h1 className="text-lg uppercase">{notFound}</h1>
+                </td>
+              </tr>
+            ) : (
+        data.map((value) => (
+          <div
+            div
+            key={value.id}
+            className=" bg-white w-[22rem] laptop:w-[18rem]  rounded-3xl shadow-md mb-4 "
+          >
             <div className="h-[6rem] overflow-hidden rounded-t-3xl mb-1">
               <img
                 className="h-full w-full object-cover"
@@ -86,19 +153,7 @@ export const Card = (props) => {
             <div className="px-3 pb-3 w-[22rem] laptop:w-[18rem] ">
               <div className="flex justify-between   ">
                 <p className="font-bold text-xs text-[#6148FF]">
-                  {value.category_id === 1
-                    ? "UI/UX Design"
-                    : value.category_id === 2
-                    ? "Product Management"
-                    : value.category_id === 3
-                    ? "Web Development"
-                    : value.category_id === 4
-                    ? "Android Development"
-                    : value.category_id === 5
-                    ? "IOS Development"
-                    : value.category_id === 6
-                    ? "Data Science"
-                    : ""}
+                  {getById(value.category_id, categoryMapping)}
                 </p>
                 <p className="flex gap-1 text-xs">
                   <FontAwesomeIcon icon={faStar} className=" text-[#F9CC00]" />
@@ -121,13 +176,7 @@ export const Card = (props) => {
                       fill="#73CA5C"
                     />
                   </svg>{" "}
-                  {value.level_id === 1
-                    ? "Beginner"
-                    : value.level_id === 2
-                    ? "Intermediate"
-                    : value.level_id === 3
-                    ? "Advanced"
-                    : ""}
+                  {getById(value.level_id, levelMapping)}
                 </p>
                 <p className=" flex  items-center text-xs pr-2">
                   <svg
@@ -164,7 +213,7 @@ export const Card = (props) => {
                   {calculateTotalDuration(value)}
                 </p>
               </div>
-              {props.isCourse && (
+              {isCourse && (
                 <button className="flex items-center text-xs text-white bg-[#6148FF] py-1 px-3 rounded-xl gap-3 ">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -181,7 +230,7 @@ export const Card = (props) => {
                   Rp {value.price}
                 </button>
               )}
-              {props.myClass && (
+              {myClass && (
                 <div className="flex items-center text-xs text-white rounded-xl gap-1 ">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -204,7 +253,7 @@ export const Card = (props) => {
                   ;
                 </div>
               )}
-              {props.isTopik &&
+              {isTopik &&
                 (value.type_id === 2 ? (
                   <button className="flex items-center text-xs text-white bg-[#6148FF] py-1 px-3 rounded-xl gap-3 ">
                     <svg
@@ -219,26 +268,46 @@ export const Card = (props) => {
                         fill="#EBF3FC"
                       />
                     </svg>
-                    {value.type_id === 1
-                      ? "GRATIS"
-                      : value.type_id === 2
-                      ? "PREMIUM"
-                      : ""}
+                    {getById(value.type_id, typeMapping)}
                   </button>
                 ) : (
-                  <button className="flex items-center text-xs text-white bg-[#6148FF] py-1 px-3 rounded-xl gap-3 ">
-                    {value.type_id === 1
-                      ? "GRATIS"
-                      : value.type_id === 2
-                      ? "PREMIUM"
-                      : ""}
+                  <button
+                    onClick={() => {
+                      navigate(`/coba/${value.id}`, {
+                        state: {
+                          id: value.id,
+                        },
+                      });
+                    }}
+                    className="flex items-center text-xs text-white bg-[#6148FF] py-1 px-3 rounded-xl gap-3 "
+                  >
+                    {getById(value.type_id, typeMapping)}
                   </button>
                 ))}
             </div>
-          </Link>
-        </div>
-      ))}
-    </>
+          </div>
+        )))}
+      </div>
+      <div className="flex gap-4 justify-end">
+        <Button
+          variant="gradient"
+          size="sm"
+          color="green"
+          onClick={handlePreviousPage}
+          disabled={page === 1}
+        >
+          Previous
+        </Button>
+        <Button
+          variant="gradient"
+          size="sm"
+          color="green"
+          onClick={handleNextPage}
+        >
+          Next
+        </Button>
+      </div>
+    </div>
     // </div>
   );
 };

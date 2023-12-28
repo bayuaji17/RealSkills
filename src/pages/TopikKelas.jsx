@@ -68,7 +68,7 @@ export const TopikKelas = () => {
       {/* <Search /> */}
       <div className=" w-full laptop:flex flex-col flex-wrap justify-center items-center">
         <div>
-          <div className="flex items-center justify-between mx-5 pt-0 pb-2 laptop:py-6 laptop:ml-0 laptop:mr-4  text-lg ">
+          <div className="flex items-center justify-between mx-5 mt-3 laptop:mt-0 pt-0 pb-2 laptop:py-6 laptop:ml-0 laptop:mr-4  text-lg ">
             <h1 className="font-bold">Topik Kelas</h1>
             <div className="laptop:hidden">
               <FilterSide onFilterChange={handleFilterChange}/>
@@ -83,7 +83,7 @@ export const TopikKelas = () => {
             </div>
 
             {/* button&card */}
-            <div className="flex px-4 flex-col w-[100vw] gap-5 laptop:w-[40rem]">
+            <div className="flex flex-col w-[100vw] gap-5 laptop:w-[40rem]">
               {/* button */}
               <div className="flex justify-between  laptop:gap-14 laptop:w-full">
                 <button 

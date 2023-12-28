@@ -1,6 +1,7 @@
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useLocation } from "react-router-dom";
+import { NavbarLogin } from "./NavbarLogin";
 
 export const SearchResult = ({ isCourse, myClass, isTopik }) => {
   const location = useLocation();
@@ -45,9 +46,10 @@ export const SearchResult = ({ isCourse, myClass, isTopik }) => {
 
   return (
     <div>
+      <NavbarLogin/><hr></hr>
       <div className="bg-[#6148FF]  text-center">
         <div className="flex justify-start items-center p-2">
-          <h1 className="text-white text-center font-bold w-full">
+          <h1 className="text-white text-start font-bold w-full">
             Search Result "{searchQuery}"
           </h1>
         </div>
