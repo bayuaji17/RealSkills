@@ -31,6 +31,7 @@ const DetailKelasPembayaran = () => {
     cvv: "",
     expiry_date: "",
   });
+  const [IsKirimBtnClicked, setIsKirimBtnClicked] = useState(false);
   const [IsCardNumberLengthValid, setIsCardNumberLengthValid] = useState(false);
   const [IsHolderNameLengthValid, setIsHolderNameLengthValid] = useState(false);
   const [IsCvvLengthValid, setIsCvvLengthValid] = useState(false);
@@ -294,7 +295,10 @@ const DetailKelasPembayaran = () => {
               </div>
               <button
                 className="bank-transfer-btn flex justify-center items-center py-[1rem] rounded-[1.5rem] text-white bg-[#3C3C3C] w-[50%] hover:bg-black disabled:bg-gray-300"
-                onClick={handleBankTransferClick}
+                onClick={() => {
+                  handleBankTransferClick();
+                  setIsKirimBtnClicked(true);
+                }}
                 disabled={
                   FormInputNominal.nominal <= 0 ||
                   !isNominalValid ||
@@ -415,7 +419,10 @@ const DetailKelasPembayaran = () => {
                   </div>
                   <button
                     className="credit-card-btn flex justify-center items-center py-[1rem] rounded-[1.5rem] text-white bg-dark-blue w-full hover:bg-light-blue-300 disabled:bg-gray-300"
-                    onClick={handleCreditCardClick}
+                    onClick={() => {
+                      handleCreditCardClick();
+                      setIsKirimBtnClicked(true);
+                    }}
                     disabled={
                       !IsCardNumberLengthValid ||
                       !IsHolderNameLengthValid ||
@@ -499,10 +506,21 @@ const DetailKelasPembayaran = () => {
 
           <Link to={`/pembayaranSukses/${classId}`}>
             <button
-              className="buy-now-btn flex items-center justify-center rounded-[1.5rem] px-[1rem] py-[.75rem] bg-[#F00] gap-2 mt-[1.5rem] mb-[0.75rem] w-full"
+              className="buy-now-btn flex items-center justify-center rounded-[1.5rem] px-[1rem] py-[.75rem] bg-[#F00] gap-2 mt-[1.5rem] mb-[0.75rem] w-full disabled:bg-gray-300"
               onClick={() => {
                 handleUpdatePayment(classId);
               }}
+              disabled={
+                (FormInputNominal.nominal <= 0 ||
+                  !isNominalValid ||
+                  !isNominalLengthValid ||
+                  !IsKirimBtnClicked) &&
+                (!IsCardNumberLengthValid ||
+                  !IsHolderNameLengthValid ||
+                  !IsCvvLengthValid ||
+                  !isExpiryDateValid ||
+                  !IsKirimBtnClicked)
+              }
             >
               <span className="font-montserrat font-black text-white text-[1rem] leading-[1.5rem]">
                 Bayar dan Ikuti Kelas Selamanya
@@ -674,7 +692,10 @@ const DetailKelasPembayaran = () => {
               </div>
               <button
                 className="mobile-credit-card-btn flex justify-center items-center py-[1vh] rounded-[1.5rem] text-white bg-dark-blue w-full hover:bg-light-blue-300 disabled:bg-gray-300"
-                onClick={handleBankTransferClick}
+                onClick={() => {
+                  handleBankTransferClick();
+                  setIsKirimBtnClicked(true);
+                }}
                 disabled={
                   FormInputNominal.nominal <= 0 ||
                   !isNominalValid ||
@@ -801,7 +822,10 @@ const DetailKelasPembayaran = () => {
               </div>
               <button
                 className="mobile-credit-card-btn flex justify-center items-center py-[1vh] rounded-[1.5rem] text-white bg-dark-blue w-full hover:bg-light-blue-300 disabled:bg-gray-300"
-                onClick={handleCreditCardClick}
+                onClick={() => {
+                  handleCreditCardClick();
+                  setIsKirimBtnClicked(true);
+                }}
                 disabled={
                   !IsCardNumberLengthValid ||
                   !IsHolderNameLengthValid ||
@@ -819,10 +843,21 @@ const DetailKelasPembayaran = () => {
 
         <Link to={`/pembayaranSukses/${classId}`}>
           <button
-            className="buy-now-button-container flex justify-center items-center py-[1.5vh] bg-[#FF0000] rounded-[1.5rem] mt-[2.25vw] w-full"
+            className="buy-now-button-container flex justify-center items-center py-[1.5vh] bg-[#FF0000] rounded-[1.5rem] mt-[2.25vw] w-full disabled:bg-gray-300"
             onClick={() => {
               handleUpdatePayment(classId);
             }}
+            disabled={
+              (FormInputNominal.nominal <= 0 ||
+                !isNominalValid ||
+                !isNominalLengthValid ||
+                !IsKirimBtnClicked) &&
+              (!IsCardNumberLengthValid ||
+                !IsHolderNameLengthValid ||
+                !IsCvvLengthValid ||
+                !isExpiryDateValid ||
+                !IsKirimBtnClicked)
+            }
           >
             <span className="font-montserrat font-black text-white text-[2vh] leading-[1.5vh]">
               Bayar dan Ikuti Kelas Selamanya

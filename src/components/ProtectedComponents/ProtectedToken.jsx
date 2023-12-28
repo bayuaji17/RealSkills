@@ -5,6 +5,7 @@ import { CookieKeys, CookieStorage } from "../../utils/cookies";
 function ProtectedToken({ children }) {
   const navigate = useNavigate();
 
+
   useEffect(() => {
     const tokenCheck = CookieStorage.get(CookieKeys.AuthToken);
 
