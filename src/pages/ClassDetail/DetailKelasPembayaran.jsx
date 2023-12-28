@@ -17,6 +17,7 @@ import { Option, Select } from "@material-tailwind/react";
 import { postPayments } from "../../services/payments/create-payments";
 import { updatePayment } from "../../services/payments/update-payments";
 import { NavbarLogin } from "../../components/NavbarLogin";
+import { toast } from "react-toastify";
 
 const DetailKelasPembayaran = () => {
   const [BankAccordionOpen, setBankAccordionOpen] = useState(false);
@@ -182,6 +183,16 @@ const DetailKelasPembayaran = () => {
     try {
       const response = await updatePayment(id);
       console.log(response, "paid payment");
+      toast.success(response.data.message, {
+        position: "bottom-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     } catch (error) {
       console.error("Error updating payment:", error);
     }

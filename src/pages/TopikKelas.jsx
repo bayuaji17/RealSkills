@@ -70,15 +70,15 @@ export const TopikKelas = () => {
         <div>
           <div className="flex items-center justify-between mx-5 pt-0 pb-2 laptop:py-6 laptop:ml-0 laptop:mr-4  text-lg ">
             <h1 className="font-bold">Topik Kelas</h1>
-            <div className="laptop:hidden">
-              {/* <FilterSide /> */}
+            <div className="flex laptop:hidden">
+              <FilterSide />
             </div>
             
           </div>
           <div className="flex gap-20 px-4 justify-center mb-3 laptop:pl-0 laptop:pr-0">
             {/* filter&(button&card) */}
 
-            <div className="laptop:flex">
+            <div className="hidden laptop:flex">
               <FilterSide onFilterChange={handleFilterChange}/>
             </div>
 

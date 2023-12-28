@@ -126,6 +126,14 @@ const DetailKelasPage = () => {
     setTotalClassMinutes(totalDuration);
   }, [CourseChapter]);
 
+  const formatDuration = (totalMinutes) => {
+    const totalHours = Math.floor(totalMinutes / 60);
+    const remainingMinutes = totalMinutes % 60;
+
+    return `${totalHours} jam ${remainingMinutes} menit`;
+  };
+  
+
   const toogleTentangKelas = () => {
     setTentangKelas(true);
     setMateriBelajar(false);
@@ -167,7 +175,7 @@ const DetailKelasPage = () => {
     }
 
     const progressPercentage =
-      totalVideos !== 0 ? (watchedCount / totalVideos) * 100 : 0;
+      totalVideos !== 0 ? Math.round((watchedCount / totalVideos) * 100) : 0;
 
     return progressPercentage;
   };
@@ -260,7 +268,7 @@ const DetailKelasPage = () => {
             <div className="badge-level-section flex items-center gap-1">
               <img src={time} alt="course-time" />
               <span className="font-montserrat text-[0.75rem] leading-[0.9rem] font-bold hover:text-[#6148FF] cursor-pointer">
-                {TotalClassMinutes} Menit
+                {formatDuration(TotalClassMinutes)} 
               </span>
             </div>
           </div>
@@ -633,7 +641,7 @@ const DetailKelasPage = () => {
                             <div className="badge-level-section flex items-center gap-1">
                               <img src={time} alt="course-time" />
                               <span className="font-montserrat text-[0.75rem] leading-[0.9rem] font-bold hover:text-[#6148FF] cursor-pointer">
-                                45 Menit
+                                {formatDuration(TotalClassMinutes)}
                               </span>
                             </div>
                           </div>
@@ -757,7 +765,7 @@ const DetailKelasPage = () => {
             <div className="badge-level-section flex items-center gap-1">
               <img src={time} alt="course-time" style={{ width: "2.5vh" }} />
               <span className="font-montserrat text-[1.5vh] leading-[2vh] font-bold hover:text-[#6148FF] cursor-pointer">
-                {TotalClassMinutes} Menit
+                 {formatDuration(TotalClassMinutes)} 
               </span>
             </div>
           </div>
@@ -1167,7 +1175,7 @@ const DetailKelasPage = () => {
                                 style={{ width: "2.5vh" }}
                               />
                               <span className="font-montserrat text-[1.5vh] leading-[2vh] font-bold hover:text-[#6148FF] cursor-pointer">
-                                45 Menit
+                                {formatDuration(TotalClassMinutes)}
                               </span>
                             </div>
                           </div>
