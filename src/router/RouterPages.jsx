@@ -114,11 +114,11 @@ export const RouterPages = () => {
           }
         />
         {/* PROFILE AREA */}
-        <Route path="/kelas" element={
+        {/* <Route path="/kelas" element={
         <ProtectedToken>
         <KelasSaya />
         </ProtectedToken>
-        } />
+        } /> */}
         <Route path="/topik" element={<TopikKelas />} />
         {/* DetailKelas Area */}
         <Route

@@ -27,25 +27,6 @@ export const KelasSaya = () => {
     fetchData();
   }, [authToken]);
 
-  // const getById = (id, mapping) => {
-  //   const match = mapping.find((item) => item.id === id);
-  //   return match ? match.label : "Unknown";
-  // };
-
-  // const levelMapping = [
-  //   { id: 1, label: "Beginner" },
-  //   { id: 2, label: "Intermediate" },
-  //   { id: 3, label: "Advanced" },
-  // ];
-  // const categoryMapping = [
-  //   { id: 1, label: "UI/UX Design" },
-  //   { id: 2, label: "Product Management" },
-  //   { id: 3, label: "Web Development" },
-  //   { id: 4, label: "Android Development" },
-  //   { id: 5, label: "IOS Development" },
-  //   { id: 6, label: "Data Science" },
-  // ];
-
   const calculateTotalDuration = (classItem) => {
     let totalDuration = 0;
     let completedDuration = 0;
