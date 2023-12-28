@@ -7,15 +7,24 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { CookieKeys, CookieStorage } from "../utils/cookies";
 import { NavbarLogin } from "../components/NavbarLogin";
+import { useNavigate } from "react-router-dom";
+import { fetchSearchMyclass } from "../services/search-myclass";
 
 export const KelasSaya = () => {
   const authToken = CookieStorage.get(CookieKeys.AuthToken);
   const [dataUser, setDataUser] = useState([]);
+  const [search, setSearch] = useState("");
+  const [searchData, setSearchData] = useState("");
+  const [filter, setFilter] = useState("all"); 
+  const navigate = useNavigate();
 
+  
   const fetchData = async () => {
+
     try {
       const data = await getMe(authToken);
-      setDataUser(data.data.class);
+      setDataUser(data.data.classes);
+      console.log("dataclasses",data.data.classes)
     } catch (error) {
       console.error("Error fetching class data:", error);
     }
@@ -46,71 +55,77 @@ export const KelasSaya = () => {
 
   const calculateTotalDuration = (classItem) => {
     let totalDuration = 0;
-    let completedDuration = 0;
+    classItem.chapters.forEach((chapter) => {
+      chapter.videos.forEach((video) => {
+        totalDuration += video.time || 0;
+      });
+    });
+
+    const totalHours = Math.floor(totalDuration / 60);
+    const totalMinutes = totalDuration % 60;
+
+    return `${totalHours} jam ${totalMinutes} menit`;
+  };
+
+  const calculateProgressBar = (classItem) => {
+    let watchedCount = 0;
+    let totalVideos = 0;
   
     if (classItem && classItem.chapters) {
       classItem.chapters.forEach((chapter) => {
         if (chapter && chapter.videos) {
+          totalVideos += chapter.videos.length;
           chapter.videos.forEach((video) => {
-            totalDuration += video.time || 0;
-            if (video.is_completed) {
-              completedDuration += video.time || 0;
+            if (video && video.watch_status && video.watch_status.length > 0 && video.watch_status[0].is_watched) {
+              watchedCount += 1;
             }
           });
         }
       });
     }
   
-    const totalHours = Math.floor(totalDuration / 60);
-    const totalMinutes = totalDuration % 60;
+    const progressPercentage = totalVideos !== 0 ? (watchedCount / totalVideos) * 100 : 0;
   
-    const completedHours = Math.floor(completedDuration / 60);
-    const completedMinutes = completedDuration % 60;
-  
-    const completionPercentage =
-      totalDuration !== 0 ? (completedDuration / totalDuration) * 100 : 0;
-  
-    return {
-      totalDuration: `${totalHours} jam ${totalMinutes} menit`,
-      completedDuration: `${completedHours} jam ${completedMinutes} menit`,
-      completionPercentage,
-    };
+    return progressPercentage;
   };
 
-  const filterClasses = (filterType) => {
-    console.log("Filter Type:", filterType);
-    console.log("Data User:", dataUser);
-  
-    let filteredClasses = dataUser;
-  
-    switch (filterType) {
-      case "all":
-      break;
+  // Fungsi untuk memfilter data berdasarkan filter yang aktif
+  const filterClasses = () => {
+    switch (filter) {
       case "inProgress":
-        filteredClasses = dataUser.filter((item) => {
-          const inProgress = item.chapters.some((chapter) => {
-            const hasInProgressVideo = chapter.videos.some((video) => !video.is_completed);
-            console.log("Video Status:", hasInProgressVideo, "Class:", item.name);
-            return hasInProgressVideo;
-          });
-          return inProgress;
-        });
-        break;
+        return dataUser.filter((item) => calculateProgressBar(item) > 0 && calculateProgressBar(item) < 100);
       case "completed":
-        filteredClasses = dataUser.filter(
-          (item) => calculateTotalDuration(item).completionPercentage === 100
-        );
-        break;
+        return dataUser.filter((item) => calculateProgressBar(item) === 100);
       default:
-        // Default case, menampilkan all classes
-        break;
+        return dataUser;
     }
-  
-    return filteredClasses;
   };
-
+   
   const data = filterClasses()
 
+const handleSearch = async () => {
+  try {
+    const dataSearch = await fetchSearchMyclass(search);
+    setSearchData(dataSearch);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+
+useEffect(() => {
+      if (searchData) {
+        navigate('/searchmyclass?query=' + search, { state: { results: searchData.classes, query: search} });
+
+      }
+  },[searchData, search])
+
+
+  const enter = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
   return (
     <div className="bg-[#EBF3FC] min-h-screen flex flex-col">
       <NavbarLogin />
@@ -119,28 +134,58 @@ export const KelasSaya = () => {
         <div>
           <div className="flex items-center justify-between mx-5 pt-0 pb-4 laptop:py-6 laptop:ml-0 laptop:mr-4  text-lg ">
             <h1 className="font-bold">Kelas Berjalan</h1>
+            <div className="hidden laptop:flex relative  w-[16rem] text-xs bg-[#EBF3FC] ">
+              <input
+                className="p-4 w-full flex justify-between rounded-lg shadow-lg"
+                placeholder="Cari Kelas terbaik...."
+                onChange={(e) => setSearch(e.target.value)}
+                onKeyDown={enter}
+              />
+              <button 
+              onClick={handleSearch}
+              className=" bg-[#6148FF] absolute right-4 mt-3 rounded-md">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  className="p-1"
+                >
+                  <path
+                    d="M10 18C11.775 17.9996 13.4988 17.4054 14.897 16.312L19.293 20.708L20.707 19.294L16.311 14.898C17.405 13.4997 17.9996 11.7754 18 10C18 5.589 14.411 2 10 2C5.589 2 2 5.589 2 10C2 14.411 5.589 18 10 18ZM10 4C13.309 4 16 6.691 16 10C16 13.309 13.309 16 10 16C6.691 16 4 13.309 4 10C4 6.691 6.691 4 10 4Z"
+                    fill="#EBF3FC"
+                  />
+                  <path
+                    d="M11.4118 8.58609C11.7908 8.96609 11.9998 9.46809 11.9998 10.0001H13.9998C14.0007 9.47451 13.8974 8.95398 13.6959 8.46857C13.4944 7.98316 13.1987 7.54251 12.8258 7.17209C11.3118 5.66009 8.68683 5.66009 7.17383 7.17209L8.58583 8.58809C9.34583 7.83009 10.6558 7.83209 11.4118 8.58609Z"
+                    fill="#EBF3FC"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
           <div className="flex w-full gap-20 mb-3 justify-center laptop:pl-0 laptop:pr-0">
             {/* filter&(button&card) */}
             <div className="hidden  laptop:flex">
               <FilterSide />
             </div>
+            
             {/* button&card */}
             <div className="flex  flex-col w-[100vw] gap-3 laptop:w-[40rem] ">
               {/* button */}
               <div className="flex px-4 justify-between   laptop:gap-14 laptop:w-full mb-2 ">
                 <button 
-                onClick={() => filterClasses("all")}
+                onClick={() => setFilter("all")}
                 className="py-1 px-5  rounded-xl bg-white hover:bg-[#6148FF] hover:text-white active:bg-[#6148FF] active:text-white focus:text-white focus:outline-none focus:ring focus:ring-violet-300 focus:bg-[#6148FF] laptop:py-1 laptop:px-10 ">
                   All
                 </button>
                 <button 
-                onClick={() => filterClasses("inProgress")}
+                onClick={() => setFilter("inProgress")}
                 className="py-1 px-7  rounded-xl bg-white hover:bg-[#6148FF] hover:text-white active:text-white focus:text-white active:bg-[#6148FF] focus:outline-none focus:ring focus:ring-violet-300 focus:bg-[#6148FF] laptop:py-1 laptop:px-14 ">
                   In Progress
                 </button>
                 <button 
-                onClick={() => filterClasses("completed")}
+                onClick={() => setFilter("completed")}
                 className="py-1 px-6 rounded-xl bg-white hover:bg-[#6148FF] hover:text-white active:text-white focus:text-white active:bg-[#6148FF] focus:outline-none focus:ring focus:ring-violet-300 focus:bg-[#6148FF] laptop:py-1 laptop:px-12">
                   Completed
                 </button>
@@ -149,7 +194,7 @@ export const KelasSaya = () => {
               <div className="flex justify-between gap-4 overflow-x-auto  laptop:flex-wrap mx-4">
                 {/* <Card myClass={true} /> */}
                 <>
-                  {data.map((value) => (
+                  {data?.map((value) => (
                     
                     <div
                       div
@@ -226,7 +271,7 @@ export const KelasSaya = () => {
                                 fill="#73CA5C"
                               />
                             </svg>
-                            {calculateTotalDuration(value).totalDuration}
+                            {calculateTotalDuration(value)}
                           </p>
                         </div>
                         <div className="flex items-center text-xs text-white rounded-xl gap-1 ">
@@ -243,7 +288,7 @@ export const KelasSaya = () => {
                             />
                           </svg>
                           <Progress
-                            value={calculateTotalDuration(value).completionPercentage}
+                            value={calculateProgressBar(value)}
                             size="md"
                             color="indigo"
                             label="Completed"

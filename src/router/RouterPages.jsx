@@ -13,7 +13,9 @@ import FilterSide from "../components/FilterSide";
 import {SearchResult} from "../components/SearchResult"
 import { Coba } from "../pages/Coba";
 import { ResultCategory } from "../pages/ResultCategory";
-import { BerandaLogin } from "../pages/BerandaLogin"
+import { BerandaLogin } from "../pages/BerandaLogin";
+import {SearchResultMyclass} from "../components/SearchResultMyclass"
+
 export const RouterPages = () => {
   return (
     <BrowserRouter>
@@ -32,6 +34,8 @@ export const RouterPages = () => {
         <Route path="/search" element={<SearchResult/>} />
         <Route path="/coba/:id" element={<Coba/>} />
         <Route path="/kategori/:id" element={<ResultCategory/>} />
+        <Route path="/searchmyclass" element={<SearchResultMyclass/>} />
+
       </Routes>
     </BrowserRouter>
   );
