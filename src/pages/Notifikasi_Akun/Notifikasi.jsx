@@ -4,19 +4,31 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Vector from "../../assets/img/icon/Vector.png";
 import circle_green from "../../assets/img/icon/circle_green.png";
 import { getUserById } from "../../services/notifikasi_akun/get_user";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { NavbarLogin } from "../../assets/components/NavbarLogin";
+import { toast } from "react-toastify";
+import { postUbahPassword } from "../../services/notifikasi_akun/ubah_password";
 
 export const Notifikasi = () => {
+  const navigate = useNavigate();
   const { AuthToken } = useParams();
   const [notif, setNotif] = useState([]);
+
+  const dateFormatter = new Intl.DateTimeFormat("en-GB", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    timeZone: "UTC",
+  });
 
   useEffect(() => {
     const fetchDetailUser = async () => {
       try {
         const data = await getUserById(AuthToken);
-        setNotif(data.data.notifications);
-        console.log(data.data.notifications, "data notif");
+        setNotif(data.data.user.notifications);
+        console.log(data.data.user.notifications, "data notif");
       } catch (error) {
         console.log("data error", error);
       }
@@ -32,11 +44,14 @@ export const Notifikasi = () => {
       </div>
 
       <div className="hero-section flex flex-col gap-2 h-screen laptop:h-[11rem] laptop:bg-[#EBF3FC] w-full">
-        <div className="back-section hidden laptop:flex items-center mt-[2.3rem] mb-[0.7rem] gap-[1.25rem] mx-[11.5rem] ">
+        <div className="back-section hidden laptop:flex items-center cursor-pointer mt-[2.3rem] mb-[0.7rem] gap-[1.25rem] mx-[11.5rem]">
           <FontAwesomeIcon
             icon={faArrowLeft}
             size="lg"
             style={{ color: "#6148FF" }}
+            onClick={() => {
+              navigate("/");
+            }}
           />
           <a
             className="font-black font-montserrat text-[1rem] text-[#6148FF] "
@@ -71,7 +86,9 @@ export const Notifikasi = () => {
 
                       <span className="flex justify-end items-end gap-3">
                         <label className="text-sm text-[#8A8A8A] items-center ">
-                          {notifications.created_at}
+                          {dateFormatter.format(
+                            new Date(notifications.created_at)
+                          )}
                         </label>
                         <img
                           src={circle_green}
