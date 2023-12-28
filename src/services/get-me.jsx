@@ -15,7 +15,7 @@ export const getMe = async (authToken) => {
   }
 };
 
-export const getFilterClasses = async ({ category, type, level}) => {
+export const getFilterMyClasses = async ({ category, type, level}) => {
   const params = {
     category,
     type,

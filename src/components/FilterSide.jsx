@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "tailwindcss/tailwind.css"; // Import Tailwind CSS
 
-const FilterSide = () => {
+const FilterSide = (props) => {
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [filters, setFilters] = useState({
     palingBaru: false,
@@ -20,17 +20,61 @@ const FilterSide = () => {
   });
 
   const handleCheckboxChange = (filterType, value) => {
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [filterType]: value,
-    }));
+    const typeMapping = {
+      freeClass: 1,
+      premiumClass: 2,
+    };
+
+    const categoryMapping = {
+      uiuxDesign: 1,
+      productManagement: 2,
+      webDevelopment: 3,
+      androidDevelopment: 4,
+      iosDevelopment: 5,
+      dataScience: 6,
+    };
+
+    const levelMapping = {
+      semuaLevel: "",
+      beginnerLevel: 1,
+      intermediateLevel: 2,
+      advancedLevel: 3,
+    };
+
+    if (typeMapping[filterType] !== undefined) {
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        category: value ? typeMapping[filterType] : "",
+        [filterType]: value,
+      }));
+    }
+
+    if (categoryMapping[filterType] !== undefined) {
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        category: value ? categoryMapping[filterType] : "",
+        [filterType]: value,
+      }));
+    }
+
+    if (levelMapping[filterType] !== undefined) {
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        level: value ? levelMapping[filterType] : "",
+        [filterType]: value,
+      }));
+    }
+  };
+
+  const applyFilters = () => {
+    props.onFilterChange(filters);
+    // setIsFilterModalOpen(false);
   };
 
   const resetFilters = () => {
     setFilters({
-      palingBaru: false,
-      palingPopuler: false,
-      promo: false,
+      freeClass: false,
+      premiumClass: false,
       uiuxDesign: false,
       webDevelopment: false,
       androidDevelopment: false,
@@ -41,6 +85,8 @@ const FilterSide = () => {
       beginnerLevel: false,
       intermediateLevel: false,
       advancedLevel: false,
+      category: "",
+      level: "",
     });
   };
 
@@ -49,41 +95,29 @@ const FilterSide = () => {
       <div className="hidden laptop:flex justify-center items-center bg-[#EBF3FC]">
         <div className="bg-white shadow-lg py-8 px-10 rounded-xl w-full text-xs">
           <div className="mb-4">
-            <p className="text-md font-semibold mb-2  ">Filter</p>
+            <p className="text-md font-semibold mb-2  ">Tipe Kelas</p>
             <label className=" mb-2 flex items-center">
               <input
                 type="checkbox"
-                checked={filters.palingBaru}
+                checked={filters.freeClass}
                 onChange={(e) =>
-                  handleCheckboxChange("palingBaru", e.target.checked)
+                  handleCheckboxChange("freeClass", e.target.checked)
                 }
-                className=" h-5 w-5 rounded-xl  mr-2 "
+                className="h-5 w-5 rounded-xl  mr-2 "
               />
-              Paling Baru
+              Kelas Gratis
             </label>
 
             <label className="mb-2 text-md flex items-center">
               <input
                 type="checkbox"
-                checked={filters.palingPopuler}
+                checked={filters.premiumClass}
                 onChange={(e) =>
-                  handleCheckboxChange("palingPopuler", e.target.checked)
+                  handleCheckboxChange("premiumClass", e.target.checked)
                 }
                 className="h-5 w-5 rounded-xl  mr-2"
               />
-              Paling Populer
-            </label>
-
-            <label className="mb-2 text-md flex items-center">
-              <input
-                type="checkbox"
-                checked={filters.promo}
-                onChange={(e) =>
-                  handleCheckboxChange("promo", e.target.checked)
-                }
-                className="h-5 w-5 rounded-xl  mr-2"
-              />
-              Promo
+              Kelas Premium
             </label>
           </div>
 
@@ -99,6 +133,18 @@ const FilterSide = () => {
                 className="h-5 w-5 rounded-xl  mr-2"
               />
               UI/UX Design
+            </label>
+
+            <label className="mb-2 text-md flex items-center">
+              <input
+                type="checkbox"
+                checked={filters.productManagement}
+                onChange={(e) =>
+                  handleCheckboxChange("productManagement", e.target.checked)
+                }
+                className="h-5 w-5 rounded-xl  mr-2"
+              />
+              Product Management
             </label>
 
             <label className="mb-2 text-md flex items-center">
@@ -128,18 +174,6 @@ const FilterSide = () => {
             <label className="mb-2 text-md flex items-center">
               <input
                 type="checkbox"
-                checked={filters.businessIntelligence}
-                onChange={(e) =>
-                  handleCheckboxChange("businessIntelligence", e.target.checked)
-                }
-                className="h-5 w-5 rounded-xl  mr-2"
-              />
-              Business Intelligence
-            </label>
-
-            <label className="mb-2 text-md flex items-center">
-              <input
-                type="checkbox"
                 checked={filters.iosDevelopment}
                 onChange={(e) =>
                   handleCheckboxChange("iosDevelopment", e.target.checked)
@@ -148,22 +182,22 @@ const FilterSide = () => {
               />
               IOS Development
             </label>
-          </div>
 
-          <div className="mb-4">
-            <p className="text-md font-semibold mb-2">Level Kesulitan</p>
             <label className="mb-2 text-md flex items-center">
               <input
                 type="checkbox"
-                checked={filters.semuaLevel}
+                checked={filters.dataScience}
                 onChange={(e) =>
-                  handleCheckboxChange("semuaLevel", e.target.checked)
+                  handleCheckboxChange("dataScience", e.target.checked)
                 }
                 className="h-5 w-5 rounded-xl  mr-2"
               />
-              Semua Level
+              Data Science
             </label>
+          </div>
 
+          <div className="mb-4">
+            <p className="text-md font-semibold mb-2">Level</p>
             <label className="mb-2 text-md flex items-center">
               <input
                 type="checkbox"
@@ -201,19 +235,21 @@ const FilterSide = () => {
             </label>
           </div>
 
-          <button
-            onClick={resetFilters}
-            className=" text-red-500 text-center w-full"
-          >
-            Hapus Filter
-          </button>
+          <div className="flex justify-around gap-4">
+            <button className="text-[#6148FF] " onClick={applyFilters}>
+              Terapkan Filter
+            </button>
+            <button onClick={resetFilters} className="text-red-500 ">
+              Hapus Filter
+            </button>
+          </div>
         </div>
       </div>
 
       <div className="flex w-full laptop:hidden ">
         {/* Modal Trigger Button */}
         <button
-          className="text-[#6148FF] font-bold "
+          className="text-[#6148FF] font-bold mobile:flex laptop:hidden"
           onClick={() => setIsFilterModalOpen(!isFilterModalOpen)}
         >
           Filter
@@ -243,41 +279,29 @@ const FilterSide = () => {
             </button>
             {/* Checkbox Inputs */}
             <div className="mb-4">
-              <p className="text-md font-semibold mb-2  ">Filter</p>
+              <p className="text-md font-semibold mb-2  ">Tipe Kelas</p>
               <label className=" mb-2 flex items-center">
                 <input
                   type="checkbox"
-                  checked={filters.palingBaru}
+                  checked={filters.freeClass}
                   onChange={(e) =>
-                    handleCheckboxChange("palingBaru", e.target.checked)
+                    handleCheckboxChange("freeClass", e.target.checked)
                   }
-                  className=" h-5 w-5 rounded-xl  mr-2 "
+                  className="h-5 w-5 rounded-xl  mr-2 "
                 />
-                Paling Baru
+                Kelas Gratis
               </label>
 
               <label className="mb-2 text-md flex items-center">
                 <input
                   type="checkbox"
-                  checked={filters.palingPopuler}
+                  checked={filters.premiumClass}
                   onChange={(e) =>
-                    handleCheckboxChange("palingPopuler", e.target.checked)
+                    handleCheckboxChange("premiumClass", e.target.checked)
                   }
                   className="h-5 w-5 rounded-xl  mr-2"
                 />
-                Paling Populer
-              </label>
-
-              <label className="mb-2 text-md flex items-center">
-                <input
-                  type="checkbox"
-                  checked={filters.promo}
-                  onChange={(e) =>
-                    handleCheckboxChange("promo", e.target.checked)
-                  }
-                  className="h-5 w-5 rounded-xl  mr-2"
-                />
-                Promo
+                Kelas Premium
               </label>
             </div>
 
@@ -293,6 +317,18 @@ const FilterSide = () => {
                   className="h-5 w-5 rounded-xl  mr-2"
                 />
                 UI/UX Design
+              </label>
+
+              <label className="mb-2 text-md flex items-center">
+                <input
+                  type="checkbox"
+                  checked={filters.productManagement}
+                  onChange={(e) =>
+                    handleCheckboxChange("productManagement", e.target.checked)
+                  }
+                  className="h-5 w-5 rounded-xl  mr-2"
+                />
+                Product Management
               </label>
 
               <label className="mb-2 text-md flex items-center">
@@ -322,21 +358,6 @@ const FilterSide = () => {
               <label className="mb-2 text-md flex items-center">
                 <input
                   type="checkbox"
-                  checked={filters.businessIntelligence}
-                  onChange={(e) =>
-                    handleCheckboxChange(
-                      "businessIntelligence",
-                      e.target.checked
-                    )
-                  }
-                  className="h-5 w-5 rounded-xl  mr-2"
-                />
-                Business Intelligence
-              </label>
-
-              <label className="mb-2 text-md flex items-center">
-                <input
-                  type="checkbox"
                   checked={filters.iosDevelopment}
                   onChange={(e) =>
                     handleCheckboxChange("iosDevelopment", e.target.checked)
@@ -345,22 +366,22 @@ const FilterSide = () => {
                 />
                 IOS Development
               </label>
-            </div>
 
-            <div className="mb-4">
-              <p className="text-md font-semibold mb-2">Level Kesulitan</p>
               <label className="mb-2 text-md flex items-center">
                 <input
                   type="checkbox"
-                  checked={filters.semuaLevel}
+                  checked={filters.dataScience}
                   onChange={(e) =>
-                    handleCheckboxChange("semuaLevel", e.target.checked)
+                    handleCheckboxChange("dataScience", e.target.checked)
                   }
                   className="h-5 w-5 rounded-xl  mr-2"
                 />
-                Semua Level
+                Data Science
               </label>
+            </div>
 
+            <div className="mb-4">
+              <p className="text-md font-semibold mb-2">Level</p>
               <label className="mb-2 text-md flex items-center">
                 <input
                   type="checkbox"
@@ -398,15 +419,15 @@ const FilterSide = () => {
               </label>
             </div>
 
+            <div className="mb-4">
+              <p className="text-md font-semibold mb-2">Level Kesulitan</p>
+            </div>
+
             <div className="flex justify-around">
-              <button className="text-[#6148FF] ">Terapkan Filter</button>
-              {/* Reset Filters Button */}
-              <button
-                onClick={() => {
-                  resetFilters();
-                }}
-                className="text-red-500 "
-              >
+              <button className="text-[#6148FF] " onClick={applyFilters}>
+                Terapkan Filter
+              </button>
+              <button onClick={resetFilters} className="text-red-500 ">
                 Hapus Filter
               </button>
             </div>

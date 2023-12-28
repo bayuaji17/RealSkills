@@ -61,6 +61,7 @@ export const TopikKelas = () => {
       level: levelValue,
     });
   };
+  
   return (
     <div className="bg-[#EBF3FC] min-h-screen  flex flex-col">
       <NavbarLogin />
@@ -72,6 +73,7 @@ export const TopikKelas = () => {
             <div className="laptop:hidden">
               <FilterSide onFilterChange={handleFilterChange}/>
             </div>
+            
           </div>
           <div className="flex gap-20 px-4 justify-center mb-3 laptop:pl-0 laptop:pr-0">
             {/* filter&(button&card) */}
