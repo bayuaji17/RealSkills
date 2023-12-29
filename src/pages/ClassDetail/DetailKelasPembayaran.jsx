@@ -49,14 +49,17 @@ const DetailKelasPembayaran = () => {
     currency: "IDR",
   });
 
+  // handle onclick accordion bank transfer 
   const toogleBankAccordion = () => {
     setBankAccordionOpen((BankAccordionOpen) => !BankAccordionOpen);
   };
 
+  // handle onclick accordion credit card
   const toogleCreditAccordion = () => {
     setCreditAccordionOpen((CreditAccordionOpen) => !CreditAccordionOpen);
   };
 
+  // function deadline pembayaran 2 hari setelah kelas ingin dibeli
   const calculateDeadline = () => {
     const purchaseDate = new Date();
     const deadlineDate = new Date(purchaseDate);
@@ -89,6 +92,7 @@ const DetailKelasPembayaran = () => {
     setIsNominalLengthValid(isInputLengthValid);
   };
 
+  // handle set nominal kembali ke 0
   const resetNominal = () => {
     setFormInputNominal({
       ...FormInputNominal,
@@ -96,10 +100,12 @@ const DetailKelasPembayaran = () => {
     });
   };
 
+  // handle untuk menyimpan value nama bank
   const handleSelectedBank = (value) => {
     setSelectedBank(value);
   };
 
+  // handle form input credit card
   const handleInputCredit = (e) => {
     const { id, value } = e.target;
     setFormInputCredit({
@@ -152,16 +158,11 @@ const DetailKelasPembayaran = () => {
           class_id: classId,
         };
         try {
-          const response = await postPayments(formPayments);
-          console.log(response);
+          await postPayments(formPayments);
         } catch (error) {
-          console.log(error);
+          console.error(error);
         }
-      } else {
-        console.error(
-          "Pilih metode pembayaran yang valid (Bank Transfer atau Credit Card)"
-        );
-      }
+      } 
     };
 
     handlePayments();
@@ -182,7 +183,6 @@ const DetailKelasPembayaran = () => {
   const handleUpdatePayment = async (id) => {
     try {
       const response = await updatePayment(id);
-      console.log(response, "paid payment");
       toast.success(response.data.message, {
         position: "bottom-center",
         autoClose: 2000,
@@ -193,8 +193,17 @@ const DetailKelasPembayaran = () => {
         progress: undefined,
         theme: "light",
       });
-    } catch (error) {
-      console.error("Error updating payment:", error);
+    } catch {
+      toast.error("Pembelian Kelas Gagal", {
+        position: "bottom-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
@@ -357,8 +366,6 @@ const DetailKelasPembayaran = () => {
                         id="cardNumber"
                         onChange={(e) => {
                           handleInputCredit(e);
-                          console.log(e.target.value);
-                          console.log(IsCardNumberLengthValid);
                         }}
                         className="outline-none font-poppins text-[0.9rem] leading-[1.25rem] w-full"
                         type="number"
@@ -377,8 +384,6 @@ const DetailKelasPembayaran = () => {
                         id="holderName"
                         onChange={(e) => {
                           handleInputCredit(e);
-                          console.log(e.target.value);
-                          console.log(IsHolderNameLengthValid, e.target.value);
                         }}
                         className="outline-none font-poppins text-[0.9rem] leading-[1.25rem] w-full"
                         type="name"
@@ -398,8 +403,6 @@ const DetailKelasPembayaran = () => {
                           placeholder="000"
                           onChange={(e) => {
                             handleInputCredit(e);
-                            console.log(e.target.value);
-                            console.log(IsCvvLengthValid, e.target.value);
                           }}
                           className="outline-none font-poppins text-[0.9rem] leading-[1.25rem] w-full"
                           type="number"
@@ -418,8 +421,6 @@ const DetailKelasPembayaran = () => {
                           id="expiryDate"
                           onChange={(e) => {
                             handleInputCredit(e);
-                            console.log(e.target.value);
-                            console.log(isExpiryDateValid);
                           }}
                           className="outline-none font-poppins text-[0.9rem] leading-[1.25rem] w-full"
                           type="text"
@@ -761,8 +762,6 @@ const DetailKelasPembayaran = () => {
                     id="cardNumber"
                     onChange={(e) => {
                       handleInputCredit(e);
-                      console.log(e.target.value);
-                      console.log(IsCardNumberLengthValid);
                     }}
                     required
                     className="font-montserrat font-semibold text-[2vh] leading-[1.5vh] outline-none w-full"
@@ -782,8 +781,6 @@ const DetailKelasPembayaran = () => {
                     required
                     onChange={(e) => {
                       handleInputCredit(e);
-                      console.log(e.target.value);
-                      console.log(IsHolderNameLengthValid, e.target.value);
                     }}
                     className="font-montserrat font-semibold text-[2vh] leading-[1.5vh] w-full outline-none"
                   />
@@ -801,8 +798,6 @@ const DetailKelasPembayaran = () => {
                       placeholder="000"
                       onChange={(e) => {
                         handleInputCredit(e);
-                        console.log(e.target.value);
-                        console.log(IsCvvLengthValid, e.target.value);
                       }}
                       type="number"
                       required
@@ -822,8 +817,6 @@ const DetailKelasPembayaran = () => {
                       id="expiryDate"
                       onChange={(e) => {
                         handleInputCredit(e);
-                        console.log(e.target.value);
-                        console.log(isExpiryDateValid);
                       }}
                       required
                       className="font-montserrat font-semibold text-[2vh] leading-[1.5vh] w-full outline-none"

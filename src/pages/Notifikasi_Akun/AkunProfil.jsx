@@ -9,7 +9,8 @@ import { Link, useParams } from "react-router-dom";
 import { getUserById } from "../../services/notifikasi_akun/get_user";
 import { putUpdate } from "../../services/notifikasi_akun/update_profile";
 import { toast } from "react-toastify";
-import { NavbarLogin } from "../../assets/components/NavbarLogin";
+import { NavbarLogin } from "../../components/NavbarLogin";
+// import { NavbarLogin } from "../components/NavbarLogin";
 export const AkunProfil = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const { AuthToken } = useParams();

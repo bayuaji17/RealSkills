@@ -59,19 +59,17 @@ const DetailKelasPage = () => {
     const fetchClassesChapters = async () => {
       try {
         const response = await getClasses(classId);
+
         // function untuk sort chapters berdasarkan no_chapter (ascending)
         const sortedChapters = response?.data?.data?.chapters?.sort(
           (a, b) => a.no_chapter - b.no_chapter
         );
         setCourseChapter(sortedChapters);
+
         // agar video dari chapter index paling awal yg tampil di ReactPlayer
         setFirstVideoPlay(response?.data?.data?.chapters[0]?.videos[0]?.link);
-        console.log(
-          response.data?.data?.chapters[0]?.videos[0],
-          "videos status"
-        );
       } catch (error) {
-        console.log(error, "error chapters");
+        console.error(error, "error chapters");
       }
     };
 
@@ -80,7 +78,6 @@ const DetailKelasPage = () => {
       try {
         const response = await getAuthenticated();
         setPaymentDetail(response?.data?.data?.user?.payments || []);
-        console.log(response?.data?.data?.user?.payments, "detailPayments");
 
         const isClassPaidAndAccessed =
           response?.data?.data?.user?.payments?.some(
@@ -104,8 +101,7 @@ const DetailKelasPage = () => {
   useEffect(() => {
     const fetchWatchedVideos = async () => {
       try {
-        const response = await getWatchedVideos(VideoID);
-        console.log(response, "watchedVideos");
+        await getWatchedVideos(VideoID);
       } catch (error) {
         console.error(error);
       }
@@ -287,7 +283,6 @@ const DetailKelasPage = () => {
       <div className="class-detail-section hidden mobile:hidden laptop:flex w-full py-[2rem]">
         <div className="left-class-section w-[60%] flex flex-col gap-[1.5rem] mx-[6.5rem]">
           <div className="video-play-container w-full h-[25rem] rounded-[1.525rem]">
-            {/* <img src={play_video} alt="play-video" /> */}
             <div className="player-wrapper h-full">
               {!isVideoClicked ? (
                 <ReactPlayer

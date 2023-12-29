@@ -239,7 +239,7 @@ export const NavbarLogin = () => {
         navigate('/search?query=' + search, { state: { results: searchData.classes, query: search} });
 
       }
-  },[searchData, search])
+  },[searchData, search, navigate])
 
 
   const enter = (e) => {

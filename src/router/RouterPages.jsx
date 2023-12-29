@@ -29,7 +29,6 @@ export const RouterPages = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* <Route path="/" element={<Beranda />} /> */}
         <Route path="/" element={<BerandaNoLogin />} />
         {/* //*Auth */}
         <Route path="login" element={<LoginPage />} />
@@ -72,6 +71,7 @@ export const RouterPages = () => {
           }
         />
         {/* //*ADMIN AREA */}
+
         {/* PROFILE AREA */}
         <Route
           path="/settings"
@@ -114,12 +114,8 @@ export const RouterPages = () => {
           }
         />
         {/* PROFILE AREA */}
-        {/* <Route path="/kelas" element={
-        <ProtectedToken>
-        <KelasSaya />
-        </ProtectedToken>
-        } /> */}
-        <Route path="/topik" element={<TopikKelas />} />
+
+
         {/* DetailKelas Area */}
         <Route
           path="/detailKelas/:classId"
@@ -146,8 +142,10 @@ export const RouterPages = () => {
           }
         />
         {/* DetailKelas Area */}
+
         <Route path="/berandaNoLog" element={<BerandaNoLogin />} />
         <Route path="/beranda" element={<BerandaLogin />} />
+        <Route path="/topik" element={<TopikKelas />} />
         <Route
           path="/kelas"
           element={
