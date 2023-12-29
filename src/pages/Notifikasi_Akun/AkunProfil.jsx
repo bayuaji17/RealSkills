@@ -206,9 +206,9 @@ export const AkunProfil = () => {
                     />
                   </Link>
                 </div>
-                <div className="picture-section flex justify-evenly items-center mt-10">
+                <div className="picture-section flex justify-evenly items-center mt-[2rem] mr-[0.75rem]">
                   <label htmlFor="profile_picture" className="cursor-pointer">
-                    <div className="flex justify-center items-center w-[8rem] h-[8rem]  border-4 border-[#6148FF] rounded-full overflow-hidden">
+                    <div className="flex justify-center items-center w-[9rem] h-[9rem]  border-4 border-[#6148FF] rounded-full overflow-hidden">
                       {console.log(updatedProfilePicture, "profil")}{" "}
                       {updatedProfilePicture ? (
                         <img
