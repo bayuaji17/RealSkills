@@ -16,45 +16,53 @@ import {
   UserCircleIcon,
   Square3Stack3DIcon,
   ChevronDownIcon,
-  Cog6ToothIcon,
-  InboxArrowDownIcon,
-  LifebuoyIcon,
   PowerIcon,
   Bars2Icon,
   BellIcon,
 } from "@heroicons/react/24/solid";
 import { Link, useNavigate } from "react-router-dom";
 import { fetchSearch } from "../services/search";
+import { CookieKeys, CookieStorage } from "../utils/cookies";
 
-// profile menu component
-const profileMenuItems = [
-  {
-    label: "My Profile",
-    icon: UserCircleIcon,
-  },
-  {
-    label: "Edit Profile",
-    icon: Cog6ToothIcon,
-  },
-  {
-    label: "Inbox",
-    icon: InboxArrowDownIcon,
-  },
-  {
-    label: "Help",
-    icon: LifebuoyIcon,
-  },
-  {
-    label: "Sign Out",
-    icon: PowerIcon,
-  },
-];
+
 
 function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const navigate = useNavigate();
 
   const closeMenu = () => setIsMenuOpen(false);
 
+  const handleMenuClick = (label) => {
+    if (label === "My Profile") {
+      // Navigate to the profile page when "My Profile" is clicked
+      navigate("/profil");
+    } else if (label === "Sign Out") {
+      // Remove the authentication token and redirect to the login page
+      CookieStorage.remove(CookieKeys.AuthToken, {
+        path: "/",
+        expires: new Date(0),
+      });
+      navigate("/login");
+    }
+  
+    // Close the menu in both cases
+    closeMenu();
+  };
+  
+  const profileMenuItems = [
+    {
+      label: "My Profile",
+      icon: UserCircleIcon,
+      onClick:handleMenuClick,
+      
+    },
+    {
+      label: "Sign Out",
+      icon: PowerIcon,
+      path: "/login",
+      onClick: handleMenuClick,
+    },
+  ];
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
       <MenuHandler>
@@ -79,12 +87,13 @@ function ProfileMenu() {
         </Button>
       </MenuHandler>
       <MenuList className="p-1">
-        {profileMenuItems.map(({ label, icon }, key) => {
+        {profileMenuItems.map(({ label, icon, path }, key) => {
           const isLastItem = key === profileMenuItems.length - 1;
           return (
             <MenuItem
+           
               key={label}
-              onClick={closeMenu}
+              onClick={() => handleMenuClick(label)}
               className={`flex items-center gap-2 rounded ${
                 isLastItem
                   ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
@@ -103,6 +112,7 @@ function ProfileMenu() {
               >
                 {label}
               </Typography>
+             
             </MenuItem>
           );
         })}
@@ -115,14 +125,10 @@ function ProfileMenu() {
 const navListMenuItems = [
   {
     title: "Kelas Berjalan",
-    description:
-      "Learn how to use @material-tailwind/html, packed with rich components and widgets.",
     path: "/kelas",
   },
   {
     title: "Topik Kelas",
-    description:
-      "Learn how to use @material-tailwind/react, packed with rich components for React.",
     path: "/topik",
   },
 ];
@@ -130,7 +136,7 @@ const navListMenuItems = [
 function NavListMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-  const renderItems = navListMenuItems.map(({ title, description, path }) => (
+  const renderItems = navListMenuItems.map(({ title,  path }) => (
     <Link
       to={path}
       key={title}
@@ -139,9 +145,6 @@ function NavListMenu() {
       <MenuItem>
         <Typography variant="h6" color="blue-gray" className="mb-1 lg:text-blue-gray-700 lg:hover:text-black text-white hover:text-blue-gray-900">
           {title}
-        </Typography>
-        <Typography variant="small" color="gray" className="font-normal lg:text-blue-gray-700 lg:hover:text-black text-white hover:text-blue-gray-900">
-          {description}
         </Typography>
       </MenuItem>
     </Link>

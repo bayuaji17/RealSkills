@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card } from "./Card";
+import { CardBeranda } from "./CardBeranda";
 
 export const KursusPopuler = () => {
   const [filterCategory, setFilterCategory] = useState("All");
@@ -41,7 +41,7 @@ export const KursusPopuler = () => {
             UI/UX Design
           </button>
           <button
-           onClick={() => {
+            onClick={() => {
               setFilterCategory("Product Management");
               setFilterParams({
                 category: "2",
@@ -54,7 +54,7 @@ export const KursusPopuler = () => {
             Product Management
           </button>
           <button
-           onClick={() => {
+            onClick={() => {
               setFilterCategory("Web Development");
               setFilterParams({
                 category: "3",
@@ -67,7 +67,7 @@ export const KursusPopuler = () => {
             Web Development
           </button>
           <button
-           onClick={() => {
+            onClick={() => {
               setFilterCategory("Android Development");
               setFilterParams({
                 category: "4",
@@ -80,7 +80,7 @@ export const KursusPopuler = () => {
             Android Development
           </button>
           <button
-           onClick={() => {
+            onClick={() => {
               setFilterCategory("IOS Development");
               setFilterParams({
                 category: "5",
@@ -93,7 +93,7 @@ export const KursusPopuler = () => {
             IOS Development
           </button>
           <button
-           onClick={() => {
+            onClick={() => {
               setFilterCategory("Data Science");
               setFilterParams({
                 category: "",
@@ -108,7 +108,7 @@ export const KursusPopuler = () => {
         </div>
       </div>
       <div className="flex gap-5 overflow-x-auto">
-        <Card
+        <CardBeranda
           isCourse={true}
           filterCategory={filterCategory}
           classesFilter={filterParams}

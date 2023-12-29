@@ -29,6 +29,10 @@ export const NavbarBeranda = () => {
       handleSearch();
     }
   };
+
+  const handleLogin = () => {
+    navigate('/login'); // Replace '/login' with the actual path of your login page
+  };
   return (
     
       <div className="hidden laptop:flex flex-row bg-[#6148FF] p-2 justify-between">
@@ -65,7 +69,9 @@ export const NavbarBeranda = () => {
           </button>
         </div>
         </div>
-        <div className="flex items-center text-white mr-[10rem] gap-2 text-md font-bold">
+        <button
+        onClick={handleLogin}
+        className="flex items-center text-white mr-[10rem] gap-2 text-md font-bold">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="21"
@@ -96,7 +102,7 @@ export const NavbarBeranda = () => {
               />
             </svg>
             <p>Masuk</p>
-          </div>
+          </button>
       </div>
    
   );

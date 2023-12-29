@@ -1,18 +1,19 @@
 import { API_ENDPOINT } from "../utils/api-endpoint";
 import http from "../utils/http";
 
-const allClass = async (page) => {
-  try {
-      const config = {
-        params: {
-          page,
-        },
-      };
-      const { data } = await http.get(API_ENDPOINT.ALL_CLASS, config);
-      return data;
-  } catch (error) {
-      throw error; 
-  }
+export const allClass = async () => {
+  const getAllClass = await http.get(API_ENDPOINT.ALL_CLASS);
+  console.log(getAllClass, "dari getTotalClass");
+  return getAllClass;
 };
 
-export { allClass };
+export const topikClass = async (
+  page,
+  limit,
+) => {
+  const getAllClass = await http.get(
+    `${API_ENDPOINT.ALL_CLASS}?page=${page}&limit=${limit}`
+  );
+  console.log(getAllClass, "dari getClass");
+  return getAllClass;
+};

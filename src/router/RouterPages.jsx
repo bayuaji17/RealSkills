@@ -31,6 +31,8 @@ import {SearchResult} from "../components/SearchResult"
 import { ResultCategory } from "../pages/ResultCategory";
 import { BerandaLogin } from "../pages/BerandaLogin"
 import ProtectedToken from "../components/ProtectedComponents/ProtectedToken";
+import {SearchResultMyclass} from "../components/SearchResultMyclass"
+
 export const RouterPages = () => {
   return (
     <BrowserRouter>
@@ -195,6 +197,8 @@ export const RouterPages = () => {
         <Route path="/search" element={<SearchResult />} />
         <Route path="/kategori/:id" element={<ResultCategory />} />
         <Route path="*" element={<NotFoundPage />} />
+        <Route path="/searchmyclass" element={<SearchResultMyclass/>} />
+
       </Routes>
     </BrowserRouter>
   );

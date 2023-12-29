@@ -1,43 +1,57 @@
-import React, { useEffect, useState } from "react";
-import {  useParams } from "react-router-dom";
-import { byCategory } from "../services/byCategory";
+import React, { useCallback, useEffect, useState } from "react";
+import { getMe } from "../services/get-me";
+import { Button, Progress } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
-import { NavbarLogin } from "../components/NavbarLogin";
 
-export const ResultCategory = () => {
-  const params = useParams();
-  const [dataKategori, setDataKategori] = useState([]);
-  const [categoryName, setCategoryName] = useState("");
+export const CardMyclass = ({ filter }) => {
+  const [dataUser, setDataUser] = useState([]);
+  const [page, setPage] = useState(1);
+  const [limit] = useState(4);
+  const [notFound, setNotFound] = useState(null);
 
-  console.log(dataKategori);
-  const fetchByKategori = async () => {
+
+ const handleGetClass = useCallback(async () => {
     try {
-      const response = await byCategory(params.id);
-      setDataKategori(response.data.data.classes);
+      const response = await getMe(
+        page,
+        limit,
+       
+      );
+
+      if (response.data.data.classes.length === 0) {
+        setDataUser([]);
+        setNotFound("Kelas Tidak Ditemukan");
+      } else {
+        setDataUser(response.data.data.classes);
+        setNotFound(null);
+      }
     } catch (error) {
-      console.error("Error fetching kategori:", error);
+      console.error(error.response.data.error);
+      setNotFound(error.response.data.error);
+      setDataUser([]);
+    }
+  }, [page, limit]);
+
+  useEffect(() => {
+    handleGetClass();
+  }, [handleGetClass]);
+
+  const handlePreviousPage = () => {
+    if (page > 1) {
+      setPage(page - 1);
     }
   };
 
-  useEffect(() => {
-    fetchByKategori();
-  }, []); //[id]
-
-  useEffect(() => {
-    const category = categoryMapping.find((cat) => cat.id === parseInt(params.id));
-    setCategoryName(category ? category.label : "");
-  }, [params.id]);
+  const handleNextPage = () => {
+    setPage(page + 1);
+  };
 
   const getById = (id, mapping) => {
     const match = mapping.find((item) => item.id === id);
     return match ? match.label : "Unknown";
   };
 
-  const typeMapping = [
-    { id: 1, label: "GRATIS" },
-    { id: 2, label: "PREMIUM" },
-  ];
   const levelMapping = [
     { id: 1, label: "Beginner" },
     { id: 2, label: "Intermediate" },
@@ -51,6 +65,7 @@ export const ResultCategory = () => {
     { id: 5, label: "IOS Development" },
     { id: 6, label: "Data Science" },
   ];
+
   const calculateTotalDuration = (classItem) => {
     let totalDuration = 0;
     classItem.chapters.forEach((chapter) => {
@@ -65,22 +80,67 @@ export const ResultCategory = () => {
     return `${totalHours} jam ${totalMinutes} menit`;
   };
 
+  const calculateProgressBar = (classItem) => {
+    let watchedCount = 0;
+    let totalVideos = 0;
+
+    if (classItem && classItem.chapters) {
+      classItem.chapters.forEach((chapter) => {
+        if (chapter && chapter.videos) {
+          totalVideos += chapter.videos.length;
+          chapter.videos.forEach((video) => {
+            if (
+              video &&
+              video.watch_status &&
+              video.watch_status.length > 0 &&
+              video.watch_status[0].is_watched
+            ) {
+              watchedCount += 1;
+            }
+          });
+        }
+      });
+    }
+
+    const progressPercentage =
+      totalVideos !== 0 ? (watchedCount / totalVideos) * 100 : 0;
+
+    return progressPercentage;
+  };
+
+  // Fungsi untuk memfilter data berdasarkan filter yang aktif
+  const filterClasses = () => {
+    switch (filter) {
+      case "inProgress":
+        return dataUser.filter(
+          (item) =>
+            calculateProgressBar(item) > 0 && calculateProgressBar(item) < 100
+        );
+      case "completed":
+        return dataUser.filter((item) => calculateProgressBar(item) === 100);
+      default:
+        return dataUser;
+    }
+  };
+
+  const data = filterClasses();
+
   return (
-    <div>
-      <NavbarLogin/><hr/>
-      <div className="bg-[#6148FF]  text-center">
-        <div className="flex justify-start items-center p-2">
-          <h1 className="text-white text-center font-bold w-full">
-            Category {categoryName}
-          </h1>
-        </div>
-      </div>
-      <div className="p-4 flex gap-5 justify-center laptop:justify-start text-start flex-wrap grid-cols-5">
-        {dataKategori.map((value) => (
+    <div className="flex flex-col w-full gap-3">
+      
+      <div className="flex flex-wrap justify-between ">
+        {data.length === 0 ? (
+              <tr>
+                <td className="p-4 border-b border-blue-gray-50">
+                  <h1 className="text-lg uppercase">{notFound}</h1>
+                </td>
+              </tr>
+            ) : (
+        data?.map((value) => (
           <div
             div
             key={value.id}
-            className=" bg-white w-[22rem] laptop:w-[18rem]  rounded-3xl shadow-md "
+            className=" bg-white w-[22rem] laptop:w-[18rem]  rounded-3xl shadow-md mb-4"
           >
             <div className="h-[6rem] overflow-hidden rounded-t-3xl mb-1">
               <img
@@ -152,47 +212,51 @@ export const ResultCategory = () => {
                   {calculateTotalDuration(value)}
                 </p>
               </div>
-              {/* <p className="flex items-center text-xs ">
+              <div className="flex items-center text-xs text-white rounded-xl gap-1 ">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="12"
-                  height="12"
+                  width="18"
+                  height="18"
                   viewBox="0 0 12 12"
                   fill="none"
                 >
                   <path
-                    d="M2.99992 1H4.04592L2.99692 4H1.19092L2.55292 1.276C2.59448 1.19305 2.65831 1.12331 2.73725 1.07456C2.81619 1.02582 2.90714 1 2.99992 1ZM1.22692 5L4.24092 9.687L2.96992 5H1.22692ZM4.00592 5L5.53592 10.645C5.56303 10.7474 5.62324 10.8379 5.70716 10.9025C5.79109 10.9671 5.89402 11.0021 5.99992 11.0021C6.10582 11.0021 6.20875 10.9671 6.29267 10.9025C6.3766 10.8379 6.4368 10.7474 6.46392 10.645L7.99792 5H4.00592ZM9.03392 5L7.75992 9.685L10.7729 5H9.03292H9.03392ZM10.8089 4H9.00592L7.95592 1H8.99992C9.09287 0.999818 9.18403 1.02555 9.26316 1.0743C9.3423 1.12305 9.40628 1.1929 9.44792 1.276L10.8089 4ZM7.94692 4H4.05692L5.10492 1H6.89492L7.94692 4Z"
-                    fill="#EBF3FC"
+                    d="M6.5833 0.184082V1.36242C9.14413 1.67742 10.9583 4.00492 10.6433 6.56575C10.375 8.68908 8.70663 10.3749 6.5833 10.6257V11.7924C9.79163 11.4716 12.125 8.62492 11.8041 5.41658C11.5416 2.64575 9.34247 0.458249 6.5833 0.184082ZM5.41663 0.201582C4.27913 0.312415 3.19413 0.749915 2.30747 1.48492L3.14163 2.34825C3.79497 1.82325 4.58247 1.48492 5.41663 1.36825V0.201582ZM1.48497 2.30742C0.7556 3.19253 0.306752 4.27505 0.195801 5.41658H1.36247C1.4733 4.58825 1.79997 3.80075 2.31913 3.14158L1.48497 2.30742ZM8.04163 3.95825L5.19497 6.80492L3.9583 5.56825L3.33997 6.18658L5.19497 8.04158L8.65997 4.57658L8.04163 3.95825ZM0.201634 6.58325C0.318301 7.72658 0.767467 8.80575 1.4908 9.69241L2.31913 8.85825C1.80401 8.19885 1.47561 7.4131 1.3683 6.58325H0.201634ZM3.14163 9.71575L2.30747 10.5149C3.19109 11.2515 4.27287 11.7102 5.41663 11.8332V10.6666C4.58678 10.5593 3.80104 10.2309 3.14163 9.71575Z"
+                    fill="#73CA5C"
                   />
                 </svg>
-                Rp {value.price}
-              </p> */}
-
-              {value.type_id === 2 ? (
-                <button className="flex items-center text-xs text-white bg-[#6148FF] py-1 px-3 rounded-xl gap-3 ">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="12"
-                    height="12"
-                    viewBox="0 0 12 12"
-                    fill="none"
-                  >
-                    <path
-                      d="M2.99992 1H4.04592L2.99692 4H1.19092L2.55292 1.276C2.59448 1.19305 2.65831 1.12331 2.73725 1.07456C2.81619 1.02582 2.90714 1 2.99992 1ZM1.22692 5L4.24092 9.687L2.96992 5H1.22692ZM4.00592 5L5.53592 10.645C5.56303 10.7474 5.62324 10.8379 5.70716 10.9025C5.79109 10.9671 5.89402 11.0021 5.99992 11.0021C6.10582 11.0021 6.20875 10.9671 6.29267 10.9025C6.3766 10.8379 6.4368 10.7474 6.46392 10.645L7.99792 5H4.00592ZM9.03392 5L7.75992 9.685L10.7729 5H9.03292H9.03392ZM10.8089 4H9.00592L7.95592 1H8.99992C9.09287 0.999818 9.18403 1.02555 9.26316 1.0743C9.3423 1.12305 9.40628 1.1929 9.44792 1.276L10.8089 4ZM7.94692 4H4.05692L5.10492 1H6.89492L7.94692 4Z"
-                      fill="#EBF3FC"
-                    />
-                  </svg>
-                  {getById(value.type_id, typeMapping)}
-                </button>
-              ) : (
-                <button className="flex items-center text-xs text-white bg-[#6148FF] py-1 px-3 rounded-xl gap-3 ">
-                  {getById(value.type_id, typeMapping)}
-                </button>
-              )}
+                <Progress
+                  value={calculateProgressBar(value)}
+                  size="md"
+                  color="indigo"
+                  label="Completed"
+                />
+                ;
+              </div>
             </div>
           </div>
-        ))}
+        )))}
       </div>
+      <div className="flex gap-4 justify-end">
+      <Button
+        variant="gradient"
+        size="sm"
+        color="green"
+        onClick={handlePreviousPage}
+        disabled={page === 1}
+      >
+        Previous
+      </Button>
+      <Button
+        variant="gradient"
+        size="sm"
+        color="green"
+        onClick={handleNextPage}
+      >
+        Next
+      </Button>
+      </div>
+
     </div>
   );
 };

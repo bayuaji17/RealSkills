@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useLocation } from "react-router-dom";
 import { NavbarLogin } from "./NavbarLogin";
 
-export const SearchResult = ({ isCourse, myClass, isTopik }) => {
+export const SearchResultMyclass = ({ isCourse, myClass, isTopik }) => {
   const location = useLocation();
   const searchQuery = new URLSearchParams(location.search).get("query");
   const result = location.state.results;

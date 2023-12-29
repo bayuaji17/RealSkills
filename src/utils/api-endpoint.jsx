@@ -34,5 +34,5 @@ export const API_ENDPOINT = {
   ALL_PAYMENT: "api/payments",
   DELETE_CHAPTER: "api/classes/chapters/",
   VIDEOS:"api/classes/chapters/videos/",
-  
+  SEARCH_MYCLASS : (query) => { return `/api/auth/authenticated?search=${query}`},
 };
