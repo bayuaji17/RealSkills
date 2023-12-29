@@ -5,9 +5,8 @@ import Vector from "../../assets/img/icon/Vector.png";
 import circle_green from "../../assets/img/icon/circle_green.png";
 import { getUserById } from "../../services/notifikasi_akun/get_user";
 import { useNavigate, useParams } from "react-router-dom";
-import { NavbarLogin } from "../../assets/components/NavbarLogin";
-import { toast } from "react-toastify";
-import { postUbahPassword } from "../../services/notifikasi_akun/ubah_password";
+import { NavbarLogin } from "../../components/NavbarLogin";
+
 
 export const Notifikasi = () => {
   const navigate = useNavigate();

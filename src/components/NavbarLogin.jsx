@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import logo from "../../assets/img/logo.png";
+import logo from "../assets/img/logo.png";
 import {
   Navbar,
-  MobileNav,
+  Collapse,
   Typography,
   Button,
   Menu,
@@ -11,52 +11,82 @@ import {
   MenuItem,
   Avatar,
   IconButton,
-  Collapse,
 } from "@material-tailwind/react";
 import {
   UserCircleIcon,
   Square3Stack3DIcon,
   ChevronDownIcon,
-  Cog6ToothIcon,
-  InboxArrowDownIcon,
-  LifebuoyIcon,
   PowerIcon,
   Bars2Icon,
   BellIcon,
 } from "@heroicons/react/24/solid";
 import { Link, useNavigate } from "react-router-dom";
-import { fetchSearch } from "../../services/search";
-
-// profile menu component
-const profileMenuItems = [
-  {
-    label: "My Profile",
-    icon: UserCircleIcon,
-    path: "/profil",
-  },
-  {
-    label: "Edit Profile",
-    icon: Cog6ToothIcon,
-  },
-  {
-    label: "Inbox",
-    icon: InboxArrowDownIcon,
-  },
-  {
-    label: "Help",
-    icon: LifebuoyIcon,
-  },
-  {
-    label: "Sign Out",
-    icon: PowerIcon,
-  },
-];
+import { fetchSearch } from "../services/search";
+import { CookieKeys, CookieStorage } from "../utils/cookies";
+import { getUserById } from "../services/notifikasi_akun/get_user";
+import AvatarPP from "../assets/img/icon/avatarPP.png";
 
 function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const navigate = useNavigate();
 
   const closeMenu = () => setIsMenuOpen(false);
 
+  const handleMenuClick = (label) => {
+    if (label === "My Profile") {
+      // Navigate to the profile page when "My Profile" is clicked
+      navigate("/profile");
+    } else if (label === "Sign Out") {
+      // Remove the authentication token and redirect to the login page
+      CookieStorage.remove(CookieKeys.AuthToken, {
+        path: "/",
+        expires: new Date(0),
+      });
+      navigate("/login");
+    }
+
+    // Close the menu in both cases
+    closeMenu();
+  };
+
+  const [userData, setUserData] = useState({
+    profile_picture: null,
+    name: "",
+    email: "",
+    profile: {
+      phone_number: "",
+      country: "",
+      city: "",
+    },
+  });
+
+  useEffect(() => {
+    const fetchDetailUser = async () => {
+      try {
+        const data = await getUserById();
+        setUserData(data.data.user);
+        console.log(data.data.user, "data user");
+      } catch (error) {
+        console.log("data error", error);
+      }
+    };
+
+    fetchDetailUser();
+  }, []);
+
+  const profileMenuItems = [
+    {
+      label: "My Profile",
+      icon: UserCircleIcon,
+      onClick: handleMenuClick,
+    },
+    {
+      label: "Sign Out",
+      icon: PowerIcon,
+      path: "/login",
+      onClick: handleMenuClick,
+    },
+  ];
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
       <MenuHandler>
@@ -68,9 +98,13 @@ function ProfileMenu() {
           <Avatar
             variant="circular"
             size="sm"
-            alt="tania andrew"
-            className="border border-gray-900 p-0.5"
-            src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
+            alt="avatar default"
+            className="border border-gray-900 p-0.3"
+            src={
+              userData && userData.profile?.profile_picture
+                ? userData.profile.profile_picture
+                : AvatarPP
+            }
           />
           <ChevronDownIcon
             strokeWidth={2.5}
@@ -86,9 +120,7 @@ function ProfileMenu() {
           return (
             <MenuItem
               key={label}
-              onClick={closeMenu}
-              as={path}
-              to={path}
+              onClick={() => handleMenuClick(label)}
               className={`flex items-center gap-2 rounded ${
                 isLastItem
                   ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
@@ -119,14 +151,10 @@ function ProfileMenu() {
 const navListMenuItems = [
   {
     title: "Kelas Berjalan",
-    description:
-      "Learn how to use @material-tailwind/html, packed with rich components and widgets.",
     path: "/kelas",
   },
   {
     title: "Topik Kelas",
-    description:
-      "Learn how to use @material-tailwind/react, packed with rich components for React.",
     path: "/topik",
   },
 ];
@@ -134,7 +162,7 @@ const navListMenuItems = [
 function NavListMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-  const renderItems = navListMenuItems.map(({ title, description, path }) => (
+  const renderItems = navListMenuItems.map(({ title, path }) => (
     <Link
       to={path}
       key={title}
@@ -144,16 +172,9 @@ function NavListMenu() {
         <Typography
           variant="h6"
           color="blue-gray"
-          className="mb-1 text-white hover:text-blue-gray-900"
+          className="mb-1 lg:text-blue-gray-700 lg:hover:text-black text-white hover:text-blue-gray-900"
         >
           {title}
-        </Typography>
-        <Typography
-          variant="small"
-          color="gray"
-          className="font-normal text-white hover:text-blue-gray-900"
-        >
-          {description}
         </Typography>
       </MenuItem>
     </Link>
@@ -163,7 +184,12 @@ function NavListMenu() {
     <React.Fragment>
       <Menu allowHover open={isMenuOpen} handler={setIsMenuOpen}>
         <MenuHandler>
-          <Typography as="a" href="#" variant="small" className="font-normal">
+          <Typography
+            as="a"
+            href="#"
+            variant="small"
+            className="font-normal text-md "
+          >
             <MenuItem className="hidden items-center gap-2 font-medium text-white lg:flex lg:rounded-full">
               <Square3Stack3DIcon className="h-[18px] w-[18px] " /> Course{" "}
               <ChevronDownIcon
@@ -196,7 +222,7 @@ const navListItems = [
   {
     label: "Account",
     icon: UserCircleIcon,
-    path: "/profil",
+    path: "/profile",
   },
   {
     label: "Notification",
@@ -268,7 +294,7 @@ export const NavbarLogin = () => {
   }, []);
 
   return (
-    <Navbar className="w-full  max-w-full p-2 lg:rounded-lg lg:pl-6 bg-[#6148FF] ">
+    <Navbar className="w-full  max-w-full p-2  lg:pl-6 bg-[#6148FF]  shadow-none border-0 rounded-none lg:rounded-none bg-opacity-100">
       <div className="relative  flex items-center justify-between text-blue-gray-900">
         <div className="flex">
           <img src={logo} alt=" " className="w-12 h-12" />

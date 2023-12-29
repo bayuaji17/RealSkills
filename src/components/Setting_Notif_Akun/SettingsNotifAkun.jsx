@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import pencil from "../assets/img/icon/pencil.png";
-import settings from "../assets/img/icon/settings.png";
-import pay from "../assets/img/icon/pay.png";
-import out from "../assets/img/icon/out.png";
+import pencil from "../../assets/img/icon/pencil.png"
+import settings from "../../assets/img/icon/settings.png";
+import pay from "../../assets/img/icon/pay.png";
+import out from "../../assets/img/icon/out.png";
 import { useNavigate } from "react-router-dom";
-import { CookieKeys, CookieStorage } from "../../src/utils/cookies";
-import { NavbarLogin } from "../assets/components/NavbarLogin";
+import { CookieKeys, CookieStorage } from "../../utils/cookies";
+import { NavbarLogin } from "../../components/NavbarLogin";
 
 export const Settings = () => {
   const navigate = useNavigate();

@@ -11,10 +11,10 @@ import pay from "../../assets/img/icon/pay.png";
 import out from "../../assets/img/icon/out.png";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
-import { NavbarLogin } from "../../assets/components/NavbarLogin";
 import { toast } from "react-toastify";
-import { CookieKeys, CookieStorage } from "../../utils/cookies";
 import { postUbahPassword } from "../../services/notifikasi_akun/ubah_password";
+import { Navbar } from "@material-tailwind/react";
+import { NavbarLogin } from "../../components/NavbarLogin";
 
 export const UbahPassword = () => {
   const navigate = useNavigate();

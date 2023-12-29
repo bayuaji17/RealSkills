@@ -12,7 +12,7 @@ import notif_pay from "../../assets/img/icon/notif_pay.png";
 import { faStar } from "@fortawesome/free-regular-svg-icons";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getUserById } from "../../services/notifikasi_akun/get_user";
-import { NavbarLogin } from "../../assets/components/NavbarLogin";
+import { NavbarLogin } from "../../components/NavbarLogin";
 
 export const RiwayatPembayaran = () => {
   const navigate = useNavigate();

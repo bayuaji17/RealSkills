@@ -11,7 +11,6 @@ import { Notifikasi } from "../pages/Notifikasi_Akun/Notifikasi";
 import { AkunProfil } from "../pages/Notifikasi_Akun/AkunProfil";
 import { UbahPassword } from "../pages/Notifikasi_Akun/UbahPassword";
 import { RiwayatPembayaran } from "../pages/Notifikasi_Akun/RiwayatPembayaran";
-import { Settings } from "../components/Settings";
 
 import DetailKelasPembayaran from "../pages/ClassDetail/DetailKelasPembayaran";
 import PembayaranSukses from "../pages/ClassDetail/PembayaranSukses";
@@ -23,7 +22,7 @@ import { FilterResultKelas } from "../pages/FilterResultKelas";
 import { FilterResultTopik } from "../pages/FilterResultTopik";
 
 import KelasContainer from "../pages/ClassDetail/KelasContainer";
-
+import { Settings } from "../components/Setting_Notif_Akun/SettingsNotifAkun";
 
 export const RouterPages = () => {
   return (
@@ -39,7 +38,7 @@ export const RouterPages = () => {
         <Route path="/detailKelas" element={<DetailKelasPage />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/notifikasi" element={<Notifikasi />} />
-        <Route path="/profil" element={<AkunProfil />} />
+        <Route path="/profile" element={<AkunProfil />} />
         <Route path="/ubahPassword" element={<UbahPassword />} />
         <Route path="/riwayatPembayaran" element={<RiwayatPembayaran />} />
         <Route path="/berandaNoLog" element={<BerandaNoLogin />} />
@@ -49,13 +48,18 @@ export const RouterPages = () => {
         <Route path="/filterResultKelas" element={<FilterResultKelas />} />
         <Route path="/filterResultTopik" element={<FilterResultTopik />} />
         <Route path="/detailKelas/:classId" element={<DetailKelasPage />} />
-        <Route path="/pembayaran/:classId" element={<DetailKelasPembayaran />} />
-        <Route path="/pembayaranSukses/:classId" element={<PembayaranSukses />} />
+        <Route
+          path="/pembayaran/:classId"
+          element={<DetailKelasPembayaran />}
+        />
+        <Route
+          path="/pembayaranSukses/:classId"
+          element={<PembayaranSukses />}
+        />
         {/* <Route path="/dummy" element={<KelasDummy/>}/> */}
-        <Route path="/tesFilter" element={<KelasContainer/>}/>
+        <Route path="/tesFilter" element={<KelasContainer />} />
         {/* <Route path="/select" element={<SelectDefault/>}/> */}
         {/* <Route path="/detailKelas/:classId" element={<TestDetailKelas/>}/> */}
-
       </Routes>
     </BrowserRouter>
   );

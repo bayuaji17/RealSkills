@@ -9,7 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { getUserById } from "../../services/notifikasi_akun/get_user";
 import { putUpdateProfile } from "../../services/notifikasi_akun/update_profile";
 import { toast } from "react-toastify";
-import { NavbarLogin } from "../../assets/components/NavbarLogin";
+import { NavbarLogin } from "../../components/NavbarLogin";
 
 export const AkunProfil = () => {
   const navigate = useNavigate();
@@ -209,7 +209,7 @@ export const AkunProfil = () => {
                 <div className="picture-section flex justify-evenly items-center mt-[2rem] mr-[0.75rem]">
                   <label htmlFor="profile_picture" className="cursor-pointer">
                     <div className="flex justify-center items-center w-[9rem] h-[9rem]  border-4 border-[#6148FF] rounded-full overflow-hidden">
-                      {console.log(updatedProfilePicture, "profil")}{" "}
+                      {/* {console.log(updatedProfilePicture, "profil")} */}
                       {updatedProfilePicture ? (
                         <img
                           src={URL.createObjectURL(updatedProfilePicture)}
