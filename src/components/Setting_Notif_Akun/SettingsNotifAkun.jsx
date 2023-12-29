@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import pencil from "../../assets/img/icon/pencil.png"
+import pencil from "../../assets/img/icon/pencil.png";
 import settings from "../../assets/img/icon/settings.png";
 import pay from "../../assets/img/icon/pay.png";
 import out from "../../assets/img/icon/out.png";
@@ -41,16 +41,16 @@ export const Settings = () => {
             <div className="flex flex-row w-full flex-grow laptop:rounded-b-2xl mobile:rounded-b-2xl">
               {/* Left Section */}
               <div className="w-full h-[21rem] bg-white rounded-2xl">
-                <div className="flex flex-col gap-5 font-montserrat m-[1.3rem]">
+                <div className="flex flex-col gap-5 font-poppins m-[1.3rem]">
                   <div className="flex flex-row gap-4">
                     <img
                       src={pencil}
                       alt=""
-                      className="w-[1.6rem] h-[1.6rem] "
+                      className="w-[1.5rem] h-[1.5rem] "
                     />
                     <a
-                      className="text-black text-[1rem] font-bold hover:text-[#6148FF]"
-                      href="/profil"
+                      className="text-black text-[0.9rem] font-bold hover:text-[#6148FF]"
+                      href="/profile"
                     >
                       Profil Saya
                     </a>
@@ -63,7 +63,7 @@ export const Settings = () => {
                       className="w-[1.5rem] h-[1.5rem]"
                     />
                     <a
-                      className="text-black text-[1rem] font-bold hover:text-[#6148FF]"
+                      className="text-black text-[0.9rem] font-bold hover:text-[#6148FF]"
                       href="/ubahPassword"
                     >
                       Ubah Password
@@ -73,7 +73,7 @@ export const Settings = () => {
                   <div className=" flex flex-row gap-4">
                     <img src={pay} alt="" className="w-[1.5rem] h-[1.5rem]" />
                     <a
-                      className="text-black text-[1rem] font-bold hover:text-[#6148FF]"
+                      className="text-black text-[0.9rem] font-bold hover:text-[#6148FF]"
                       href="/riwayatPembayaran"
                     >
                       Riwayat Pembayaran
@@ -83,7 +83,7 @@ export const Settings = () => {
                   <div className=" flex flex-row gap-4">
                     <img src={out} alt="" className="w-[1.5rem] h-[1.5rem]" />
                     <a
-                      className="text-black text-[1rem] font-bold hover:text-[#6148FF]"
+                      className="text-black text-[0.9rem] font-bold hover:text-[#6148FF]"
                       href="./"
                       onClick={() => {
                         CookieStorage.remove(CookieKeys.AuthToken);
