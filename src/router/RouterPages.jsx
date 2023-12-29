@@ -15,8 +15,7 @@ import { Notifikasi } from "../pages/Notifikasi_Akun/Notifikasi";
 import { AkunProfil } from "../pages/Notifikasi_Akun/AkunProfil";
 import { UbahPassword } from "../pages/Notifikasi_Akun/UbahPassword";
 import { RiwayatPembayaran } from "../pages/Notifikasi_Akun/RiwayatPembayaran";
-import { Settings } from "../components/Settings";
-
+import { Settings } from "../components/Setting_Notif_Akun/SettingsNotifAkun";
 import DetailKelasPembayaran from "../pages/ClassDetail/DetailKelasPembayaran";
 import PembayaranSukses from "../pages/ClassDetail/PembayaranSukses";
 import { BerandaNoLogin } from "../pages/BerandaNoLogin";
@@ -26,12 +25,11 @@ import FilterSide from "../components/FilterSide";
 // import { FilterResultKelas } from "../pages/FilterResultKelas";
 // import { FilterResultTopik } from "../pages/FilterResultTopik";
 
-
-import {SearchResult} from "../components/SearchResult"
+import { SearchResult } from "../components/SearchResult";
 import { ResultCategory } from "../pages/ResultCategory";
-import { BerandaLogin } from "../pages/BerandaLogin"
+import { BerandaLogin } from "../pages/BerandaLogin";
 import ProtectedToken from "../components/ProtectedComponents/ProtectedToken";
-import {SearchResultMyclass} from "../components/SearchResultMyclass"
+import { SearchResultMyclass } from "../components/SearchResultMyclass";
 
 export const RouterPages = () => {
   return (
@@ -47,37 +45,42 @@ export const RouterPages = () => {
         <Route path="/resetPassword" element={<ResetPasswordPage />} />
         {/* //*Auth */}
         {/* //*ADMIN AREA */}
-        <Route path="admin/dashboard" element={<AdminDashboard/>} />
-        <Route path="admin/kelola-kelas" element={<KelolaKelas/>} />
-        <Route path="admin/kelola-kelas/:id" element={<DetailsKelolaKelas/>} />
-        <Route path="admin/kelola-kelas/chapters/:id" element={<Chapters/>} />
+        <Route path="admin/dashboard" element={<AdminDashboard />} />
+        <Route path="admin/kelola-kelas" element={<KelolaKelas />} />
+        <Route path="admin/kelola-kelas/:id" element={<DetailsKelolaKelas />} />
+        <Route path="admin/kelola-kelas/chapters/:id" element={<Chapters />} />
         {/* //*ADMIN AREA */}
-
 
         <Route path="/detailKelas" element={<DetailKelasPage />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/notifikasi" element={<Notifikasi />} />
-        <Route path="/profil" element={<AkunProfil />} />
+        <Route path="/profile" element={<AkunProfil />} />
         <Route path="/ubahPassword" element={<UbahPassword />} />
         <Route path="/riwayatPembayaran" element={<RiwayatPembayaran />} />
         <Route path="/kelas" element={<KelasSaya />} />
         <Route path="/topik" element={<TopikKelas />} />
         <Route path="/filterSide" element={<FilterSide />} />
         <Route path="/detailKelas/:classId" element={<DetailKelasPage />} />
-        <Route path="/pembayaran/:classId" element={<DetailKelasPembayaran />} />
-        <Route path="/pembayaranSukses/:classId" element={<PembayaranSukses />} />
+        <Route
+          path="/pembayaran/:classId"
+          element={<DetailKelasPembayaran />}
+        />
+        <Route
+          path="/pembayaranSukses/:classId"
+          element={<PembayaranSukses />}
+        />
 
-        <Route path="/berandaNoLog" element={<BerandaNoLogin/>} />
-        <Route path="/beranda" element={<BerandaLogin/>} />
-        <Route path="/kelas" element={<KelasSaya/>} />
-        <Route path="/topik" element={<TopikKelas/>} />
-        <Route path="/filterSide" element={<FilterSide/>} />
+        <Route path="/berandaNoLog" element={<BerandaNoLogin />} />
+        <Route path="/beranda" element={<BerandaLogin />} />
+        <Route path="/kelas" element={<KelasSaya />} />
+        <Route path="/topik" element={<TopikKelas />} />
+        <Route path="/filterSide" element={<FilterSide />} />
         <Route path="/reset" element={<ResetPasswordTautanPage />} />
         <Route path="/resetPassword" element={<ResetPasswordPage />} />
-        <Route path="/search" element={<SearchResult/>} />
-        <Route path="/kategori/:id" element={<ResultCategory/>} />
+        <Route path="/search" element={<SearchResult />} />
+        <Route path="/kategori/:id" element={<ResultCategory />} />
 
-        <Route path="*" element={<NotFoundPage/>} />
+        <Route path="*" element={<NotFoundPage />} />
         <Route
           path="admin/dashboard"
           element={
@@ -130,7 +133,7 @@ export const RouterPages = () => {
           }
         />
         <Route
-          path="/profil"
+          path="/profile"
           element={
             <ProtectedToken>
               <AkunProfil />
@@ -154,7 +157,6 @@ export const RouterPages = () => {
           }
         />
         {/* PROFILE AREA */}
-
 
         {/* DetailKelas Area */}
         <Route
@@ -197,8 +199,7 @@ export const RouterPages = () => {
         <Route path="/search" element={<SearchResult />} />
         <Route path="/kategori/:id" element={<ResultCategory />} />
         <Route path="*" element={<NotFoundPage />} />
-        <Route path="/searchmyclass" element={<SearchResultMyclass/>} />
-
+        <Route path="/searchmyclass" element={<SearchResultMyclass />} />
       </Routes>
     </BrowserRouter>
   );

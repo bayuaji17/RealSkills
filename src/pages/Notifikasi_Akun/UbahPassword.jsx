@@ -10,13 +10,14 @@ import settings from "../../assets/img/icon/settings.png";
 import pay from "../../assets/img/icon/pay.png";
 import out from "../../assets/img/icon/out.png";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
-import { Link } from "react-router-dom";
-import { NavbarLogin } from "../../assets/components/NavbarLogin";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { postReset } from "../../services/auth/reset-password";
-import { CookieKeys, CookieStorage } from "../../utils/cookies";
+import { postUbahPassword } from "../../services/notifikasi_akun/ubah_password";
+import { Navbar } from "@material-tailwind/react";
+import { NavbarLogin } from "../../components/NavbarLogin";
 
 export const UbahPassword = () => {
+  const navigate = useNavigate();
   const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,24}$/;
   const ERROR_BORDER_COLOR = "border-red-600 focus:outline-red-600";
   const SUCCESS_BORDER_COLOR = "border-green-600 focus:outline-green-600";
@@ -94,7 +95,7 @@ export const UbahPassword = () => {
       confirm_new_password: FormInput.changePassword,
     };
     try {
-      const response = await postReset(formReset);
+      const response = await postUbahPassword(formReset);
       if (response && response.data) {
         toast.success(response.data.message, {
           position: "bottom-center",
@@ -106,7 +107,6 @@ export const UbahPassword = () => {
           progress: undefined,
           theme: "light",
         });
-        CookieStorage.set(CookieKeys.AuthToken, response.data.data.token);
       } else {
         console.error("Invalid response format:", response);
       }
@@ -138,11 +138,14 @@ export const UbahPassword = () => {
       </div>
 
       <div className="hero-section flex flex-col gap-2 w-full laptop:h-[11rem] bg-[#EBF3FC] ">
-        <div className="back-section hidden laptop:flex items-center mt-[2.3rem] mb-[0.7rem] gap-[1.25rem] mx-[11.5rem]">
+        <div className="back-section hidden laptop:flex items-center cursor-pointer mt-[2.3rem] mb-[0.7rem] gap-[1.25rem] mx-[11.5rem]">
           <FontAwesomeIcon
             icon={faArrowLeft}
-            size="l"
+            size="lg"
             style={{ color: "#6148FF" }}
+            onClick={() => {
+              navigate("/");
+            }}
           />
           <a
             className="font-black font-montserrat text-[1rem] text-[#6148FF]"
@@ -153,15 +156,15 @@ export const UbahPassword = () => {
         </div>
         <div className="flex mx-[0.9rem] mt-[1rem] justify-center items-center">
           <div className="modal flex flex-col laptop:border laptop:border-[#6148FF] min-h-screen laptop:h-auto w-full laptop:w-[75%] rounded-[1rem] mb-[4rem]">
-            <div className="title hidden laptop:flex w-full h-[4.7rem] justify-center items-center laptop:bg-[#6148FF] rounded-t-2xl">
+            <div className="title hidden laptop:flex w-full h-[4.8rem] justify-center items-center laptop:bg-[#6148FF] rounded-t-2xl">
               <span className=" flex laptop:justify-center laptop:items-center text-white font-bold text-[1.8rem] py-3">
                 Akun
               </span>
             </div>
             <div className="flex flex-row w-full flex-grow rounded-b-2xl">
               {/* Left Section */}
-              <div class="left-section hidden laptop:flex w-1/2 m-[2rem]">
-                <div className="flex flex-col gap-5 font-montserrat">
+              <div className="left-section hidden laptop:flex w-1/2 m-[2rem]">
+                <div className="flex flex-col gap-5 font-poppins">
                   <div className="flex flex-row gap-4">
                     <img
                       src={pencil}
@@ -233,7 +236,7 @@ export const UbahPassword = () => {
                   </h1>
                 </div>
 
-                <div className="password-lama flex flex-col gap-2 font-montserrat mt-[1.5rem]">
+                <div className="password-lama flex flex-col gap-2 font-poppins mt-[1.5rem]">
                   <span className="text-[1rem] ">Masukan Password Lama</span>
 
                   <div className="relative">
@@ -272,7 +275,7 @@ export const UbahPassword = () => {
                   </div>
                 </div>
 
-                <div className="password-baru flex flex-col gap-2 font-montserrat mt-[0.8rem]">
+                <div className="password-baru flex flex-col gap-2 font-poppins mt-[0.8rem]">
                   <span className="text-[1rem]">Masukan Password Baru</span>
                   <div className="relative">
                     <input
@@ -326,7 +329,7 @@ export const UbahPassword = () => {
                   )}
                 </div>
 
-                <div className="ulangi-password-baru flex flex-col gap-2 font-montserrat mt-[0.8rem]">
+                <div className="ulangi-password-baru flex flex-col gap-2 font-poppins mt-[0.8rem]">
                   <span className="text-[1rem]">Ulangi Password Baru</span>
                   <div className="relative">
                     <input
@@ -380,7 +383,7 @@ export const UbahPassword = () => {
                   )}
                 </div>
                 <button
-                  className="bg-blue-300 w-full text-white py-[0.8rem] px-[1rem] mt-[1rem] rounded-2xl hover:bg-[#6148FF]  relative"
+                  className="bg-blue-300 w-full text-white text-[1.2rem] py-[0.7rem] px-[1rem] mt-[1.3rem] rounded-2xl hover:bg-[#6148FF] font-poppins relative"
                   type="submit"
                   disabled={
                     !isPasswordLengthValid ||

@@ -1,27 +1,13 @@
 import { API_ENDPOINT } from "../../utils/api-endpoint";
-import http from "../../utils/http";
+import { CookieKeys, CookieStorage } from "../../utils/cookies";
+import httpForm from "../../utils/httpForm";
 
-const putUpdate = async (authToken, userData) => {
-  try {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
-    };
-    const { data } = await http.put(
-      API_ENDPOINT.UPDATE_PROFILE,
-      config,
-      userData
-    );
-    return data;
-  } catch (error) {
-    throw error;
-  }
+export const putUpdateProfile = async (input) => {
+  const updateProfile = await httpForm.put(
+    `${API_ENDPOINT.UPDATE_PROFILE}?token=${CookieStorage.get(
+      CookieKeys.AuthToken
+    )}`,
+    input
+  );
+  return updateProfile;
 };
-
-export { putUpdate };
-
-// export const putUpdate = async () => {
-//   const update = await http.put(API_ENDPOINT.UPDATE_PROFILE);
-//   return update;
-// };

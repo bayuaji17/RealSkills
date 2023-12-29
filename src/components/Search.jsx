@@ -13,7 +13,7 @@ import {
 import logo from "../assets/img/logo.png";
 import { useNavigate } from "react-router-dom";
 import { fetchSearch } from "../services/search";
-
+ 
 export const Search = () => {
   const [open, setOpen] = React.useState(false);
   // const openDrawer = () => setOpen(true);
@@ -21,9 +21,9 @@ export const Search = () => {
   const [search, setSearch] = useState("");
   const [searchData, setSearchData] = useState("");
   const navigate = useNavigate();
-   
-
-
+ 
+ 
+ 
 const handleSearch = async () => {
   try {
     const dataSearch = await fetchSearch(search);
@@ -32,25 +32,25 @@ const handleSearch = async () => {
     console.error(error);
   }
 };
-
-
+ 
+ 
 useEffect(() => {
       if (searchData) {
         navigate('/search?query=' + search, { state: { results: searchData.classes, query: search} });
-
+ 
       }
   },[searchData, search])
-
-
+ 
+ 
   const enter = (e) => {
     if (e.key === "Enter") {
       handleSearch();
     }
   };
-  
+ 
   return (
     <div className="flex justify-between items-center py-4 px-4 bg-[#EBF3FC] gap-6 laptop:hidden">
-      
+ 
       <React.Fragment>
           <Button className="bg-[#6148FF] shadow-lg" onClick={() => setOpen(true)}>
             <svg
@@ -263,3 +263,4 @@ useEffect(() => {
     </div>
   );
 };
+ 

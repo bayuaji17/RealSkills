@@ -23,8 +23,8 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { fetchSearch } from "../services/search";
 import { CookieKeys, CookieStorage } from "../utils/cookies";
-
-
+import { getUserById } from "../services/notifikasi_akun/get_user";
+import AvatarPP from "../assets/img/icon/avatarPP.png";
 
 function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -35,7 +35,7 @@ function ProfileMenu() {
   const handleMenuClick = (label) => {
     if (label === "My Profile") {
       // Navigate to the profile page when "My Profile" is clicked
-      navigate("/profil");
+      navigate("/profile");
     } else if (label === "Sign Out") {
       // Remove the authentication token and redirect to the login page
       CookieStorage.remove(CookieKeys.AuthToken, {
@@ -44,17 +44,41 @@ function ProfileMenu() {
       });
       navigate("/login");
     }
-  
+
     // Close the menu in both cases
     closeMenu();
   };
-  
+
+  const [userData, setUserData] = useState({
+    profile_picture: null,
+    name: "",
+    email: "",
+    profile: {
+      phone_number: "",
+      country: "",
+      city: "",
+    },
+  });
+
+  useEffect(() => {
+    const fetchDetailUser = async () => {
+      try {
+        const data = await getUserById();
+        setUserData(data.data.user);
+        console.log(data.data.user, "data user");
+      } catch (error) {
+        console.log("data error", error);
+      }
+    };
+
+    fetchDetailUser();
+  }, []);
+
   const profileMenuItems = [
     {
       label: "My Profile",
       icon: UserCircleIcon,
-      onClick:handleMenuClick,
-      
+      onClick: handleMenuClick,
     },
     {
       label: "Sign Out",
@@ -74,9 +98,13 @@ function ProfileMenu() {
           <Avatar
             variant="circular"
             size="sm"
-            alt="tania andrew"
-            className="border border-gray-900 p-0.5"
-            src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
+            alt="avatar default"
+            className="border border-gray-900 p-0.3"
+            src={
+              userData && userData.profile?.profile_picture
+                ? userData.profile.profile_picture
+                : AvatarPP
+            }
           />
           <ChevronDownIcon
             strokeWidth={2.5}
@@ -91,7 +119,6 @@ function ProfileMenu() {
           const isLastItem = key === profileMenuItems.length - 1;
           return (
             <MenuItem
-           
               key={label}
               onClick={() => handleMenuClick(label)}
               className={`flex items-center gap-2 rounded ${
@@ -112,7 +139,6 @@ function ProfileMenu() {
               >
                 {label}
               </Typography>
-             
             </MenuItem>
           );
         })}
@@ -136,14 +162,18 @@ const navListMenuItems = [
 function NavListMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-  const renderItems = navListMenuItems.map(({ title,  path }) => (
+  const renderItems = navListMenuItems.map(({ title, path }) => (
     <Link
       to={path}
       key={title}
       style={{ textDecoration: "none", color: "inherit" }}
     >
       <MenuItem>
-        <Typography variant="h6" color="blue-gray" className="mb-1 lg:text-blue-gray-700 lg:hover:text-black text-white hover:text-blue-gray-900">
+        <Typography
+          variant="h6"
+          color="blue-gray"
+          className="mb-1 lg:text-blue-gray-700 lg:hover:text-black text-white hover:text-blue-gray-900"
+        >
           {title}
         </Typography>
       </MenuItem>
@@ -154,10 +184,14 @@ function NavListMenu() {
     <React.Fragment>
       <Menu allowHover open={isMenuOpen} handler={setIsMenuOpen}>
         <MenuHandler>
-          <Typography as="a" href="#" variant="small" className="font-normal text-md ">
+          <Typography
+            as="a"
+            href="#"
+            variant="small"
+            className="font-normal text-md "
+          >
             <MenuItem className="hidden items-center gap-2 font-medium text-white lg:flex lg:rounded-full">
-              <Square3Stack3DIcon className="h-[18px] w-[18px] " />{" "}
-              Course{" "}
+              <Square3Stack3DIcon className="h-[18px] w-[18px] " /> Course{" "}
               <ChevronDownIcon
                 strokeWidth={2}
                 className={`h-3 w-3 transition-transform ${
@@ -174,8 +208,7 @@ function NavListMenu() {
         </MenuList>
       </Menu>
       <MenuItem className="flex items-center gap-2 font-medium  text-white lg:hidden">
-        <Square3Stack3DIcon className="h-[18px] w-[18px]  text-base" />{" "}
-        Course{" "}
+        <Square3Stack3DIcon className="h-[18px] w-[18px]  text-base" /> Course{" "}
       </MenuItem>
       <ul className="ml-6 flex w-full flex-col gap-1 lg:hidden">
         {renderItems}
@@ -189,19 +222,18 @@ const navListItems = [
   {
     label: "Account",
     icon: UserCircleIcon,
-    path: "/profil",
+    path: "/profile",
   },
   {
     label: "Notification",
     icon: BellIcon,
-    path: "/notif",
+    path: "/notifikasi",
   },
 ];
 
 function NavList() {
   return (
     <ul className="mt-2  mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
-      
       <NavListMenu />
       {navListItems.map(({ label, icon, path }, key) => (
         <Typography
@@ -214,7 +246,10 @@ function NavList() {
         >
           <MenuItem className="flex items-center gap-2 lg:rounded-full text-base">
             {React.createElement(icon, { className: "h-[18px] w-[18px]" })}{" "}
-            <span className="text-white hover:text-blue-gray-900"> {label}</span>
+            <span className="text-white hover:text-blue-gray-900">
+              {" "}
+              {label}
+            </span>
           </MenuItem>
         </Typography>
       ))}
@@ -238,12 +273,12 @@ export const NavbarLogin = () => {
   };
 
   useEffect(() => {
-      if (searchData) {
-        navigate('/search?query=' + search, { state: { results: searchData.classes, query: search} });
-
-      }
-  },[searchData, search, navigate])
-
+    if (searchData) {
+      navigate("/search?query=" + search, {
+        state: { results: searchData.classes, query: search },
+      });
+    }
+  }, [searchData, search]);
 
   const enter = (e) => {
     if (e.key === "Enter") {
