@@ -32,6 +32,7 @@ import {SearchResult} from "../components/SearchResult"
 import { Coba } from "../pages/Coba";
 import { ResultCategory } from "../pages/ResultCategory";
 import { BerandaLogin } from "../pages/BerandaLogin"
+import { AdminUsers } from "../pages/admin/AdminUsers";
 export const RouterPages = () => {
   return (
     <BrowserRouter>
@@ -48,6 +49,7 @@ export const RouterPages = () => {
         {/* //*ADMIN AREA */}
         <Route path="admin/dashboard" element={<AdminDashboard/>} />
         <Route path="admin/kelola-kelas" element={<KelolaKelas/>} />
+        <Route path="admin/users" element={<AdminUsers/>} />
         <Route path="admin/kelola-kelas/:id" element={<DetailsKelolaKelas/>} />
         <Route path="admin/kelola-kelas/chapters/:id" element={<Chapters/>} />
         {/* //*ADMIN AREA */}

@@ -17,14 +17,29 @@ export const TambahKelas = ({ open, handler }) => {
     name: "",
     code: "",
     price: "",
-    goals: [],
+    goals: [],  
+    prerequisites:[],
     author: "",
     about: "",
     category_id: "1",
     type_id: "1",
     level_id: "1",
   });
+const handlePrerequisitesChange = (e, index) => {
+  const { value } = e.target;
+  const updatedPrerequisites = [...formKelas.prerequisites];
+    updatedPrerequisites[index] = value;
+    setFormKelas({ ...formKelas, prerequisites: updatedPrerequisites });
+  };
 
+  const addPrerequisites = () => {
+    setFormKelas({ ...formKelas, prerequisites: [...formKelas.prerequisites, ""] });
+  };
+  const handleRemovePrerequisites = (index) => {
+    const updatedPrerequisites = [...formKelas.prerequisites];
+    updatedPrerequisites.splice(index, 1);
+    setFormKelas({ ...formKelas, prerequisites: updatedPrerequisites });
+  };
   const handleGoalsChange = (e, index) => {
     const { value } = e.target;
     const updatedGoals = [...formKelas.goals];
@@ -45,7 +60,6 @@ export const TambahKelas = ({ open, handler }) => {
     setFormKelas({ ...formKelas, class_image: event.target.files[0] });
   };
 
-  //TODO
   const handleInputParseIntChange = (e) => {
     const { id, value } = e.target;
     setFormKelas({
@@ -55,7 +69,6 @@ export const TambahKelas = ({ open, handler }) => {
     console.log(e.target.value, formKelas, "ini isinyahandleINPUT");
     console.log(e.target.files, formKelas, "ini file");
   };
-  //TODO
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     setFormKelas({
@@ -69,6 +82,7 @@ export const TambahKelas = ({ open, handler }) => {
     event.preventDefault();
     const formData = new FormData();
     formData.append("goals", formKelas.goals);
+    formData.append("prerequisites", formKelas.prerequisites);
     formData.append("class_image", formKelas.class_image);
     formData.append("name", formKelas.name);
     formData.append("code", formKelas.code);
@@ -81,13 +95,13 @@ export const TambahKelas = ({ open, handler }) => {
     try {
       const response = await postClassForm(formData);
       toast.success("sukses");
-      console.log(response.data.message, "ini response");
       setFormKelas({
         class_image: null,
         name: "",
         code: "",
         price: "",
         goals: [],
+        prerequisites: [],
         author: "",
         about: "",
         category_id: "1",
@@ -95,10 +109,10 @@ export const TambahKelas = ({ open, handler }) => {
         level_id: "1",
       });
       handler();
+      return response
     } catch (error) {
       toast.error(error);
 
-      console.error(error);
     }
   };
 
@@ -207,6 +221,40 @@ export const TambahKelas = ({ open, handler }) => {
                 onClick={addGoals}
               >
                 Tambahkan Tujuan Kelas
+              </Button>
+            </div>
+            {/* //!Prerequisites */}
+            <div className="flex flex-col">
+              <label htmlFor="prerequisites" className="py-2 text-xs">
+              Prerequisites
+              </label>
+              {formKelas.prerequisites.map((prerequisites, index) => (
+      
+                <div key={index} className="flex flex-row pb-2 pt-1">
+                  <input
+                    type="text"
+                    id="prerequisites"
+                    value={prerequisites}
+                    placeholder="Tambahkan Prerequisites"
+                    onChange={(e) => handlePrerequisitesChange(e, index)}
+                    className="w-4/5 h-12 rounded-xl py-2 px-5 border-2"
+                  />
+                  <button
+                    className="px-2 border-2 bg-red-600 rounded-xl mx-4 w-24 h-12 text-white"
+                 
+                    onClick={() => handleRemovePrerequisites(index)}
+                  >
+                    Hapus
+                  </button>
+                </div>
+              ))}
+              <Button
+                variant="gradient"
+                color="green"
+                className="rounded-lg"
+                onClick={addPrerequisites}
+              >
+                Tambahkan Prerequisites
               </Button>
             </div>
             <FormSelect

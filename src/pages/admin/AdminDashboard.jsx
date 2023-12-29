@@ -30,7 +30,7 @@ export const AdminDashboard = () => {
 
           {/* Table */}
           <div className="container mx-auto w-10/12 pb-4">
-            <div className="flex flex-row justify-between pb-2 items-center flex-wrap">
+            {/* <div className="flex flex-row justify-between pb-2 items-center flex-wrap">
               <h1 className="text-xl font-bold">Status Pembayaran</h1>
               <div className="flex flex-row gap-2">
                 <Button
@@ -59,7 +59,7 @@ export const AdminDashboard = () => {
                   </Typography>
                 </div>
               </div>
-            </div>
+            </div> */}
             <TablePembayaran />
           </div>
           {/* End Table */}

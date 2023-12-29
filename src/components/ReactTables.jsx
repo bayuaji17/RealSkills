@@ -20,6 +20,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons";
 import filter from "../assets/Filter.svg";
 import { TambahKelas } from "./admin/TambahKelas";
+import { toast } from "react-toastify";
 const TABLE_HEAD = [
   "Kode Kelas",
   "Kategori",
@@ -82,8 +83,8 @@ export const ReactTables = () => {
         setNotFound(null);
       }
     } catch (error) {
-      console.error(error.response.data.error);
-      setNotFound(error.response.data.error);
+      // console.error(error.response.data.error);
+      // setNotFound(error.response.data.error);
       setDataTables([]);
     }
   }, [page, limit, search, category, type, level]);
@@ -177,14 +178,14 @@ export const ReactTables = () => {
     });
   };
 
-  const handleInputParseIntChange = (e) => {
-    const { id, value } = e.target;
-    setFormData({
-      ...formData,
-      [id]: parseInt(value, 10),
-    });
-    console.log(e.target.value, formData, "ini isinyahandleINPUT");
-  };
+  // const handleInputParseIntChange = (e) => {
+  //   const { id, value } = e.target;
+  //   setFormData({
+  //     ...formData,
+  //     [id]: parseInt(value, 10),
+  //   });
+  //   console.log(e.target.value, formData, "ini isinyahandleINPUT");
+  // };
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     setFormData({
@@ -198,7 +199,9 @@ export const ReactTables = () => {
       await editClassById(selectedRow.id, formData);
       handleGetClass();
       handleEditDialogClose();
+      toast.success("Kelas Berhasil diubah !");
     } catch (error) {
+      toast.error("Kelas gagal diubah !");
       console.error(error);
     }
   };
@@ -209,7 +212,11 @@ export const ReactTables = () => {
   const handleDeleteSubmit = async () => {
     try {
       await deleteClassById(selectedRow.id);
+      setHapus(false);
+      toast.success("Kelas Berhasil dihapus");
     } catch (error) {
+      setHapus(false);
+      toast.error("Kelas gagal dihapus");
       console.error(error);
     }
   };
@@ -220,7 +227,7 @@ export const ReactTables = () => {
       {/* Tambah KELAS */}
       <div className="flex flex-row justify-between pb-2 items-center flex-wrap">
         <h1 className="text-xl font-bold">Kelola Kelas</h1>
-        <div className="flex flex-row gap-2">
+        <div className="flex flex-row gap-2 flex-wrap">
           <Button
             variant="filled"
             className="rounded-3xl h-10 w-28 flex items-center gap-2 normal-case pl-4 bg-blue-600"
@@ -334,26 +341,28 @@ export const ReactTables = () => {
             name="Kategori"
             label="category_id"
             options={kategoriOptions}
-            onChange={(e) => handleInputParseIntChange(e)}
+            onChange={(e) => handleInputChange(e)}
           />
           <FormSelect
             name="Tipe Kelas"
             label="type_id"
             options={tipeKelas}
-            onChange={(e) => handleInputParseIntChange(e)}
+            onChange={(e) => handleInputChange(e)}
           />
           <FormSelect
             name="Level"
             label="level_id"
             options={levelKesulitan}
-            onChange={(e) => handleInputParseIntChange(e)}
+            onChange={(e) => handleInputChange(e)}
           />
         </DialogBody>
         <DialogFooter>
           <Button
             variant="gradient"
             color="blue"
-            onClick={() => navigate(`/admin/kelola-kelas/chapters/${selectedRow.id}`)}
+            onClick={() =>
+              navigate(`/admin/kelola-kelas/chapters/${selectedRow.id}`)
+            }
             className="mr-1"
           >
             <span>Chapter Kelas</span>
@@ -426,14 +435,14 @@ export const ReactTables = () => {
             </tr>
           </thead>
           <tbody>
-            {dataTables.length === 0 ? (
+            {dataTables?.length === 0 ? (
               <tr>
                 <td className="p-4 border-b border-blue-gray-50">
                   <h1 className="text-lg uppercase">{notFound}</h1>
                 </td>
               </tr>
             ) : (
-              dataTables.map((data, index) => {
+              dataTables?.map((data, index) => {
                 return (
                   <tr key={index}>
                     <td className="p-4 border-b border-blue-gray-50">

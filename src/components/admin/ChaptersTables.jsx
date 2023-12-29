@@ -16,6 +16,12 @@ import FormInput from "../form/FormInput";
 import { editChaptersById } from "../../services/edit-chapters";
 import { deleteChaptersById } from "../../services/delete-chapters";
 import { toast } from "react-toastify";
+import {
+  deleteVideosById,
+  editVideosById,
+} from "../../services/videos-chapter";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 export const ChaptersTables = () => {
   const [dataChapters, setDataChapters] = useState([]);
@@ -26,6 +32,7 @@ export const ChaptersTables = () => {
   const [editVideo, setEditVideo] = useState(false);
   const [selectedChapters, setSelectedChapters] = useState(null);
   const [hapus, setHapus] = useState(false);
+  const [hapusVideo, setHapusVideo] = useState(false);
   const [editDataVideo, setEditDataVideo] = useState({
     title: "",
     link: "",
@@ -67,16 +74,43 @@ export const ChaptersTables = () => {
 
   const handleInputChangeVideo = (e) => {
     const { id, value } = e.target;
-    setEditVideo({ ...editDataVideo, [id]: value });
+    setEditDataVideo({ ...editDataVideo, [id]: value });
   };
-  const handleEditSubmitVideo = () => {
+  const handleInputParseIntChangeVideo = (e) => {
+    const { id, value } = e.target;
+    setEditDataVideo({ ...editDataVideo, [id]: parseInt(value, 10) });
+  };
+  const handleEditSubmitVideo = async () => {
     const editSubmit = {
       title: editDataVideo.title,
       link: editDataVideo.link,
       time: editDataVideo.time,
     };
+    try {
+      const response = await editVideosById(editVideosId, editSubmit);
+      setEditVideo(false);
+      toast.success("Kelas berhasil di perbarui");
+      console.log(response);
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
 
     console.log(editSubmit);
+  };
+  const handleHapusVideo = (row) => {
+    setSelectedVideos(row);
+    setHapusVideo(true);
+  };
+  const handleDeleteVideoSubmit = async () => {
+    try {
+      await deleteVideosById(selectedVideos);
+      setHapusVideo(false);
+      toast.success("kelas Berhasil dihapus");
+      getClasById();
+    } catch (error) {
+      console.error(error);
+    }
   };
   // *EDIT Video
 
@@ -184,9 +218,12 @@ export const ChaptersTables = () => {
     }
     try {
       const response = await editChaptersById(editChaptersId, dataEditSubmit);
-      console.log(response);
+      toast.success("Chapters Berhasil diperbarui");
+      setEdit(false);
       return response;
     } catch (error) {
+      setEdit(false);
+      toast.error("Chapters gagal diperbarui");
       console.error(error);
     }
   };
@@ -194,7 +231,7 @@ export const ChaptersTables = () => {
     try {
       await deleteChaptersById(selectedChapters.id);
       setHapus(false);
-      toast.success("kelas Berhasil dihapus");
+      toast.success("Chapter Berhasil dihapus");
       getClasById();
     } catch (error) {
       console.error(error);
@@ -202,6 +239,7 @@ export const ChaptersTables = () => {
   };
 
   console.log(editChapters, "dari chaptersTable.jsx");
+  console.log(editDataVideo, "dari editvideo.jsx");
 
   // ! UNTUK EDIT
   // *UNTUK GET
@@ -230,7 +268,7 @@ export const ChaptersTables = () => {
   }, []);
   // *UNTUK GET
   return (
-    <div className="bg-blue-gray-200">
+    <div className="">
       {/* //! EDIT Video */}
       <Dialog open={editVideo} handler={editVideoClose} className=" h-[70%]">
         <DialogHeader>Edit Video</DialogHeader>
@@ -257,7 +295,7 @@ export const ChaptersTables = () => {
             placeholder="Durasi Video"
             name="Durasi Video"
             value={editDataVideo.time}
-            onChange={(e) => handleInputChangeVideo(e)}
+            onChange={(e) => handleInputParseIntChangeVideo(e)}
           />
         </DialogBody>
         <DialogFooter>
@@ -269,12 +307,38 @@ export const ChaptersTables = () => {
           >
             <span>Cancel</span>
           </Button>
-          <Button variant="gradient" color="green" onClick={handleEditSubmitVideo}>
+          <Button
+            variant="gradient"
+            color="green"
+            onClick={handleEditSubmitVideo}
+          >
             <span>Confirm</span>
           </Button>
         </DialogFooter>
       </Dialog>
       {/* //! EDIT Video */}
+      {/* //! Hapus Video */}
+      <Dialog open={hapusVideo} handler={() => setHapusVideo(false)}>
+        <DialogHeader>Anda yakin ingin mengapus video ini ?</DialogHeader>
+        <DialogFooter>
+          <Button
+            variant="text"
+            color="red"
+            onClick={() => setHapusVideo(false)}
+            className="mr-1"
+          >
+            <span>Cancel</span>
+          </Button>
+          <Button
+            variant="gradient"
+            color="green"
+            onClick={handleDeleteVideoSubmit}
+          >
+            <span>Confirm</span>
+          </Button>
+        </DialogFooter>
+      </Dialog>
+      {/* //! Hapus Video */}
       {/* //!Edit Chapter */}
       <Dialog
         open={edit}
@@ -301,8 +365,19 @@ export const ChaptersTables = () => {
           />
           {editChapters.videos.map((videos, index) => (
             <div key={index}>
-              <Card className="h-96 bg-red-200 my-4">
-                <div className="w-[30rem] px-4">
+              <Card className="h-[30rem] bg-red-200 my-4">
+                <div className="flex flex-row flex-wrap justify-between items-center">
+                  <h1 className="before:content-['*'] before:px-2 before:text-red-600 italic">
+                    Hapus jika tidak ingin menambah video di dalam chapters
+                  </h1>
+                  <button
+                    className="px-2 my-2 border-2 bg-red-600 rounded-xl mx-4 w-24 h-12 text-white"
+                    onClick={() => handleRemoveVideo(index)}
+                  >
+                    Hapus
+                  </button>
+                </div>
+                <div className="p-4">
                   <FormInput
                     type="text"
                     label="no_video"
@@ -336,16 +411,10 @@ export const ChaptersTables = () => {
                     onChange={(e) => handleVideoChange(e, index, "time")}
                   />
                 </div>
-                <button
-                  className="px-2 my-2 border-2 bg-red-600 rounded-xl mx-4 w-24 h-12 text-white"
-                  onClick={() => handleRemoveVideo(index)}
-                >
-                  Hapus
-                </button>
               </Card>
             </div>
           ))}
-          <Button className="w-full" onClick={addVideo}>
+          <Button className="w-full my-3" onClick={addVideo}>
             Tambah Video
           </Button>
         </DialogBody>
@@ -386,30 +455,45 @@ export const ChaptersTables = () => {
         </DialogFooter>
       </Dialog>
       {/* //!Untuk Hapus */}
-      <h1 className="text-center">Data Chapters</h1>
-      <a href="/admin/kelola-kelas">BACK</a>
-      <div className="flex flex-row flex-wrap gap-4 container justify-center">
-        {dataChapters.map((chapters, index) => {
+      <h1 className="text-center font-extrabold text-3xl py-4">
+        Data Chapters
+      </h1>
+      <a href="/admin/kelola-kelas" className="pl-5">
+        <FontAwesomeIcon icon={faArrowLeft} size="2xl" />
+      </a>
+      <div className="flex flex-col gap-4 container sm:container md:container lg:container xl:container justify-center">
+        {dataChapters?.map((chapters, index) => {
           return (
             <div key={index}>
-              <Card className="w-[80rem] h-[30rem] bg-blue-gray-700 my-4 overflow-scroll">
+              <Card className="w-[88vw] mobile:w-[80vw] laptop:w-[80vw] laptop:h-[30rem] bg-blue-gray-700 my-4 overflow-x-scroll ">
                 <CardBody>
-                  {/* <h1 className="text-white">Chapter {index + 1}</h1> */}
                   <div className="text-white ">
                     <tr>
-                      <td>Nomor Chapter</td>
-                      <td> :</td>
-                      <td>{chapters.no_chapter}</td>
+                      <td className="after:content-[''] after:px-4">
+                        Nomor Chapter
+                      </td>
+                      <td>:</td>
+                      <td className="before:content-[''] before:px-1">
+                        {chapters.no_chapter}
+                      </td>
                     </tr>
                     <tr>
-                      <td>Title Chapter</td>
-                      <td> :</td>
-                      <td>{chapters.title}</td>
+                      <td className="after:content-[''] after:px-4">
+                        Title Chapter
+                      </td>
+                      <td>:</td>
+                      <td className="before:content-[''] before:px-1">
+                        {chapters.title}
+                      </td>
                     </tr>
                     <tr>
-                      <td>Jumlah Video</td>
-                      <td> :</td>
-                      <td>{chapters.videos.length}</td>
+                      <td className="after:content-[''] after:px-4">
+                        Jumlah Video
+                      </td>
+                      <td>:</td>
+                      <td className="before:content-[''] before:px-1">
+                        {chapters.videos.length}
+                      </td>
                     </tr>
                     <div className="flex flex-row gap-2 justify-between items-center my-2">
                       <h1 className="text-lg font-semibold">
@@ -477,7 +561,10 @@ export const ChaptersTables = () => {
                                 >
                                   Edit
                                 </Button>
-                                <Button onClick={editVideoClose} color="red">
+                                <Button
+                                  onClick={() => handleHapusVideo(videos.id)}
+                                  color="red"
+                                >
                                   Hapus
                                 </Button>
                               </div>
