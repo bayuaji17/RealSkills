@@ -1,16 +1,21 @@
 import React from "react";
 import { Card, Typography, List, ListItem } from "@material-tailwind/react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { CookieKeys, CookieStorage } from "../../utils/cookies";
+import { toast } from "react-toastify";
 export const SideBarAdmin = () => {
   const location = useLocation();
+  const navigate = useNavigate()
 
-  const bgClass = () => {
-    return location.pathname === "/admin/kelola-kelas" ? "bg-red-600" : "";
+  const getBgClass = (path) => {
+    return location.pathname === path ? "bg-red-600" : "";
+  };
+  const handleLogout = () => {
+    CookieStorage.remove(CookieKeys.AuthToken);
+    toast.success("Log Out Berhasil!");
+    navigate("/admin");
   };
 
-  const activeClass = () => {
-    return location.pathname === "/admin/dashboard" ? "bg-red-600" : "";
-  };
 
   return (
     <Card className="h-screen w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5 rounded-none bg-[#6148FF]">
@@ -20,19 +25,24 @@ export const SideBarAdmin = () => {
         </Typography>
       </div>
       <List>
-        <a href="/admin/dashboard">
+        <Link to={"/admin/dashboard"}>
           <ListItem
-            className={`text-white hover:bg-[#489CFF] hover:text-white hover:font-semibold ${activeClass()}`}
+            className={`text-white hover:bg-[#489CFF] hover:text-white hover:font-semibold ${getBgClass("/admin/dashboard")}`}
           >
             Dashboard
           </ListItem>
-        </a>
-        <a href="/admin/kelola-kelas">
-          <ListItem className={`text-white ${bgClass()}`}>
+        </Link>
+        <Link to={"/admin/kelola-kelas"}>
+          <ListItem className={`text-white ${getBgClass("/admin/kelola-kelas")}`}>
             Kelola Kelas
           </ListItem>
-        </a>
-        <ListItem className="text-white">Log Out</ListItem>
+        </Link>
+        <Link to={"/admin/users"}>
+          <ListItem className={`text-white ${getBgClass("/admin/users")}`}>
+            Users
+          </ListItem>
+        </Link>
+          <ListItem className="text-white" onClick={handleLogout}>Log Out</ListItem>
       </List>
     </Card>
   );

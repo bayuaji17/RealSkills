@@ -31,6 +31,7 @@ import { BerandaLogin } from "../pages/BerandaLogin";
 import ProtectedToken from "../components/ProtectedComponents/ProtectedToken";
 import { SearchResultMyclass } from "../components/SearchResultMyclass";
 
+import { AdminUsers } from "../pages/admin/AdminUsers";
 export const RouterPages = () => {
   return (
     <BrowserRouter>
@@ -49,6 +50,7 @@ export const RouterPages = () => {
         <Route path="admin/kelola-kelas" element={<KelolaKelas />} />
         <Route path="admin/kelola-kelas/:id" element={<DetailsKelolaKelas />} />
         <Route path="admin/kelola-kelas/chapters/:id" element={<Chapters />} />
+        <Route path="admin/users" element={<AdminUsers />} />
         {/* //*ADMIN AREA */}
 
         <Route path="/detailKelas" element={<DetailKelasPage />} />
