@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Beranda } from "../pages/Beranda";
 import { LoginPage } from "../pages/authentication/LoginPage";
 import { RegisterPage } from "../pages/authentication/RegisterPage";
 import { LoginAdminPage } from "../pages/authentication/LoginAdminPage";
@@ -29,9 +28,9 @@ import FilterSide from "../components/FilterSide";
 
 
 import {SearchResult} from "../components/SearchResult"
-import { Coba } from "../pages/Coba";
 import { ResultCategory } from "../pages/ResultCategory";
 import { BerandaLogin } from "../pages/BerandaLogin"
+import ProtectedToken from "../components/ProtectedComponents/ProtectedToken";
 export const RouterPages = () => {
   return (
     <BrowserRouter>
@@ -77,6 +76,125 @@ export const RouterPages = () => {
         <Route path="/kategori/:id" element={<ResultCategory/>} />
 
         <Route path="*" element={<NotFoundPage/>} />
+        <Route
+          path="admin/dashboard"
+          element={
+            <ProtectedToken>
+              <AdminDashboard />
+            </ProtectedToken>
+          }
+        />
+        <Route
+          path="admin/kelola-kelas"
+          element={
+            <ProtectedToken>
+              <KelolaKelas />
+            </ProtectedToken>
+          }
+        />
+        <Route
+          path="admin/kelola-kelas/:id"
+          element={
+            <ProtectedToken>
+              <DetailsKelolaKelas />
+            </ProtectedToken>
+          }
+        />
+        <Route
+          path="admin/kelola-kelas/chapters/:id"
+          element={
+            <ProtectedToken>
+              <Chapters />
+            </ProtectedToken>
+          }
+        />
+        {/* //*ADMIN AREA */}
+
+        {/* PROFILE AREA */}
+        <Route
+          path="/settings"
+          element={
+            <ProtectedToken>
+              <Settings />
+            </ProtectedToken>
+          }
+        />
+        <Route
+          path="/notifikasi"
+          element={
+            <ProtectedToken>
+              <Notifikasi />
+            </ProtectedToken>
+          }
+        />
+        <Route
+          path="/profil"
+          element={
+            <ProtectedToken>
+              <AkunProfil />
+            </ProtectedToken>
+          }
+        />
+        <Route
+          path="/ubahPassword"
+          element={
+            <ProtectedToken>
+              <UbahPassword />
+            </ProtectedToken>
+          }
+        />
+        <Route
+          path="/riwayatPembayaran"
+          element={
+            <ProtectedToken>
+              <RiwayatPembayaran />
+            </ProtectedToken>
+          }
+        />
+        {/* PROFILE AREA */}
+
+
+        {/* DetailKelas Area */}
+        <Route
+          path="/detailKelas/:classId"
+          element={
+            <ProtectedToken>
+              <DetailKelasPage />
+            </ProtectedToken>
+          }
+        />
+        <Route
+          path="/pembayaran/:classId"
+          element={
+            <ProtectedToken>
+              <DetailKelasPembayaran />
+            </ProtectedToken>
+          }
+        />
+        <Route
+          path="/pembayaranSukses/:classId"
+          element={
+            <ProtectedToken>
+              <PembayaranSukses />
+            </ProtectedToken>
+          }
+        />
+        {/* DetailKelas Area */}
+
+        <Route path="/berandaNoLog" element={<BerandaNoLogin />} />
+        <Route path="/beranda" element={<BerandaLogin />} />
+        <Route path="/topik" element={<TopikKelas />} />
+        <Route
+          path="/kelas"
+          element={
+            <ProtectedToken>
+              <KelasSaya />
+            </ProtectedToken>
+          }
+        />
+        <Route path="/search" element={<SearchResult />} />
+        <Route path="/kategori/:id" element={<ResultCategory />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );

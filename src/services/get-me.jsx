@@ -15,3 +15,13 @@ export const getMe = async (authToken) => {
   }
 };
 
+export const getFilterMyClasses = async ({ category, type, level}) => {
+  const params = {
+    category,
+    type,
+    level
+  }
+  const filterMyclass = await http.get(API_ENDPOINT.GET_ME, { params });
+  return filterMyclass;
+}
+

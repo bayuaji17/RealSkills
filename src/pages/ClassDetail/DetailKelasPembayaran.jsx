@@ -17,6 +17,7 @@ import { Option, Select } from "@material-tailwind/react";
 import { postPayments } from "../../services/payments/create-payments";
 import { updatePayment } from "../../services/payments/update-payments";
 import { NavbarLogin } from "../../components/NavbarLogin";
+import { toast } from "react-toastify";
 
 const DetailKelasPembayaran = () => {
   const [BankAccordionOpen, setBankAccordionOpen] = useState(false);
@@ -31,6 +32,7 @@ const DetailKelasPembayaran = () => {
     cvv: "",
     expiry_date: "",
   });
+  const [IsKirimBtnClicked, setIsKirimBtnClicked] = useState(false);
   const [IsCardNumberLengthValid, setIsCardNumberLengthValid] = useState(false);
   const [IsHolderNameLengthValid, setIsHolderNameLengthValid] = useState(false);
   const [IsCvvLengthValid, setIsCvvLengthValid] = useState(false);
@@ -47,14 +49,17 @@ const DetailKelasPembayaran = () => {
     currency: "IDR",
   });
 
+  // handle onclick accordion bank transfer 
   const toogleBankAccordion = () => {
     setBankAccordionOpen((BankAccordionOpen) => !BankAccordionOpen);
   };
 
+  // handle onclick accordion credit card
   const toogleCreditAccordion = () => {
     setCreditAccordionOpen((CreditAccordionOpen) => !CreditAccordionOpen);
   };
 
+  // function deadline pembayaran 2 hari setelah kelas ingin dibeli
   const calculateDeadline = () => {
     const purchaseDate = new Date();
     const deadlineDate = new Date(purchaseDate);
@@ -87,6 +92,7 @@ const DetailKelasPembayaran = () => {
     setIsNominalLengthValid(isInputLengthValid);
   };
 
+  // handle set nominal kembali ke 0
   const resetNominal = () => {
     setFormInputNominal({
       ...FormInputNominal,
@@ -94,10 +100,12 @@ const DetailKelasPembayaran = () => {
     });
   };
 
+  // handle untuk menyimpan value nama bank
   const handleSelectedBank = (value) => {
     setSelectedBank(value);
   };
 
+  // handle form input credit card
   const handleInputCredit = (e) => {
     const { id, value } = e.target;
     setFormInputCredit({
@@ -150,16 +158,11 @@ const DetailKelasPembayaran = () => {
           class_id: classId,
         };
         try {
-          const response = await postPayments(formPayments);
-          console.log(response);
+          await postPayments(formPayments);
         } catch (error) {
-          console.log(error);
+          console.error(error);
         }
-      } else {
-        console.error(
-          "Pilih metode pembayaran yang valid (Bank Transfer atau Credit Card)"
-        );
-      }
+      } 
     };
 
     handlePayments();
@@ -180,9 +183,27 @@ const DetailKelasPembayaran = () => {
   const handleUpdatePayment = async (id) => {
     try {
       const response = await updatePayment(id);
-      console.log(response, "paid payment");
-    } catch (error) {
-      console.error("Error updating payment:", error);
+      toast.success(response.data.message, {
+        position: "bottom-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } catch {
+      toast.error("Pembelian Kelas Gagal", {
+        position: "bottom-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
@@ -294,7 +315,10 @@ const DetailKelasPembayaran = () => {
               </div>
               <button
                 className="bank-transfer-btn flex justify-center items-center py-[1rem] rounded-[1.5rem] text-white bg-[#3C3C3C] w-[50%] hover:bg-black disabled:bg-gray-300"
-                onClick={handleBankTransferClick}
+                onClick={() => {
+                  handleBankTransferClick();
+                  setIsKirimBtnClicked(true);
+                }}
                 disabled={
                   FormInputNominal.nominal <= 0 ||
                   !isNominalValid ||
@@ -342,8 +366,6 @@ const DetailKelasPembayaran = () => {
                         id="cardNumber"
                         onChange={(e) => {
                           handleInputCredit(e);
-                          console.log(e.target.value);
-                          console.log(IsCardNumberLengthValid);
                         }}
                         className="outline-none font-poppins text-[0.9rem] leading-[1.25rem] w-full"
                         type="number"
@@ -362,8 +384,6 @@ const DetailKelasPembayaran = () => {
                         id="holderName"
                         onChange={(e) => {
                           handleInputCredit(e);
-                          console.log(e.target.value);
-                          console.log(IsHolderNameLengthValid, e.target.value);
                         }}
                         className="outline-none font-poppins text-[0.9rem] leading-[1.25rem] w-full"
                         type="name"
@@ -383,8 +403,6 @@ const DetailKelasPembayaran = () => {
                           placeholder="000"
                           onChange={(e) => {
                             handleInputCredit(e);
-                            console.log(e.target.value);
-                            console.log(IsCvvLengthValid, e.target.value);
                           }}
                           className="outline-none font-poppins text-[0.9rem] leading-[1.25rem] w-full"
                           type="number"
@@ -403,8 +421,6 @@ const DetailKelasPembayaran = () => {
                           id="expiryDate"
                           onChange={(e) => {
                             handleInputCredit(e);
-                            console.log(e.target.value);
-                            console.log(isExpiryDateValid);
                           }}
                           className="outline-none font-poppins text-[0.9rem] leading-[1.25rem] w-full"
                           type="text"
@@ -415,7 +431,10 @@ const DetailKelasPembayaran = () => {
                   </div>
                   <button
                     className="credit-card-btn flex justify-center items-center py-[1rem] rounded-[1.5rem] text-white bg-dark-blue w-full hover:bg-light-blue-300 disabled:bg-gray-300"
-                    onClick={handleCreditCardClick}
+                    onClick={() => {
+                      handleCreditCardClick();
+                      setIsKirimBtnClicked(true);
+                    }}
                     disabled={
                       !IsCardNumberLengthValid ||
                       !IsHolderNameLengthValid ||
@@ -499,10 +518,21 @@ const DetailKelasPembayaran = () => {
 
           <Link to={`/pembayaranSukses/${classId}`}>
             <button
-              className="buy-now-btn flex items-center justify-center rounded-[1.5rem] px-[1rem] py-[.75rem] bg-[#F00] gap-2 mt-[1.5rem] mb-[0.75rem] w-full"
+              className="buy-now-btn flex items-center justify-center rounded-[1.5rem] px-[1rem] py-[.75rem] bg-[#F00] gap-2 mt-[1.5rem] mb-[0.75rem] w-full disabled:bg-gray-300"
               onClick={() => {
                 handleUpdatePayment(classId);
               }}
+              disabled={
+                (FormInputNominal.nominal <= 0 ||
+                  !isNominalValid ||
+                  !isNominalLengthValid ||
+                  !IsKirimBtnClicked) &&
+                (!IsCardNumberLengthValid ||
+                  !IsHolderNameLengthValid ||
+                  !IsCvvLengthValid ||
+                  !isExpiryDateValid ||
+                  !IsKirimBtnClicked)
+              }
             >
               <span className="font-montserrat font-black text-white text-[1rem] leading-[1.5rem]">
                 Bayar dan Ikuti Kelas Selamanya
@@ -674,7 +704,10 @@ const DetailKelasPembayaran = () => {
               </div>
               <button
                 className="mobile-credit-card-btn flex justify-center items-center py-[1vh] rounded-[1.5rem] text-white bg-dark-blue w-full hover:bg-light-blue-300 disabled:bg-gray-300"
-                onClick={handleBankTransferClick}
+                onClick={() => {
+                  handleBankTransferClick();
+                  setIsKirimBtnClicked(true);
+                }}
                 disabled={
                   FormInputNominal.nominal <= 0 ||
                   !isNominalValid ||
@@ -729,8 +762,6 @@ const DetailKelasPembayaran = () => {
                     id="cardNumber"
                     onChange={(e) => {
                       handleInputCredit(e);
-                      console.log(e.target.value);
-                      console.log(IsCardNumberLengthValid);
                     }}
                     required
                     className="font-montserrat font-semibold text-[2vh] leading-[1.5vh] outline-none w-full"
@@ -750,8 +781,6 @@ const DetailKelasPembayaran = () => {
                     required
                     onChange={(e) => {
                       handleInputCredit(e);
-                      console.log(e.target.value);
-                      console.log(IsHolderNameLengthValid, e.target.value);
                     }}
                     className="font-montserrat font-semibold text-[2vh] leading-[1.5vh] w-full outline-none"
                   />
@@ -769,8 +798,6 @@ const DetailKelasPembayaran = () => {
                       placeholder="000"
                       onChange={(e) => {
                         handleInputCredit(e);
-                        console.log(e.target.value);
-                        console.log(IsCvvLengthValid, e.target.value);
                       }}
                       type="number"
                       required
@@ -790,8 +817,6 @@ const DetailKelasPembayaran = () => {
                       id="expiryDate"
                       onChange={(e) => {
                         handleInputCredit(e);
-                        console.log(e.target.value);
-                        console.log(isExpiryDateValid);
                       }}
                       required
                       className="font-montserrat font-semibold text-[2vh] leading-[1.5vh] w-full outline-none"
@@ -801,7 +826,10 @@ const DetailKelasPembayaran = () => {
               </div>
               <button
                 className="mobile-credit-card-btn flex justify-center items-center py-[1vh] rounded-[1.5rem] text-white bg-dark-blue w-full hover:bg-light-blue-300 disabled:bg-gray-300"
-                onClick={handleCreditCardClick}
+                onClick={() => {
+                  handleCreditCardClick();
+                  setIsKirimBtnClicked(true);
+                }}
                 disabled={
                   !IsCardNumberLengthValid ||
                   !IsHolderNameLengthValid ||
@@ -819,10 +847,21 @@ const DetailKelasPembayaran = () => {
 
         <Link to={`/pembayaranSukses/${classId}`}>
           <button
-            className="buy-now-button-container flex justify-center items-center py-[1.5vh] bg-[#FF0000] rounded-[1.5rem] mt-[2.25vw] w-full"
+            className="buy-now-button-container flex justify-center items-center py-[1.5vh] bg-[#FF0000] rounded-[1.5rem] mt-[2.25vw] w-full disabled:bg-gray-300"
             onClick={() => {
               handleUpdatePayment(classId);
             }}
+            disabled={
+              (FormInputNominal.nominal <= 0 ||
+                !isNominalValid ||
+                !isNominalLengthValid ||
+                !IsKirimBtnClicked) &&
+              (!IsCardNumberLengthValid ||
+                !IsHolderNameLengthValid ||
+                !IsCvvLengthValid ||
+                !isExpiryDateValid ||
+                !IsKirimBtnClicked)
+            }
           >
             <span className="font-montserrat font-black text-white text-[2vh] leading-[1.5vh]">
               Bayar dan Ikuti Kelas Selamanya
