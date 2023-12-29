@@ -2,7 +2,7 @@ import axios from "axios";
 import { CookieKeys, CookieStorage } from "./cookies";
 
 const httpForm = axios.create({
-  baseURL: process.env.REACT_APP_BASE_URL,
+  baseURL: process.env.REACT_APP_BASEURL,
   timeout: 30000,
   headers: {
     Accept: "multipart/form-data",

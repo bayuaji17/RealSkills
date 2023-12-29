@@ -100,6 +100,9 @@ export const KelasSaya = () => {
         <div>
           <div className="flex items-center justify-between mx-2 mt-3 pt-0 pb-4 laptop:mt-0 laptop:py-6 laptop:ml-0 laptop:mr-4  text-lg ">
             <h1 className="font-bold">Kelas Berjalan</h1>
+            <div className="flex laptop:hidden">
+              <FilterSide onFilterChange={handleFilterChange} />
+            </div>
             <div className="hidden laptop:flex relative  w-[16rem] text-xs bg-[#EBF3FC] ">
               <input
                 className="p-4 w-full flex justify-between rounded-lg shadow-lg"
