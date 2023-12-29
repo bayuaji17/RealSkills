@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { allClass } from "../services/get-allclass";
 import { Progress } from "@material-tailwind/react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 export const CardBeranda = ({
@@ -116,6 +116,7 @@ export const CardBeranda = ({
           key={value.id}
           className=" bg-white w-[22rem] laptop:w-[18rem]  rounded-3xl shadow-md "
         >
+          <Link to={`/detailKelas/${value.id}`}>
           <div className="h-[6rem] overflow-hidden rounded-t-3xl mb-1">
           <img
             className="h-full w-full object-cover"
@@ -187,6 +188,7 @@ export const CardBeranda = ({
               </p>
             </div>
             {isCourse && (
+               <Link to={`/detailKelas/${value.id}`}>
               <button className="flex items-center text-xs text-white bg-[#6148FF] py-1 px-3 rounded-xl gap-3 ">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -202,6 +204,7 @@ export const CardBeranda = ({
                 </svg>
                 Rp {value.price}
               </button>
+              </Link>
             )}
             {myClass && (
               <div className="flex items-center text-xs text-white rounded-xl gap-1 ">
@@ -258,6 +261,7 @@ export const CardBeranda = ({
                 </button>
               ))}
           </div>
+          </Link>
         </div>
       ))}
     </>

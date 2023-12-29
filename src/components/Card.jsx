@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useCallback, useEffect, useState } from "react";
 import { allClass, topikClass } from "../services/get-allclass";
 import { Button, Progress } from "@material-tailwind/react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Card = ({
   isCourse,
@@ -35,8 +35,8 @@ export const Card = ({
         setNotFound(null);
       }
     } catch (error) {
-      console.error(error.response.data.error);
-      setNotFound(error.response.data.error);
+      // console.error(error.response.data.data.error);
+      // setNotFound(error.response.data.data.error);
       setClassData([]);
     }
   }, [page, limit]);
@@ -255,6 +255,7 @@ export const Card = ({
               )}
               {isTopik &&
                 (value.type_id === 2 ? (
+                  <Link to={`/detailKelas/${value.id}`}>
                   <button className="flex items-center text-xs text-white bg-[#6148FF] py-1 px-3 rounded-xl gap-3 ">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -270,6 +271,7 @@ export const Card = ({
                     </svg>
                     {getById(value.type_id, typeMapping)}
                   </button>
+                  </Link>
                 ) : (
                   <button
                     onClick={() => {

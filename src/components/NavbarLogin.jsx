@@ -16,9 +16,6 @@ import {
   UserCircleIcon,
   Square3Stack3DIcon,
   ChevronDownIcon,
-  Cog6ToothIcon,
-  InboxArrowDownIcon,
-  LifebuoyIcon,
   PowerIcon,
   Bars2Icon,
   BellIcon,
@@ -35,47 +32,35 @@ function ProfileMenu() {
 
   const closeMenu = () => setIsMenuOpen(false);
 
-  const handleSignOut = async () => {
-    try {
-      console.log("Removing auth token...");
+  const handleMenuClick = (label) => {
+    if (label === "My Profile") {
+      // Navigate to the profile page when "My Profile" is clicked
+      navigate("/profil");
+    } else if (label === "Sign Out") {
       // Remove the authentication token and redirect to the login page
       CookieStorage.remove(CookieKeys.AuthToken, {
         path: "/",
         expires: new Date(0),
       });
-  
-      // Assuming you have the 'navigate' function from 'react-router-dom'
       navigate("/login");
-    } catch (error) {
-      console.error("Error during sign out:", error);
     }
+  
+    // Close the menu in both cases
+    closeMenu();
   };
+  
   const profileMenuItems = [
     {
       label: "My Profile",
       icon: UserCircleIcon,
-      path: "/profile", // Ganti dengan path yang sesuai
-    },
-    {
-      label: "Edit Profile",
-      icon: Cog6ToothIcon,
-      path: "/edit-profile", // Ganti dengan path yang sesuai
-    },
-    {
-      label: "Inbox",
-      icon: InboxArrowDownIcon,
-      path: "/inbox", // Ganti dengan path yang sesuai
-    },
-    {
-      label: "Help",
-      icon: LifebuoyIcon,
-      path: "/help", // Ganti dengan path yang sesuai
+      onClick:handleMenuClick,
+      
     },
     {
       label: "Sign Out",
       icon: PowerIcon,
       path: "/login",
-      onClick: handleSignOut,
+      onClick: handleMenuClick,
     },
   ];
   return (
@@ -108,10 +93,7 @@ function ProfileMenu() {
             <MenuItem
            
               key={label}
-              onClick={() => {
-                handleSignOut();
-                closeMenu();
-              }}
+              onClick={() => handleMenuClick(label)}
               className={`flex items-center gap-2 rounded ${
                 isLastItem
                   ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
