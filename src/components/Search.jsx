@@ -264,6 +264,7 @@ export const Search = () => {
                 </svg>
               </ListItemPrefix>
               <a href="/login">Login</a>
+              <a href="/profile">Akun</a>
             </ListItem>
           </List>
         </Drawer>

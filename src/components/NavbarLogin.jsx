@@ -35,8 +35,10 @@ function ProfileMenu() {
 
   const handleMenuClick = (label) => {
     if (label === "My Profile") {
-      // Navigate to the profile page when "My Profile" is clicked
-      navigate("/profile");
+      const path = window.innerWidth >= 1025 ? "/profile" : "/settings";
+
+      // Navigate to the determined path
+      navigate(path);
     } else if (label === "Sign Out") {
       // Remove the authentication token and redirect to the login page
       CookieStorage.remove(CookieKeys.AuthToken, {
