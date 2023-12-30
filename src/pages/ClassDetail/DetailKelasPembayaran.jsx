@@ -591,28 +591,28 @@ const DetailKelasPembayaran = () => {
 
           <div className="mobile-all-price-container bg-[#FFFF] rounded-[.5rem] flex justify-between py-[1vh]">
             <div className="price-section flex flex-col gap-[2vh] mx-[1rem]">
-              <span className="font-montserrat text-[2vh] font-black leading-[2vh]">
+              <span className="font-montserrat text-[1.75vh] font-black leading-[2vh]">
                 Harga
               </span>
-              <span className="font-montserrat text-[1.75vh] font-black text-[#151515] leading-[2vh]">
+              <span className="font-montserrat text-[1.5vh] font-black text-[#151515] leading-[2vh]">
                 {rupiahFormat.format(Detail.price)}
               </span>
             </div>
 
             <div className="tax-section flex flex-col gap-[2vh] mx-[1rem]">
-              <span className="font-montserrat text-[2vh] font-black leading-[2vh]">
+              <span className="font-montserrat text-[1.75vh] font-black leading-[2vh]">
                 PPN 11%
               </span>
-              <span className="font-montserrat text-[1.75vh] font-black text-[#151515] leading-[2vh]">
+              <span className="font-montserrat text-[1.5vh] font-black text-[#151515] leading-[2vh]">
                 {rupiahFormat.format(taxPrice)}
               </span>
             </div>
 
             <div className="total-price-section flex flex-col gap-[2vh] mx-[1rem]">
-              <span className="font-montserrat text-[2vh] font-black leading-[2vh]">
+              <span className="font-montserrat text-[1.75vh] font-black leading-[2vh]">
                 Total Bayar
               </span>
-              <span className="font-montserrat text-[1.75vh] font-black text-dark-blue leading-[2vh]">
+              <span className="font-montserrat text-[1.5vh] font-black text-dark-blue leading-[2vh]">
                 {rupiahFormat.format(Detail.price + taxPrice)}
               </span>
             </div>
@@ -654,7 +654,7 @@ const DetailKelasPembayaran = () => {
                 />
               </div>
 
-              <div className="select-container w-[50vh] font-poppins font-semibold">
+              <div className="select-container w-[60%] font-poppins font-semibold">
                 <Select
                   size="md"
                   color="blue"
@@ -669,7 +669,7 @@ const DetailKelasPembayaran = () => {
                   <Option value="BCA">BCA</Option>
                 </Select>
               </div>
-              <div className="flex items-center w-[50vh] flex-col gap-[1.5vh]">
+              <div className="flex items-center w-[60%] flex-col gap-[1.5vh]">
                 <div className="nominal-container flex flex-col gap-[.5vh] w-full">
                   <span className="font-poppins font-semibold text-[2vh] leading-[2vh]">
                     Nominal

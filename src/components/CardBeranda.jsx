@@ -2,7 +2,6 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { allClass } from "../services/get-allclass";
-import { Progress } from "@material-tailwind/react";
 import { Link, useNavigate } from "react-router-dom";
 import { getFreeClass } from "../services/freeClass";
 import { toast } from "react-toastify";
@@ -139,16 +138,21 @@ export const CardBeranda = ({
   const renderPriceButton = (value) => {
     if (value.price === 0) {
       return (
+        <div className="flex flex-col gap-1">
         <button
           onClick={() => handleFreeClass(value.id)}
           className="flex items-center text-xs text-white bg-[#6148FF] py-1 px-3 rounded-xl"
         >
           Free
         </button>
+        <p className="text-xs text-center text-gray-500">
+        Free Course
+      </p>
+      </div>
       );
     } else {
       return (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-1">
           <button className="flex items-center text-xs text-white bg-[#6148FF] py-1 px-3 rounded-xl gap-2">
           <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -190,7 +194,7 @@ export const CardBeranda = ({
             alt="Logo"
           />
           </div>
-          <div className="px-3 pb-3 w-[22rem] laptop:w-[18rem] ">
+          <div className="px-3 pb-1 w-[22rem] laptop:w-[18rem] ">
             <div className="flex justify-between   ">
               <p className="font-bold text-xs text-[#6148FF]">
                 {getById(value.category_id, categoryMapping)}

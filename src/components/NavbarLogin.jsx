@@ -35,8 +35,10 @@ function ProfileMenu() {
 
   const handleMenuClick = (label) => {
     if (label === "My Profile") {
-      // Navigate to the profile page when "My Profile" is clicked
-      navigate("/profile");
+      const path = window.innerWidth >= 1025 ? "/profile" : "/settings";
+
+      // Navigate to the determined path
+      navigate(path);
     } else if (label === "Sign Out") {
       // Remove the authentication token and redirect to the login page
       CookieStorage.remove(CookieKeys.AuthToken, {
@@ -295,7 +297,7 @@ export const NavbarLogin = () => {
   }, []);
 
   return (
-    <Navbar className="w-full  max-w-full p-2  lg:pl-6 bg-[#6148FF]  shadow-none border-0 rounded-none lg:rounded-none bg-opacity-100">
+    <Navbar className="w-full  max-w-full p-1  lg:pl-6 bg-[#6148FF]  shadow-none border-0 rounded-none lg:rounded-none bg-opacity-100">
       <div className="relative  flex items-center justify-between text-blue-gray-900">
         <div className="flex">
           <img src={logo} alt=" " className="w-12 h-12" />

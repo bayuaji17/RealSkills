@@ -70,7 +70,8 @@ export const SearchResultMyclass = ({ isCourse, myClass, isTopik }) => {
         {/* <hr /> */}
         <br></br>
         <div className=" flex gap-5 justify-center text-start flex-wrap grid-cols-5">
-          {result?.map((value) => (
+        {result && result.length > 0 ? (
+            result.map((value) => (
             <div
               div
               key={value.id}
@@ -188,7 +189,13 @@ export const SearchResultMyclass = ({ isCourse, myClass, isTopik }) => {
                 )}
               </div>
             </div>
-          ))}
+            
+          ))
+          ) : (
+            <div className="text-gray-500 ">
+              No classes found for "{searchQuery}".
+            </div>
+          )}
         </div>
       </div>
     </div>

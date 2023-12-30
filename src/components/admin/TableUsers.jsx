@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getAllUsers } from "../../services/all-users";
 import { Button, Card, CardFooter, Typography } from "@material-tailwind/react";
 import { PostNotif } from "./PostNotif";
+import { Link } from "react-router-dom";
 
 export const TableUsers = () => {
   const [page, setPage] = useState(1);
@@ -39,7 +40,16 @@ export const TableUsers = () => {
       <PostNotif open={open} handler={handleOpen} />
       <div className="flex flex-row items-center justify-between px-5 flex-wrap py-3 ">
         <h1 className="text-lg font-bold">Data Users</h1>
-        <Button onClick={handleOpen} color="blue">Broadcast Notifikasi</Button>
+        <div className="flex flex-row gap-3">
+          <Link to={"/admin/users/notifikasi"}>
+            <Button color="blue">
+              Table Notifikasi
+            </Button>
+          </Link>
+          <Button onClick={handleOpen} color="blue">
+            Broadcast Notifikasi
+          </Button>
+        </div>
       </div>
       <div>
         <Card className="h-80 w-full overflow-scroll">
@@ -120,24 +130,24 @@ export const TableUsers = () => {
             </tbody>
           </table>
           <CardFooter className="flex items-center laptop:justify-end gap-2 border-t border-blue-gray-50 p-4">
-          <Button
-            variant="gradient"
-            size="sm"
-            color="green"
-            onClick={handlePreviousPage}
-            disabled={page === 1}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="gradient"
-            size="sm"
-            color="green"
-            onClick={handleNextPage}
-          >
-            Next
-          </Button>
-        </CardFooter>
+            <Button
+              variant="gradient"
+              size="sm"
+              color="green"
+              onClick={handlePreviousPage}
+              disabled={page === 1}
+            >
+              Previous
+            </Button>
+            <Button
+              variant="gradient"
+              size="sm"
+              color="green"
+              onClick={handleNextPage}
+            >
+              Next
+            </Button>
+          </CardFooter>
         </Card>
       </div>
     </div>

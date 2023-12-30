@@ -35,4 +35,6 @@ export const API_ENDPOINT = {
   DELETE_CHAPTER: "api/classes/chapters/",
   VIDEOS:"api/classes/chapters/videos/",
   SEARCH_MYCLASS : (query) => { return `/api/auth/authenticated?search=${query}`},
+  NOTIFIKASI:"api/users/notifications/"
+  
 };

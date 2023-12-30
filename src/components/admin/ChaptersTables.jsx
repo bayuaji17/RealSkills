@@ -291,7 +291,7 @@ export const ChaptersTables = () => {
           />
           <FormInput
             label="time"
-            type="text"
+            type="number"
             placeholder="Durasi Video"
             name="Durasi Video"
             value={editDataVideo.time}

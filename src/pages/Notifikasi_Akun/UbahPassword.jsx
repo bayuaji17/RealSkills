@@ -173,7 +173,7 @@ export const UbahPassword = () => {
                     />
                     <a
                       className="text-black text-[0.9rem] font-bold hover:text-[#6148FF]"
-                      href="/profil"
+                      href="/profile"
                     >
                       Profil Saya
                     </a>
