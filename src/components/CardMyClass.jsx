@@ -22,7 +22,6 @@ export const CardMyclass = (props) => {
    }
     } catch (error) {
       setClassData([]);
-      alert(error.response.data.error);
     }
   }, [props.classesFilter, props.filterParams?.page || 1, props.filterParams?.limit || 4]);
 
