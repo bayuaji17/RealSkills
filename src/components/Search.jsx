@@ -225,7 +225,7 @@ export const Search = () => {
                   />
                 </svg>
               </ListItemPrefix>
-              Akun
+              <a href="/profile">Akun</a>
             </ListItem>
           </List>
         </Drawer>
