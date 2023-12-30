@@ -119,12 +119,12 @@ export const AkunProfil = () => {
             size="lg"
             style={{ color: "#6148FF" }}
             onClick={() => {
-              navigate("/");
+              navigate("/beranda");
             }}
           />
           <a
             className="font-black font-montserrat text-[1rem] text-[#6148FF]"
-            href="/"
+            href="/beranda"
           >
             Kembali ke Beranda
           </a>
