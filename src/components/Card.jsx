@@ -14,6 +14,7 @@ export const Card = (props) => {
       try {
         const data = await getFilterClasses(props.classesFilter);
         setClassData(data.data.data.classes);
+        console.log(props.classesFilter, 'classes filter')
       } catch (error) {
         console.error("Error fetching class data:", error);
         alert(error.response.data.error);
