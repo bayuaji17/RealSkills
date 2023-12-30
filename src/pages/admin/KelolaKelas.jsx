@@ -3,6 +3,7 @@ import { SideBarAdmin } from "../../components/admin/SideBarAdmin";
 import { NavbarAdmin } from "../../components/admin/NavbarAdmin";
 import { ReactTables } from "../../components/ReactTables";
 import { CardAdminApi } from "../../components/admin/CardAdminApi";
+import { TableKelas } from "../../components/admin/TableKelas";
 
 export const KelolaKelas = () => {
   const [open, setOpen] = useState(false);
@@ -33,7 +34,8 @@ export const KelolaKelas = () => {
           {/* //!EndCard */}
           {/* Table */}
           <div className="container mx-auto w-10/12 pb-4">
-            <ReactTables />
+            {/* <ReactTables /> */}
+            <TableKelas/>
           </div>
           {/* End Table */}
         </div>
