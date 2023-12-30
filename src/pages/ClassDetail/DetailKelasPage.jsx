@@ -858,7 +858,7 @@ const DetailKelasPage = () => {
                       style={{ width: "2.5vh" }}
                     />
                     <Progress
-                      value={20}
+                      value={calculateProgressBar(Detail)}
                       size="md"
                       color="indigo"
                       label="Completed"
@@ -887,10 +887,10 @@ const DetailKelasPage = () => {
                       key={chapterIndex}
                     >
                       <div className="chapter-title-section flex items-center justify-between">
-                        <span className="font-montserrat font-extrabold text-dark-blue text-[1.7vh] leading-[1.25vh]">
+                        <span className="font-montserrat font-extrabold text-dark-blue text-[1.7vh] leading-[2vh] w-[70%] flex justify-start">
                           Chapter {value.no_chapter} - {value.title}
                         </span>
-                        <span className="font-montserrat text-[#489CFF] text-[1.7vh] font-extrabold leading-[1.25vh]">
+                        <span className="font-montserrat text-[#489CFF] text-[1.7vh] font-extrabold leading-[2vh] w-[30%] flex justify-end">
                           {totalVideoMinutes} Menit
                         </span>
                       </div>

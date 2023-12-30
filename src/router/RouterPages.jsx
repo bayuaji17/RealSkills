@@ -21,148 +21,116 @@ import PembayaranSukses from "../pages/ClassDetail/PembayaranSukses";
 import { BerandaNoLogin } from "../pages/BerandaNoLogin";
 import { KelasSaya } from "../pages/KelasSaya";
 import { TopikKelas } from "../pages/TopikKelas";
-import FilterSide from "../components/FilterSide";
-// import { FilterResultKelas } from "../pages/FilterResultKelas";
-// import { FilterResultTopik } from "../pages/FilterResultTopik";
-
 import { SearchResult } from "../components/SearchResult";
 import { ResultCategory } from "../pages/ResultCategory";
 import { BerandaLogin } from "../pages/BerandaLogin";
-import ProtectedToken from "../components/ProtectedComponents/ProtectedToken";
 import { SearchResultMyclass } from "../components/SearchResultMyclass";
-
 import { AdminUsers } from "../pages/admin/AdminUsers";
 import { AdminUsersNotif } from "../pages/admin/AdminUsersNotif";
+import ProtectedTokenUser from "../components/ProtectedComponents/ProtectedTokenUser";
+import ProtectedTokenAdmin from "../components/ProtectedComponents/ProtectedTokenAdmin";
 export const RouterPages = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* <Route path="/" element={<Beranda />} /> */}
-        <Route path="/" element={<BerandaNoLogin />} />
-        {/* //*Auth */}
+        {/* AUTH AREA */}
         <Route path="login" element={<LoginPage />} />
         <Route path="admin" element={<LoginAdminPage />} />
         <Route path="register" element={<RegisterPage />} />
         <Route path="/reset" element={<ResetPasswordTautanPage />} />
         <Route path="/resetPassword" element={<ResetPasswordPage />} />
-        {/* //*Auth */}
-        {/* //*ADMIN AREA */}
-        <Route path="admin/dashboard" element={<AdminDashboard />} />
-        <Route path="admin/kelola-kelas" element={<KelolaKelas />} />
-        <Route path="admin/kelola-kelas/:id" element={<DetailsKelolaKelas />} />
-        <Route path="admin/kelola-kelas/chapters/:id" element={<Chapters />} />
-        <Route path="admin/users" element={<AdminUsers />} />
-        <Route path="admin/dashboard" element={<AdminDashboard/>} />
-        <Route path="admin/kelola-kelas" element={<KelolaKelas/>} />
-        <Route path="admin/users" element={<AdminUsers/>} />
-        <Route path="admin/users/notifikasi" element={<AdminUsersNotif/>} />
-        <Route path="admin/kelola-kelas/:id" element={<DetailsKelolaKelas/>} />
-        <Route path="admin/kelola-kelas/chapters/:id" element={<Chapters/>} />
-        {/* //*ADMIN AREA */}
+        {/* AUTH AREA */}
 
-        <Route path="/detailKelas" element={<DetailKelasPage />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/notifikasi" element={<Notifikasi />} />
-        <Route path="/profile" element={<AkunProfil />} />
-        <Route path="/ubahPassword" element={<UbahPassword />} />
-        <Route path="/riwayatPembayaran" element={<RiwayatPembayaran />} />
-        <Route path="/kelas" element={<KelasSaya />} />
-        <Route path="/topik" element={<TopikKelas />} />
-        <Route path="/filterSide" element={<FilterSide />} />
-        <Route path="/detailKelas/:classId" element={<DetailKelasPage />} />
+        {/* ADMIN AREA */}
         <Route
-          path="/pembayaran/:classId"
-          element={<DetailKelasPembayaran />}
+          path="admin/users"
+          element={
+            <ProtectedTokenAdmin>
+              <AdminUsers />
+            </ProtectedTokenAdmin>
+          }
         />
-        <Route
-          path="/pembayaranSukses/:classId"
-          element={<PembayaranSukses />}
-        />
-
-        <Route path="/berandaNoLog" element={<BerandaNoLogin />} />
-        <Route path="/beranda" element={<BerandaLogin />} />
-        <Route path="/kelas" element={<KelasSaya />} />
-        <Route path="/topik" element={<TopikKelas />} />
-        <Route path="/filterSide" element={<FilterSide />} />
-        <Route path="/reset" element={<ResetPasswordTautanPage />} />
-        <Route path="/resetPassword" element={<ResetPasswordPage />} />
-        <Route path="/search" element={<SearchResult />} />
-        <Route path="/kategori/:id" element={<ResultCategory />} />
-
-        <Route path="*" element={<NotFoundPage />} />
         <Route
           path="admin/dashboard"
           element={
-            <ProtectedToken>
+            <ProtectedTokenAdmin>
               <AdminDashboard />
-            </ProtectedToken>
+            </ProtectedTokenAdmin>
           }
         />
         <Route
           path="admin/kelola-kelas"
           element={
-            <ProtectedToken>
+            <ProtectedTokenAdmin>
               <KelolaKelas />
-            </ProtectedToken>
+            </ProtectedTokenAdmin>
           }
         />
         <Route
           path="admin/kelola-kelas/:id"
           element={
-            <ProtectedToken>
+            <ProtectedTokenAdmin>
               <DetailsKelolaKelas />
-            </ProtectedToken>
+            </ProtectedTokenAdmin>
           }
         />
         <Route
           path="admin/kelola-kelas/chapters/:id"
           element={
-            <ProtectedToken>
+            <ProtectedTokenAdmin>
               <Chapters />
-            </ProtectedToken>
+            </ProtectedTokenAdmin>
           }
         />
-        {/* //*ADMIN AREA */}
+        <Route
+          path="admin/users/notifikasi"
+          element={
+            <ProtectedTokenAdmin>
+              <AdminUsersNotif />
+            </ProtectedTokenAdmin>
+          }
+        />
+        {/* ADMIN AREA */}
 
         {/* PROFILE AREA */}
         <Route
           path="/settings"
           element={
-            <ProtectedToken>
+            <ProtectedTokenUser>
               <Settings />
-            </ProtectedToken>
+            </ProtectedTokenUser>
           }
         />
         <Route
           path="/notifikasi"
           element={
-            <ProtectedToken>
+            <ProtectedTokenUser>
               <Notifikasi />
-            </ProtectedToken>
+            </ProtectedTokenUser>
           }
         />
         <Route
           path="/profile"
           element={
-            <ProtectedToken>
+            <ProtectedTokenUser>
               <AkunProfil />
-            </ProtectedToken>
+            </ProtectedTokenUser>
           }
         />
         <Route
           path="/ubahPassword"
           element={
-            <ProtectedToken>
+            <ProtectedTokenUser>
               <UbahPassword />
-            </ProtectedToken>
+            </ProtectedTokenUser>
           }
         />
         <Route
           path="/riwayatPembayaran"
           element={
-            <ProtectedToken>
+            <ProtectedTokenUser>
               <RiwayatPembayaran />
-            </ProtectedToken>
+            </ProtectedTokenUser>
           }
         />
         {/* PROFILE AREA */}
@@ -171,44 +139,54 @@ export const RouterPages = () => {
         <Route
           path="/detailKelas/:classId"
           element={
-            <ProtectedToken>
+            <ProtectedTokenUser>
               <DetailKelasPage />
-            </ProtectedToken>
+            </ProtectedTokenUser>
           }
         />
         <Route
           path="/pembayaran/:classId"
           element={
-            <ProtectedToken>
+            <ProtectedTokenUser>
               <DetailKelasPembayaran />
-            </ProtectedToken>
+            </ProtectedTokenUser>
           }
         />
         <Route
           path="/pembayaranSukses/:classId"
           element={
-            <ProtectedToken>
+            <ProtectedTokenUser>
               <PembayaranSukses />
-            </ProtectedToken>
+            </ProtectedTokenUser>
           }
         />
         {/* DetailKelas Area */}
 
-        <Route path="/berandaNoLog" element={<BerandaNoLogin />} />
-        <Route path="/beranda" element={<BerandaLogin />} />
+        {/* GENERAL AREA */}
+        <Route path="/" element={<BerandaNoLogin />} />
+        <Route
+          path="/beranda"
+          element={
+            <ProtectedTokenUser>
+              <BerandaLogin />
+            </ProtectedTokenUser>
+          }
+        />
         <Route path="/topik" element={<TopikKelas />} />
         <Route
           path="/kelas"
           element={
-            <ProtectedToken>
+            <ProtectedTokenUser>
               <KelasSaya />
-            </ProtectedToken>
+            </ProtectedTokenUser>
           }
         />
         <Route path="/search" element={<SearchResult />} />
         <Route path="/kategori/:id" element={<ResultCategory />} />
         <Route path="*" element={<NotFoundPage />} />
         <Route path="/searchmyclass" element={<SearchResultMyclass />} />
+
+        {/* GENERAL AREA */}
       </Routes>
     </BrowserRouter>
   );

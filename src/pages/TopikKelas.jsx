@@ -93,7 +93,7 @@ export const TopikKelas = () => {
           <div className="flex items-center justify-between mx-5 mt-3 laptop:mt-0 pt-0 pb-2 laptop:py-6 laptop:ml-0 laptop:mr-4  text-lg ">
             <h1 className="font-bold">Topik Kelas</h1>
             <div className="flex laptop:hidden">
-              <FilterSide />
+              <FilterSide onFilterChange={handleFilterChange}/>
             </div>
             
           </div>
