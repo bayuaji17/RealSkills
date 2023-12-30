@@ -32,6 +32,7 @@ import ProtectedToken from "../components/ProtectedComponents/ProtectedToken";
 import { SearchResultMyclass } from "../components/SearchResultMyclass";
 
 import { AdminUsers } from "../pages/admin/AdminUsers";
+import { AdminUsersNotif } from "../pages/admin/AdminUsersNotif";
 export const RouterPages = () => {
   return (
     <BrowserRouter>
@@ -51,6 +52,12 @@ export const RouterPages = () => {
         <Route path="admin/kelola-kelas/:id" element={<DetailsKelolaKelas />} />
         <Route path="admin/kelola-kelas/chapters/:id" element={<Chapters />} />
         <Route path="admin/users" element={<AdminUsers />} />
+        <Route path="admin/dashboard" element={<AdminDashboard/>} />
+        <Route path="admin/kelola-kelas" element={<KelolaKelas/>} />
+        <Route path="admin/users" element={<AdminUsers/>} />
+        <Route path="admin/users/notifikasi" element={<AdminUsersNotif/>} />
+        <Route path="admin/kelola-kelas/:id" element={<DetailsKelolaKelas/>} />
+        <Route path="admin/kelola-kelas/chapters/:id" element={<Chapters/>} />
         {/* //*ADMIN AREA */}
 
         <Route path="/detailKelas" element={<DetailKelasPage />} />
