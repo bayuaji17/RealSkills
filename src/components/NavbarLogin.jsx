@@ -19,6 +19,7 @@ import {
   PowerIcon,
   Bars2Icon,
   BellIcon,
+  HomeIcon,
 } from "@heroicons/react/24/solid";
 import { Link, useNavigate } from "react-router-dom";
 import { fetchSearch } from "../services/search";
@@ -220,9 +221,9 @@ function NavListMenu() {
 // nav list component
 const navListItems = [
   {
-    label: "Account",
-    icon: UserCircleIcon,
-    path: "/profile",
+    label: "Dashboard",
+    icon: HomeIcon,
+    path: "/beranda",
   },
   {
     label: "Notification",

@@ -7,11 +7,15 @@ export const getAllClass = async () => {
 };
 
 
-export const getFilterClasses = async ({category, type, level}) => {
+
+export const getFilterClasses = async ({page, limit, category, type, level}) => {
   const params = {
+    page,
+    limit,
     category,
     type,
-    level
+    level,
+    
   }
   const filterClasses = await http.get(API_ENDPOINT.CLASSES, { params });
   return filterClasses;

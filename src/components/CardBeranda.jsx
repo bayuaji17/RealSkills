@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import { allClass } from "../services/get-allclass";
 import { Progress } from "@material-tailwind/react";
 import { Link, useNavigate } from "react-router-dom";
+import { getFreeClass } from "../services/freeClass";
+import { toast } from "react-toastify";
 
 
 export const CardBeranda = ({
@@ -14,7 +16,7 @@ export const CardBeranda = ({
   filterCategory,
 }) => {
   const [classData, setClassData] = useState([]);
-  const [page, setPage] = useState(1);
+  const [page] = useState(1);
   const navigate = useNavigate();
 
 
@@ -106,6 +108,70 @@ export const CardBeranda = ({
     return `${totalHours} jam ${totalMinutes} menit`;
   };
 
+  const handleFreeClass = async (id) => {
+    try {
+      const response = await getFreeClass(id);
+      toast.success(response.message, {
+        position: "bottom-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } catch (error) {
+      // console.error("Error accessing free class:", error);
+      // toast.error("Anda sudah mengakses kelas ini", {
+      //   position: "bottom-center",
+      //   autoClose: 2000,
+      //   hideProgressBar: false,
+      //   closeOnClick: false,
+      //   pauseOnHover: true,
+      //   draggable: true,
+      //   progress: undefined,
+      //   theme: "light",
+      // });
+    }
+  };
+
+  const renderPriceButton = (value) => {
+    if (value.price === 0) {
+      return (
+        <button
+          onClick={() => handleFreeClass(value.id)}
+          className="flex items-center text-xs text-white bg-[#6148FF] py-1 px-3 rounded-xl"
+        >
+          Free
+        </button>
+      );
+    } else {
+      return (
+        <div className="flex flex-col gap-2">
+          <button className="flex items-center text-xs text-white bg-[#6148FF] py-1 px-3 rounded-xl gap-2">
+          <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                    >
+                      <path
+                        d="M2.99992 1H4.04592L2.99692 4H1.19092L2.55292 1.276C2.59448 1.19305 2.65831 1.12331 2.73725 1.07456C2.81619 1.02582 2.90714 1 2.99992 1ZM1.22692 5L4.24092 9.687L2.96992 5H1.22692ZM4.00592 5L5.53592 10.645C5.56303 10.7474 5.62324 10.8379 5.70716 10.9025C5.79109 10.9671 5.89402 11.0021 5.99992 11.0021C6.10582 11.0021 6.20875 10.9671 6.29267 10.9025C6.3766 10.8379 6.4368 10.7474 6.46392 10.645L7.99792 5H4.00592ZM9.03392 5L7.75992 9.685L10.7729 5H9.03292H9.03392ZM10.8089 4H9.00592L7.95592 1H8.99992C9.09287 0.999818 9.18403 1.02555 9.26316 1.0743C9.3423 1.12305 9.40628 1.1929 9.44792 1.276L10.8089 4ZM7.94692 4H4.05692L5.10492 1H6.89492L7.94692 4Z"
+                        fill="#EBF3FC"
+                      />
+                    </svg>
+            {`Rp ${value.price}`}
+          </button>
+          <p className="text-xs text-center text-gray-500">
+            Premium Course
+          </p>
+        </div>
+      );
+    }
+    }
+
 
   return (
     // <div className="flex justify-between gap-3 overflow-x-auto  laptop:flex-wrap">
@@ -188,47 +254,13 @@ export const CardBeranda = ({
               </p>
             </div>
             {isCourse && (
-               <Link to={`/detailKelas/${value.id}`}>
-              <button className="flex items-center text-xs text-white bg-[#6148FF] py-1 px-3 rounded-xl gap-3 ">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="12"
-                  height="12"
-                  viewBox="0 0 12 12"
-                  fill="none"
-                >
-                  <path
-                    d="M2.99992 1H4.04592L2.99692 4H1.19092L2.55292 1.276C2.59448 1.19305 2.65831 1.12331 2.73725 1.07456C2.81619 1.02582 2.90714 1 2.99992 1ZM1.22692 5L4.24092 9.687L2.96992 5H1.22692ZM4.00592 5L5.53592 10.645C5.56303 10.7474 5.62324 10.8379 5.70716 10.9025C5.79109 10.9671 5.89402 11.0021 5.99992 11.0021C6.10582 11.0021 6.20875 10.9671 6.29267 10.9025C6.3766 10.8379 6.4368 10.7474 6.46392 10.645L7.99792 5H4.00592ZM9.03392 5L7.75992 9.685L10.7729 5H9.03292H9.03392ZM10.8089 4H9.00592L7.95592 1H8.99992C9.09287 0.999818 9.18403 1.02555 9.26316 1.0743C9.3423 1.12305 9.40628 1.1929 9.44792 1.276L10.8089 4ZM7.94692 4H4.05692L5.10492 1H6.89492L7.94692 4Z"
-                    fill="#EBF3FC"
-                  />
-                </svg>
-                Rp {value.price}
-              </button>
+              <Link to={`/detailKelas/${value.id}`}>
+                <div className="flex flex-col gap-2">
+                  {renderPriceButton(value)}
+                </div>
               </Link>
             )}
-            {myClass && (
-              <div className="flex items-center text-xs text-white rounded-xl gap-1 ">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 12 12"
-                  fill="none"
-                >
-                  <path
-                    d="M6.5833 0.184082V1.36242C9.14413 1.67742 10.9583 4.00492 10.6433 6.56575C10.375 8.68908 8.70663 10.3749 6.5833 10.6257V11.7924C9.79163 11.4716 12.125 8.62492 11.8041 5.41658C11.5416 2.64575 9.34247 0.458249 6.5833 0.184082ZM5.41663 0.201582C4.27913 0.312415 3.19413 0.749915 2.30747 1.48492L3.14163 2.34825C3.79497 1.82325 4.58247 1.48492 5.41663 1.36825V0.201582ZM1.48497 2.30742C0.7556 3.19253 0.306752 4.27505 0.195801 5.41658H1.36247C1.4733 4.58825 1.79997 3.80075 2.31913 3.14158L1.48497 2.30742ZM8.04163 3.95825L5.19497 6.80492L3.9583 5.56825L3.33997 6.18658L5.19497 8.04158L8.65997 4.57658L8.04163 3.95825ZM0.201634 6.58325C0.318301 7.72658 0.767467 8.80575 1.4908 9.69241L2.31913 8.85825C1.80401 8.19885 1.47561 7.4131 1.3683 6.58325H0.201634ZM3.14163 9.71575L2.30747 10.5149C3.19109 11.2515 4.27287 11.7102 5.41663 11.8332V10.6666C4.58678 10.5593 3.80104 10.2309 3.14163 9.71575Z"
-                    fill="#73CA5C"
-                  />
-                </svg>
-                <Progress
-                  value={50}
-                  size="md"
-                  color="indigo"
-                  label="Completed"
-                />
-                ;
-              </div>
-            )}
+           
             {isTopik &&
               (value.type_id === 2 ? (
                 <button className="flex items-center text-xs text-white bg-[#6148FF] py-1 px-3 rounded-xl gap-3 ">

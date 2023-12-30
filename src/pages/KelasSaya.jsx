@@ -5,13 +5,31 @@ import { NavbarLogin } from "../components/NavbarLogin";
 import { CardMyclass } from "../components/CardMyClass";
 import { fetchSearchMyclass } from "../services/search-myclass";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@material-tailwind/react";
 export const KelasSaya = () => {
   const [filteredType, setFilteredType] = useState("all");
   const [filterParams, setFilterParams] = useState({
+    page : 1,
+    limit : 4,
     category: "",
     level: "",
     type: "",
   });
+  const handlePreviousPage = () => {
+    if (filterParams.page > 1) {
+      setFilterParams((prevParams) => ({
+        ...prevParams,
+        page: prevParams.page - 1,
+      }));
+    }
+  };
+  
+  const handleNextPage = () => {
+    setFilterParams((prevParams) => ({
+      ...prevParams,
+      page: prevParams.page + 1,
+    }));
+  };
 
   const handleFilterChange = (newFilterParams) => {
     let typeValue = "";
@@ -61,6 +79,8 @@ export const KelasSaya = () => {
       type: typeValue,
       category: categoryValue,
       level: levelValue,
+      page: 1,
+      limit: 4,
     });
   };
 
@@ -169,7 +189,25 @@ export const KelasSaya = () => {
                   filter={filter}
                 />
               </div>
-              {/* </div> */}
+              <div className="flex gap-4 justify-end">
+        <Button
+          variant="gradient"
+          size="sm"
+          color="green"
+          onClick={handlePreviousPage}
+          disabled={filterParams.page === 1}
+        >
+          Previous
+        </Button>
+        <Button
+          variant="gradient"
+          size="sm"
+          color="green"
+          onClick={handleNextPage}
+        >
+          Next
+        </Button>
+              </div>
               <div>
                 <h1 className="px-4 font-semibold text-md text-xl mb-4 mt-1  laptop:hidden laptop:mb-0">
                   Kategori

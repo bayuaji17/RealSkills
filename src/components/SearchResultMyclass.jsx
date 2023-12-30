@@ -1,4 +1,4 @@
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useLocation } from "react-router-dom";
 import { NavbarLogin } from "./NavbarLogin";
@@ -48,10 +48,22 @@ export const SearchResultMyclass = ({ isCourse, myClass, isTopik }) => {
     <div>
       <NavbarLogin/><hr></hr>
       <div className="bg-[#6148FF]  text-center">
-        <div className="flex justify-start items-center p-2">
-          <h1 className="text-white text-start font-bold w-full">
-            Search Result "{searchQuery}"
-          </h1>
+      <div className="flex justify-start text-white gap-4 items-center px-4 py-2">        
+        <FontAwesomeIcon
+            icon={faArrowLeft}
+            size="xl"
+            onClick={() => {
+              window.history.back();
+            }}
+          />
+          <span
+            className="font-montserrat text-[1rem] font-bold leading-[1.5rem]"
+            onClick={() => {
+              window.history.back();
+            }}
+          >
+            Search result "{searchQuery}"
+          </span>
         </div>
       </div>
       <div className=" flex justify-center laptop:justify-start flex-wrap p-4">

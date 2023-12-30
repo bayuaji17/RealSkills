@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import {  useParams } from "react-router-dom";
 import { byCategory } from "../services/byCategory";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faStar } from "@fortawesome/free-solid-svg-icons";
 import { NavbarLogin } from "../components/NavbarLogin";
 
 export const ResultCategory = () => {
@@ -69,10 +69,22 @@ export const ResultCategory = () => {
     <div>
       <NavbarLogin/><hr/>
       <div className="bg-[#6148FF]  text-center">
-        <div className="flex justify-start items-center p-2">
-          <h1 className="text-white text-center font-bold w-full">
-            Category {categoryName}
-          </h1>
+      <div className="flex justify-start text-white gap-4 items-center px-4 py-2">        
+        <FontAwesomeIcon
+            icon={faArrowLeft}
+            size="xl"
+            onClick={() => {
+              window.history.back();
+            }}
+          />
+          <span
+            className="font-montserrat text-[1rem] font-bold leading-[1.5rem]"
+            onClick={() => {
+              window.history.back();
+            }}
+          >
+             Category {categoryName}
+          </span>
         </div>
       </div>
       <div className="p-4 flex gap-5 justify-center laptop:justify-start text-start flex-wrap grid-cols-5">

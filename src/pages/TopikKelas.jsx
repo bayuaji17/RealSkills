@@ -2,14 +2,34 @@ import React, {  useState } from "react";
 import FilterSide from "../components/FilterSide";
 import { Card } from "../components/Card";
 import { NavbarLogin } from "../components/NavbarLogin";
+import { Button } from "@material-tailwind/react";
 
 export const TopikKelas = () => {
   const [filteredType, setFilteredType] = useState("all"); // "all", "premium", "gratis"
   const [filterParams, setFilterParams] = useState({
+    page : 1,
+    limit : 4,
     category : "",
     level : "",
     type : ""
   })
+  
+  const handlePreviousPage = () => {
+    if (filterParams.page > 1) {
+      setFilterParams((prevParams) => ({
+        ...prevParams,
+        page: prevParams.page - 1,
+      }));
+    }
+  };
+  
+  const handleNextPage = () => {
+    setFilterParams((prevParams) => ({
+      ...prevParams,
+      page: prevParams.page + 1,
+    }));
+  };
+  
 
   const handleFilterChange = (newFilterParams) => {
     let typeValue = "";
@@ -59,6 +79,8 @@ export const TopikKelas = () => {
       type: typeValue,
       category: categoryValue,
       level: levelValue,
+      page: 1,
+      limit: 4,
     });
   };
   
@@ -105,6 +127,25 @@ export const TopikKelas = () => {
               <div className=" gap-3 flex justify-between flex-wrap ">
               <Card isTopik={true} filteredType={filteredType} classesFilter={filterParams}/>
               </div>
+              <div className="flex gap-4 justify-end">
+        <Button
+          variant="gradient"
+          size="sm"
+          color="green"
+          onClick={handlePreviousPage}
+          disabled={filterParams.page === 1}
+        >
+          Previous
+        </Button>
+        <Button
+          variant="gradient"
+          size="sm"
+          color="green"
+          onClick={handleNextPage}
+        >
+          Next
+        </Button>
+      </div>
             </div>
           </div>
         </div>

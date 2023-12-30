@@ -71,7 +71,7 @@ export const LoginPage = () => {
         theme: "light",
       });
       CookieStorage.set(CookieKeys.AuthToken, response.data.data.token);
-      navigate("/kelas");
+      navigate("/beranda");
     } catch (error) {
       toast.error(error?.response?.data?.error?.detail, {
         position: "bottom-center",
@@ -94,11 +94,11 @@ export const LoginPage = () => {
           <h3 className="flex  mb-3 text-3xl font-bold text-[#6148FF] justify-center laptop:justify-start">
             Masuk
           </h3>
-          <label className="flex flex-col mb-2">Email/Telepon</label>
+          <label className="flex flex-col mb-2">Email</label>
           <input
             type="email"
             className={`border rounded-xl p-3 mb-3  laptop:w-[22rem]  mobile: w-[94vw] ${colorBorderEmailTelp()}`}
-            placeholder="Contoh: johndee@gmail.com/62..."
+            placeholder="Contoh: johndee@gmail.com"
             onChange={(e) => inputEmailTelp(e)}
           ></input>
           <span className="flex justify-between mb-2">

@@ -3,15 +3,15 @@ import { API_ENDPOINT } from "../utils/api-endpoint";
 import { CookieKeys, CookieStorage } from "../utils/cookies";
 import http from "../utils/http";
 
-let isFetching = false; // Tambahkan variabel untuk menandai apakah sedang mengambil data
+let isFetching = false; 
 
 export const getFreeClass = async (id) => {
   try {
     if (isFetching) {
-      return; // Jangan mengambil data jika sedang dalam proses pengambilan
+      return; 
     }
 
-    isFetching = true; // Set variabel isFetching menjadi true
+    isFetching = true; 
 
     const authToken = CookieStorage.get(CookieKeys.AuthToken);
 
@@ -26,12 +26,11 @@ export const getFreeClass = async (id) => {
     console.log('Response Status:', response.status);
     console.log('Response Data:', response.data);
 
-    isFetching = false; // Set variabel isFetching menjadi false setelah selesai mengambil data
-
+    isFetching = false; 
     return response.data;
   } catch (error) {
     console.error('Error:', error.response ? error.response.data : error.message);
-    isFetching = false; // Set variabel isFetching menjadi false jika terjadi kesalahan
+    isFetching = false; 
     throw error;
   }
 };

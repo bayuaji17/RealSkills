@@ -12,11 +12,14 @@ export const getMe = async (
   return getAllClass;
 };
 
-export const getFilterMyClasses = async ({ category, type, level}) => {
+export const getFilterMyClasses = async ({ category, type, level, page, limit}) => {
   const params = {
+    page,
+    limit,
     category,
     type,
-    level
+    level,
+
   }
   const filterMyclass = await http.get(API_ENDPOINT.GET_ME, { params });
   return filterMyclass;
