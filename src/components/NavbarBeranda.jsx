@@ -35,20 +35,20 @@ export const NavbarBeranda = () => {
   };
   return (
     
-      <div className="hidden laptop:flex flex-row bg-[#6148FF] p-2 justify-between">
+      <div className="hidden laptop:flex flex-row bg-[#6148FF] p-1 justify-between">
         <div className="flex  items-center text-white ml-[5rem]">
           <img src={logo} alt=" " className="w-12 h-12" />
           <h1 className=" text-lg mr-20">RealSkills</h1>
         <div className="flex relative">
           <input
-            className="p-3 w-[25rem] flex justify-between rounded-lg text-[#6148FF]"
+            className="p-2 w-[25rem] flex justify-between rounded-lg text-[#6148FF]"
             placeholder="Cari Kursus terbaik...."
             onChange={(e) => setSearch(e.target.value)}
               onKeyDown={enter}
           />
           <button 
               onClick={handleSearch}
-              className=" bg-[#6148FF] absolute right-3 mt-3 rounded-md">
+              className=" bg-[#6148FF] absolute right-2 mt-2 rounded-md">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
