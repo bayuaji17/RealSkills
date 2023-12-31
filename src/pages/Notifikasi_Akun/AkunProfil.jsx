@@ -11,10 +11,7 @@ import { putUpdateProfile } from "../../services/notifikasi_akun/update_profile"
 import { toast } from "react-toastify";
 import { NavbarLogin } from "../../components/NavbarLogin";
 import { CookieKeys, CookieStorage } from "../../utils/cookies";
-<<<<<<< HEAD
-=======
 
->>>>>>> 7a996ec31cddd4c0edc5ae7b81bb384be94caeed
 export const AkunProfil = () => {
   const navigate = useNavigate();
   const [updatedProfilePicture, setUpdatedProfilePicture] = useState("");
