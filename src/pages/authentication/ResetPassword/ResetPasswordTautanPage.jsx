@@ -112,7 +112,7 @@ const ResetPasswordTautanPage = () => {
             <img
               src={RealSkillsLogo}
               alt="RealSkills"
-              className="w-[15rem] h-[15rem]"
+              className="w-[18rem] h-[18rem]"
             />
           </div>
         </div>

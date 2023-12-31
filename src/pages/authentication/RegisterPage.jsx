@@ -283,7 +283,7 @@ export const RegisterPage = () => {
             <img
               src={RealSkillsLogo}
               alt="test"
-              className="w-[15rem] h-[15rem]"
+              className="w-[18rem] h-[18rem]"
             />
           </div>
         </div>

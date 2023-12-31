@@ -82,7 +82,7 @@ export const LoginAdminPage = () => {
     <div className="parents w-full h-screen flex">
       {/*Left Section*/}
       <div className="hidden laptop:flex justify-center items-center h-full w-[40%] bg-[#6148FF] font-poppins text-center text-2xl ">
-        <img src={RealSkillsLogo} alt="" className="w-[15rem] h-[15rem]" />
+        <img src={RealSkillsLogo} alt="" className="w-[18rem] h-[18rem]" />
       </div>
       {/* Right Section */}
       <div className=" flex flex-row justify-center items-center font-poppins h-screen mx-[0.8rem] laptop:w-[60%] laptop:m-0">

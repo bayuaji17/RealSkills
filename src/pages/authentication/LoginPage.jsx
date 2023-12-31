@@ -141,7 +141,7 @@ export const LoginPage = () => {
         </div>
       </div>
       <div className=" hidden laptop:flex justify-center items-center h-full w-5/12 bg-[#6148FF]">
-        <img src={RealSkillsLogo} alt=" " className="w-[15rem] h-[15rem]"></img>
+        <img src={RealSkillsLogo} alt=" " className="w-[18rem] h-[18rem]"></img>
       </div>
     </div>
   );
