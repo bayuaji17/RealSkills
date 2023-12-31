@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
-import logo from "../../assets/img/logo.png";
+import RealSkillsLogo from "../../assets/Logo/Logo_Slogan.svg";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { toast } from "react-toastify";
 import { postLoginAdmin } from "../../services/auth/login_admin";
@@ -23,7 +23,6 @@ export const LoginAdminPage = () => {
   const isAdminIDLengthValid = FormInput.admin_id.length > 0;
   const isPasswordValid = PASSWORD_REGEX.test(FormInput.password);
   const isPasswordLengthValid = FormInput.password.length > 0;
-
 
   const colorBorderPassword = () => {
     if (isPasswordLengthValid && !isPasswordValid) {
@@ -83,8 +82,7 @@ export const LoginAdminPage = () => {
     <div className="parents w-full h-screen flex">
       {/*Left Section*/}
       <div className="hidden laptop:flex justify-center items-center h-full w-[40%] bg-[#6148FF] font-poppins text-center text-2xl ">
-        <img src={logo} alt="" className="w-40 h-40" />
-        <h1 className="font-bold text-4xl text-white">RealSkills</h1>
+        <img src={RealSkillsLogo} alt="" className="w-[15rem] h-[15rem]" />
       </div>
       {/* Right Section */}
       <div className=" flex flex-row justify-center items-center font-poppins h-screen mx-[0.8rem] laptop:w-[60%] laptop:m-0">

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import logo from "../assets/img/logo.png";
+import RealSkills from "../assets/Logo/Single_Logo.svg";
 import { useNavigate } from "react-router-dom";
 import { fetchSearch } from "../services/search";
 
@@ -36,8 +36,8 @@ export const NavbarBeranda = () => {
   return (
     
       <div className="hidden laptop:flex flex-row bg-[#6148FF] p-1 justify-between">
-        <div className="flex  items-center text-white ml-[5rem]">
-          <img src={logo} alt=" " className="w-12 h-12" />
+        <div className="flex  items-center text-white ml-[5rem] gap-3">
+          <img src={RealSkills} alt=" " className="w-12 h-12" />
           <h1 className=" text-lg mr-20">RealSkills</h1>
         <div className="flex relative">
           <input

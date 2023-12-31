@@ -10,6 +10,7 @@ import { getUserById } from "../../services/notifikasi_akun/get_user";
 import { putUpdateProfile } from "../../services/notifikasi_akun/update_profile";
 import { toast } from "react-toastify";
 import { NavbarLogin } from "../../components/NavbarLogin";
+import { CookieKeys, CookieStorage } from "../../utils/cookies";
 export const AkunProfil = () => {
   const navigate = useNavigate();
   const [updatedProfilePicture, setUpdatedProfilePicture] = useState("");
@@ -179,7 +180,11 @@ export const AkunProfil = () => {
                     <img src={out} alt="" className="w-[1.5rem] h-[1.5rem] " />
                     <a
                       className="text-black text-[0.9rem] font-bold hover:text-[#6148FF]"
-                      href="/"
+                      onClick={() => {
+                        CookieStorage.remove(CookieKeys.AuthToken);
+                        navigate("/login");
+                      }}
+                      href="/login"
                     >
                       Keluar
                     </a>
