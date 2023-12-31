@@ -13,6 +13,7 @@ import { faStar } from "@fortawesome/free-regular-svg-icons";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getUserById } from "../../services/notifikasi_akun/get_user";
 import { NavbarLogin } from "../../components/NavbarLogin";
+import { CookieKeys, CookieStorage } from "../../utils/cookies";
 
 export const RiwayatPembayaran = () => {
   const navigate = useNavigate();
@@ -155,7 +156,11 @@ export const RiwayatPembayaran = () => {
                     <img src={out} alt="" className="w-[1.5rem] h-[1.5rem]" />
                     <a
                       className="text-black text-[0.9rem] font-bold hover:text-[#6148FF]"
-                      href="/"
+                      onClick={() => {
+                        CookieStorage.remove(CookieKeys.AuthToken);
+                        navigate("/login");
+                      }}
+                      href="/login"
                     >
                       Keluar
                     </a>
