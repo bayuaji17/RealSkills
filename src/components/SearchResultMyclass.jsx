@@ -48,7 +48,7 @@ export const SearchResultMyclass = ({ isCourse, myClass, isTopik }) => {
     <div>
       <NavbarLogin/><hr></hr>
       <div className="bg-[#6148FF]  text-center">
-      <div className="flex justify-start text-white gap-4 items-center px-4 py-2">        
+      <div className="flex justify-start text-white gap-4 items-center px-4 py-2  cursor-pointer">        
         <FontAwesomeIcon
             icon={faArrowLeft}
             size="xl"

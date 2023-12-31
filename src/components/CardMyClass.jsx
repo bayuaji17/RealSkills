@@ -231,8 +231,8 @@ export const CardMyclass = (props) => {
               <div className="flex items-center text-xs text-white rounded-xl gap-1 ">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
+                  width="16"
+                  height="16"
                   viewBox="0 0 12 12"
                   fill="none"
                 >

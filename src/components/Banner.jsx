@@ -7,7 +7,7 @@ export const Banner = () => {
   const navigate = useNavigate()
 
   const handleLogin = () => {
-    navigate('/login'); // Replace '/login' with the actual path of your login page
+    navigate('/login');
   };
 
   return (
@@ -22,7 +22,7 @@ export const Banner = () => {
       </div>
       <div className="bg-[#6148FF] w-2/6  flex justify-center items-center">
         <div className=" flex flex-wrap w-[14rem] "> 
-        <p className="text-white font-semibold text-2xl">Belajar dari Praktisi Terbaik!</p>
+        <p className="text-white font-semibold text-2xl italic">Unleash Your Potential, Craft Real Skills!</p>
         <button 
         onClick={handleLogin}
         className="bg-white text-[#6148FF] rounded-lg text-xs font-bold p-2 w-full  ">IKUTI KELAS</button>

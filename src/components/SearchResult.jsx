@@ -49,7 +49,7 @@ export const SearchResult = ({ isCourse, myClass, isTopik }) => {
       <NavbarLogin />
       <hr></hr>
       <div className="bg-[#6148FF]  text-center">
-        <div className="flex justify-start text-white gap-4 items-center px-4 py-2">
+        <div className="flex justify-start text-white gap-4 items-center px-4 py-2  cursor-pointer">
           <FontAwesomeIcon
             icon={faArrowLeft}
             size="xl"
@@ -76,7 +76,7 @@ export const SearchResult = ({ isCourse, myClass, isTopik }) => {
               <div
                 div
                 key={value.id}
-                className=" bg-white w-[22rem] laptop:w-[18rem]  rounded-3xl shadow-md "
+                className=" bg-white w-[22rem] laptop:w-[18rem]  rounded-3xl shadow-md  cursor-pointer"
               >
                 <div className="h-[6rem] overflow-hidden rounded-t-3xl mb-1">
                   <img
