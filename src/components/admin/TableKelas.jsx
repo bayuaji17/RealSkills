@@ -87,6 +87,7 @@ export const TableKelas = () => {
       }
     } catch (error) {
       setDataTables([]);
+      setNotFound("Kelas Tidak Ditemukan");
     }
   }, [page, limit, search, category, type, level]);
 
@@ -97,7 +98,7 @@ export const TableKelas = () => {
   const handleSearch = (e) => {
     setTimeout(() => {
       setSearch(e.target.value);
-    }, 1500);
+    }, 1000);
   };
 
   const handlePreviousPage = () => {
@@ -229,7 +230,6 @@ export const TableKelas = () => {
       ...formData,
       [id]: value,
     });
-    console.log(e.target.value, formData, "ini isinya");
   };
   const handleEditSubmit = async () => {
     const formEditData = new FormData();
@@ -251,7 +251,6 @@ export const TableKelas = () => {
       toast.success("Kelas Berhasil diubah !");
     } catch (error) {
       toast.error("Kelas gagal diubah !");
-      console.error(error);
     }
   };
   const handleHapus = (row) => {
@@ -262,17 +261,17 @@ export const TableKelas = () => {
     try {
       await deleteClassById(selectedRow.id);
       setHapus(false);
+      handleGetClass();
       toast.success("Kelas Berhasil dihapus");
     } catch (error) {
       setHapus(false);
       toast.error("Kelas gagal dihapus");
-      console.error(error);
     }
   };
   return (
-    <div>
+    <div className="font-montserrat">
       {/* Tambah KELAS */}
-      <TambahKelas open={openTambah} handler={handleOpenTambah} />
+      <TambahKelas open={openTambah} handler={handleOpenTambah} getClass={handleGetClass} />
       {/* Tambah KELAS */}
       <div className="flex flex-row justify-between pb-2 items-center flex-wrap">
         <h1 className="text-xl font-bold">Kelola Kelas</h1>
@@ -290,17 +289,17 @@ export const TableKelas = () => {
             <h1 className="text-sm">Tambah</h1>
           </Button>
           <Button
-            variant="outlined"
-            className="rounded-3xl border-blue-600 h-10 w-28 flex items-center gap-2 normal-case hover:bg-purple-600"
+            variant="filled"
+            className="rounded-3xl h-10 w-28 flex items-center gap-2 normal-case bg-blue-600"
             onClick={handleOpenFilter}
           >
             <img src={filter} alt="logo" />
-            <h1 className="text-sm text-blue-600">Filter</h1>
+            <h1 className="text-sm text-white">Filter</h1>
           </Button>
           <div className={`relative pb-2`}>
             <input
               type="text"
-              className={`rounded-full px-4 border-2 border-[#6148FF] h-10 transition-all duration-500 w-0 focus:w-40 ${
+              className={`rounded-full px-4 border-2 border-blue-600 h-10 transition-all duration-500 w-0 focus:w-40 ${
                 open ? "w-40 mobile:w-40 mobile:focus:w-40" : "w-10 mobile:w-10"
               }`}
               onChange={handleSearch}
@@ -348,7 +347,7 @@ export const TableKelas = () => {
               type="file"
               name="file"
               id="class_image"
-              className="w-full h-12 rounded-xl py-1 px-5 file:pt-1 file:rounded-full border-2 file:w-24 file:border-gray-800 file:bg-blue-600 file:text-white"
+              className="w-full h-12 rounded-xl py-1 px-5 file:pt-1 file:rounded-full border-2 file:w-24 file:border-none file:cursor-pointer file:bg-blue-600 file:text-white"
               onChange={handleFileChange}
             />
           </div>
@@ -552,7 +551,7 @@ export const TableKelas = () => {
                   <Typography
                     variant="small"
                     color="blue-gray"
-                    className="font-normal leading-none opacity-70"
+                    className="font-poppins leading-none opacity-70"
                   >
                     {head}
                   </Typography>
@@ -575,7 +574,7 @@ export const TableKelas = () => {
                       <Typography
                         variant="small"
                         color="blue-gray"
-                        className="font-normal"
+                        className="font-montserrat"
                       >
                         {data.code}
                       </Typography>
@@ -584,7 +583,7 @@ export const TableKelas = () => {
                       <Typography
                         variant="small"
                         color="blue-gray"
-                        className="font-normal"
+                        className="font-montserrat"
                       >
                         {getLabelById(data.category_id, categoryMapping)}
                       </Typography>
@@ -593,7 +592,7 @@ export const TableKelas = () => {
                       <Typography
                         variant="small"
                         color="blue-gray"
-                        className="font-normal"
+                        className="font-montserrat"
                       >
                         {data.name}
                       </Typography>
@@ -602,7 +601,7 @@ export const TableKelas = () => {
                       <Typography
                         variant="small"
                         color="blue-gray"
-                        className="font-normal"
+                        className="font-montserrat"
                       >
                         {getLabelById(data.type_id, typeMapping)}
                       </Typography>
@@ -611,7 +610,7 @@ export const TableKelas = () => {
                       <Typography
                         variant="small"
                         color="blue-gray"
-                        className="font-normal"
+                        className="font-montserrat"
                       >
                         {getLabelById(data.level_id, levelMapping)}
                       </Typography>
@@ -620,7 +619,7 @@ export const TableKelas = () => {
                       <Typography
                         variant="small"
                         color="blue-gray"
-                        className="font-normal"
+                        className="font-montserrat"
                       >
                         {data.price}
                       </Typography>

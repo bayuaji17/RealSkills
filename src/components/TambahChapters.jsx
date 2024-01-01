@@ -28,8 +28,6 @@ export const TambahChapters = () => {
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     setChapterData({ ...chapterData, [id]: value });
-
-    console.log(e.target.value, chapterData);
   };
   const handleParseIntInput = (e) => {
     const { id, value } = e.target;
@@ -40,13 +38,11 @@ export const TambahChapters = () => {
     const updatedVideos = [...chapterData.videos];
     updatedVideos[index][field] = e.target.value;
     setChapterData({ ...chapterData, videos: updatedVideos });
-    console.log(chapterData);
   };
   const handleParseIntVideoChange = (e, field, index) => {
     const updatedVideos = [...chapterData.videos];
     updatedVideos[index][field] = parseInt(e.target.value, 10);
     setChapterData({ ...chapterData, videos: updatedVideos });
-    console.log(chapterData);
   };
   const handleAddVideo = () => {
     setChapterData({
@@ -102,8 +98,8 @@ export const TambahChapters = () => {
   return (
 
       <div>
-        <div className="container mx-auto">
-          <h1 className="text-center font-bold text-2xl">
+        <div className="container mx-auto font-poppins">
+          <h1 className="text-center font-bold text-2xl ">
             Tambah Chapter dan Video
           </h1>
           <a href="/admin/kelola-kelas">
@@ -111,10 +107,10 @@ export const TambahChapters = () => {
             <span className="text-xl px-2 font-semibold"> Kembali</span>
           </a>
 
-          <Card className="w-full p-3 bg-gradient-to-br from-pink-500 via-red-500 to-yellow-500">
+          <Card className="w-full p-3 bg-blue-600 my-3">
             <form onSubmit={handleSubmit}>
               <FormInput
-                classNameLabel="!text-lg pt-5 px-2"
+                classNameLabel="!text-lg pt-5 px-2 text-white"
                 name="Nomor Chapter"
                 label="no_chapter"
                 type="number"
@@ -123,7 +119,7 @@ export const TambahChapters = () => {
                 onChange={(e) => handleParseIntInput(e)}
               />
               <FormInput
-                classNameLabel="!text-lg pt-5 px-2"
+                classNameLabel="!text-lg pt-5 px-2 text-white"
                 name="Title Chapter"
                 label="title"
                 type="text"
@@ -133,8 +129,8 @@ export const TambahChapters = () => {
               />
               <div className="flex flex-row flex-wrap justify-center gap-y-3 gap-x-6 py-2">
                 {chapterData.videos.map((video, index) => (
-                  <Card className="w-[38rem] my-2 p-3 ">
                     <div key={index}>
+                  <Card className="w-[38rem] my-2 p-3 ">
                       <div className="flex flex-row items-center justify-between">
                         <h1>Data Video Ke : {index + 1}</h1>
                         <Button
@@ -185,15 +181,15 @@ export const TambahChapters = () => {
                         }
                         placeholder="Input Link Video"
                       />
-                    </div>
                   </Card>
+                    </div>
                 ))}
               </div>
               <div className="flex justify-between">
-                <Button variant="gradient" onClick={handleAddVideo}>
+                <Button variant="gradient" onClick={handleAddVideo} color="teal">
                   Tambah Video
                 </Button>
-                <Button variant="gradient" type="submit">
+                <Button variant="gradient" type="submit" color="green">
                   Submit Chapter
                 </Button>
               </div>

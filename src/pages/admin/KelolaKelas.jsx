@@ -1,25 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { SideBarAdmin } from "../../components/admin/SideBarAdmin";
 import { NavbarAdmin } from "../../components/admin/NavbarAdmin";
-import { ReactTables } from "../../components/ReactTables";
 import { CardAdminApi } from "../../components/admin/CardAdminApi";
 import { TableKelas } from "../../components/admin/TableKelas";
 
 export const KelolaKelas = () => {
-  const [open, setOpen] = useState(false);
-  const [openFilter, setOpenFilter] = useState(false);
-  const [openTambah, setOpenTambah] = useState(false);
-  const handleOpenFilter = () => setOpenFilter(true);
-  const handleCloseFilter = () => setOpenFilter(false);
-
-  const show = () => {
-    setOpen(!open);
-  };
-  const handleOpenTambah = () => setOpenTambah(!openTambah);
-
   return (
     <div>
-      <div className="flex">
+      <div className="flex font-montserrat">
         <div className="laptop:w-[20%] overflow-hidden laptop:block hidden ">
           <SideBarAdmin />
         </div>
@@ -28,14 +16,14 @@ export const KelolaKelas = () => {
           {/* //! Card */}
           <div className="py-2">
             <div className="">
-             <CardAdminApi/>
+              <CardAdminApi />
             </div>
           </div>
           {/* //!EndCard */}
           {/* Table */}
           <div className="container mx-auto w-10/12 pb-4">
             {/* <ReactTables /> */}
-            <TableKelas/>
+            <TableKelas />
           </div>
           {/* End Table */}
         </div>
