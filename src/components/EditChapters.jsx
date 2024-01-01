@@ -10,8 +10,6 @@ import React, { useState } from "react";
 import FormInput from "./form/FormInput";
 import { editChaptersById } from "../services/edit-chapters";
 
-//! Masih NGEBUG
-
 export const EditChapters = ({ open, handleOpen, editChaptersId, cancel }) => {
   const [editChapters, setEditChapters] = useState({
     no_chapter: undefined,
@@ -42,7 +40,6 @@ export const EditChapters = ({ open, handleOpen, editChaptersId, cancel }) => {
       updatedVideos[index][field] = value;
     }
     setEditChapters({ ...editChapters, videos: updatedVideos });
-    console.log(editChapters, e.target.value);
   };
 
   const addVideo = () => {
@@ -87,7 +84,6 @@ export const EditChapters = ({ open, handleOpen, editChaptersId, cancel }) => {
     }
     try {
       const response = await editChaptersById(editChaptersId, dataEditSubmit);
-      console.log(response);
       return response;
     } catch (error) {
       console.error(error);
