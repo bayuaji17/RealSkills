@@ -37,8 +37,10 @@ export const NavbarBeranda = () => {
   return (
     <div className="hidden laptop:flex flex-row bg-[#6148FF] p-1 justify-between">
       <div className="flex  items-center text-white ml-[5rem] gap-3">
-        <img src={RealSkills} alt=" " className="w-12 h-12" />
-        <img src={RealSkillsText} alt="" className="w-24 h-12" />
+        <a href="/" className="flex gap-3">
+          <img src={RealSkills} alt=" " className="w-12 h-12" />
+          <img src={RealSkillsText} alt="" className="w-24 h-12" />
+        </a>
         <div className="flex relative">
           <input
             className="ml-4 p-2 w-[25rem] flex justify-between rounded-lg text-[#6148FF]"

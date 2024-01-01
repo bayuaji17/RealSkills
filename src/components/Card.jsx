@@ -105,7 +105,7 @@ export const Card = (props) => {
 
   return (
     <div className="flex flex-col w-full gap-3">
-      <div className="flex flex-wrap justify-between ">
+      <div className="flex flex-wrap justify-evenly ">
         {filteredClassData.length === 0 ? (
               <tr>
                 <td className="p-4 border-b border-blue-gray-50">
@@ -117,7 +117,7 @@ export const Card = (props) => {
           <div
             div
             key={value.id}
-            className=" bg-white w-[22rem] laptop:w-[18rem]  rounded-3xl shadow-md mb-4"
+            className=" bg-white w-[90vw] mobile:w-[22rem] laptop:w-[18rem]  rounded-3xl shadow-md mb-4"
           >
             <Link to={`/detailKelas/${value.id}`}>
               <div className="h-[6rem] overflow-hidden rounded-t-3xl mb-1">
@@ -127,7 +127,7 @@ export const Card = (props) => {
                   alt="Logo"
                 />
               </div>
-              <div className="px-3 pb-3 w-[22rem] laptop:w-[18rem] ">
+              <div className="px-3 pb-3 w-[90vw] mobile:w-[22rem] laptop:w-[18rem] ">
                 <div className="flex justify-between   ">
                   <p className="font-bold text-xs text-[#6148FF]">
                     {value.category_id === 1

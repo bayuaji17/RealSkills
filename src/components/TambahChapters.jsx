@@ -130,7 +130,7 @@ export const TambahChapters = () => {
               <div className="flex flex-row flex-wrap justify-center gap-y-3 gap-x-6 py-2">
                 {chapterData.videos.map((video, index) => (
                     <div key={index}>
-                  <Card className="w-[38rem] my-2 p-3 ">
+                  <Card className="w-[80vw] mobile:w-[90vw] laptop:w-[38rem] my-2 p-3 ">
                       <div className="flex flex-row items-center justify-between">
                         <h1>Data Video Ke : {index + 1}</h1>
                         <Button

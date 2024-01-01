@@ -37,7 +37,7 @@ export const BerandaLogin = () => {
         <h1 className=" px-4 font-semibold text-md text-xl  laptop:hidden ">
           Kategori
         </h1>
-        <div className=" overflow-x-auto mx-4 laptop:mx-0  laptop:flex-wrap">
+        <div className=" overflow-x-auto mx-4 laptop:mx-0  laptop:flex-wrap py-3">
           <KategoriBelajar />
         </div>
       </div>

@@ -271,7 +271,11 @@ export const TableKelas = () => {
   return (
     <div className="font-montserrat">
       {/* Tambah KELAS */}
-      <TambahKelas open={openTambah} handler={handleOpenTambah} getClass={handleGetClass} />
+      <TambahKelas
+        open={openTambah}
+        handler={handleOpenTambah}
+        getClass={handleGetClass}
+      />
       {/* Tambah KELAS */}
       <div className="flex flex-row justify-between pb-2 items-center flex-wrap">
         <h1 className="text-xl font-bold">Kelola Kelas</h1>
@@ -338,7 +342,7 @@ export const TableKelas = () => {
       <Dialog open={edit} handler={handleEditDialogClose}>
         <DialogHeader className="justify-center">Edit Kelas</DialogHeader>
 
-        <DialogBody className="overflow-y-scroll h-[30rem]">
+        <DialogBody className="overflow-y-scroll h-[60vh] mobile:h-[30rem] laptop:h-[30rem]">
           <div className="flex flex-col">
             <label htmlFor="class_image" className="py-2 text-xs">
               Upload Image
@@ -482,24 +486,26 @@ export const TableKelas = () => {
           />
         </DialogBody>
         <DialogFooter>
-          <Button
-            variant="gradient"
-            color="blue"
-            onClick={() =>
-              navigate(`/admin/kelola-kelas/chapters/${selectedRow.id}`)
-            }
-            className="mr-1"
-          >
-            <span>Chapter Kelas</span>
-          </Button>
-          <Button
-            variant="gradient"
-            color="blue"
-            onClick={() => navigate(`/admin/kelola-kelas/${selectedRow.id}`)}
-            className="mr-1"
-          >
-            <span>Tambah Chapter</span>
-          </Button>
+          <div className="flex flex-row gap-2 py-2">
+            <Button
+              variant="gradient"
+              color="blue"
+              onClick={() =>
+                navigate(`/admin/kelola-kelas/chapters/${selectedRow.id}`)
+              }
+              className="mr-1"
+            >
+              <span>Chapter Kelas</span>
+            </Button>
+            <Button
+              variant="gradient"
+              color="blue"
+              onClick={() => navigate(`/admin/kelola-kelas/${selectedRow.id}`)}
+              className="mr-1"
+            >
+              <span>Tambah Chapter</span>
+            </Button>
+          </div>
           <Button
             variant="text"
             color="red"

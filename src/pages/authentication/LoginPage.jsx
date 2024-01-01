@@ -73,7 +73,7 @@ export const LoginPage = () => {
       CookieStorage.set(CookieKeys.AuthToken, response.data.data.token);
       navigate("/beranda");
     } catch (error) {
-      toast.error(error?.response?.data?.error?.detail, {
+      toast.error(error?.response?.data?.error, {
         position: "bottom-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -86,7 +86,6 @@ export const LoginPage = () => {
     }
   };
 
-  //Testing
   return (
     <div className="flex flex-row justify-center items-center h-screen font-poppins  ">
       <div className="flex flex-col justify-center items-center  h-full  laptop:w-7/12">

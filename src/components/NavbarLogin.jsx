@@ -224,7 +224,7 @@ function NavListMenu() {
 // nav list component
 const navListItems = [
   {
-    label: "Dashboard",
+    label: "Homepage",
     icon: HomeIcon,
     path: "/beranda",
   },
@@ -301,9 +301,9 @@ export const NavbarLogin = () => {
     <Navbar className="w-full  max-w-full p-1  lg:pl-6 bg-[#6148FF]  shadow-none border-0 rounded-none lg:rounded-none bg-opacity-100">
       <div className="relative  flex items-center justify-between text-blue-gray-900">
       <Link to="/">
-        <div className="flex gap-3">
+        <div className="flex gap-3 ml-3">
           <img src={RealSkills} alt=" " className="w-12 h-12" />
-          <img src={RealSkillsText} alt="" className="w-20 h-12" />
+          <img src={RealSkillsText} alt="" className="w-20 h-12 hidden mobile:block " />
         </div>
         </Link>
         <>
