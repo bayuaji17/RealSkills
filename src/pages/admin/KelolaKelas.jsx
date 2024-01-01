@@ -22,7 +22,6 @@ export const KelolaKelas = () => {
           {/* //!EndCard */}
           {/* Table */}
           <div className="container mx-auto w-10/12 pb-4">
-            {/* <ReactTables /> */}
             <TableKelas />
           </div>
           {/* End Table */}
