@@ -5,73 +5,93 @@ import pencil from "../../assets/img/icon/pencil.png";
 import settings from "../../assets/img/icon/settings.png";
 import pay from "../../assets/img/icon/pay.png";
 import out from "../../assets/img/icon/out.png";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getUserById } from "../../services/notifikasi_akun/get_user";
-import { putUpdate } from "../../services/notifikasi_akun/update_profile";
+import { putUpdateProfile } from "../../services/notifikasi_akun/update_profile";
 import { toast } from "react-toastify";
 import { NavbarLogin } from "../../components/NavbarLogin";
-// import { NavbarLogin } from "../components/NavbarLogin";
+import { CookieKeys, CookieStorage } from "../../utils/cookies";
+
 export const AkunProfil = () => {
-  const [selectedImage, setSelectedImage] = useState(null);
-  const { AuthToken } = useParams();
+  const navigate = useNavigate();
+  const [updatedProfilePicture, setUpdatedProfilePicture] = useState("");
+
   const [userData, setUserData] = useState({
     profile_picture: null,
     name: "",
     email: "",
-    phone_number: "",
-    country: "",
-    city: "",
+    profile: {
+      phone_number: "",
+      country: "",
+      city: "",
+    },
   });
-
-  const handleInputFile = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setSelectedImage(file);
-    }
-  };
 
   useEffect(() => {
     const fetchDetailUser = async () => {
       try {
-        const data = await getUserById(AuthToken);
-        setUserData(data);
-        console.log(data, "data user");
+        const data = await getUserById();
+        setUserData(data.data.user);
+        console.log(data.data.user, "data user");
       } catch (error) {
         console.log("data error", error);
       }
     };
 
     fetchDetailUser();
-  }, [AuthToken]);
+  }, []);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setUpdatedProfilePicture(file);
+
+    setUserData((prevUserData) => ({
+      ...prevUserData,
+      profile: {
+        ...prevUserData.profile,
+        profile_picture: URL.createObjectURL(file),
+      },
+    }));
+  };
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
+
     setUserData((prevUserData) => ({
-      data: {
-        ...prevUserData.data,
-        profile: {
-          ...prevUserData.data.profile,
-          [id]: value,
-        },
+      ...prevUserData,
+      profile: {
+        ...prevUserData.profile,
         [id]: value,
       },
+      [id]: value,
     }));
-    console.log(e.target.value, "ini isinya");
   };
-
-  const handleSaveProfile = async () => {
+  console.log(userData, "userdata");
+  const handleSaveProfile = async (event) => {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append("profile_picture", updatedProfilePicture);
+    formData.append("name", userData.name);
+    formData.append("email", userData.email);
+    formData.append("phone_number", userData.profile.phone_number);
+    formData.append("country", userData.profile.country);
+    formData.append("city", userData.profile.city);
     try {
-      const response = await putUpdate(AuthToken, userData);
-      toast.success(response.data.message, {
-        position: "bottom-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      const response = await putUpdateProfile(formData);
+      if (response && response.data) {
+        toast.success(response.data.message, {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      } else {
+        console.error("Invalid response format:", response);
+      }
       console.log("User profile updated successfully");
     } catch (error) {
       toast.error(error.response.data.error, {
@@ -95,22 +115,25 @@ export const AkunProfil = () => {
       </div>
 
       <div className="hero-section flex flex-col gap-2  w-full  laptop:h-[11rem] bg-[#EBF3FC]  ">
-        <div className="back-section hidden laptop:flex items-center mt-[2.3rem] mb-[0.7rem] gap-[1.25rem] mx-[11.5rem]">
+        <div className="back-section hidden laptop:flex items-center cursor-pointer mt-[2.3rem] mb-[0.7rem] gap-[1.25rem] mx-[11.5rem]">
           <FontAwesomeIcon
             icon={faArrowLeft}
-            size="l"
+            size="lg"
             style={{ color: "#6148FF" }}
+            onClick={() => {
+              navigate("/beranda");
+            }}
           />
           <a
             className="font-black font-montserrat text-[1rem] text-[#6148FF]"
-            href="/"
+            href="/beranda"
           >
             Kembali ke Beranda
           </a>
         </div>
         <div className="flex mx-[0.9rem] mt-[1rem] justify-center items-center  ">
           <div className="modal flex flex-col laptop:border laptop:border-[#6148FF] min-h-screen laptop:h-auto w-full laptop:w-[75%] rounded-[1rem] mb-[4rem]">
-            <div className="title hidden laptop:flex w-full h-[4.7rem] justify-center items-center laptop:bg-[#6148FF] rounded-t-2xl ">
+            <div className="title hidden laptop:flex w-full h-[4.8rem] justify-center items-center laptop:bg-[#6148FF] rounded-t-2xl ">
               <span className=" flex laptop:justify-center laptop:items-center text-white font-bold text-[1.8rem] py-5">
                 Akun
               </span>
@@ -118,7 +141,7 @@ export const AkunProfil = () => {
             <div className="flex flex-row w-full flex-grow rounded-b-2xl mb-[2rem]">
               {/* Left Section */}
               <div className="left-section hidden laptop:flex w-1/2 m-[2rem]">
-                <div className="flex flex-col gap-5 font-montserrat ">
+                <div className="flex flex-col gap-5 font-poppins ">
                   <div className="flex flex-row gap-4">
                     <img
                       src={pencil}
@@ -137,7 +160,7 @@ export const AkunProfil = () => {
                       className="w-[1.5rem] h-[1.5rem]"
                     />
                     <a
-                      className="text-black text-[0.9rem] font-bold hover:text-[#6148FF]"
+                      className="text-semibold text-[0.9rem] font-bold hover:text-[#6148FF]"
                       href="/ubahPassword"
                     >
                       Ubah Password
@@ -158,7 +181,11 @@ export const AkunProfil = () => {
                     <img src={out} alt="" className="w-[1.5rem] h-[1.5rem] " />
                     <a
                       className="text-black text-[0.9rem] font-bold hover:text-[#6148FF]"
-                      href="/"
+                      onClick={() => {
+                        CookieStorage.remove(CookieKeys.AuthToken);
+                        navigate("/login");
+                      }}
+                      href="/login"
                     >
                       Keluar
                     </a>
@@ -184,17 +211,24 @@ export const AkunProfil = () => {
                     />
                   </Link>
                 </div>
-                <div className="picture-section flex justify-evenly items-center mt-10">
+                <div className="picture-section flex justify-evenly items-center mt-[2rem] mr-[0.75rem]">
                   <label htmlFor="profile_picture" className="cursor-pointer">
-                    <div className="flex justify-center items-center w-[8rem] h-[8rem]  border-4 border-[#6148FF] rounded-full overflow-hidden">
-                      {selectedImage ? (
+                    <div className="flex justify-center items-center w-[9rem] h-[9rem]  border-4 border-[#6148FF] rounded-full overflow-hidden">
+                      {/* {console.log(updatedProfilePicture, "profil")} */}
+                      {updatedProfilePicture ? (
                         <img
-                          src={URL.createObjectURL(selectedImage)}
+                          src={URL.createObjectURL(updatedProfilePicture)}
+                          log
+                          alt="Profile"
+                          className="w-full h-full object-cover"
+                        />
+                      ) : userData.profile?.profile_picture ? (
+                        <img
+                          src={userData.profile?.profile_picture}
                           alt="Profile"
                           className="w-full h-full object-cover"
                         />
                       ) : (
-                        // Placeholder or default image
                         <span className="text-[1.5rem]">+</span>
                       )}
                     </div>
@@ -203,20 +237,19 @@ export const AkunProfil = () => {
                       type="file"
                       accept="image/*"
                       style={{ display: "none" }}
-                      // value={userData.data?.profile?.profile_picture}
-                      onChange={handleInputFile}
+                      onChange={handleFileChange}
                     />
                   </label>
                 </div>
 
-                <div className="flex flex-col gap-2 font-montserrat mt-[1rem] ">
+                <div className="flex flex-col gap-2 font-poppins mt-[1rem] ">
                   <span className="text-[1rem] ">Nama</span>
                   <input
                     id="name"
                     type="text"
                     className="border-2 border-[#D0D0D0] text-black rounded-2xl py-[0.7rem] px-[1rem] "
-                    placeholder="Name"
-                    value={userData.data?.name}
+                    placeholder="Nama"
+                    value={userData.name}
                     onChange={(e) => handleInputChange(e)}
                   />
 
@@ -226,17 +259,17 @@ export const AkunProfil = () => {
                     type="email"
                     className="border-2 border-[#D0D0D0] text-black rounded-2xl py-[0.7rem] px-[1rem] "
                     placeholder="Email"
-                    value={userData.data?.email}
+                    value={userData.email}
                     onChange={(e) => handleInputChange(e)}
                   />
 
                   <span className="text-[1rem]">Nomor Telepon</span>
                   <input
                     id="phone_number"
-                    type="tel"
+                    type="number"
                     className="border-2 border-[#D0D0D0] text-black rounded-2xl py-[0.7rem] px-[1rem] "
-                    placeholder="Phone Number"
-                    value={userData.data?.profile?.phone_number}
+                    placeholder="Nomor Telepon"
+                    value={userData.profile?.phone_number}
                     onChange={(e) => handleInputChange(e)}
                   />
 
@@ -245,8 +278,8 @@ export const AkunProfil = () => {
                     id="country"
                     type="text"
                     className="border-2 border-[#D0D0D0] text-black rounded-2xl py-[0.7rem] px-[1rem] "
-                    placeholder="Masukkan Negara tempat tinggal"
-                    value={userData.data?.profile?.country}
+                    placeholder="Negara"
+                    value={userData.profile?.country}
                     onChange={(e) => handleInputChange(e)}
                   />
 
@@ -255,13 +288,13 @@ export const AkunProfil = () => {
                     id="city"
                     type="text"
                     className="border-2 border-[#D0D0D0] text-black rounded-2xl py-[0.7rem] px-[1rem] "
-                    placeholder="Masukkan kota tempat tinggal"
-                    value={userData.data?.profile?.city}
+                    placeholder="Kota"
+                    value={userData.profile?.city}
                     onChange={(e) => handleInputChange(e)}
                   />
 
                   <button
-                    className="bg-blue-300 text-white py-[1rem] px-[1rem] mt-[1rem] rounded-2xl hover:bg-[#6148FF] "
+                    className="bg-blue-300 text-white text-[1.1rem] py-[0.8rem] px-[1rem] mt-[1rem] rounded-2xl hover:bg-[#6148FF] "
                     type="submit"
                     onClick={handleSaveProfile}
                   >

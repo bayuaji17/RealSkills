@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import badge from "../../assets/img/icon/badge-svg.svg";
 import modul from "../../assets/img/icon/clarity_book-line.svg";
 import time from "../../assets/img/icon/ri_time-fill.svg";
-import message from "../../assets/img/icon/gridicons_chat.svg";
+// import message from "../../assets/img/icon/gridicons_chat.svg";
 import progress_check from "../../assets/img/icon/progress-check.svg";
 import done_play_button from "../../assets/img/icon/green-play.svg";
 import undone_play_button from "../../assets/img/icon/dark-blue-play.svg";
@@ -20,6 +20,8 @@ import { getAuthenticated } from "../../services/auth/get-authenticated";
 import { getWatchedVideos } from "../../services/users/get-watched-videos";
 import { NavbarLogin } from "../../components/NavbarLogin";
 import { Progress } from "@material-tailwind/react";
+import { getFreeClass } from "../../services/freeClass";
+import { toast } from "react-toastify";
 
 const DetailKelasPage = () => {
   const [MateriBelajar, setMateriBelajar] = useState(false);
@@ -27,6 +29,7 @@ const DetailKelasPage = () => {
   const [PaymentModal, setPaymentModal] = useState(false);
   const [Detail, setDetail] = useState([]);
   const [PaymentDetail, setPaymentDetail] = useState([]);
+  const [FreeClassDetail, setFreeClassDetail] = useState([]);
   const [CourseChapter, setCourseChapter] = useState([]);
   const [SelectedVideo, setSelectedVideo] = useState("");
   const [FirstVideoPlay, setFirstVideoPlay] = useState("");
@@ -78,6 +81,8 @@ const DetailKelasPage = () => {
       try {
         const response = await getAuthenticated();
         setPaymentDetail(response?.data?.data?.user?.payments || []);
+        setFreeClassDetail(response?.data?.data?.classes || []);
+        console.log(response?.data?.data?.classes, "freeClassDetail");
 
         const isClassPaidAndAccessed =
           response?.data?.data?.user?.payments?.some(
@@ -128,7 +133,6 @@ const DetailKelasPage = () => {
 
     return `${totalHours} jam ${remainingMinutes} menit`;
   };
-  
 
   const toogleTentangKelas = () => {
     setTentangKelas(true);
@@ -176,9 +180,37 @@ const DetailKelasPage = () => {
     return progressPercentage;
   };
 
+  const handleFreeClass = async (id) => {
+    try {
+      const response = await getFreeClass(id);
+      toast.success(response.message, {
+        position: "bottom-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } catch (error) {
+      // console.error("Error accessing free class:", error);
+      // toast.error("Anda sudah mengakses kelas ini", {
+      //   position: "bottom-center",
+      //   autoClose: 2000,
+      //   hideProgressBar: false,
+      //   closeOnClick: false,
+      //   pauseOnHover: true,
+      //   draggable: true,
+      //   progress: undefined,
+      //   theme: "light",
+      // });
+    }
+  };
+
   return (
     <div className="parents">
-      <div className="nav-component-section hidden laptop:flex">
+      <div className="nav-component-section block">
         <NavbarLogin />
       </div>
 
@@ -264,18 +296,55 @@ const DetailKelasPage = () => {
             <div className="badge-level-section flex items-center gap-1">
               <img src={time} alt="course-time" />
               <span className="font-montserrat text-[0.75rem] leading-[0.9rem] font-bold hover:text-[#6148FF] cursor-pointer">
-                {formatDuration(TotalClassMinutes)} 
+                {formatDuration(TotalClassMinutes)}
               </span>
             </div>
           </div>
 
           {/* Button Telegram Section */}
-          <div className="telegram-btn-section relative w-[25%]">
-            <button className="bg-[#73CA5C] w-full text-white rounded-[1.6rem] px-[1rem] py-[0.5rem] font-montserrat text-[1rem] leading-[1.5rem] font-black shadow-lg flex items-center gap-2 justify-center">
-              <span>Join Grup Telegram</span>
-              <img src={message} alt="message-icon" width="30" />
-            </button>
-          </div>
+          {Detail.type_id === 2 ? (
+            <div className="telegram-btn-section relative w-[25%]">
+              {PaymentDetail.some(
+                (payment) => payment.class_id === Detail.id && payment.is_paid
+              ) ? (
+                <button
+                  className="bg-dark-blue w-full text-white rounded-[1.6rem] px-[1rem] py-[0.5rem] font-montserrat text-[1rem] leading-[1.5rem] font-black shadow-lg flex items-center gap-2 justify-center disabled:bg-gray-300 disabled:text-black"
+                  disabled
+                >
+                  <span>Kelas Terbuka</span>
+                </button>
+              ) : (
+                <button
+                  onClick={tooglePayment}
+                  className="bg-dark-blue w-full text-white rounded-[1.6rem] px-[1rem] py-[0.5rem] font-montserrat text-[1rem] leading-[1.5rem] font-black shadow-lg flex items-center gap-2 justify-center"
+                >
+                  <span>Beli Sekarang</span>
+                  <img src={arrow_buy} alt="arrow-buy" width="20" />
+                </button>
+              )}
+            </div>
+          ) : (
+            <div className="telegram-btn-section relative w-[25%]">
+              {FreeClassDetail.some((free) => free.id === Detail.id) ? (
+                <button
+                  className="bg-dark-blue w-full text-white rounded-[1.6rem] px-[1rem] py-[0.5rem] font-montserrat text-[1rem] leading-[1.5rem] font-black shadow-lg flex items-center gap-2 justify-center disabled:bg-gray-300 disabled:text-black"
+                  disabled
+                >
+                  <span>Kelas Gratis Terbuka</span>
+                </button>
+              ) : (
+                <button
+                  onClick={() => {
+                    handleFreeClass(Detail.id);
+                  }}
+                  className="bg-dark-blue w-full text-white rounded-[1.6rem] px-[1rem] py-[0.5rem] font-montserrat text-[1rem] leading-[1.5rem] font-black shadow-lg flex items-center gap-2 justify-center"
+                >
+                  <span>Akses Kelas Gratis</span>
+                  <img src={arrow_buy} alt="arrow-buy" width="20" />
+                </button>
+              )}
+            </div>
+          )}
         </div>
       </div>
 
@@ -359,11 +428,15 @@ const DetailKelasPage = () => {
               const isChapterUnlocked =
                 chapterIndex === 0 ||
                 !isPremiumClass ||
-                (Detail?.id ===
-                  PaymentDetail?.find(
-                    (payment) => payment?.class?.id === Detail?.id
-                  )?.class.id &&
-                  PaymentDetail?.some((payment) => payment?.is_paid));
+                (Detail.id ===
+                  PaymentDetail.find(
+                    (payment) => payment.class_id === Detail.id
+                  )?.class_id &&
+                  PaymentDetail.some(
+                    (payment) =>
+                      payment.class_id === Detail.id && payment.is_paid
+                  ));
+
               const totalVideoMinutes = value?.videos?.reduce(
                 (total, video) => total + (video?.time || 0),
                 0
@@ -668,7 +741,7 @@ const DetailKelasPage = () => {
       {/* End Desktop */}
 
       {/* Mobile */}
-      <div className="mobile-section w-full h-screen bg-slate-600 block laptop:hidden">
+      <div className="mobile-section overflow-x-hidden w-full h-screen bg-slate-600 block laptop:hidden">
         <div className="play-video-mobile-container bg-[rgba(0,0,0,0.85)] w-full h-[30%] flex justify-center items-center">
           <div className="player-wrapper h-[90%] w-full">
             {!isVideoClicked ? (
@@ -760,10 +833,78 @@ const DetailKelasPage = () => {
             <div className="badge-level-section flex items-center gap-1">
               <img src={time} alt="course-time" style={{ width: "2.5vh" }} />
               <span className="font-montserrat text-[1.5vh] leading-[2vh] font-bold hover:text-[#6148FF] cursor-pointer">
-                 {formatDuration(TotalClassMinutes)} 
+                {formatDuration(TotalClassMinutes)}
               </span>
             </div>
           </div>
+
+          {Detail.type_id === 2 ? (
+            // Jika kelas berbayar
+            <div className="telegram-btn-section w-[90%]">
+              {PaymentDetail.some(
+                (payment) => payment.class_id === Detail.id && payment.is_paid
+              ) ? (
+                <button
+                  className="bg-dark-blue w-full ml-[1.35rem] mr-[1.5rem] text-white rounded-[1.6rem] px-[1rem] py-[0.5rem] font-montserrat text-[2vh] leading-[2.5vh] font-black shadow-lg flex items-center gap-2 justify-center disabled:bg-gray-300 disabled:text-black"
+                  disabled
+                >
+                  <span>Kelas Terbuka</span>
+                </button>
+              ) : (
+                <button
+                  onClick={tooglePayment}
+                  className="bg-dark-blue w-full ml-[1.35rem] mr-[1.5rem] text-white rounded-[1.6rem] px-[1rem] py-[0.5rem] font-montserrat text-[2vh] leading-[2.5vh] font-black shadow-lg flex items-center gap-2 justify-center"
+                >
+                  <span>Beli Sekarang</span>
+                  <img src={arrow_buy} alt="arrow-buy" width="20" />
+                </button>
+              )}
+            </div>
+          ) : (
+            <div className="telegram-btn-section relative w-[90%]">
+              {FreeClassDetail.some((free) => free.id === Detail.id) ? (
+                <button
+                  className="bg-dark-blue w-full ml-[1.35rem] mr-[1.5rem] text-white rounded-[1.6rem] px-[1rem] py-[0.5rem] font-montserrat text-[2vh] leading-[2.5vh] font-black shadow-lg flex items-center gap-2 justify-center disabled:bg-gray-300 disabled:text-black"
+                  disabled
+                >
+                  <span>Kelas Gratis Terbuka</span>
+                </button>
+              ) : (
+                <button
+                  onClick={() => {
+                    handleFreeClass(Detail.id);
+                  }}
+                  className="bg-dark-blue w-full ml-[1.35rem] mr-[1.5rem] text-white rounded-[1.6rem] px-[1rem] py-[0.5rem] font-montserrat text-[2vh] leading-[2.5vh] font-black shadow-lg flex items-center gap-2 justify-center"
+                >
+                  <span>Akses Kelas Gratis</span>
+                  <img src={arrow_buy} alt="arrow-buy" width="20" />
+                </button>
+              )}
+            </div>
+          )}
+
+          {/* {PaymentDetail.some(
+            (payment) => payment.class_id === Detail.id && payment.is_paid
+          ) ? (
+            <div className="telegram-btn-section relative w-[50vh]">
+              <button
+                className="bg-dark-blue w-full ml-[1.35rem] mr-[1.5rem] text-white rounded-[1.6rem] px-[1rem] py-[0.5rem] font-montserrat text-[2vh] leading-[2.5vh] font-black shadow-lg flex items-center gap-2 justify-center disabled:bg-gray-300 disabled:text-black"
+                disabled
+              >
+                <span>Kelas Terbuka</span>
+              </button>
+            </div>
+          ) : (
+            <div className="telegram-btn-section relative w-[50vh]">
+              <button
+                onClick={tooglePayment}
+                className="bg-dark-blue w-full ml-[1.35rem] mr-[1.5rem] text-white rounded-[1.6rem] px-[1rem] py-[0.5rem] font-montserrat text-[2vh] leading-[2.5vh] font-black shadow-lg flex items-center gap-2 justify-center"
+              >
+                <span>Beli Sekarang</span>
+                <img src={arrow_buy} alt="arrow-buy" width="20" />
+              </button>
+            </div>
+          )} */}
 
           {TentangKelas && !MateriBelajar ? (
             <>
@@ -858,7 +999,7 @@ const DetailKelasPage = () => {
                       style={{ width: "2.5vh" }}
                     />
                     <Progress
-                      value={20}
+                      value={calculateProgressBar(Detail)}
                       size="md"
                       color="indigo"
                       label="Completed"
@@ -887,10 +1028,10 @@ const DetailKelasPage = () => {
                       key={chapterIndex}
                     >
                       <div className="chapter-title-section flex items-center justify-between">
-                        <span className="font-montserrat font-extrabold text-dark-blue text-[1.7vh] leading-[1.25vh]">
+                        <span className="font-montserrat font-extrabold text-dark-blue text-[1.7vh] leading-[2vh] w-[70%] flex justify-start">
                           Chapter {value.no_chapter} - {value.title}
                         </span>
-                        <span className="font-montserrat text-[#489CFF] text-[1.7vh] font-extrabold leading-[1.25vh]">
+                        <span className="font-montserrat text-[#489CFF] text-[1.7vh] font-extrabold leading-[2vh] w-[30%] flex justify-end">
                           {totalVideoMinutes} Menit
                         </span>
                       </div>

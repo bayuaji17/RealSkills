@@ -1,25 +1,25 @@
 import { API_ENDPOINT } from "../utils/api-endpoint";
 import http from "../utils/http";
 
-export const getMe = async (authToken) => {
-  try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        }
-      };
-      const { data } = await http.get(API_ENDPOINT.GET_ME, config);
-      return data;
-  } catch (error) {
-      throw error; 
-  }
+export const getMe = async (
+  page,
+  limit,
+) => {
+  const getAllClass = await http.get(
+    `${API_ENDPOINT.GET_ME}?page=${page}&limit=${limit}`
+  );
+  console.log(getAllClass, "dari getClass");
+  return getAllClass;
 };
 
-export const getFilterMyClasses = async ({ category, type, level}) => {
+export const getFilterMyClasses = async ({ category, type, level, page, limit}) => {
   const params = {
+    page,
+    limit,
     category,
     type,
-    level
+    level,
+
   }
   const filterMyclass = await http.get(API_ENDPOINT.GET_ME, { params });
   return filterMyclass;

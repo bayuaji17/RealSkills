@@ -1,25 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { getFilterMyClasses } from "../services/get-me";
-import { Progress } from "@material-tailwind/react";
+import {  Progress } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
 export const CardMyclass = (props) => {
   const [classData, setClassData] = useState([]);
+  const [notFound, setNotFound] = useState(null);
+
+ const fetchData = useCallback(async () => {
+    try {
+      const data = await getFilterMyClasses(props.classesFilter, props.filterParams?.page || 1, props.filterParams?.limit || 4);
+
+     if(data.data.data.classes.length === 0) {
+     setClassData([]);
+     setNotFound("Kelas Tidak Ditemukan");
+   } else {
+     setClassData(data.data.data.classes);
+     setNotFound(null);
+   }
+    } catch (error) {
+      setClassData([]);
+    }
+  }, [props.classesFilter, props.filterParams?.page || 1, props.filterParams?.limit || 4]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getFilterMyClasses(props.classesFilter);
-        setClassData(data.data.data.classes);
-        console.log("dataclasses", data.data.data.classes);
-      } catch (error) {
-        console.error("Error fetching class data:", error);
-      }
-    };
     fetchData();
-  }, [props.classesFilter]);
+  }, [fetchData]);
+
+ 
 
   const calculateTotalDuration = (classItem) => {
     let totalDuration = 0;
@@ -114,8 +124,16 @@ export const CardMyclass = (props) => {
   const data = filterClasses();
 
   return (
-    <>
-      {data?.map((value) => (
+    <div className="flex flex-col w-full gap-3">
+      <div className="flex flex-wrap justify-between ">
+      {data.length === 0 ? (
+              <tr>
+                <td className="p-4 border-b border-blue-gray-50">
+                  <h1 className="text-lg uppercase">{notFound}</h1>
+                </td>
+              </tr>
+            ) : (
+      data?.map((value) => (
         <div
           div
           key={value.id}
@@ -213,8 +231,8 @@ export const CardMyclass = (props) => {
               <div className="flex items-center text-xs text-white rounded-xl gap-1 ">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
+                  width="16"
+                  height="16"
                   viewBox="0 0 12 12"
                   fill="none"
                 >
@@ -234,7 +252,9 @@ export const CardMyclass = (props) => {
             </div>
           </Link>
         </div>
-      ))}
-    </>
+      )))}
+      </div>
+    </div>
+    // </div>
   );
 };

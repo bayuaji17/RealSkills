@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import logo from "../assets/img/logo.png";
+import RealSkills from "../assets/Logo/Single_Logo.svg";
+import RealSkillsText from "../assets/Logo/RealSkills_Text.svg";
 import {
   Navbar,
   Collapse,
@@ -16,45 +17,80 @@ import {
   UserCircleIcon,
   Square3Stack3DIcon,
   ChevronDownIcon,
-  Cog6ToothIcon,
-  InboxArrowDownIcon,
-  LifebuoyIcon,
   PowerIcon,
   Bars2Icon,
   BellIcon,
+  HomeIcon,
 } from "@heroicons/react/24/solid";
 import { Link, useNavigate } from "react-router-dom";
 import { fetchSearch } from "../services/search";
-
-// profile menu component
-const profileMenuItems = [
-  {
-    label: "My Profile",
-    icon: UserCircleIcon,
-  },
-  {
-    label: "Edit Profile",
-    icon: Cog6ToothIcon,
-  },
-  {
-    label: "Inbox",
-    icon: InboxArrowDownIcon,
-  },
-  {
-    label: "Help",
-    icon: LifebuoyIcon,
-  },
-  {
-    label: "Sign Out",
-    icon: PowerIcon,
-  },
-];
+import { CookieKeys, CookieStorage } from "../utils/cookies";
+import { getUserById } from "../services/notifikasi_akun/get_user";
+import AvatarPP from "../assets/img/icon/avatarPP.png";
 
 function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const navigate = useNavigate();
 
   const closeMenu = () => setIsMenuOpen(false);
 
+  const handleMenuClick = (label) => {
+    if (label === "My Profile") {
+      const path = window.innerWidth >= 1025 ? "/profile" : "/settings";
+
+      // Navigate to the determined path
+      navigate(path);
+    } else if (label === "Sign Out") {
+      // Remove the authentication token and redirect to the login page
+      CookieStorage.remove(CookieKeys.AuthToken, {
+        path: "/",
+        expires: new Date(0),
+      });
+      navigate("/login");
+    }
+
+    // Close the menu in both cases
+    closeMenu();
+  };
+
+  const [userData, setUserData] = useState({
+    profile_picture: null,
+    name: "",
+    email: "",
+    profile: {
+      phone_number: "",
+      country: "",
+      city: "",
+    },
+  });
+
+  useEffect(() => {
+    const fetchDetailUser = async () => {
+      try {
+        const data = await getUserById();
+        setUserData(data.data.user);
+        console.log(data.data.user, "data user");
+      } catch (error) {
+        console.log("data error", error);
+      }
+    };
+
+    fetchDetailUser();
+  }, []);
+
+  const profileMenuItems = [
+    {
+      label: "My Profile",
+      icon: UserCircleIcon,
+      onClick: handleMenuClick,
+    },
+    {
+      label: "Sign Out",
+      icon: PowerIcon,
+      path: "/login",
+      onClick: handleMenuClick,
+    },
+  ];
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
       <MenuHandler>
@@ -66,9 +102,13 @@ function ProfileMenu() {
           <Avatar
             variant="circular"
             size="sm"
-            alt="tania andrew"
-            className="border border-gray-900 p-0.5"
-            src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
+            alt="avatar default"
+            className="border border-gray-900 p-0.3"
+            src={
+              userData && userData.profile?.profile_picture
+                ? userData.profile.profile_picture
+                : AvatarPP
+            }
           />
           <ChevronDownIcon
             strokeWidth={2.5}
@@ -79,12 +119,12 @@ function ProfileMenu() {
         </Button>
       </MenuHandler>
       <MenuList className="p-1">
-        {profileMenuItems.map(({ label, icon }, key) => {
+        {profileMenuItems.map(({ label, icon, path }, key) => {
           const isLastItem = key === profileMenuItems.length - 1;
           return (
             <MenuItem
               key={label}
-              onClick={closeMenu}
+              onClick={() => handleMenuClick(label)}
               className={`flex items-center gap-2 rounded ${
                 isLastItem
                   ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
@@ -115,14 +155,10 @@ function ProfileMenu() {
 const navListMenuItems = [
   {
     title: "Kelas Berjalan",
-    description:
-      "Learn how to use @material-tailwind/html, packed with rich components and widgets.",
     path: "/kelas",
   },
   {
     title: "Topik Kelas",
-    description:
-      "Learn how to use @material-tailwind/react, packed with rich components for React.",
     path: "/topik",
   },
 ];
@@ -130,18 +166,19 @@ const navListMenuItems = [
 function NavListMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-  const renderItems = navListMenuItems.map(({ title, description, path }) => (
+  const renderItems = navListMenuItems.map(({ title, path }) => (
     <Link
       to={path}
       key={title}
       style={{ textDecoration: "none", color: "inherit" }}
     >
       <MenuItem>
-        <Typography variant="h6" color="blue-gray" className="mb-1 lg:text-blue-gray-700 lg:hover:text-black text-white hover:text-blue-gray-900">
+        <Typography
+          variant="h6"
+          color="blue-gray"
+          className="mb-1 lg:text-blue-gray-700 lg:hover:text-black text-white hover:text-blue-gray-900"
+        >
           {title}
-        </Typography>
-        <Typography variant="small" color="gray" className="font-normal lg:text-blue-gray-700 lg:hover:text-black text-white hover:text-blue-gray-900">
-          {description}
         </Typography>
       </MenuItem>
     </Link>
@@ -151,10 +188,14 @@ function NavListMenu() {
     <React.Fragment>
       <Menu allowHover open={isMenuOpen} handler={setIsMenuOpen}>
         <MenuHandler>
-          <Typography as="a" href="#" variant="small" className="font-normal text-md ">
+          <Typography
+            as="a"
+            href="#"
+            variant="small"
+            className="font-normal text-md "
+          >
             <MenuItem className="hidden items-center gap-2 font-medium text-white lg:flex lg:rounded-full">
-              <Square3Stack3DIcon className="h-[18px] w-[18px] " />{" "}
-              Course{" "}
+              <Square3Stack3DIcon className="h-[18px] w-[18px] " /> Course{" "}
               <ChevronDownIcon
                 strokeWidth={2}
                 className={`h-3 w-3 transition-transform ${
@@ -171,8 +212,7 @@ function NavListMenu() {
         </MenuList>
       </Menu>
       <MenuItem className="flex items-center gap-2 font-medium  text-white lg:hidden">
-        <Square3Stack3DIcon className="h-[18px] w-[18px]  text-base" />{" "}
-        Course{" "}
+        <Square3Stack3DIcon className="h-[18px] w-[18px]  text-base" /> Course{" "}
       </MenuItem>
       <ul className="ml-6 flex w-full flex-col gap-1 lg:hidden">
         {renderItems}
@@ -184,21 +224,20 @@ function NavListMenu() {
 // nav list component
 const navListItems = [
   {
-    label: "Account",
-    icon: UserCircleIcon,
-    path: "/profil",
+    label: "Homepage",
+    icon: HomeIcon,
+    path: "/beranda",
   },
   {
     label: "Notification",
     icon: BellIcon,
-    path: "/notif",
+    path: "/notifikasi",
   },
 ];
 
 function NavList() {
   return (
     <ul className="mt-2  mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
-      
       <NavListMenu />
       {navListItems.map(({ label, icon, path }, key) => (
         <Typography
@@ -211,7 +250,10 @@ function NavList() {
         >
           <MenuItem className="flex items-center gap-2 lg:rounded-full text-base">
             {React.createElement(icon, { className: "h-[18px] w-[18px]" })}{" "}
-            <span className="text-white hover:text-blue-gray-900"> {label}</span>
+            <span className="text-white hover:text-blue-gray-900">
+              {" "}
+              {label}
+            </span>
           </MenuItem>
         </Typography>
       ))}
@@ -235,12 +277,12 @@ export const NavbarLogin = () => {
   };
 
   useEffect(() => {
-      if (searchData) {
-        navigate('/search?query=' + search, { state: { results: searchData.classes, query: search} });
-
-      }
-  },[searchData, search, navigate])
-
+    if (searchData) {
+      navigate("/search?query=" + search, {
+        state: { results: searchData.classes, query: search },
+      });
+    }
+  }, [searchData, search]);
 
   const enter = (e) => {
     if (e.key === "Enter") {
@@ -256,13 +298,14 @@ export const NavbarLogin = () => {
   }, []);
 
   return (
-    <Navbar className="w-full  max-w-full p-2  lg:pl-6 bg-[#6148FF]  shadow-none border-0 rounded-none lg:rounded-none bg-opacity-100">
+    <Navbar className="w-full  max-w-full p-1  lg:pl-6 bg-[#6148FF]  shadow-none border-0 rounded-none lg:rounded-none bg-opacity-100">
       <div className="relative  flex items-center justify-between text-blue-gray-900">
-        <div className="flex">
-          <img src={logo} alt=" " className="w-12 h-12" />
-          <h1 className="text-white text-lg flex items-center">RealSkills</h1>
+      <Link to="/">
+        <div className="flex gap-3 ml-3">
+          <img src={RealSkills} alt=" " className="w-12 h-12" />
+          <img src={RealSkillsText} alt="" className="w-20 h-12 hidden mobile:block " />
         </div>
-
+        </Link>
         <>
           <div className="hidden lg:block">
             <NavList />

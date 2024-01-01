@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import logo from "../../../assets/img/logo.png";
+import RealSkillsLogo from "../../../assets/Logo/Logo_Slogan.svg";
 import { postReset } from "../../../services/auth/reset-password";
 
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,24}$/;
@@ -17,12 +17,10 @@ const SUCCESS_BORDER_COLOR = "border-green-600 focus:outline-green-600";
 
 const ResetPasswordPage = () => {
   const navigate = useNavigate();
-  const [FormInput, setFormInput] = useState(
-    {
-      password: "",
-      confirmPassword: "",
-    }
-  )
+  const [FormInput, setFormInput] = useState({
+    password: "",
+    confirmPassword: "",
+  });
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [ConfirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
@@ -40,12 +38,12 @@ const ResetPasswordPage = () => {
   };
 
   const handleInput = (e) => {
-     const { id, value } = e.target;
+    const { id, value } = e.target;
     setFormInput({
       ...FormInput,
       [id]: value,
     });
-  }
+  };
 
   const passwordBorderClass = () => {
     if (isPasswordLengthValid && !isPasswordValid) {
@@ -66,8 +64,8 @@ const ResetPasswordPage = () => {
   const handleResetPassword = async () => {
     const formReset = {
       new_password: FormInput.password,
-      confirm_new_password: FormInput.confirmPassword
-    }
+      confirm_new_password: FormInput.confirmPassword,
+    };
     try {
       const response = await postReset(formReset);
       toast.success(response.data.message, {
@@ -93,7 +91,7 @@ const ResetPasswordPage = () => {
         theme: "light",
       });
     }
-  }  
+  };
 
   return (
     <>
@@ -116,8 +114,8 @@ const ResetPasswordPage = () => {
                     id="password"
                     placeholder="Buat Password"
                     value={FormInput.password}
-                    onChange={(e)=>{
-                      handleInput(e)
+                    onChange={(e) => {
+                      handleInput(e);
                     }}
                     className={`border-2 border-[#D0D0D0] rounded-[1rem] py-[0.5rem] px-[1rem] w-full ${passwordBorderClass()}`}
                     required
@@ -174,8 +172,8 @@ const ResetPasswordPage = () => {
                     id="confirmPassword"
                     placeholder="Ulangi Password"
                     // value={FormInput.confirmPassword}
-                    onChange={(e)=>{
-                      handleInput(e)
+                    onChange={(e) => {
+                      handleInput(e);
                     }}
                     className={`border-2 border-[#D0D0D0] rounded-[1rem] py-[0.5rem] px-[1rem] w-full ${ConfirmPasswordBorderClass()}`}
                     required
@@ -242,10 +240,11 @@ const ResetPasswordPage = () => {
         {/* Right Section */}
         <div className="hidden laptop:bg-blue-700 laptop:w-[50%] laptop:h-screen laptop:flex laptop:justify-center laptop:items-center">
           <div className="brand-text-logo flex gap-2 items-center">
-            <img src={logo} alt="RealSkills" className="w-40 h-40" />
-            <span className="text-brand font-montserrat font-black text-white text-[3rem]">
-              RealSkills
-            </span>
+            <img
+              src={RealSkillsLogo}
+              alt="RealSkills"
+              className="w-[18rem] h-[18rem]"
+            />
           </div>
         </div>
       </div>

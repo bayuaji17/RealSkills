@@ -235,11 +235,7 @@ const FilterSide = (props) => {
             </label>
           </div>
 
-          <div className="mb-4">
-            <p className="text-md font-semibold mb-2">Level Kesulitan</p>
-          </div>
-
-          <div className="flex justify-around">
+          <div className="flex justify-around gap-4">
             <button className="text-[#6148FF] " onClick={applyFilters}>
               Terapkan Filter
             </button>
