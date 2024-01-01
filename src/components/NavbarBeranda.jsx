@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import logo from "../assets/img/logo.png";
+import RealSkills from "../assets/Logo/Single_Logo.svg";
+import RealSkillsText from "../assets/Logo/RealSkills_Text.svg";
 import { useNavigate } from "react-router-dom";
 import { fetchSearch } from "../services/search";
 
@@ -17,12 +18,12 @@ export const NavbarBeranda = () => {
   };
 
   useEffect(() => {
-      if (searchData) {
-        navigate('/search?query=' + search, { state: { results: searchData.classes, query: search} });
-
-      }
-  },[searchData, search])
-
+    if (searchData) {
+      navigate("/search?query=" + search, {
+        state: { results: searchData.classes, query: search },
+      });
+    }
+  }, [searchData, search]);
 
   const enter = (e) => {
     if (e.key === "Enter") {
@@ -31,24 +32,24 @@ export const NavbarBeranda = () => {
   };
 
   const handleLogin = () => {
-    navigate('/login'); // Replace '/login' with the actual path of your login page
+    navigate("/login"); // Replace '/login' with the actual path of your login page
   };
   return (
-    
-      <div className="hidden laptop:flex flex-row bg-[#6148FF] p-1 justify-between">
-        <div className="flex  items-center text-white ml-[5rem]">
-          <img src={logo} alt=" " className="w-12 h-12" />
-          <h1 className=" text-lg mr-20">RealSkills</h1>
+    <div className="hidden laptop:flex flex-row bg-[#6148FF] p-1 justify-between">
+      <div className="flex  items-center text-white ml-[5rem] gap-3">
+        <img src={RealSkills} alt=" " className="w-12 h-12" />
+        <img src={RealSkillsText} alt="" className="w-24 h-12" />
         <div className="flex relative">
           <input
-            className="p-2 w-[25rem] flex justify-between rounded-lg text-[#6148FF]"
+            className="ml-4 p-2 w-[25rem] flex justify-between rounded-lg text-[#6148FF]"
             placeholder="Cari Kursus terbaik...."
             onChange={(e) => setSearch(e.target.value)}
-              onKeyDown={enter}
+            onKeyDown={enter}
           />
-          <button 
-              onClick={handleSearch}
-              className=" bg-[#6148FF] absolute right-2 mt-2 rounded-md">
+          <button
+            onClick={handleSearch}
+            className=" bg-[#6148FF] absolute right-2 mt-2 rounded-md"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -68,42 +69,42 @@ export const NavbarBeranda = () => {
             </svg>
           </button>
         </div>
-        </div>
-        <button
-        onClick={handleLogin}
-        className="flex items-center text-white mr-[10rem] gap-2 text-md font-bold">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="21"
-              height="20"
-              viewBox="0 0 21 20"
-              fill="none"
-            >
-              <path
-                d="M8.8335 14.1666L13.0002 9.99992L8.8335 5.83325"
-                stroke="white"
-                strokeWidth={2}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M13 10H3"
-                stroke="white"
-                strokeWidth={2}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M13 2.5H16.3333C16.7754 2.5 17.1993 2.67559 17.5118 2.98816C17.8244 3.30072 18 3.72464 18 4.16667V15.8333C18 16.2754 17.8244 16.6993 17.5118 17.0118C17.1993 17.3244 16.7754 17.5 16.3333 17.5H13"
-                stroke="white"
-                strokeWidth={2}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <p>Masuk</p>
-          </button>
       </div>
-   
+      <button
+        onClick={handleLogin}
+        className="flex items-center text-white mr-[10rem] gap-2 text-md font-bold"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="21"
+          height="20"
+          viewBox="0 0 21 20"
+          fill="none"
+        >
+          <path
+            d="M8.8335 14.1666L13.0002 9.99992L8.8335 5.83325"
+            stroke="white"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M13 10H3"
+            stroke="white"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M13 2.5H16.3333C16.7754 2.5 17.1993 2.67559 17.5118 2.98816C17.8244 3.30072 18 3.72464 18 4.16667V15.8333C18 16.2754 17.8244 16.6993 17.5118 17.0118C17.1993 17.3244 16.7754 17.5 16.3333 17.5H13"
+            stroke="white"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+        <p>Masuk</p>
+      </button>
+    </div>
   );
 };

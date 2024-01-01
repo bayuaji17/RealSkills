@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import logo from "../assets/img/logo.png";
+import RealSkills from "../assets/Logo/Single_Logo.svg";
+import RealSkillsText from "../assets/Logo/RealSkills_Text.svg";
 import {
   Navbar,
   Collapse,
@@ -300,9 +301,9 @@ export const NavbarLogin = () => {
     <Navbar className="w-full  max-w-full p-1  lg:pl-6 bg-[#6148FF]  shadow-none border-0 rounded-none lg:rounded-none bg-opacity-100">
       <div className="relative  flex items-center justify-between text-blue-gray-900">
       <Link to="/">
-        <div className="flex">
-          <img src={logo} alt=" " className="w-12 h-12" />
-          <h1 className="text-white text-lg flex items-center">RealSkills</h1>
+        <div className="flex gap-3">
+          <img src={RealSkills} alt=" " className="w-12 h-12" />
+          <img src={RealSkillsText} alt="" className="w-20 h-12" />
         </div>
         </Link>
         <>

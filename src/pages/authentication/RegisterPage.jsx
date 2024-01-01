@@ -3,7 +3,7 @@ import { postRegister } from "../../services/auth/register-user";
 import FormInput from "../../components/form/FormInput";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import logo from "../../assets/img/logo.png";
+import RealSkillsLogo from "../../assets/Logo/Logo_Slogan.svg";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,24}$/;
@@ -280,8 +280,11 @@ export const RegisterPage = () => {
       <div className="hidden laptop:flex laptop:h-screen laptop:w-5/12">
         <div className="flex flex-row bg-[#6148FF] w-full justify-center items-center">
           <div className="flex flex-row items-center gap-x-4">
-            <img src={logo} alt="test" className="w-40 h-40" />
-            <h1 className="font-bold text-4xl text-white">RealSkills</h1>
+            <img
+              src={RealSkillsLogo}
+              alt="test"
+              className="w-[18rem] h-[18rem]"
+            />
           </div>
         </div>
       </div>
