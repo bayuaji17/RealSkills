@@ -14,7 +14,7 @@ export const Card = (props) => {
 
   const fetchData = useCallback(async () => {
     try {
-      const data = await getFilterClasses(props.classesFilter,  props.filterParams?.page || 1, props.filterParams?.limit || 4);
+      const data = await getFilterClasses(props.classesFilter,  props.filterParams?.page || 1, props.filterParams?.limit || 20);
       if (data.data.data.classes.length === 0) {
         setClassData([]);
         setNotFound("Kelas Tidak Ditemukan");
@@ -25,7 +25,7 @@ export const Card = (props) => {
     } catch (error) {
       setClassData([]);
     }
-  },[props.classesFilter,  props.filterParams?.page || 1, props.filterParams?.limit || 4]);
+  },[props.classesFilter,  props.filterParams?.page || 1, props.filterParams?.limit || 20]);
 
   useEffect(() => {
     fetchData();
