@@ -10,7 +10,7 @@ export const KelasSaya = () => {
   const [filteredType, setFilteredType] = useState("all");
   const [filterParams, setFilterParams] = useState({
     page : 1,
-    limit : 4,
+    limit : 20,
     category: "",
     level: "",
     type: "",
@@ -80,7 +80,7 @@ export const KelasSaya = () => {
       category: categoryValue,
       level: levelValue,
       page: 1,
-      limit: 4,
+      limit: 20,
     });
   };
 
@@ -192,7 +192,7 @@ export const KelasSaya = () => {
                   filter={filter}
                 />
               </div>
-              <div className="flex gap-4 justify-end">
+              <div className="flex gap-4 justify-end absolute">
         <Button
           variant="gradient"
           size="sm"

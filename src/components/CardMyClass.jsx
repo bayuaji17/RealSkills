@@ -11,7 +11,7 @@ export const CardMyclass = (props) => {
 
  const fetchData = useCallback(async () => {
     try {
-      const data = await getFilterMyClasses(props.classesFilter, props.filterParams?.page || 1, props.filterParams?.limit || 4);
+      const data = await getFilterMyClasses(props.classesFilter, props.filterParams?.page || 1, props.filterParams?.limit || 20);
 
      if(data.data.data.classes.length === 0) {
      setClassData([]);
@@ -23,7 +23,7 @@ export const CardMyclass = (props) => {
     } catch (error) {
       setClassData([]);
     }
-  }, [props.classesFilter, props.filterParams?.page || 1, props.filterParams?.limit || 4]);
+  }, [props.classesFilter, props.filterParams?.page || 1, props.filterParams?.limit || 20]);
 
   useEffect(() => {
     fetchData();
