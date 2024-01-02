@@ -169,7 +169,7 @@ export const CardMyclass = (props) => {
                   {value.rating}
                 </p>
               </div>
-              <p className="font-bold text-xs py-1 ">{value.name}</p>
+              <p className="font-bold text-xs py-1 overflow-hidden whitespace-nowrap overflow-ellipsis">{value.name}</p>
               <p className="text-xs">by {value.author}</p>
               <div className="flex w-full  justify-between">
                 <p className="text-[#6148FF] flex  items-center py-1 text-xs">
