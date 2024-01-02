@@ -82,7 +82,6 @@ const DetailKelasPage = () => {
         const response = await getAuthenticated();
         setPaymentDetail(response?.data?.data?.user?.payments || []);
         setFreeClassDetail(response?.data?.data?.classes || []);
-        console.log(response?.data?.data?.classes, "freeClassDetail");
 
         const isClassPaidAndAccessed =
           response?.data?.data?.user?.payments?.some(
