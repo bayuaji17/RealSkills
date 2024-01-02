@@ -883,29 +883,6 @@ const DetailKelasPage = () => {
             </div>
           )}
 
-          {/* {PaymentDetail.some(
-            (payment) => payment.class_id === Detail.id && payment.is_paid
-          ) ? (
-            <div className="telegram-btn-section relative w-[50vh]">
-              <button
-                className="bg-dark-blue w-full ml-[1.35rem] mr-[1.5rem] text-white rounded-[1.6rem] px-[1rem] py-[0.5rem] font-montserrat text-[2vh] leading-[2.5vh] font-black shadow-lg flex items-center gap-2 justify-center disabled:bg-gray-300 disabled:text-black"
-                disabled
-              >
-                <span>Kelas Terbuka</span>
-              </button>
-            </div>
-          ) : (
-            <div className="telegram-btn-section relative w-[50vh]">
-              <button
-                onClick={tooglePayment}
-                className="bg-dark-blue w-full ml-[1.35rem] mr-[1.5rem] text-white rounded-[1.6rem] px-[1rem] py-[0.5rem] font-montserrat text-[2vh] leading-[2.5vh] font-black shadow-lg flex items-center gap-2 justify-center"
-              >
-                <span>Beli Sekarang</span>
-                <img src={arrow_buy} alt="arrow-buy" width="20" />
-              </button>
-            </div>
-          )} */}
-
           {TentangKelas && !MateriBelajar ? (
             <>
               <div className="select-about-materi-section flex items-center w-full mt-2 cursor-pointer">
