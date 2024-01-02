@@ -88,7 +88,16 @@ const DetailKelasPage = () => {
             (payment) => payment?.class.id === Detail?.id && payment?.is_paid
           );
 
+        // some((free) => free.id === Detail.id
+        const isFreeClassAccessed = response?.data?.data?.classes?.some(
+          (free) => free.id === Detail?.id
+        );
+
         if (isClassPaidAndAccessed) {
+          setPrerequisitesModal(true);
+        }
+
+        if (isFreeClassAccessed) {
           setPrerequisitesModal(true);
         }
       } catch (error) {
@@ -390,7 +399,7 @@ const DetailKelasPage = () => {
                     key={index}
                     className="font-montserrat text-[1rem] leading-[0.9rem]"
                   >
-                    {goal}
+                   {index + 1}. {goal}
                   </span>
                 ))
               ) : (
@@ -940,7 +949,7 @@ const DetailKelasPage = () => {
                           key={index}
                           className="font-montserrat text-[1.8vh] leading-[2vh] text-[rgba(0,0,0,0.80)]"
                         >
-                          {goal}
+                          {index + 1}. {goal}
                         </span>
                       ))
                     ) : (
