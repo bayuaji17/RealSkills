@@ -399,7 +399,7 @@ const DetailKelasPage = () => {
                     key={index}
                     className="font-montserrat text-[1rem] leading-[0.9rem]"
                   >
-                    {goal}
+                   {index + 1}. {goal}
                   </span>
                 ))
               ) : (
@@ -949,7 +949,7 @@ const DetailKelasPage = () => {
                           key={index}
                           className="font-montserrat text-[1.8vh] leading-[2vh] text-[rgba(0,0,0,0.80)]"
                         >
-                          {goal}
+                          {index + 1}. {goal}
                         </span>
                       ))
                     ) : (
