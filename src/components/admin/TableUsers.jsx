@@ -33,7 +33,7 @@ export const TableUsers = () => {
   useEffect(() => {
     getAllDataUsers();
   }, [page]);
-  const TABLE_HEAD = ["Id", "Nama", "Email", "Status", "Jumlah Kelas"];
+  const TABLE_HEAD = ["No Hp", "Nama", "Email", "Status", "Jumlah Kelas"];
   return (
     <div>
       <PostNotif open={open} handler={handleOpen} />
@@ -79,7 +79,7 @@ export const TableUsers = () => {
                         color="blue-gray"
                         className="font-normal"
                       >
-                        {data.id}
+                        {data.profile.phone_number}
                       </Typography>
                     </td>
                     <td className="p-3 border-b-2">
