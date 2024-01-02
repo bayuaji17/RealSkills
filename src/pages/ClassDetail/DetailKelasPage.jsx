@@ -580,7 +580,7 @@ const DetailKelasPage = () => {
             {PrerequisitesModal && (
               <div className="modal-payment-popup fixed bg-black bg-opacity-70 inset-0 font-montserrat cursor-pointer">
                 <div className="flex justify-center items-center font-montserrat h-full w-full">
-                  <div className="bg-[#FFFF] flex flex-col gap-[1rem] h-[70%] w-[30%] rounded-[1rem] px-[1rem] py-[1rem]">
+                  <div className="bg-[#FFFF] flex flex-col gap-[1rem] w-[30%] rounded-[1rem] px-[1rem] py-[1rem]">
                     <div
                       onClick={tooglePrerequisites}
                       className="flex justify-end"
@@ -604,7 +604,21 @@ const DetailKelasPage = () => {
                           Persiapkan hal berikut untuk belajar yang maksimal:
                         </span>
                         <span className="font-montserrat text-[0.75rem] text-center leading-[1.25rem]">
-                          {Detail.prerequisites}
+                          {/* {Detail.prerequisites} */}
+                          {Detail.prerequisites
+                            ? Detail.prerequisites.map(
+                                (prerequisitesValue, i) => (
+                                  <span
+                                    className="font-montserrat font-normal"
+                                    key={prerequisitesValue.id}
+                                  >
+                                    {prerequisitesValue}
+                                    {i < Detail.prerequisites.length - 1 &&
+                                      ", "}
+                                  </span>
+                                )
+                              )
+                            : ""}
                         </span>
                       </div>
                     </div>
@@ -1168,7 +1182,20 @@ const DetailKelasPage = () => {
                             Persiapkan hal berikut untuk belajar yang maksimal:
                           </span>
                           <span className="font-montserrat text-[1.5vh] text-center leading-[2vh]">
-                            {Detail.prerequisites}
+                            {Detail.prerequisites
+                              ? Detail.prerequisites.map(
+                                  (prerequisitesValue, i) => (
+                                    <span
+                                      className="font-montserrat font-normal"
+                                      key={prerequisitesValue.id}
+                                    >
+                                      {prerequisitesValue}
+                                      {i < Detail.prerequisites.length - 1 &&
+                                        ", "}
+                                    </span>
+                                  )
+                                )
+                              : ""}
                           </span>
                         </div>
                       </div>
