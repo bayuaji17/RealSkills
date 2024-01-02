@@ -1,7 +1,7 @@
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
-import { allClass } from "../services/get-allclass";
+import { allClass, topikClass } from "../services/get-allclass";
 import { Link, useNavigate } from "react-router-dom";
 import { getFreeClass } from "../services/freeClass";
 import { toast } from "react-toastify";
@@ -16,12 +16,13 @@ export const CardBeranda = ({
 }) => {
   const [classData, setClassData] = useState([]);
   const [page] = useState(1);
+  const [limit] = useState(10);
   const navigate = useNavigate();
 
 
   const fetchData = async () => {
     try {
-      const data = await allClass(page);
+      const data = await topikClass(page,limit);
       // console.log(data);
       setClassData(data.data.data.classes);
     } catch (error) {
@@ -31,7 +32,7 @@ export const CardBeranda = ({
 
   useEffect(() => {
     fetchData()
-  }, [page]);
+  }, [page,limit]);
 
 
 
