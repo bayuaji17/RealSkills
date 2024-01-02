@@ -44,7 +44,6 @@ export const Notifikasi = () => {
       await deleteNotifById(id);
       setHapus(false);
       toast.success("Notifikasi Berhasil dihapus");
-      // Refetch the notifications after deletion
       const updatedNotifications = notif.filter(
         (notification) => notification.id !== id
       );
