@@ -88,7 +88,16 @@ const DetailKelasPage = () => {
             (payment) => payment?.class.id === Detail?.id && payment?.is_paid
           );
 
+        // some((free) => free.id === Detail.id
+        const isFreeClassAccessed = response?.data?.data?.classes?.some(
+          (free) => free.id === Detail?.id
+        );
+
         if (isClassPaidAndAccessed) {
+          setPrerequisitesModal(true);
+        }
+
+        if (isFreeClassAccessed) {
           setPrerequisitesModal(true);
         }
       } catch (error) {
