@@ -5,7 +5,7 @@ import { NavbarLogin } from "../components/NavbarLogin";
 import { CardMyclass } from "../components/CardMyClass";
 import { fetchSearchMyclass } from "../services/search-myclass";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@material-tailwind/react";
+// import { Button } from "@material-tailwind/react";
 export const KelasSaya = () => {
   const [filteredType, setFilteredType] = useState("all");
   const [filterParams, setFilterParams] = useState({
@@ -15,21 +15,21 @@ export const KelasSaya = () => {
     level: "",
     type: "",
   });
-  const handlePreviousPage = () => {
-    if (filterParams.page > 1) {
-      setFilterParams((prevParams) => ({
-        ...prevParams,
-        page: prevParams.page - 1,
-      }));
-    }
-  };
+  // const handlePreviousPage = () => {
+  //   if (filterParams.page > 1) {
+  //     setFilterParams((prevParams) => ({
+  //       ...prevParams,
+  //       page: prevParams.page - 1,
+  //     }));
+  //   }
+  // };
   
-  const handleNextPage = () => {
-    setFilterParams((prevParams) => ({
-      ...prevParams,
-      page: prevParams.page + 1,
-    }));
-  };
+  // const handleNextPage = () => {
+  //   setFilterParams((prevParams) => ({
+  //     ...prevParams,
+  //     page: prevParams.page + 1,
+  //   }));
+  // };
 
   const handleFilterChange = (newFilterParams) => {
     let typeValue = "";
@@ -192,7 +192,7 @@ export const KelasSaya = () => {
                   filter={filter}
                 />
               </div>
-              <div className="flex gap-4 justify-end absolute">
+              {/* <div className="flex gap-4 justify-end absolute">
         <Button
           variant="gradient"
           size="sm"
@@ -210,7 +210,7 @@ export const KelasSaya = () => {
         >
           Next
         </Button>
-              </div>
+              </div> */}
               <div>
                 <h1 className="px-4 font-semibold text-md text-xl mb-4 mt-1  laptop:hidden laptop:mb-0">
                   Kategori

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import FilterSide from "../components/FilterSide";
 import { Card } from "../components/Card";
 import { NavbarLogin } from "../components/NavbarLogin";
-import { Button } from "@material-tailwind/react";
+// import { Button } from "@material-tailwind/react";
 
 export const TopikKelas = () => {
   const [filteredType, setFilteredType] = useState("all"); // "all", "premium", "gratis"
@@ -14,21 +14,21 @@ export const TopikKelas = () => {
     type: "",
   });
 
-  const handlePreviousPage = () => {
-    if (filterParams.page > 1) {
-      setFilterParams((prevParams) => ({
-        ...prevParams,
-        page: prevParams.page - 1,
-      }));
-    }
-  };
+  // const handlePreviousPage = () => {
+  //   if (filterParams.page > 1) {
+  //     setFilterParams((prevParams) => ({
+  //       ...prevParams,
+  //       page: prevParams.page - 1,
+  //     }));
+  //   }
+  // };
 
-  const handleNextPage = () => {
-    setFilterParams((prevParams) => ({
-      ...prevParams,
-      page: prevParams.page + 1,
-    }));
-  };
+  // const handleNextPage = () => {
+  //   setFilterParams((prevParams) => ({
+  //     ...prevParams,
+  //     page: prevParams.page + 1,
+  //   }));
+  // };
 
   const handleFilterChange = (newFilterParams) => {
     let typeValue = "";
