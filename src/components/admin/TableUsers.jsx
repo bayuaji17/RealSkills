@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { getAllUsers } from "../../services/all-users";
 import { Button, Card, CardFooter, Typography } from "@material-tailwind/react";
 import { PostNotif } from "./PostNotif";
-import { Link } from "react-router-dom";
 
 export const TableUsers = () => {
   const [page, setPage] = useState(1);
@@ -41,18 +40,13 @@ export const TableUsers = () => {
       <div className="flex flex-row items-center justify-between px-5 flex-wrap py-3 ">
         <h1 className="text-lg font-bold">Data Users</h1>
         <div className="flex flex-row gap-3">
-          <Link to={"/admin/users/notifikasi"}>
-            <Button color="blue">
-              Table Notifikasi
-            </Button>
-          </Link>
           <Button onClick={handleOpen} color="blue">
             Broadcast Notifikasi
           </Button>
         </div>
       </div>
       <div>
-        <Card className="h-80 w-full overflow-scroll">
+        <Card className="h-80 w-full overflow-y-scroll overflow-auto">
           <table className="w-full min-w-max table-auto text-left">
             <thead className="sticky top-0">
               <tr>

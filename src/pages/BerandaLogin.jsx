@@ -41,7 +41,7 @@ export const BerandaLogin = () => {
           <KategoriBelajar />
         </div>
       </div>
-      <KursusPopuler />
+     <KursusPopuler />
     </div>
   );
 };

@@ -107,7 +107,7 @@ export const KursusPopuler = () => {
           </button>
         </div>
       </div>
-      <div className="flex gap-5 overflow-x-auto">
+      <div className="flex gap-5 overflow-x-auto py-3">
         <CardBeranda
           isCourse={true}
           filterCategory={filterCategory}

@@ -20,6 +20,8 @@ import { getAuthenticated } from "../../services/auth/get-authenticated";
 import { getWatchedVideos } from "../../services/users/get-watched-videos";
 import { NavbarLogin } from "../../components/NavbarLogin";
 import { Progress } from "@material-tailwind/react";
+import { getFreeClass } from "../../services/freeClass";
+import { toast } from "react-toastify";
 
 const DetailKelasPage = () => {
   const [MateriBelajar, setMateriBelajar] = useState(false);
@@ -27,6 +29,7 @@ const DetailKelasPage = () => {
   const [PaymentModal, setPaymentModal] = useState(false);
   const [Detail, setDetail] = useState([]);
   const [PaymentDetail, setPaymentDetail] = useState([]);
+  const [FreeClassDetail, setFreeClassDetail] = useState([]);
   const [CourseChapter, setCourseChapter] = useState([]);
   const [SelectedVideo, setSelectedVideo] = useState("");
   const [FirstVideoPlay, setFirstVideoPlay] = useState("");
@@ -78,13 +81,23 @@ const DetailKelasPage = () => {
       try {
         const response = await getAuthenticated();
         setPaymentDetail(response?.data?.data?.user?.payments || []);
+        setFreeClassDetail(response?.data?.data?.classes || []);
 
         const isClassPaidAndAccessed =
           response?.data?.data?.user?.payments?.some(
             (payment) => payment?.class.id === Detail?.id && payment?.is_paid
           );
 
+        // some((free) => free.id === Detail.id
+        const isFreeClassAccessed = response?.data?.data?.classes?.some(
+          (free) => free.id === Detail?.id
+        );
+
         if (isClassPaidAndAccessed) {
+          setPrerequisitesModal(true);
+        }
+
+        if (isFreeClassAccessed) {
           setPrerequisitesModal(true);
         }
       } catch (error) {
@@ -173,6 +186,34 @@ const DetailKelasPage = () => {
       totalVideos !== 0 ? Math.round((watchedCount / totalVideos) * 100) : 0;
 
     return progressPercentage;
+  };
+
+  const handleFreeClass = async (id) => {
+    try {
+      const response = await getFreeClass(id);
+      toast.success(response.message, {
+        position: "bottom-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } catch (error) {
+      // console.error("Error accessing free class:", error);
+      // toast.error("Anda sudah mengakses kelas ini", {
+      //   position: "bottom-center",
+      //   autoClose: 2000,
+      //   hideProgressBar: false,
+      //   closeOnClick: false,
+      //   pauseOnHover: true,
+      //   draggable: true,
+      //   progress: undefined,
+      //   theme: "light",
+      // });
+    }
   };
 
   return (
@@ -269,25 +310,47 @@ const DetailKelasPage = () => {
           </div>
 
           {/* Button Telegram Section */}
-          {PaymentDetail.some(
-            (payment) => payment.class_id === Detail.id && payment.is_paid
-          ) ? (
+          {Detail.type_id === 2 ? (
             <div className="telegram-btn-section relative w-[25%]">
-              <button
-                className="bg-dark-blue w-full text-white rounded-[1.6rem] px-[1rem] py-[0.5rem] font-montserrat text-[1rem] leading-[1.5rem] font-black shadow-lg flex items-center gap-2 justify-center disabled:bg-gray-300 disabled:text-black"
-                disabled
-              >
-                <span>Kelas Terbuka</span>
-              </button>
+              {PaymentDetail.some(
+                (payment) => payment.class_id === Detail.id && payment.is_paid
+              ) ? (
+                <button
+                  className="bg-dark-blue w-full text-white rounded-[1.6rem] px-[1rem] py-[0.5rem] font-montserrat text-[1rem] leading-[1.5rem] font-black shadow-lg flex items-center gap-2 justify-center disabled:bg-gray-300 disabled:text-black"
+                  disabled
+                >
+                  <span>Kelas Terbuka</span>
+                </button>
+              ) : (
+                <button
+                  onClick={tooglePayment}
+                  className="bg-dark-blue w-full text-white rounded-[1.6rem] px-[1rem] py-[0.5rem] font-montserrat text-[1rem] leading-[1.5rem] font-black shadow-lg flex items-center gap-2 justify-center"
+                >
+                  <span>Beli Sekarang</span>
+                  <img src={arrow_buy} alt="arrow-buy" width="20" />
+                </button>
+              )}
             </div>
           ) : (
             <div className="telegram-btn-section relative w-[25%]">
-              <button 
-              onClick={tooglePayment}
-              className="bg-dark-blue w-full text-white rounded-[1.6rem] px-[1rem] py-[0.5rem] font-montserrat text-[1rem] leading-[1.5rem] font-black shadow-lg flex items-center gap-2 justify-center">
-                <span>Beli Sekarang</span>
-                <img src={arrow_buy} alt="arrow-buy" width="20" />
-              </button>
+              {FreeClassDetail.some((free) => free.id === Detail.id) ? (
+                <button
+                  className="bg-dark-blue w-full text-white rounded-[1.6rem] px-[1rem] py-[0.5rem] font-montserrat text-[1rem] leading-[1.5rem] font-black shadow-lg flex items-center gap-2 justify-center disabled:bg-gray-300 disabled:text-black"
+                  disabled
+                >
+                  <span>Kelas Gratis Terbuka</span>
+                </button>
+              ) : (
+                <button
+                  onClick={() => {
+                    handleFreeClass(Detail.id);
+                  }}
+                  className="bg-dark-blue w-full text-white rounded-[1.6rem] px-[1rem] py-[0.5rem] font-montserrat text-[1rem] leading-[1.5rem] font-black shadow-lg flex items-center gap-2 justify-center"
+                >
+                  <span>Akses Kelas Gratis</span>
+                  <img src={arrow_buy} alt="arrow-buy" width="20" />
+                </button>
+              )}
             </div>
           )}
         </div>
@@ -336,7 +399,7 @@ const DetailKelasPage = () => {
                     key={index}
                     className="font-montserrat text-[1rem] leading-[0.9rem]"
                   >
-                    {goal}
+                   {index + 1}. {goal}
                   </span>
                 ))
               ) : (
@@ -526,7 +589,7 @@ const DetailKelasPage = () => {
             {PrerequisitesModal && (
               <div className="modal-payment-popup fixed bg-black bg-opacity-70 inset-0 font-montserrat cursor-pointer">
                 <div className="flex justify-center items-center font-montserrat h-full w-full">
-                  <div className="bg-[#FFFF] flex flex-col gap-[1rem] h-[70%] w-[30%] rounded-[1rem] px-[1rem] py-[1rem]">
+                  <div className="bg-[#FFFF] flex flex-col gap-[1rem] w-[30%] rounded-[1rem] px-[1rem] py-[1rem]">
                     <div
                       onClick={tooglePrerequisites}
                       className="flex justify-end"
@@ -550,7 +613,21 @@ const DetailKelasPage = () => {
                           Persiapkan hal berikut untuk belajar yang maksimal:
                         </span>
                         <span className="font-montserrat text-[0.75rem] text-center leading-[1.25rem]">
-                          {Detail.prerequisites}
+                          {/* {Detail.prerequisites} */}
+                          {Detail.prerequisites
+                            ? Detail.prerequisites.map(
+                                (prerequisitesValue, i) => (
+                                  <span
+                                    className="font-montserrat font-normal"
+                                    key={prerequisitesValue.id}
+                                  >
+                                    {prerequisitesValue}
+                                    {i < Detail.prerequisites.length - 1 &&
+                                      ", "}
+                                  </span>
+                                )
+                              )
+                            : ""}
                         </span>
                       </div>
                     </div>
@@ -783,25 +860,48 @@ const DetailKelasPage = () => {
             </div>
           </div>
 
-          {PaymentDetail.some(
-            (payment) => payment.class_id === Detail.id && payment.is_paid
-          ) ? (
-            <div className="telegram-btn-section relative w-[50vh]">
-              <button
-                className="bg-dark-blue w-full ml-[1.35rem] mr-[1.5rem] text-white rounded-[1.6rem] px-[1rem] py-[0.5rem] font-montserrat text-[2vh] leading-[2.5vh] font-black shadow-lg flex items-center gap-2 justify-center disabled:bg-gray-300 disabled:text-black"
-                disabled
-              >
-                <span>Kelas Terbuka</span>
-              </button>
+          {Detail.type_id === 2 ? (
+            // Jika kelas berbayar
+            <div className="telegram-btn-section w-[90%]">
+              {PaymentDetail.some(
+                (payment) => payment.class_id === Detail.id && payment.is_paid
+              ) ? (
+                <button
+                  className="bg-dark-blue w-full ml-[1.35rem] mr-[1.5rem] text-white rounded-[1.6rem] px-[1rem] py-[0.5rem] font-montserrat text-[2vh] leading-[2.5vh] font-black shadow-lg flex items-center gap-2 justify-center disabled:bg-gray-300 disabled:text-black"
+                  disabled
+                >
+                  <span>Kelas Terbuka</span>
+                </button>
+              ) : (
+                <button
+                  onClick={tooglePayment}
+                  className="bg-dark-blue w-full ml-[1.35rem] mr-[1.5rem] text-white rounded-[1.6rem] px-[1rem] py-[0.5rem] font-montserrat text-[2vh] leading-[2.5vh] font-black shadow-lg flex items-center gap-2 justify-center"
+                >
+                  <span>Beli Sekarang</span>
+                  <img src={arrow_buy} alt="arrow-buy" width="20" />
+                </button>
+              )}
             </div>
           ) : (
-            <div className="telegram-btn-section relative w-[50vh]">
-              <button 
-              onClick={tooglePayment}
-              className="bg-dark-blue w-full ml-[1.35rem] mr-[1.5rem] text-white rounded-[1.6rem] px-[1rem] py-[0.5rem] font-montserrat text-[2vh] leading-[2.5vh] font-black shadow-lg flex items-center gap-2 justify-center">
-                <span>Beli Sekarang</span>
-                <img src={arrow_buy} alt="arrow-buy" width="20" />
-              </button>
+            <div className="telegram-btn-section relative w-[90%]">
+              {FreeClassDetail.some((free) => free.id === Detail.id) ? (
+                <button
+                  className="bg-dark-blue w-full ml-[1.35rem] mr-[1.5rem] text-white rounded-[1.6rem] px-[1rem] py-[0.5rem] font-montserrat text-[2vh] leading-[2.5vh] font-black shadow-lg flex items-center gap-2 justify-center disabled:bg-gray-300 disabled:text-black"
+                  disabled
+                >
+                  <span>Kelas Gratis Terbuka</span>
+                </button>
+              ) : (
+                <button
+                  onClick={() => {
+                    handleFreeClass(Detail.id);
+                  }}
+                  className="bg-dark-blue w-full ml-[1.35rem] mr-[1.5rem] text-white rounded-[1.6rem] px-[1rem] py-[0.5rem] font-montserrat text-[2vh] leading-[2.5vh] font-black shadow-lg flex items-center gap-2 justify-center"
+                >
+                  <span>Akses Kelas Gratis</span>
+                  <img src={arrow_buy} alt="arrow-buy" width="20" />
+                </button>
+              )}
             </div>
           )}
 
@@ -849,7 +949,7 @@ const DetailKelasPage = () => {
                           key={index}
                           className="font-montserrat text-[1.8vh] leading-[2vh] text-[rgba(0,0,0,0.80)]"
                         >
-                          {goal}
+                          {index + 1}. {goal}
                         </span>
                       ))
                     ) : (
@@ -1091,7 +1191,20 @@ const DetailKelasPage = () => {
                             Persiapkan hal berikut untuk belajar yang maksimal:
                           </span>
                           <span className="font-montserrat text-[1.5vh] text-center leading-[2vh]">
-                            {Detail.prerequisites}
+                            {Detail.prerequisites
+                              ? Detail.prerequisites.map(
+                                  (prerequisitesValue, i) => (
+                                    <span
+                                      className="font-montserrat font-normal"
+                                      key={prerequisitesValue.id}
+                                    >
+                                      {prerequisitesValue}
+                                      {i < Detail.prerequisites.length - 1 &&
+                                        ", "}
+                                    </span>
+                                  )
+                                )
+                              : ""}
                           </span>
                         </div>
                       </div>
