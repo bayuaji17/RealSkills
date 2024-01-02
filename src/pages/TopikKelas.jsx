@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import FilterSide from "../components/FilterSide";
 import { Card } from "../components/Card";
 import { NavbarLogin } from "../components/NavbarLogin";
@@ -7,13 +7,13 @@ import { Button } from "@material-tailwind/react";
 export const TopikKelas = () => {
   const [filteredType, setFilteredType] = useState("all"); // "all", "premium", "gratis"
   const [filterParams, setFilterParams] = useState({
-    page : 1,
-    limit : 4,
-    category : "",
-    level : "",
-    type : ""
-  })
-  
+    page: 1,
+    limit: 20,
+    category: "",
+    level: "",
+    type: "",
+  });
+
   const handlePreviousPage = () => {
     if (filterParams.page > 1) {
       setFilterParams((prevParams) => ({
@@ -22,14 +22,13 @@ export const TopikKelas = () => {
       }));
     }
   };
-  
+
   const handleNextPage = () => {
     setFilterParams((prevParams) => ({
       ...prevParams,
       page: prevParams.page + 1,
     }));
   };
-  
 
   const handleFilterChange = (newFilterParams) => {
     let typeValue = "";
@@ -80,10 +79,10 @@ export const TopikKelas = () => {
       category: categoryValue,
       level: levelValue,
       page: 1,
-      limit: 4,
+      limit: 20,
     });
   };
-  
+
   return (
     <div className="bg-[#EBF3FC] min-h-screen  flex flex-col">
       <NavbarLogin />
@@ -93,59 +92,65 @@ export const TopikKelas = () => {
           <div className="flex items-center justify-between mx-5 mt-3 laptop:mt-0 pt-0 pb-2 laptop:py-6 laptop:ml-0 laptop:mr-4  text-lg ">
             <h1 className="font-bold">Topik Kelas</h1>
             <div className="flex laptop:hidden">
-              <FilterSide onFilterChange={handleFilterChange}/>
+              <FilterSide onFilterChange={handleFilterChange} />
             </div>
-            
           </div>
           <div className="flex gap-20 px-4 justify-center mb-3 laptop:pl-0 laptop:pr-0">
             {/* filter&(button&card) */}
 
             <div className="hidden laptop:flex">
-              <FilterSide onFilterChange={handleFilterChange}/>
+              <FilterSide onFilterChange={handleFilterChange} />
             </div>
 
             {/* button&card */}
             <div className="flex flex-col w-[100vw] gap-5 laptop:w-[40rem]">
               {/* button */}
               <div className="flex justify-evenly  laptop:gap-14 laptop:w-full">
-                <button 
-                onClick={() => setFilteredType("all")}
-                className="py-1 px-5  rounded-xl bg-white hover:bg-[#6148FF] hover:text-white active:bg-[#6148FF] active:text-white focus:text-white focus:outline-none focus:ring focus:ring-violet-300 focus:bg-[#6148FF] laptop:py-1 laptop:px-10 ">
+                <button
+                  onClick={() => setFilteredType("all")}
+                  className="py-1 px-5  rounded-xl bg-white hover:bg-[#6148FF] hover:text-white active:bg-[#6148FF] active:text-white focus:text-white focus:outline-none focus:ring focus:ring-violet-300 focus:bg-[#6148FF] laptop:py-1 laptop:px-10 "
+                >
                   All
                 </button>
-                <button 
-                onClick={() => setFilteredType("premium")}
-                className="py-1 px-5  rounded-xl bg-white hover:bg-[#6148FF] hover:text-white active:text-white focus:text-white active:bg-[#6148FF] focus:outline-none focus:ring focus:ring-violet-300 focus:bg-[#6148FF] laptop:py-1 laptop:px-12 ">
+                <button
+                  onClick={() => setFilteredType("premium")}
+                  className="py-1 px-5  rounded-xl bg-white hover:bg-[#6148FF] hover:text-white active:text-white focus:text-white active:bg-[#6148FF] focus:outline-none focus:ring focus:ring-violet-300 focus:bg-[#6148FF] laptop:py-1 laptop:px-12 "
+                >
                   Kelas Premium
                 </button>
-                <button 
-                onClick={() => setFilteredType("gratis")}
-                className="py-1 px-5 rounded-xl bg-white hover:bg-[#6148FF] hover:text-white active:text-white focus:text-white active:bg-[#6148FF] focus:outline-none focus:ring focus:ring-violet-300 focus:bg-[#6148FF] laptop:py-1 laptop:px-10">
+                <button
+                  onClick={() => setFilteredType("gratis")}
+                  className="py-1 px-5 rounded-xl bg-white hover:bg-[#6148FF] hover:text-white active:text-white focus:text-white active:bg-[#6148FF] focus:outline-none focus:ring focus:ring-violet-300 focus:bg-[#6148FF] laptop:py-1 laptop:px-10"
+                >
                   Kelas Gratis
                 </button>
               </div>
               <div className=" gap-3 flex justify-between flex-wrap ">
-              <Card isTopik={true} filteredType={filteredType} classesFilter={filterParams}/>
+                <Card
+                  isTopik={true}
+                  filteredType={filteredType}
+                  classesFilter={filterParams}
+                />
               </div>
-              <div className="flex gap-4 justify-end">
-        <Button
-          variant="gradient"
-          size="sm"
-          color="green"
-          onClick={handlePreviousPage}
-          disabled={filterParams.page === 1}
-        >
-          Previous
-        </Button>
-        <Button
-          variant="gradient"
-          size="sm"
-          color="green"
-          onClick={handleNextPage}
-        >
-          Next
-        </Button>
-      </div>
+              {/* <div className="flex gap-4 justify-end ">
+                <Button
+                  variant="gradient"
+                  size="sm"
+                  color="green"
+                  onClick={handlePreviousPage}
+                  disabled={filterParams.page === 1}
+                >
+                  Previous
+                </Button>
+                <Button
+                  variant="gradient"
+                  size="sm"
+                  color="green"
+                  onClick={handleNextPage}
+                >
+                  Next
+                </Button>
+              </div> */}
             </div>
           </div>
         </div>

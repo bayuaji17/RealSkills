@@ -9,13 +9,16 @@ import {
   Navbar,
   Typography,
 } from "@material-tailwind/react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import RealskillsText from "../../assets/Logo/RealSkills_Text.svg";
+import { CookieKeys, CookieStorage } from "../../utils/cookies";
+import { toast } from "react-toastify";
 export const NavbarAdmin = () => {
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
   const [open, setOpen] = useState(false);
   const [openNav, setOpenNav] = useState(false);
+  const navigate = useNavigate();
   useEffect(() => {
     window.addEventListener(
       "resize",
@@ -28,6 +31,12 @@ export const NavbarAdmin = () => {
   };
   const activeClass = (path) => {
     return location.pathname === path ? "bg-[#489CFF]" : "";
+  };
+
+  const handleLogout = () => {
+    CookieStorage.remove(CookieKeys.AuthToken);
+    toast.success("Log Out Berhasil!");
+    navigate("/admin");
   };
 
   return (
@@ -101,7 +110,7 @@ export const NavbarAdmin = () => {
               Users
             </ListItem>
           </Link>
-          <ListItem className="text-white">Log Out</ListItem>
+          <ListItem className="text-white" onClick={handleLogout}>Log Out</ListItem>
         </List>
       </Drawer>
     </div>
