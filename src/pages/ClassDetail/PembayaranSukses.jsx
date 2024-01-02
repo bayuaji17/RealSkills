@@ -37,7 +37,7 @@ const PembayaranSukses = () => {
               Mulai Belajar
             </button>
           </Link>
-          <span
+          <span 
             className="text-[#489CFF] font-black font-montserrat text-[2.25vh] leading-[2vh] laptop:text-[1rem] laptop:leading-[1.5rem] cursor-pointer"
             onClick={() => {
               navigate("/beranda");

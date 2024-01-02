@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import badge from "../../assets/img/icon/badge-svg.svg";
 import modul from "../../assets/img/icon/clarity_book-line.svg";
 import time from "../../assets/img/icon/ri_time-fill.svg";
-import message from "../../assets/img/icon/gridicons_chat.svg";
+// import message from "../../assets/img/icon/gridicons_chat.svg";
 import progress_check from "../../assets/img/icon/progress-check.svg";
 import done_play_button from "../../assets/img/icon/green-play.svg";
 import undone_play_button from "../../assets/img/icon/dark-blue-play.svg";
@@ -128,7 +128,6 @@ const DetailKelasPage = () => {
 
     return `${totalHours} jam ${remainingMinutes} menit`;
   };
-  
 
   const toogleTentangKelas = () => {
     setTentangKelas(true);
@@ -178,7 +177,7 @@ const DetailKelasPage = () => {
 
   return (
     <div className="parents">
-      <div className="nav-component-section hidden laptop:flex">
+      <div className="nav-component-section block">
         <NavbarLogin />
       </div>
 
@@ -264,18 +263,33 @@ const DetailKelasPage = () => {
             <div className="badge-level-section flex items-center gap-1">
               <img src={time} alt="course-time" />
               <span className="font-montserrat text-[0.75rem] leading-[0.9rem] font-bold hover:text-[#6148FF] cursor-pointer">
-                {formatDuration(TotalClassMinutes)} 
+                {formatDuration(TotalClassMinutes)}
               </span>
             </div>
           </div>
 
           {/* Button Telegram Section */}
-          <div className="telegram-btn-section relative w-[25%]">
-            <button className="bg-[#73CA5C] w-full text-white rounded-[1.6rem] px-[1rem] py-[0.5rem] font-montserrat text-[1rem] leading-[1.5rem] font-black shadow-lg flex items-center gap-2 justify-center">
-              <span>Join Grup Telegram</span>
-              <img src={message} alt="message-icon" width="30" />
-            </button>
-          </div>
+          {PaymentDetail.some(
+            (payment) => payment.class_id === Detail.id && payment.is_paid
+          ) ? (
+            <div className="telegram-btn-section relative w-[25%]">
+              <button
+                className="bg-dark-blue w-full text-white rounded-[1.6rem] px-[1rem] py-[0.5rem] font-montserrat text-[1rem] leading-[1.5rem] font-black shadow-lg flex items-center gap-2 justify-center disabled:bg-gray-300 disabled:text-black"
+                disabled
+              >
+                <span>Kelas Terbuka</span>
+              </button>
+            </div>
+          ) : (
+            <div className="telegram-btn-section relative w-[25%]">
+              <button 
+              onClick={tooglePayment}
+              className="bg-dark-blue w-full text-white rounded-[1.6rem] px-[1rem] py-[0.5rem] font-montserrat text-[1rem] leading-[1.5rem] font-black shadow-lg flex items-center gap-2 justify-center">
+                <span>Beli Sekarang</span>
+                <img src={arrow_buy} alt="arrow-buy" width="20" />
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
@@ -359,11 +373,15 @@ const DetailKelasPage = () => {
               const isChapterUnlocked =
                 chapterIndex === 0 ||
                 !isPremiumClass ||
-                (Detail?.id ===
-                  PaymentDetail?.find(
-                    (payment) => payment?.class?.id === Detail?.id
-                  )?.class.id &&
-                  PaymentDetail?.some((payment) => payment?.is_paid));
+                (Detail.id ===
+                  PaymentDetail.find(
+                    (payment) => payment.class_id === Detail.id
+                  )?.class_id &&
+                  PaymentDetail.some(
+                    (payment) =>
+                      payment.class_id === Detail.id && payment.is_paid
+                  ));
+
               const totalVideoMinutes = value?.videos?.reduce(
                 (total, video) => total + (video?.time || 0),
                 0
@@ -668,7 +686,7 @@ const DetailKelasPage = () => {
       {/* End Desktop */}
 
       {/* Mobile */}
-      <div className="mobile-section w-full h-screen bg-slate-600 block laptop:hidden">
+      <div className="mobile-section overflow-x-hidden w-full h-screen bg-slate-600 block laptop:hidden">
         <div className="play-video-mobile-container bg-[rgba(0,0,0,0.85)] w-full h-[30%] flex justify-center items-center">
           <div className="player-wrapper h-[90%] w-full">
             {!isVideoClicked ? (
@@ -760,10 +778,32 @@ const DetailKelasPage = () => {
             <div className="badge-level-section flex items-center gap-1">
               <img src={time} alt="course-time" style={{ width: "2.5vh" }} />
               <span className="font-montserrat text-[1.5vh] leading-[2vh] font-bold hover:text-[#6148FF] cursor-pointer">
-                 {formatDuration(TotalClassMinutes)} 
+                {formatDuration(TotalClassMinutes)}
               </span>
             </div>
           </div>
+
+          {PaymentDetail.some(
+            (payment) => payment.class_id === Detail.id && payment.is_paid
+          ) ? (
+            <div className="telegram-btn-section relative w-[50vh]">
+              <button
+                className="bg-dark-blue w-full ml-[1.35rem] mr-[1.5rem] text-white rounded-[1.6rem] px-[1rem] py-[0.5rem] font-montserrat text-[2vh] leading-[2.5vh] font-black shadow-lg flex items-center gap-2 justify-center disabled:bg-gray-300 disabled:text-black"
+                disabled
+              >
+                <span>Kelas Terbuka</span>
+              </button>
+            </div>
+          ) : (
+            <div className="telegram-btn-section relative w-[50vh]">
+              <button 
+              onClick={tooglePayment}
+              className="bg-dark-blue w-full ml-[1.35rem] mr-[1.5rem] text-white rounded-[1.6rem] px-[1rem] py-[0.5rem] font-montserrat text-[2vh] leading-[2.5vh] font-black shadow-lg flex items-center gap-2 justify-center">
+                <span>Beli Sekarang</span>
+                <img src={arrow_buy} alt="arrow-buy" width="20" />
+              </button>
+            </div>
+          )}
 
           {TentangKelas && !MateriBelajar ? (
             <>

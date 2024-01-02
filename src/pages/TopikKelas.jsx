@@ -107,7 +107,7 @@ export const TopikKelas = () => {
             {/* button&card */}
             <div className="flex flex-col w-[100vw] gap-5 laptop:w-[40rem]">
               {/* button */}
-              <div className="flex justify-between  laptop:gap-14 laptop:w-full">
+              <div className="flex justify-evenly  laptop:gap-14 laptop:w-full">
                 <button 
                 onClick={() => setFilteredType("all")}
                 className="py-1 px-5  rounded-xl bg-white hover:bg-[#6148FF] hover:text-white active:bg-[#6148FF] active:text-white focus:text-white focus:outline-none focus:ring focus:ring-violet-300 focus:bg-[#6148FF] laptop:py-1 laptop:px-10 ">

@@ -1,22 +1,20 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import logo from "../../../assets/img/logo.png";
+import RealSkillsLogo from "../../../assets/Logo/Logo_Slogan.svg";
 import { postForgotPassword } from "../../../services/auth/forgot-password";
 import { CookieKeys, CookieStorage } from "../../../utils/cookies";
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 const ResetPasswordTautanPage = () => {
-  const [FormInput, setFormInput] = useState(
-    {
-      email: ""
-    }
-  )
+  const [FormInput, setFormInput] = useState({
+    email: "",
+  });
   const isEmailValid = EMAIL_REGEX.test(FormInput.email);
   const isEmailLengthValid = FormInput.email.length > 0;
   const ERROR_BORDER_COLOR = "border-red-600 focus:outline-red-600";
   const SUCCESS_BORDER_COLOR = "border-green-600 focus:outline-green-600";
-  
+
   const emailBorderClass = () => {
     if (isEmailLengthValid > 0 && !isEmailValid) {
       return ERROR_BORDER_COLOR;
@@ -26,17 +24,17 @@ const ResetPasswordTautanPage = () => {
   };
 
   const handleInput = (e) => {
-     const { id, value } = e.target;
+    const { id, value } = e.target;
     setFormInput({
       ...FormInput,
       [id]: value,
     });
-  }
+  };
 
   const handleForgotPassword = async () => {
     const formForgot = {
-      email: FormInput.email
-    }
+      email: FormInput.email,
+    };
     try {
       const response = await postForgotPassword(formForgot);
       toast.success(response.data.message, {
@@ -49,7 +47,10 @@ const ResetPasswordTautanPage = () => {
         progress: undefined,
         theme: "light",
       });
-      CookieStorage.set(CookieKeys.ForgotPasswordToken, response.data.data.token)
+      CookieStorage.set(
+        CookieKeys.ForgotPasswordToken,
+        response.data.data.token
+      );
     } catch (error) {
       toast.error(error.response.data.error, {
         position: "bottom-center",
@@ -62,7 +63,7 @@ const ResetPasswordTautanPage = () => {
         theme: "light",
       });
     }
-  }
+  };
 
   return (
     <>
@@ -96,7 +97,7 @@ const ResetPasswordTautanPage = () => {
             <button
               className="reset-btn font-poppins text-white bg-blue-700 rounded-[1rem] py-[0.75rem] px-[1.5rem] text-[1rem] disabled:cursor-not-allowed disabled:bg-blue-300"
               disabled={!isEmailLengthValid || !isEmailValid}
-              onClick={()=>{
+              onClick={() => {
                 handleForgotPassword();
               }}
             >
@@ -107,12 +108,13 @@ const ResetPasswordTautanPage = () => {
 
         {/* Right Section */}
         <div className="right-section hidden laptop:bg-blue-700 laptop:w-[50%] laptop:h-screen laptop:flex laptop:justify-center laptop:items-center">
-        <div className="brand-text-logo flex gap-2 items-center">
-          <img src={logo} alt="RealSkills" className="w-40 h-40"/>
-          <span className="text-brand font-montserrat font-black text-white text-[3rem]">
-            RealSkills
-          </span>
-        </div>
+          <div className="brand-text-logo flex gap-2 items-center">
+            <img
+              src={RealSkillsLogo}
+              alt="RealSkills"
+              className="w-[18rem] h-[18rem]"
+            />
+          </div>
         </div>
       </div>
     </>

@@ -210,7 +210,7 @@ const DetailKelasPembayaran = () => {
   return (
     <div className="parents">
       {/* Desktop */}
-      <div className="hidden laptop:block">
+      <div className="block">
         <NavbarLogin />
       </div>
 

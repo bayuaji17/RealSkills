@@ -10,7 +10,7 @@ export const KursusPopuler = () => {
   });
 
   return (
-    <div className="px-4 py-1 laptop:mx-[6rem] laptop:px-0 bg-[#EBF3FC] laptop:bg-white">
+    <div className="px-4 laptop:mx-[6rem] laptop:px-0 bg-[#EBF3FC] laptop:bg-white py-3">
       <h1 className="font-semibold text-xl text-md">Kursus Populer</h1>
       <div className=" flex item-center">
         <div className="flex p-2 justify-between item-center font-bold  gap-5 w-full text-sm overflow-x-auto">

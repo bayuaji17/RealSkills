@@ -33,13 +33,11 @@ export const PostNotif = ({ open, handler }) => {
     };
     try {
       const response = await postNotif(formData);
-      console.log(response);
       handler();
       setLoading(false);
       toast.success("Broadcast Notification Success");
       return response;
     } catch (error) {
-      console.log(error);
       toast.error("error");
       setLoading(false);
     }

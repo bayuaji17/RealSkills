@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
-import logo from "../../assets/img/logo.png";
+import RealSkillsLogo from "../../assets/Logo/Logo_Slogan.svg";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { login } from "../../services/auth/login-user";
 import { toast } from "react-toastify";
@@ -23,7 +23,7 @@ export const LoginPage = () => {
     setShowPassword(!showPassword);
   };
 
-        //Testing
+  //Testing
   const inputEmailTelp = (e) => {
     setEmailTelp(e.target.value);
   };
@@ -73,7 +73,7 @@ export const LoginPage = () => {
       CookieStorage.set(CookieKeys.AuthToken, response.data.data.token);
       navigate("/beranda");
     } catch (error) {
-      toast.error(error?.response?.data?.error?.detail, {
+      toast.error(error?.response?.data?.error, {
         position: "bottom-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -86,7 +86,6 @@ export const LoginPage = () => {
     }
   };
 
-  //Testing
   return (
     <div className="flex flex-row justify-center items-center h-screen font-poppins  ">
       <div className="flex flex-col justify-center items-center  h-full  laptop:w-7/12">
@@ -141,8 +140,7 @@ export const LoginPage = () => {
         </div>
       </div>
       <div className=" hidden laptop:flex justify-center items-center h-full w-5/12 bg-[#6148FF]">
-        <img src={logo} alt=" " className="w-40 h-40"></img>
-        <h1 className="font-bold text-4xl text-white">RealSkills</h1>
+        <img src={RealSkillsLogo} alt=" " className="w-[18rem] h-[18rem]"></img>
       </div>
     </div>
   );

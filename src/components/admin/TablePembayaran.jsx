@@ -60,13 +60,6 @@ export const TablePembayaran = () => {
       <div className="flex flex-row justify-between pb-2 items-center flex-wrap">
         <h1 className="text-xl font-bold">Status Pembayaran</h1>
         <div className="flex flex-row gap-2">
-          {/* <Button
-            variant="outlined"
-            className="rounded-3xl border-blue-600 h-10 w-28 flex items-center gap-2 normal-case hover:bg-purple-600"
-          >
-            <img src={filterAdmin} alt="logo" />
-            <h1 className="text-sm text-blue-600">Filter</h1>
-          </Button> */}
           <div className={`relative pb-2`}>
             <input
               type="text"
@@ -101,7 +94,7 @@ export const TablePembayaran = () => {
                   <Typography
                     variant="small"
                     color="blue-gray"
-                    className="font-normal leading-none opacity-70"
+                    className="font-poppins leading-none opacity-70"
                   >
                     {head}
                   </Typography>
@@ -111,6 +104,9 @@ export const TablePembayaran = () => {
           </thead>
           <tbody>
             {searchDataTable?.map((payment, index) => {
+              const idUser = payment.user_id;
+              const split = idUser.split("-");
+              const idUserSplit = split[split.length - 1];
               const originalDate = new Date(payment.payment_date);
               const dateFormatter = new Intl.DateTimeFormat("en-GB", {
                 year: "numeric",
@@ -121,14 +117,16 @@ export const TablePembayaran = () => {
                 timeZone: "UTC",
               });
               const formattedDate = dateFormatter.format(originalDate);
-              const paymentClass = payment.is_paid ? "text-green-400":"text-red-600"
+              const paymentClass = payment.is_paid
+                ? "text-green-400"
+                : "text-red-600";
               const paymentStatus = payment.is_paid
                 ? "Sudah Dibayar"
                 : " Belum Dibayar";
               return (
                 <tr key={index}>
                   <td className="p-2 border-b-2">
-                    <p className="text-sm">{payment.user_id}</p>
+                    <p className="text-sm">{idUserSplit}</p>
                   </td>
                   <td className="p-2 border-b-2">
                     <p className="text-sm">

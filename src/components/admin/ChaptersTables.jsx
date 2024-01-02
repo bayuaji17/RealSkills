@@ -11,7 +11,6 @@ import {
 import React, { useEffect, useState } from "react";
 import { getClassById } from "../../services/get-all-class";
 import { useParams } from "react-router-dom";
-import { EditChapters } from "../EditChapters";
 import FormInput from "../form/FormInput";
 import { editChaptersById } from "../../services/edit-chapters";
 import { deleteChaptersById } from "../../services/delete-chapters";
@@ -90,13 +89,10 @@ export const ChaptersTables = () => {
       const response = await editVideosById(editVideosId, editSubmit);
       setEditVideo(false);
       toast.success("Kelas berhasil di perbarui");
-      console.log(response);
       return response;
     } catch (error) {
-      console.error(error);
     }
 
-    console.log(editSubmit);
   };
   const handleHapusVideo = (row) => {
     setSelectedVideos(row);
@@ -109,7 +105,6 @@ export const ChaptersTables = () => {
       toast.success("kelas Berhasil dihapus");
       getClasById();
     } catch (error) {
-      console.error(error);
     }
   };
   // *EDIT Video
@@ -135,7 +130,7 @@ export const ChaptersTables = () => {
       updatedVideos[index][field] = value;
     }
     setEditChapters({ ...editChapters, videos: updatedVideos });
-    console.log(editChapters, e.target.value);
+
   };
   // *Untuk add video chapter
   const addVideo = () => {
@@ -224,7 +219,7 @@ export const ChaptersTables = () => {
     } catch (error) {
       setEdit(false);
       toast.error("Chapters gagal diperbarui");
-      console.error(error);
+
     }
   };
   const handleDeleteChapterSubmit = async () => {
@@ -234,19 +229,16 @@ export const ChaptersTables = () => {
       toast.success("Chapter Berhasil dihapus");
       getClasById();
     } catch (error) {
-      console.error(error);
+
     }
   };
-
-  console.log(editChapters, "dari chaptersTable.jsx");
-  console.log(editDataVideo, "dari editvideo.jsx");
 
   // ! UNTUK EDIT
   // *UNTUK GET
   const TABLE_HEAD_VIDEO = [
     "Nomor Video",
     "Title Video",
-    "Link",
+    "Link Video",
     "Durasi",
     "Aksi",
   ];
@@ -256,10 +248,8 @@ export const ChaptersTables = () => {
     try {
       const response = await getClassById(id);
       setDataChapters(response.data.data.chapters);
-      console.log(response.data.data.chapters, "dari chaptersTable");
       return response;
     } catch (error) {
-      console.error(error);
     }
   };
 
@@ -268,7 +258,7 @@ export const ChaptersTables = () => {
   }, []);
   // *UNTUK GET
   return (
-    <div className="">
+    <div className=" font-montserrat">
       {/* //! EDIT Video */}
       <Dialog open={editVideo} handler={editVideoClose} className=" h-[70%]">
         <DialogHeader>Edit Video</DialogHeader>
@@ -312,7 +302,7 @@ export const ChaptersTables = () => {
             color="green"
             onClick={handleEditSubmitVideo}
           >
-            <span>Confirm</span>
+            <span>Simpan</span>
           </Button>
         </DialogFooter>
       </Dialog>
@@ -365,9 +355,9 @@ export const ChaptersTables = () => {
           />
           {editChapters.videos.map((videos, index) => (
             <div key={index}>
-              <Card className="h-[30rem] bg-red-200 my-4">
+              <Card className="h-[30rem] bg-blue-600 my-4">
                 <div className="flex flex-row flex-wrap justify-between items-center">
-                  <h1 className="before:content-['*'] before:px-2 before:text-red-600 italic">
+                  <h1 className="before:content-['*'] before:px-2 before:text-red-600 italic text-white">
                     Hapus jika tidak ingin menambah video di dalam chapters
                   </h1>
                   <button
@@ -385,6 +375,7 @@ export const ChaptersTables = () => {
                     value={videos.no_video}
                     placeholder="Input No Video Chapter"
                     onChange={(e) => handleVideoChange(e, index, "no_video")}
+                    classNameLabel="text-white"
                   />
                   <FormInput
                     type="text"
@@ -393,6 +384,7 @@ export const ChaptersTables = () => {
                     value={videos.titleVideo}
                     placeholder="Input Title Video Chapter"
                     onChange={(e) => handleVideoChange(e, index, "titleVideo")}
+                    classNameLabel="text-white"
                   />
                   <FormInput
                     type="text"
@@ -401,6 +393,7 @@ export const ChaptersTables = () => {
                     value={videos.link}
                     placeholder="Input Link Video Chapter"
                     onChange={(e) => handleVideoChange(e, index, "link")}
+                    classNameLabel="text-white"
                   />
                   <FormInput
                     type="text"
@@ -409,12 +402,13 @@ export const ChaptersTables = () => {
                     value={videos.time}
                     placeholder="Input No Video Chapter"
                     onChange={(e) => handleVideoChange(e, index, "time")}
+                    classNameLabel="text-white"
                   />
                 </div>
               </Card>
             </div>
           ))}
-          <Button className="w-full my-3" onClick={addVideo}>
+          <Button className="w-full my-3" onClick={addVideo} color="green">
             Tambah Video
           </Button>
         </DialogBody>
@@ -428,7 +422,7 @@ export const ChaptersTables = () => {
             <span>Cancel</span>
           </Button>
           <Button variant="gradient" color="green" onClick={handleSubmit}>
-            <span>Confirm</span>
+            <span>simpan</span>
           </Button>
         </DialogFooter>
       </Dialog>
@@ -458,14 +452,22 @@ export const ChaptersTables = () => {
       <h1 className="text-center font-extrabold text-3xl py-4">
         Data Chapters
       </h1>
-      <a href="/admin/kelola-kelas" className="pl-5">
-        <FontAwesomeIcon icon={faArrowLeft} size="2xl" />
-      </a>
+      <div className="flex flex-row justify-between items-center flex-wrap">
+        <a href="/admin/kelola-kelas" className="pl-5">
+          <FontAwesomeIcon icon={faArrowLeft} size="2xl" />
+          <span className="font-bold text-xl px-4">Kembali</span>
+        </a>
+        <a href={`/admin/kelola-kelas/${id}`}>
+          <Button className="rounded-full" color="blue">
+            Tambah Chapter
+          </Button>
+        </a>
+      </div>
       <div className="flex flex-col gap-4 container sm:container md:container lg:container xl:container justify-center">
         {dataChapters?.map((chapters, index) => {
           return (
             <div key={index}>
-              <Card className="w-[88vw] mobile:w-[80vw] laptop:w-[80vw] laptop:h-[30rem] bg-blue-gray-700 my-4 overflow-x-scroll ">
+              <Card className="w-[88vw] mobile:w-[80vw] laptop:w-[80vw] laptop:h-[30rem] bg-blue-600 my-4 overflow-x-scroll ">
                 <CardBody>
                   <div className="text-white ">
                     <tr>
@@ -516,7 +518,7 @@ export const ChaptersTables = () => {
                     </div>
                   </div>
                 </CardBody>
-                <Card className="h-[15rem] w-[90%] overflow-scroll mx-auto">
+                <Card className="h-[15rem] w-[90%] overflow-auto mx-auto">
                   <table className="w-full container mx-auto min-w-max table-auto text-left">
                     <thead>
                       <tr>
@@ -558,6 +560,7 @@ export const ChaptersTables = () => {
                                   onClick={() =>
                                     handleEditVideo(videos.id, videos)
                                   }
+                                  color="green"
                                 >
                                   Edit
                                 </Button>
