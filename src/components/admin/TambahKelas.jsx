@@ -117,7 +117,8 @@ export const TambahKelas = ({ open, handler,getClass }) => {
       return response;
     } catch (error) {
       setLoading(false);
-      toast.error(error);
+      handler()
+      toast.error(error.response.data.error);
     }
   };
 

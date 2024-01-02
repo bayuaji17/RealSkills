@@ -26,7 +26,6 @@ import { ResultCategory } from "../pages/ResultCategory";
 import { BerandaLogin } from "../pages/BerandaLogin";
 import { SearchResultMyclass } from "../components/SearchResultMyclass";
 import { AdminUsers } from "../pages/admin/AdminUsers";
-import { AdminUsersNotif } from "../pages/admin/AdminUsersNotif";
 import ProtectedTokenUser from "../components/ProtectedComponents/ProtectedTokenUser";
 import ProtectedTokenAdmin from "../components/ProtectedComponents/ProtectedTokenAdmin";
 export const RouterPages = () => {
@@ -79,14 +78,6 @@ export const RouterPages = () => {
           element={
             <ProtectedTokenAdmin>
               <Chapters />
-            </ProtectedTokenAdmin>
-          }
-        />
-        <Route
-          path="admin/users/notifikasi"
-          element={
-            <ProtectedTokenAdmin>
-              <AdminUsersNotif />
             </ProtectedTokenAdmin>
           }
         />
