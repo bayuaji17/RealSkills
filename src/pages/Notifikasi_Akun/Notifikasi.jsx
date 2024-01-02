@@ -4,7 +4,7 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Vector from "../../assets/img/icon/Vector.png";
 import circle_green from "../../assets/img/icon/circle_green.png";
 import { getUserById } from "../../services/notifikasi_akun/get_user";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { NavbarLogin } from "../../components/NavbarLogin";
 import { toast } from "react-toastify";
 import { deleteNotifById } from "../../services/delete-notif";
@@ -78,15 +78,28 @@ export const Notifikasi = () => {
             Kembali ke Beranda
           </a>
         </div>
-        <div className="flex mx-[0.9rem] mt-[1rem] laptop:justify-center laptop:items-center mobile:justify-items-start ">
+        <div className="back-section flex items-center gap-3 laptop:hidden m-[1rem] ">
+          <Link
+            to="/beranda"
+            className="text-black text-[1rem] font-bold font-montserrat"
+          >
+            <FontAwesomeIcon
+              icon={faArrowLeft}
+              size="xl"
+              style={{ color: "black" }}
+            />
+          </Link>
+        </div>
+
+        <div className="flex mx-[0.9rem] mt-0 laptop:mt-[1rem] laptop:justify-center laptop:items-center mobile:justify-items-start ">
           <div className="modal flex flex-col laptop:border laptop:border-[#6148FF] laptop:h-auto laptop:w-[75%] rounded-[1rem] mb-[5rem] mobile:w-full ">
             <div className="title w-full h-[4.8rem] laptop:bg-[#6148FF] rounded-t-[1rem]">
-              <span className=" flex laptop:justify-center mobile:justify-start items-center laptop:text-white font-bold text-[1.8rem] py-3 mobile:text-black">
+              <span className=" flex laptop:justify-center mobile:justify-start items-center laptop:text-white font-bold text-[1.8rem] laptop:py-3 mobile:text-black">
                 Notifikasi
               </span>
             </div>
 
-            <div className="isi-notifikasi flex flex-col gap-[2.5rem] py-[1rem] laptop:my-[1rem] laptop:mx-[3.5rem] font-montserrat">
+            <div className="isi-notifikasi flex flex-col gap-[2.5rem] py-[1rem] my-0 laptop:my-[1rem] mx-0 laptop:mx-[3.5rem] font-montserrat">
               {notif.map((notifications, index) => (
                 <div key={index}>
                   <div className="first-notification">
@@ -102,7 +115,7 @@ export const Notifikasi = () => {
                         </label>
                       </span>
 
-                      <span className="flex justify-end items-end gap-3">
+                      <span className="flex justify-end items-end gap-3 ml-[3rem]">
                         <label className="text-sm text-[#8A8A8A] items-center ">
                           {dateFormatter.format(
                             new Date(notifications.created_at)
