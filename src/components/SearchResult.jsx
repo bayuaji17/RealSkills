@@ -6,7 +6,7 @@ import { NavbarLogin } from "./NavbarLogin";
 export const SearchResult = ({ isCourse, myClass, isTopik }) => {
   const location = useLocation();
   const searchQuery = new URLSearchParams(location.search).get("query");
-  const result = location.state.results;
+  const result = location?.state?.results;
 
   const getById = (id, mapping) => {
     const match = mapping.find((item) => item.id === id);
