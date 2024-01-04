@@ -95,7 +95,7 @@ const FilterSide = (props) => {
       <div className="hidden laptop:flex justify-center items-center bg-[#EBF3FC]">
         <div className="bg-white shadow-lg py-8 px-10 rounded-xl w-full text-xs">
           <div className="mb-4">
-            <p className="text-md font-semibold mb-2  ">Tipe Kelas</p>
+            <p className="text-md font-semibold mb-2  ">Class Type</p>
             <label className=" mb-2 flex items-center">
               <input
                 type="checkbox"
@@ -105,7 +105,7 @@ const FilterSide = (props) => {
                 }
                 className="h-5 w-5 rounded-xl  mr-2 "
               />
-              Kelas Gratis
+              Free Class
             </label>
 
             <label className="mb-2 text-md flex items-center">
@@ -117,12 +117,12 @@ const FilterSide = (props) => {
                 }
                 className="h-5 w-5 rounded-xl  mr-2"
               />
-              Kelas Premium
+              Premium Class
             </label>
           </div>
 
           <div className="mb-4">
-            <p className="text-md font-semibold mb-2">Kategori</p>
+            <p className="text-md font-semibold mb-2">Category</p>
             <label className="mb-2 text-md flex items-center">
               <input
                 type="checkbox"
@@ -237,10 +237,10 @@ const FilterSide = (props) => {
 
           <div className="flex justify-around gap-4">
             <button className="text-[#6148FF] " onClick={applyFilters}>
-              Terapkan Filter
+              Apply Filter
             </button>
             <button onClick={resetFilters} className="text-red-500 ">
-              Hapus Filter
+              Clear Filter
             </button>
           </div>
         </div>
@@ -279,7 +279,7 @@ const FilterSide = (props) => {
             </button>
             {/* Checkbox Inputs */}
             <div className="mb-4">
-              <p className="text-md font-semibold mb-2  ">Tipe Kelas</p>
+              <p className="text-md font-semibold mb-2  ">Class Type</p>
               <label className=" mb-2 flex items-center">
                 <input
                   type="checkbox"
@@ -289,7 +289,7 @@ const FilterSide = (props) => {
                   }
                   className="h-5 w-5 rounded-xl  mr-2 "
                 />
-                Kelas Gratis
+                Free Class
               </label>
 
               <label className="mb-2 text-md flex items-center">
@@ -301,7 +301,7 @@ const FilterSide = (props) => {
                   }
                   className="h-5 w-5 rounded-xl  mr-2"
                 />
-                Kelas Premium
+               Premium Class
               </label>
             </div>
 
@@ -419,16 +419,12 @@ const FilterSide = (props) => {
               </label>
             </div>
 
-            <div className="mb-4">
-              <p className="text-md font-semibold mb-2">Level Kesulitan</p>
-            </div>
-
             <div className="flex justify-around">
               <button className="text-[#6148FF] " onClick={applyFilters}>
-                Terapkan Filter
+                Apply Filter
               </button>
               <button onClick={resetFilters} className="text-red-500 ">
-                Hapus Filter
+                Clear Filter
               </button>
             </div>
           </div>

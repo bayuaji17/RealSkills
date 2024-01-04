@@ -45,7 +45,7 @@ export const Search = () => {
   };
 
   return (
-    <div className="flex justify-between items-center py-4 px-4 bg-[#EBF3FC] gap-6 laptop:hidden">
+    <div className="flex justify-between items-center py-4 px-4 bg-[#6148FF] gap-6 laptop:hidden">
       <React.Fragment>
         <Button
           className="bg-[#6148FF] shadow-lg"

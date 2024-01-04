@@ -154,11 +154,11 @@ function ProfileMenu() {
 // nav list menu
 const navListMenuItems = [
   {
-    title: "Kelas Berjalan",
+    title: "My Course",
     path: "/kelas",
   },
   {
-    title: "Topik Kelas",
+    title: "Course",
     path: "/topik",
   },
 ];
@@ -300,7 +300,7 @@ export const NavbarLogin = () => {
   return (
     <Navbar className="w-full  max-w-full p-1  lg:pl-6 bg-[#6148FF]  shadow-none border-0 rounded-none lg:rounded-none bg-opacity-100">
       <div className="relative  flex items-center justify-between text-blue-gray-900">
-      <Link to="/">
+      <Link to="/beranda">
         <div className="flex gap-3 ml-3">
           <img src={RealSkills} alt=" " className="w-12 h-12" />
           <img src={RealSkillsText} alt="" className="w-20 h-12 hidden mobile:block " />
@@ -323,8 +323,8 @@ export const NavbarLogin = () => {
         <div className="flex gap-2">
           <div className="flex relative">
             <input
-              className="p-2 text-sm flex justify-between rounded-lg shadow-sm w-[7.2rem] laptop:w-full text-[#6148FF]"
-              placeholder="Cari Kursus terbaik...."
+              className="p-2 text-sm flex justify-between rounded-lg shadow-sm w-[7.2rem] laptop:w-full text-[#6148FF] italic"
+              placeholder="Search..."
               onChange={(e) => setSearch(e.target.value)}
               onKeyDown={enter}
             />

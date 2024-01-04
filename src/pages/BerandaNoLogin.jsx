@@ -12,8 +12,8 @@ export const BerandaNoLogin = () => {
       <Search />
       <Banner />
       <div className="bg-[#EBF3FC] ">
-        <h1 className=" px-4 font-semibold text-md text-xl  laptop:hidden ">
-          Kategori
+        <h1 className=" px-4 font-semibold text-md text-xl pt-3  laptop:hidden ">
+          Category
         </h1>
         <div className=" overflow-x-auto mx-4 laptop:mx-0  laptop:flex-wrap">
           <KategoriBelajar />

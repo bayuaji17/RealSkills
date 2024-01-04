@@ -43,8 +43,8 @@ export const NavbarBeranda = () => {
         </a>
         <div className="flex relative">
           <input
-            className="ml-4 p-2 w-[25rem] flex justify-between rounded-lg text-[#6148FF]"
-            placeholder="Cari Kursus terbaik...."
+            className="ml-4 p-2 w-[25rem] flex justify-between rounded-lg text-[#6148FF] italic"
+            placeholder="Search..."
             onChange={(e) => setSearch(e.target.value)}
             onKeyDown={enter}
           />
@@ -105,7 +105,7 @@ export const NavbarBeranda = () => {
             strokeLinejoin="round"
           />
         </svg>
-        <p>Masuk</p>
+        <p>Login</p>
       </button>
     </div>
   );

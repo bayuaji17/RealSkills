@@ -42,7 +42,7 @@ export const CardMyclass = (props) => {
     const totalHours = Math.floor(totalDuration / 60);
     const totalMinutes = totalDuration % 60;
 
-    return `${totalHours} jam ${totalMinutes} menit`;
+    return `${totalHours} hour ${totalMinutes} min`;
   };
 
   const calculateProgressBar = (classItem) => {
@@ -140,7 +140,7 @@ export const CardMyclass = (props) => {
           className=" bg-white w-[22rem] laptop:w-[18rem]  rounded-3xl shadow-md "
         >
           <Link to={`/detailKelas/${value.id}`}>
-            <div className="h-[6rem] overflow-hidden rounded-t-3xl mb-1">
+            <div className="h-[7rem] overflow-hidden rounded-t-3xl mb-1">
               <img
                 className="h-full w-full object-cover"
                 src={value.image_url}
@@ -210,7 +210,7 @@ export const CardMyclass = (props) => {
                       fill="#73CA5C"
                     />
                   </svg>
-                  {value.modules} Modul
+                  {value.modules} Module
                 </p>
                 <p className=" flex  items-center text-xs">
                   <svg

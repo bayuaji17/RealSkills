@@ -90,7 +90,7 @@ export const TopikKelas = () => {
       <div className=" w-full laptop:flex flex-col flex-wrap justify-center items-center">
         <div>
           <div className="flex items-center justify-between mx-5 mt-3 laptop:mt-0 pt-0 pb-2 laptop:py-6 laptop:ml-0 laptop:mr-4  text-lg ">
-            <h1 className="font-bold">Topik Kelas</h1>
+            <h1 className="font-bold">Course</h1>
             <div className="flex laptop:hidden">
               <FilterSide onFilterChange={handleFilterChange} />
             </div>
@@ -116,13 +116,13 @@ export const TopikKelas = () => {
                   onClick={() => setFilteredType("premium")}
                   className="py-1 px-5  rounded-xl bg-white hover:bg-[#6148FF] hover:text-white active:text-white focus:text-white active:bg-[#6148FF] focus:outline-none focus:ring focus:ring-violet-300 focus:bg-[#6148FF] laptop:py-1 laptop:px-12 "
                 >
-                  Kelas Premium
+                  Premium Class
                 </button>
                 <button
                   onClick={() => setFilteredType("gratis")}
                   className="py-1 px-5 rounded-xl bg-white hover:bg-[#6148FF] hover:text-white active:text-white focus:text-white active:bg-[#6148FF] focus:outline-none focus:ring focus:ring-violet-300 focus:bg-[#6148FF] laptop:py-1 laptop:px-10"
                 >
-                  Kelas Gratis
+                  Free Class
                 </button>
               </div>
               <div className=" gap-3 flex justify-between flex-wrap ">

@@ -43,7 +43,7 @@ export const Card = (props) => {
     const totalHours = Math.floor(totalDuration / 60);
     const totalMinutes = totalDuration % 60;
 
-    return `${totalHours} jam ${totalMinutes} menit`;
+    return `${totalHours} hour ${totalMinutes} min`;
   };
 
   const filteredClassData = classData.filter((value) => {
@@ -120,7 +120,7 @@ export const Card = (props) => {
             className=" bg-white w-[90vw] mobile:w-[22rem] laptop:w-[18rem]  rounded-3xl shadow-md mb-4"
           >
             <Link to={`/detailKelas/${value.id}`}>
-              <div className="h-[6rem] overflow-hidden rounded-t-3xl mb-1">
+              <div className="h-[7rem] overflow-hidden rounded-t-3xl mb-1">
                 <img
                   className="h-full w-full object-cover"
                   src={value.image_url}

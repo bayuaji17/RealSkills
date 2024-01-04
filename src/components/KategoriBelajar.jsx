@@ -22,8 +22,8 @@ export const KategoriBelajar = () => {
   return (
     <>
       <div className=" laptop:mx-[6rem] laptop:px-0">
-        <h1 className="hidden laptop:flex laptop:font-semibold laptop:text-md laptop:text-xl laptop:pt-2">
-          Kategori Belajar
+        <h1 className="hidden laptop:flex laptop:font-semibold laptop:text-md laptop:text-xl pt-3">
+          Course Category
         </h1>
         <div className="flex justify-between gap-4 pt-3">          
         {dataKategori.map((value) => (
