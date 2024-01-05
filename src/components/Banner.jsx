@@ -1,7 +1,5 @@
 import React from "react";
-import cbanner from "../assets/img/cbanner.png";
 import ban from "../assets/img/ban.png";
-import grad from "../assets/img/grad.png";
 import { useNavigate } from "react-router-dom";
 
 export const Banner = () => {
@@ -12,32 +10,19 @@ export const Banner = () => {
   };
 
   return (
-    <div className="flex  laptop:flex-row w-screen">
-      {/* <div className="hidden laptop:flex relative h-screen w-4/6">
-        <img src={ban} alt="" className="w-full h-full bg-cover" />
-        <img
-          src={grad}
-          alt=""
-          className="absolute top-0 left-0 w-full h-full"
-        />
-      </div> */}
-      <div className="flex  bg-[#6148FF]  w-screen gap-6 justify-evenly items-center px-4">
-       
-        <div className=" flex flex-wrap w-[15rem] justify-start laptop:w-[20rem]  ">
-          <p className="text-white font-semibold text-base laptop:text-4xl italic">Hello!</p>
-          <p className="text-white font-semibold text-base laptop:text-2xl italic">
-            Unleash Your Potential, Craft Real Skills!
-          </p>
-          <button
-            onClick={handleLogin}
-            className="bg-white text-[#6148FF] rounded-lg text-md font-bold p-1 w-full  "
-          >
-            Let's join class
-          </button>
+    <div className="flex flex-col-reverse laptop:flex-row h-8/12 bg-[#6148FF] ">
+      
+      <div className="bg-[#6148FF] flex laptop:w-2/6 laptop:justify-center justify-start items-center p-4 md:p-8">
+        <div className=" flex flex-wrap w-[14rem] md:w-[18rem] laptop:w-[16rem] "> 
+        <p className="text-white font-semibold text-2xl md:text-4xl laptop:text-4xl italic">Hello!</p>
+        <p className="text-white font-semibold text-xl md:text-2xl laptop:text-2xl italic">Unleash Your Potential, Craft Real Skills!</p>
+        <button 
+        onClick={handleLogin}
+        className="bg-white text-[#6148FF] rounded-lg text-md font-bold p-1 w-full  ">Let's join class</button>
         </div>
-        <div>
-        <img src={ban} alt="" className="bg-cover py-[3rem] " />
-        </div>
+      </div>
+      <div className=" relative w-full laptop:w-4/6 flex justify-center ">
+        <img src={ban} alt="" className="laptop:p-[2rem] object-cover flex " />
       </div>
     </div>
   );

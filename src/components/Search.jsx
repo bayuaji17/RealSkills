@@ -45,7 +45,7 @@ export const Search = () => {
   };
 
   return (
-    <div className="flex justify-between items-center py-4 px-4 bg-[#6148FF] gap-6 laptop:hidden">
+    <div className="flex justify-between items-center py-4 px-4 bg-[#6148FF] gap-6 laptop:hidden ">
       <React.Fragment>
         <Button
           className="bg-[#6148FF] shadow-lg"
@@ -139,7 +139,7 @@ export const Search = () => {
           </div>
           <List>
             <ListItem>
-              <ListItemPrefix>
+              <ListItemPrefix className="hover:text-black">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="25"
@@ -153,8 +153,8 @@ export const Search = () => {
                   />
                 </svg>
               </ListItemPrefix>
-              <a href="/topik" className="text-white text-lg">
-                Topik Kelas
+              <a href="/topik" className="text-white text-lg ">
+                Cousre
               </a>
             </ListItem>
             <ListItem>
@@ -199,7 +199,7 @@ export const Search = () => {
       <div className="flex relative w-10/12 ">
         <input
           className="p-4 flex justify-between rounded-lg shadow-lg w-full text-[#6148FF]"
-          placeholder="Cari Kursus terbaik...."
+          placeholder="Search..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           onKeyDown={enter}
