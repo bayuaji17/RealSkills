@@ -5,7 +5,7 @@ import badge from "../../assets/img/icon/badge-svg.svg";
 import modul from "../../assets/img/icon/clarity_book-line.svg";
 import time from "../../assets/img/icon/ri_time-fill.svg";
 // import message from "../../assets/img/icon/gridicons_chat.svg";
-import progress_check from "../../assets/img/icon/progress-check.svg";
+// import progress_check from "../../assets/img/icon/progress-check.svg";
 import done_play_button from "../../assets/img/icon/green-play.svg";
 import undone_play_button from "../../assets/img/icon/dark-blue-play.svg";
 import locked from "../../assets/img/icon/bxs_lock.svg";
@@ -121,7 +121,7 @@ const DetailKelasPage = () => {
     };
 
     fetchWatchedVideos();
-  }, [VideoID]);
+  }, [VideoID, isVideoClicked, SelectedVideo]);
 
   // useEffect untuk mendapatkan total menit seluruh chapters
   useEffect(() => {
@@ -201,19 +201,7 @@ const DetailKelasPage = () => {
         progress: undefined,
         theme: "light",
       });
-    } catch (error) {
-      // console.error("Error accessing free class:", error);
-      // toast.error("Anda sudah mengakses kelas ini", {
-      //   position: "bottom-center",
-      //   autoClose: 2000,
-      //   hideProgressBar: false,
-      //   closeOnClick: false,
-      //   pauseOnHover: true,
-      //   draggable: true,
-      //   progress: undefined,
-      //   theme: "light",
-      // });
-    }
+    } catch {}
   };
 
   return (
@@ -399,7 +387,7 @@ const DetailKelasPage = () => {
                     key={index}
                     className="font-montserrat text-[1rem] leading-[0.9rem]"
                   >
-                   {index + 1}. {goal}
+                    {index + 1}. {goal}
                   </span>
                 ))
               ) : (
@@ -420,13 +408,15 @@ const DetailKelasPage = () => {
                 </span>
               </div>
 
-              <div className="progress-bar-section flex gap-2 w-[100%]">
-                <img src={progress_check} alt="progress-check" width="20" />
+              <div className="progress-bar-section flex gap-2 w-[100%] items-center">
+                <span className="font-montserrat text-[0.8rem] leading-[1.25rem]">
+                  {calculateProgressBar(Detail)}%
+                </span>
                 <Progress
                   value={calculateProgressBar(Detail)}
                   size="md"
                   color="indigo"
-                  label="Completed"
+                  // label="Completed"
                 />
               </div>
             </div>
@@ -469,8 +459,13 @@ const DetailKelasPage = () => {
 
                       return (
                         <div
-                          className="course-chapters-container border-b border-[#EBF3FC] py-[0.5rem]"
+                          className="course-chapters-container cursor-pointer border-b border-[#EBF3FC] py-[0.5rem]"
                           key={videoIndex}
+                          onClick={() => {
+                            setVideoID(vids.watch_status[0].video_id);
+                            setSelectedVideo(vids.link);
+                            setisVideoClicked(true);
+                          }}
                         >
                           <div className="chapter-card-section flex items-center justify-between w-[95%]">
                             <div className="card-number-title-section flex items-center gap-[0.75rem]">
@@ -480,7 +475,7 @@ const DetailKelasPage = () => {
                                 {adjustedVideoIndex}
                               </span>
                               <span
-                                className={`font-montserrat font-semibold text-[0.9rem] text-[rgba(0,0,0,0.80)] leading-[1.25rem]`}
+                                className={`font-montserrat font-semibold text-[0.9rem]  text-[rgba(0,0,0,0.80)] leading-[1.25rem] w-[85%] hover:text-dark-blue`}
                               >
                                 {vids.title}
                               </span>
@@ -991,18 +986,14 @@ const DetailKelasPage = () => {
                   <span className="w-[100%] font-montserrat font-black text-[2.25vh] leading-[2vh]">
                     Materi Belajar
                   </span>
-                  <div className="flex items-center w-[100%]">
-                    <img
-                      src={progress_check}
-                      alt="progress-check"
-                      style={{ width: "2.5vh" }}
-                    />
+                  <div className="flex items-center w-[100%] gap-[1vh]">
+                    <span className="font-montserrat text-[1.5vh] leading-[2vh]">
+                      {calculateProgressBar(Detail)}%
+                    </span>
                     <Progress
                       value={calculateProgressBar(Detail)}
                       size="md"
                       color="indigo"
-                      label="Completed"
-                      className="text-[1vh]"
                     />
                   </div>
                 </div>
@@ -1044,15 +1035,20 @@ const DetailKelasPage = () => {
                             vids.watch_status && vids.watch_status.length > 0;
                           return (
                             <div
-                              className="course-chapters-container border-b-[0.25vh] border-[#EBF3FC] py-[.75vh] mt-[1vh]"
+                              className="course-chapters-container cursor-pointer border-b-[0.25vh] border-[#EBF3FC] py-[.75vh] mt-[1vh]"
                               key={videoIndex}
+                              onClick={() => {
+                                setVideoID(vids.watch_status[0].video_id);
+                                setSelectedVideo(vids.link);
+                                setisVideoClicked(true);
+                              }}
                             >
                               <div className="chapter-card-section flex items-center justify-between w-[95%]">
                                 <div className="card-number-title-section flex items-center gap-[0.75rem]">
                                   <span className="rounded-[100%] text-[2vh] px-[2.1vh] py-[1.25vh] hover:bg-dark-blue hover:text-white cursor-pointer bg-[#EBF3FC]">
                                     {adjustedVideoIndex}
                                   </span>
-                                  <span className="course-title-section text-[rgba(0,0,0,0.80)] text-[1.75vh] font-semibold leading-[1.25rem] font-montserrat">
+                                  <span className="course-title-section text-[rgba(0,0,0,0.80)] text-[1.75vh] font-semibold leading-[1.25rem] font-montserrat hover:text-dark-blue">
                                     {vids.title}
                                   </span>
                                 </div>
