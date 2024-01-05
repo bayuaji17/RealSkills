@@ -137,7 +137,7 @@ export const CardMyclass = (props) => {
         <div
           div
           key={value.id}
-          className=" bg-white w-[22rem] laptop:w-[18rem]  rounded-3xl shadow-md "
+          className=" bg-white w-[22rem] laptop:w-[18rem]  rounded-3xl shadow-md mb-4 "
         >
           <Link to={`/detailKelas/${value.id}`}>
             <div className="h-[7rem] overflow-hidden rounded-t-3xl mb-1">

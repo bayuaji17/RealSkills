@@ -4,6 +4,7 @@ import { Banner } from "../components/Banner";
 import { KategoriBelajar } from "../components/KategoriBelajar";
 import { KursusPopuler } from "../components/KursusPopuler";
 import { Search } from "../components/Search";
+import{ Footer2 } from "../components/Footer2";
 
 export const BerandaNoLogin = () => {
   return (
@@ -20,6 +21,7 @@ export const BerandaNoLogin = () => {
         </div>
       </div>
       <KursusPopuler />
+      <Footer2/>
     </div>
   );
 };

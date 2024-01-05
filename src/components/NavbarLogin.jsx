@@ -223,11 +223,11 @@ function NavListMenu() {
 
 // nav list component
 const navListItems = [
-  {
-    label: "Homepage",
-    icon: HomeIcon,
-    path: "/beranda",
-  },
+  // {
+  //   label: "Homepage",
+  //   icon: HomeIcon,
+  //   path: "/beranda",
+  // },
   {
     label: "Notification",
     icon: BellIcon,
@@ -306,24 +306,9 @@ export const NavbarLogin = () => {
           <img src={RealSkillsText} alt="" className="w-20 h-12 hidden mobile:block " />
         </div>
         </Link>
-        <>
-          <div className="hidden lg:block">
-            <NavList />
-          </div>
-          <IconButton
-            size="md"
-            color="white"
-            variant="text"
-            onClick={toggleIsNavOpen}
-            className="ml-auto mr-2 lg:hidden "
-          >
-            <Bars2Icon className="h-6 w-6" />
-          </IconButton>
-        </>
-        <div className="flex gap-2">
-          <div className="flex relative">
+        <div className="flex relative">
             <input
-              className="p-2 text-sm flex justify-between rounded-lg shadow-sm w-[7.2rem] laptop:w-full text-[#6148FF] italic"
+              className="p-3 text-sm flex justify-between rounded-lg shadow-sm w-[30vw] laptop:w-[20rem] text-[#6148FF] italic"
               placeholder="Search..."
               onChange={(e) => setSearch(e.target.value)}
               onKeyDown={enter}
@@ -334,8 +319,8 @@ export const NavbarLogin = () => {
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
+                width="26"
+                height="26"
                 viewBox="0 0 24 24"
                 fill="none"
                 className="p-1"
@@ -351,6 +336,22 @@ export const NavbarLogin = () => {
               </svg>
             </button>
           </div>
+          <div className="flex gap-2">
+          <div className="hidden lg:block">
+            <NavList />
+          </div>
+          <IconButton
+            size="md"
+            color="white"
+            variant="text"
+            onClick={toggleIsNavOpen}
+            className="ml-auto mr-2 lg:hidden "
+          >
+            <Bars2Icon className="h-6 w-6" />
+          </IconButton>
+        
+        
+          
           <ProfileMenu />
         </div>
       </div>
