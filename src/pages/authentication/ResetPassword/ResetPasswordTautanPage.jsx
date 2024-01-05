@@ -12,16 +12,16 @@ const ResetPasswordTautanPage = () => {
   });
   const isEmailValid = EMAIL_REGEX.test(FormInput.email);
   const isEmailLengthValid = FormInput.email.length > 0;
-  const ERROR_BORDER_COLOR = "border-red-600 focus:outline-red-600";
-  const SUCCESS_BORDER_COLOR = "border-green-600 focus:outline-green-600";
+  // const ERROR_BORDER_COLOR = "border-red-600 focus:outline-red-600";
+  // const SUCCESS_BORDER_COLOR = "border-green-600 focus:outline-green-600";
 
-  const emailBorderClass = () => {
-    if (isEmailLengthValid > 0 && !isEmailValid) {
-      return ERROR_BORDER_COLOR;
-    } else if (isEmailLengthValid > 0 && isEmailValid) {
-      return SUCCESS_BORDER_COLOR;
-    }
-  };
+  // const emailBorderClass = () => {
+  //   if (isEmailLengthValid > 0 && !isEmailValid) {
+  //     return ERROR_BORDER_COLOR;
+  //   } else if (isEmailLengthValid > 0 && isEmailValid) {
+  //     return SUCCESS_BORDER_COLOR;
+  //   }
+  // };
 
   const handleInput = (e) => {
     const { id, value } = e.target;
@@ -85,7 +85,7 @@ const ResetPasswordTautanPage = () => {
                   label="email"
                   value={FormInput.email}
                   placeholder="example@gmail.com"
-                  className={`border-2 border-[#D0D0D0] rounded-[1rem] py-[0.5rem] px-[1rem] ${emailBorderClass()}`}
+                  className={`border-2 border-[#D0D0D0] rounded-[1rem] py-[0.5rem] px-[1rem] `}
                 />
               </div>
               {isEmailLengthValid && !isEmailValid && (

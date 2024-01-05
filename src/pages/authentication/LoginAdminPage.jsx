@@ -24,13 +24,13 @@ export const LoginAdminPage = () => {
   const isPasswordValid = PASSWORD_REGEX.test(FormInput.password);
   const isPasswordLengthValid = FormInput.password.length > 0;
 
-  const colorBorderPassword = () => {
-    if (isPasswordLengthValid && !isPasswordValid) {
-      return ERROR_BORDER_COLOR;
-    } else if (isPasswordLengthValid && isPasswordValid) {
-      return SUCCESS_BORDER_COLOR;
-    }
-  };
+  // const colorBorderPassword = () => {
+  //   if (isPasswordLengthValid && !isPasswordValid) {
+  //     return ERROR_BORDER_COLOR;
+  //   } else if (isPasswordLengthValid && isPasswordValid) {
+  //     return SUCCESS_BORDER_COLOR;
+  //   }
+  // };
 
   const handleInput = (e) => {
     const { id, value } = e.target;
@@ -60,6 +60,7 @@ export const LoginAdminPage = () => {
       CookieStorage.set(CookieKeys.AuthToken, response.data.data.token);
       navigate("/admin/dashboard");
     } catch (error) {
+      // toast.error("isi terlebih dahulu")
       toast.error(error.response.data.error, {
         position: "bottom-center",
         autoClose: 5000,
@@ -116,7 +117,7 @@ export const LoginAdminPage = () => {
                 value={FormInput.password}
                 id="password"
                 type={showPassword ? "text" : "password"}
-                className={`border rounded-xl p-3 laptop:w-[22rem] mobile: w-[94vw] mb-4 text-black ${colorBorderPassword()}`}
+                className={`border rounded-xl p-3 laptop:w-[22rem] mobile: w-[94vw] mb-4 text-black`}
                 placeholder="Masukan Password"
               />
               <FontAwesomeIcon
@@ -136,7 +137,11 @@ export const LoginAdminPage = () => {
               onClick={() => {
                 handleLoginAdmin();
               }}
-              className="bg-blue-300 text-white p-3 rounded-2xl laptop:w-[22rem] mobile:w-[94vw] hover:bg-[#6148FF]"
+              disabled={
+                !isAdminIDLengthValid ||
+                !isPasswordLengthValid
+              }
+              className="bg-blue-300 text-white p-3 rounded-2xl laptop:w-[22rem] mobile:w-[94vw] hover:bg-[#6148FF] disabled:cursor-not-allowed"
               type="submit"
             >
               Masuk

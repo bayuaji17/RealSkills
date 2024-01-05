@@ -32,27 +32,27 @@ export const LoginPage = () => {
     setPassword(e.target.value);
   };
 
-  const emailTelpValid =
-    EMAIL_REGEX.test(emailTelp) || NOTELP_REGEX.test(emailTelp);
-  const passwordValid = PASSWORD_REGEX.test(password);
-  const emailTelpLengthValid = emailTelp.length > 0;
-  const passwordLengthValid = password.length > 0;
+  // const emailTelpValid =
+  //   EMAIL_REGEX.test(emailTelp) || NOTELP_REGEX.test(emailTelp);
+  // const passwordValid = PASSWORD_REGEX.test(password);
+  // const emailTelpLengthValid = emailTelp.length > 0;
+  // const passwordLengthValid = password.length > 0;
 
-  const colorBorderEmailTelp = () => {
-    if (emailTelpLengthValid > 0 && !emailTelpValid) {
-      return ERROR_BORDER_COLOR;
-    } else if (emailTelpLengthValid > 0 && emailTelpValid) {
-      return SUCCESS_BORDER_COLOR;
-    }
-  };
+  // const colorBorderEmailTelp = () => {
+  //   if (emailTelpLengthValid > 0 && !emailTelpValid) {
+  //     return ERROR_BORDER_COLOR;
+  //   } else if (emailTelpLengthValid > 0 && emailTelpValid) {
+  //     return SUCCESS_BORDER_COLOR;
+  //   }
+  // };
 
-  const colorBorderPassword = () => {
-    if (passwordLengthValid && !passwordValid) {
-      return ERROR_BORDER_COLOR;
-    } else if (passwordLengthValid && passwordValid) {
-      return SUCCESS_BORDER_COLOR;
-    }
-  };
+  // const colorBorderPassword = () => {
+  //   if (passwordLengthValid && !passwordValid) {
+  //     return ERROR_BORDER_COLOR;
+  //   } else if (passwordLengthValid && passwordValid) {
+  //     return SUCCESS_BORDER_COLOR;
+  //   }
+  // };
 
   const handleLoginUser = async () => {
     try {
@@ -73,7 +73,8 @@ export const LoginPage = () => {
       CookieStorage.set(CookieKeys.AuthToken, response.data.data.token);
       navigate("/beranda");
     } catch (error) {
-      toast.error(error?.response?.data?.error, {
+      console.error(error)
+      toast.error(error?.response?.data?.error.detail, {
         position: "bottom-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -96,7 +97,7 @@ export const LoginPage = () => {
           <label className="flex flex-col mb-2">Email</label>
           <input
             type="email"
-            className={`border rounded-xl p-3 mb-3  laptop:w-[22rem]  mobile: w-[94vw] ${colorBorderEmailTelp()}`}
+            className={`border rounded-xl p-3 mb-3  laptop:w-[22rem]  mobile: w-[94vw]`}
             placeholder="Contoh: johndee@gmail.com"
             onChange={(e) => inputEmailTelp(e)}
           ></input>
@@ -111,7 +112,7 @@ export const LoginPage = () => {
           <div className="relative">
             <input
               type={showPassword ? "text" : "password"}
-              className={`border rounded-xl p-3  laptop:w-[22rem] mobile: w-[94vw] mb-4 ${colorBorderPassword()}`}
+              className={`border rounded-xl p-3  laptop:w-[22rem] mobile: w-[94vw] mb-4`}
               placeholder="Masukkan Password"
               onChange={(e) => inputPassword(e)}
             />
