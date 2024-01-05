@@ -46,8 +46,8 @@ export const Footer2 = () => {
     fetchKategori();
   }, []); 
   return (
-    <footer className="bg-[#5C38EB] text-white relative w-screen text-base pt-6">
-      <div className=" mx-auto  max-w-7xl px-8 w-screen">
+    <footer className="bg-[#5C38EB] text-white relative max-w-screen text-base pt-6">
+      <div className=" mx-auto px-8">
         <div className="flex justify-around gap-10">
         <div className="flex flex-col laptop:flex-row laptop:gap-3 laptop:mr-3">
           <img src={RealSkills} alt=" " className="w-12 h-12 md:ml-2 pt-0" />
